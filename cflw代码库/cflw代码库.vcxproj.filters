@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="内联文件">
+      <UniqueIdentifier>{7b2e1084-2d86-42d8-9f69-8fcbb0a98c0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="数学">
+      <UniqueIdentifier>{0233ea9a-b1f7-43b6-9653-c5171442fc9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="输入">
+      <UniqueIdentifier>{1de31c6e-7d8b-4836-a94c-33754943d6a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="图形">
+      <UniqueIdentifier>{c313cbec-787e-4b5c-81f6-f0cc2e65b57e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="帮助">
+      <UniqueIdentifier>{a8591efb-4ed8-49e1-aff6-c95159832ec3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="工具">
+      <UniqueIdentifier>{bb200243-119c-4bd7-aa93-4f28e4dc6347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="多媒体">
+      <UniqueIdentifier>{5b688d78-a071-401c-b5cd-2978458d4687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="文件">
+      <UniqueIdentifier>{83ed09bd-897c-42de-9a15-0bbb33f17069}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="常用代码">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cflw数学.h">
+      <Filter>数学</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw数学_单位转换.h">
+      <Filter>数学</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw数学_杂烩.h">
+      <Filter>数学</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw数学_图形.h">
+      <Filter>数学</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw输入.h">
+      <Filter>输入</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw输入_di8.h">
+      <Filter>输入</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw输入_win.h">
+      <Filter>输入</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw输入_xi.h">
+      <Filter>输入</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw数学_随机.h">
+      <Filter>数学</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw图形_d2d.h">
+      <Filter>图形</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw图形_d3d11.h">
+      <Filter>图形</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw图形_d3d12.h">
+      <Filter>图形</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw单位.h">
+      <Filter>数学</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw数学_矩阵.h">
+      <Filter>数学</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw数学_向量.h">
+      <Filter>数学</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw数学_平面几何.h">
+      <Filter>数学</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw数学_函数方程.h">
+      <Filter>数学</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw图形_d3d纹理.h">
+      <Filter>图形</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw辅助.h">
+      <Filter>帮助</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw辅助_win.h">
+      <Filter>帮助</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw异常.h">
+      <Filter>帮助</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw时间.h">
+      <Filter>工具</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw工具.h">
+      <Filter>工具</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw工具_循环.h">
+      <Filter>工具</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw视窗.h">
+      <Filter>工具</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw算法.h">
+      <Filter>帮助</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw工具_属性.h">
+      <Filter>工具</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw多媒体.h">
+      <Filter>多媒体</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw音频_xa2.h">
+      <Filter>多媒体</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw文件_csv.h">
+      <Filter>文件</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw文件_obj模型.h">
+      <Filter>文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cflw数学_单位转换.cpp">
+      <Filter>数学</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw数学.cpp">
+      <Filter>数学</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw数学_图形.cpp">
+      <Filter>数学</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw输入_di8.cpp">
+      <Filter>输入</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw输入_win.cpp">
+      <Filter>输入</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw输入_xi.cpp">
+      <Filter>输入</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw数学_随机.cpp">
+      <Filter>数学</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw输入.cpp">
+      <Filter>输入</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw图形_d2d.cpp">
+      <Filter>图形</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw图形_d3d11.cpp">
+      <Filter>图形</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw图形_d3d12.cpp">
+      <Filter>图形</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw图形_d2d助手.cpp">
+      <Filter>图形</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw数学_矩阵.cpp">
+      <Filter>数学</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw数学_向量.cpp">
+      <Filter>数学</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw数学_平面几何.cpp">
+      <Filter>数学</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw数学_函数方程.cpp">
+      <Filter>数学</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw图形_d3d纹理.cpp">
+      <Filter>图形</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw辅助.cpp">
+      <Filter>帮助</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw异常.cpp">
+      <Filter>帮助</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw时间.cpp">
+      <Filter>工具</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw工具.cpp">
+      <Filter>工具</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw视窗.cpp">
+      <Filter>工具</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw多媒体.cpp">
+      <Filter>多媒体</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw音频_xa2.cpp">
+      <Filter>多媒体</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw文件_csv.cpp">
+      <Filter>文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw文件_obj模型.cpp">
+      <Filter>文件</Filter>
+    </ClCompile>
+    <ClCompile Include="常用代码\窗口模板.cpp">
+      <Filter>常用代码</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cflw数学_杂烩.inl">
+      <Filter>数学</Filter>
+    </None>
+    <None Include="cflw数学.inl">
+      <Filter>数学</Filter>
+    </None>
+    <None Include="cflw工具.inl">
+      <Filter>工具</Filter>
+    </None>
+    <None Include="常用代码\常用代码段.txt">
+      <Filter>常用代码</Filter>
+    </None>
+    <None Include="常用代码\3d.hlsl">
+      <Filter>常用代码</Filter>
+    </None>
+  </ItemGroup>
+</Project>

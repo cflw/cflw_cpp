@@ -1,0 +1,11 @@
+#pragma once
+#include <algorithm>
+namespace cflw::À„∑® {
+template<typename t, typename tF = std::hash<t>>
+struct Fπ˛œ£œ‡µ» {
+	bool operator()(const t &a, const t &b) {
+		auto vf = tF();
+		return vf(a) == vf(b);
+	}
+};
+}
