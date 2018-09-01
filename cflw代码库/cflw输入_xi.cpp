@@ -206,11 +206,11 @@ S方向 C手柄::f方向(t索引 i) const {
 	case (int)E手柄方向::e右摇杆:
 		return m摇杆[(int)E摇杆::e右].f方向();
 	default: {
-		const float v最大x = 数学::f绝对值最大值<float>(
+		const float v最大x = 数学::f绝对值最大值(
 			m方向键[(int)E方向键::x].m方向, 
 			m摇杆[(int)E摇杆::e左].m方向[0], 
 			m摇杆[(int)E摇杆::e右].m方向[0]);
-		const float v最大y = 数学::f绝对值最大值<float>(
+		const float v最大y = 数学::f绝对值最大值(
 			m方向键[(int)E方向键::y].m方向,
 			m摇杆[(int)E摇杆::e左].m方向[1],
 			m摇杆[(int)E摇杆::e右].m方向[1]);

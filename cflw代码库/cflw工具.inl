@@ -4,12 +4,23 @@
 #include "cflw辅助.h"
 namespace cflw::工具 {
 //==============================================================================
-// 随机数
+// 计值器
 //==============================================================================
-template<class t> t C随机数::f生成(const t &p小, const t &p大) {
-	f计算();
-	const t v差 = p大 - p小;
-	return (t)(p小 + (t)r / (t)max * v差);
+template<typename t> void C计值器<t>::f清零() {
+	m值数 = 0;
+}
+template<typename t> void C计值器<t>::f重置(t a) {
+	m值数 = 0;
+	m间隔 = a;
+}
+template<typename t> bool C计值器<t>::f滴答(t a) {
+	m值数 += a;
+	if (m值数 >= m间隔) {
+		m值数 = 0;
+		return true;
+	} else {
+		return false;
+	}
 }
 //==============================================================================
 // 数字与文本的转换

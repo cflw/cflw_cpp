@@ -5,31 +5,26 @@
 #include <tuple>
 namespace cflw::工具 {
 //==============================================================================
-// 随机数
-//==============================================================================
-class C随机数 {
-public:
-	unsigned long a;		//随机数种子a
-	unsigned long b;		//随机数种子b
-	unsigned long r;		//上次计算结果
-	static const unsigned long max;	//随机数最大值
-	C随机数();		//构造函数
-	void f置种子(const unsigned long &);
-	void f计算();	//计算一个随机数
-	unsigned long f生成();
-	template<class t> t f生成(const t &, const t &);
-	bool f生成(const float &);
-};
-//==============================================================================
 // 计次器,计算次数
 //==============================================================================
 class C计次器 {
 public:
-	int v间隔 = 0;
-	int v次数 = 0;
 	C计次器() = default;
 	void f重置(int);
 	bool f滴答();
+private:
+	int m间隔 = 0;
+	int m次数 = 0;
+};
+template<typename t>
+class C计值器 {
+public:
+	void f清零();
+	void f重置(t 间隔);
+	bool f滴答(t);
+private:
+	t m值数 = 0;
+	t m间隔 = 0;
 };
 //==============================================================================
 // 文本编缉

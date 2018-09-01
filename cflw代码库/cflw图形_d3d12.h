@@ -393,7 +393,7 @@ public:
 	};
 	struct S描述符表 {
 		size_t m开始位置;
-		size_t m数量;
+		size_t m分配数量;
 		D3D12_SHADER_VISIBILITY m可见性;
 	};
 	static D3D12_SHADER_VISIBILITY f计算可见性(E着色器);
@@ -401,14 +401,14 @@ public:
 	static D3D12_DESCRIPTOR_RANGE_TYPE f计算描述范围类型(E类型);
 	C根签名参数 &f添加描述符(E类型, UINT 寄存器, UINT 空间, E着色器 可见性 = E着色器::e全部);
 	C根签名参数 &f添加采样器(const D3D12_SAMPLER_DESC &, UINT 寄存器, UINT 空间, E着色器 可见性 = E着色器::e全部);
-	C根签名参数 &f添加范围(E类型 m类型, UINT m数量 = 1, UINT m开始寄存器 = 0, UINT m寄存器空间 = 0, UINT m偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND, E着色器 可见性 = E着色器::e全部);
-	C根签名参数 &f连续添加范围(E类型 m类型, UINT m数量 = 1, UINT m开始寄存器 = 0, UINT m寄存器空间 = 0, UINT m偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND);
+	C根签名参数 &f添加范围(E类型 m类型, UINT m分配数量 = 1, UINT m开始寄存器 = 0, UINT m寄存器空间 = 0, UINT m偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND, E着色器 可见性 = E着色器::e全部);
+	C根签名参数 &f连续添加范围(E类型 m类型, UINT m分配数量 = 1, UINT m开始寄存器 = 0, UINT m寄存器空间 = 0, UINT m偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND);
 	C根签名参数 &f连续添加范围开始(E着色器 可见性 = E着色器::e全部);
 	C根签名参数 &f连续添加范围结束();
 	void fs标记(E根签名标记);
 	void fs标记(D3D12_ROOT_SIGNATURE_FLAGS);
 public:
-	void f实现_添加范围(E类型 m类型, UINT m数量 = 1, UINT m开始寄存器 = 0, UINT m寄存器空间 = 0, UINT m偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND);
+	void f实现_添加范围(E类型 m类型, UINT m分配数量 = 1, UINT m开始寄存器 = 0, UINT m寄存器空间 = 0, UINT m偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND);
 	void f实现_添加索引(E根参数类型);
 	std::vector<S根参数索引> ma索引;
 	std::vector<D3D12_ROOT_PARAMETER> ma参数;

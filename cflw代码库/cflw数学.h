@@ -1,100 +1,100 @@
-#pragma once
+ï»¿#pragma once
 #include <math.h>
 #include <complex>
 #include <utility>
 #include <functional>
 #include <algorithm>
-namespace cflw::ÊıÑ§ {
+namespace cflw::æ•°å­¦ {
 //==============================================================================
-//Êı×ÖÀàĞÍ&±ğÃû&Ç°ÖÃÉùÃ÷
+//æ•°å­—ç±»å‹&åˆ«å&å‰ç½®å£°æ˜
 //==============================================================================
-//±ê×¼¿âÀàĞÍ
-typedef std::complex<float> t¸´Êı;
+//æ ‡å‡†åº“ç±»å‹
+typedef std::complex<float> tå¤æ•°;
 //==============================================================================
-// ÊıÑ§³£Êı
+// æ•°å­¦å¸¸æ•°
 //==============================================================================
-constexpr double c°ë¦Ğ = 1.5707963267948966192313216916398;
-constexpr double c¦Ğ = 3.1415926535897932384626433832795;
-constexpr double c¶ş¦Ğ = 6.283185307179586476925286766559;
-constexpr double c¸ùºÅ2 = 1.4142135623730950488016887242097;
-constexpr double c¶Èµ½»¡¶È = 0.01745329251994329576923690768489;
-constexpr double c»¡¶Èµ½¶È = 57.295779513082320876798154814105;
+constexpr double cåŠÏ€ = 1.5707963267948966192313216916398;
+constexpr double cÏ€ = 3.1415926535897932384626433832795;
+constexpr double cäºŒÏ€ = 6.283185307179586476925286766559;
+constexpr double cæ ¹å·2 = 1.4142135623730950488016887242097;
+constexpr double cåº¦åˆ°å¼§åº¦ = 0.01745329251994329576923690768489;
+constexpr double cå¼§åº¦åˆ°åº¦ = 57.295779513082320876798154814105;
 //==============================================================================
-// »ù±¾ÊıÑ§º¯Êı&È«¾ÖÍµÀÁº¯Êı
+// åŸºæœ¬æ•°å­¦å‡½æ•°&å…¨å±€å·æ‡’å‡½æ•°
 //==============================================================================
-int fÈ¡ÕûÊıÎ»Êı(const int &);
-template<typename t> int fÈ¡·ûºÅ(const t &x);
-template<> int fÈ¡·ûºÅ<bool>(const bool &x);
-template<typename t> const t& f×î´óÖµ(const t &a, const t &b);
-template<typename t> const t& f×îĞ¡Öµ(const t &a, const t &b);
-template<typename t> t fÏŞÖÆ(const t &Öµ, const t &×îĞ¡Öµ, const t &×î´óÖµ);
-template<typename t> t f½Ó½ü(const t &Ô´Öµ, const t &Ä¿±êÖµ, const t &½Ó½ü²î);
-template<typename t> t f±¶Êı½¥±ä(const t &Ô´Öµ, const t &Ä¿±êÖµ, const float &²îÖµ½¥±ä±¶Êı, const t &×îĞ¡½¥±ä, const t &×î´ó½¥±ä);
-template<typename t> t fÏßĞÔ½¥±ä(const t &Ô´Öµ, const t &Ä¿±êÖµ, const float &½¥±äÖµ);
-template<typename t> t fÇóÓà(const t &pÔ´Öµ, const t &p³ıÊı);
-template<typename t> bool fÏŞÖÆÑ­»·(t &pÖµ, const t &p×î´óÖµ);
-int f10µÄ´Î·½(const int &x);
-template<typename t> t f¾ø¶ÔÖµ(const t &);
-template<typename t> std::tuple<t, t> sincos(t);
-template<typename t> t f²åÖµ(const t&ÆğÊ¼Öµ, const t&ÖÕÖ¹Öµ, float ÖĞ¼äÖµ);
-template<typename t> int fÏŞ(t &±»ÏŞÖµ, const t &ÏŞÖµ);
-template<typename t> t fµã³Ë(const t&¼×, const t&ÒÒ);
-template<typename t> t f²æ³Ë(const t&¼×, const t&ÒÒ);
-template<typename t> t f¸º(const t&¼×);
-template<typename t> bool fÍ¬·ûºÅ(const t &, const t &);
-template<typename t> t fÆ½·½(const t &);
-template<typename t> t fÁ¢·½(const t &);
-template<typename t> t f¶ÔÆë(const t &, const t &);//½«x¶ÔÆëµ½yµÄÕûÊı±¶
-template<typename t> t fÑ­»·(const t &, const t &×îĞ¡, const t &×î´ó);
-template<typename t> t f²î(const t &, const t &);
-template<typename tk, typename tv> tv f²åÖµ2(const std::pair<tk, tv> &, const std::pair<tk, tv> &, const tk &);
-template<typename tk, typename tv> tv f²åÖµ2(const tk &, const tv &, const tk &, const tv &, const tk &);
-template<typename t> t f·´¹´¹É(const t &, const t &);	//ÒÑÖªĞ±±ßºÍÒ»Ö±½Ç±ßÇóÁíÒ»Ö±½Ç±ß
-template<typename t> t fËÄÉáÎåÈë(const t &);	//
-template<typename t> t fµÈÑüÌİĞÎ²åÖµ(const t &pĞ¡, const t &p´ó, float pĞ±¿í, float pÖĞ¼äÖµ);
-template<typename t·µ»Ø, typename...t²ÎÊı> t·µ»Ø fËãÊõÆ½¾ù(t²ÎÊı &&...);
-template<typename t·µ»Ø, typename...t²ÎÊı> t·µ»Ø f¼¸ºÎÆ½¾ù(t²ÎÊı &&...);
-template<typename t·µ»Ø, typename...t²ÎÊı> t·µ»Ø f¾ø¶ÔÖµ×î´óÖµ(t²ÎÊı &&...);	//¼ÆËã³ö¾ø¶ÔÖµ×î´óÖµ,·µ»ØÔ­Öµ
+int få–æ•´æ•°ä½æ•°(const int &);
+template<typename t> int få–ç¬¦å·(const t &x);
+template<> int få–ç¬¦å·<bool>(const bool &x);
+template<typename t> const t& fæœ€å¤§å€¼(const t &a, const t &b);
+template<typename t> const t& fæœ€å°å€¼(const t &a, const t &b);
+template<typename t> t fé™åˆ¶(const t &å€¼, const t &æœ€å°å€¼, const t &æœ€å¤§å€¼);
+template<typename t> t fæ¥è¿‘(const t &æºå€¼, const t &ç›®æ ‡å€¼, const t &æ¥è¿‘å·®);
+template<typename t> t få€æ•°æ¸å˜(const t &æºå€¼, const t &ç›®æ ‡å€¼, const float &å·®å€¼æ¸å˜å€æ•°, const t &æœ€å°æ¸å˜, const t &æœ€å¤§æ¸å˜);
+template<typename t> t fçº¿æ€§æ¸å˜(const t &æºå€¼, const t &ç›®æ ‡å€¼, const float &æ¸å˜å€¼);
+template<typename t> t fæ±‚ä½™(const t &pæºå€¼, const t &pé™¤æ•°);
+template<typename t> bool fé™åˆ¶å¾ªç¯(t &på€¼, const t &pæœ€å¤§å€¼);
+int f10çš„æ¬¡æ–¹(const int &x);
+template<typename t> t fç»å¯¹å€¼(const t &);
+template<typename t> std::tuple<t, t> sincos(const t &);
+template<typename t> t fæ’å€¼(const t&èµ·å§‹å€¼, const t&ç»ˆæ­¢å€¼, float ä¸­é—´å€¼);
+template<typename t> int fé™(t &è¢«é™å€¼, const t &é™å€¼);
+template<typename t> t fç‚¹ä¹˜(const t&ç”², const t&ä¹™);
+template<typename t> t få‰ä¹˜(const t&ç”², const t&ä¹™);
+template<typename t> t fè´Ÿ(const t&ç”²);
+template<typename t> bool fåŒç¬¦å·(const t &, const t &);
+template<typename t> t få¹³æ–¹(const t &);
+template<typename t> t fç«‹æ–¹(const t &);
+template<typename t> t få¯¹é½(const t &, const t &);//å°†xå¯¹é½åˆ°yçš„æ•´æ•°å€
+template<typename t> t få¾ªç¯(const t &, const t &æœ€å°, const t &æœ€å¤§);
+template<typename t> t få·®(const t &, const t &);
+template<typename tk, typename tv> tv fæ’å€¼2(const std::pair<tk, tv> &, const std::pair<tk, tv> &, const tk &);
+template<typename tk, typename tv> tv fæ’å€¼2(const tk &, const tv &, const tk &, const tv &, const tk &);
+template<typename t> t fåå‹¾è‚¡(const t &, const t &);	//å·²çŸ¥æ–œè¾¹å’Œä¸€ç›´è§’è¾¹æ±‚å¦ä¸€ç›´è§’è¾¹
+template<typename t> t få››èˆäº”å…¥(const t &);	//
+template<typename t> t fç­‰è…°æ¢¯å½¢æ’å€¼(const t &på°, const t &på¤§, float pæ–œå®½, float pä¸­é—´å€¼);
+template<typename...tå‚æ•°> auto fç®—æœ¯å¹³å‡(tå‚æ•° &&...);
+template<typename...tå‚æ•°> auto få‡ ä½•å¹³å‡(tå‚æ•° &&...);
+template<typename...tå‚æ•°> auto fç»å¯¹å€¼æœ€å¤§å€¼(tå‚æ•° &&...);	//è®¡ç®—å‡ºç»å¯¹å€¼æœ€å¤§å€¼,è¿”å›åŸå€¼
 //==============================================================================
-// »ù±¾¼¸ºÎº¯Êı
+// åŸºæœ¬å‡ ä½•å‡½æ•°
 //==============================================================================
-//ÌØ±ğ½Ç¶È
-float fÇóÓà(const float &x, const float &y);
-float f·­ÕÛ(float, float);
-float fÎ»ÖÃ(float, float);
-//´°¿Ú×ø±êÓëÖ±½Ç×ø±ê±ä»»
-float f´°¿Ú×ø±êx(float, float);
-float f´°¿Ú×ø±êy(float, float);
-float fÖ±½Ç×ø±êx(float, float);
-float fÖ±½Ç×ø±êy(float, float);
+//ç‰¹åˆ«è§’åº¦
+float fæ±‚ä½™(const float &x, const float &y);
+float fç¿»æŠ˜(float, float);
+float fä½ç½®(float, float);
+//çª—å£åæ ‡ä¸ç›´è§’åæ ‡å˜æ¢
+float fçª—å£åæ ‡x(float, float);
+float fçª—å£åæ ‡y(float, float);
+float fç›´è§’åæ ‡x(float, float);
+float fç›´è§’åæ ‡y(float, float);
 //==============================================================================
-// ¸÷ÖÖ¼ÆËãÀà
+// å„ç§è®¡ç®—ç±»
 //==============================================================================
-template<typename t> class C½Ç¶È¼ÆËã {
+template<typename t> class Cè§’åº¦è®¡ç®— {
 public:
-	static const C½Ç¶È¼ÆËã c¶È, c»¡¶È;
-	t mÖÜ½Ç;
-	t mÆ½½Ç;
-	C½Ç¶È¼ÆËã(const t &);
-	t fÆ½¾ù(const t &½Ç1, const t &½Ç2) const;
-	t fÈ¡Õı(const t &½Ç) const;	//ÏŞÖÆÔÚ[0,ÖÜ½Ç)·¶Î§ÄÚ
-	t fÏŞÖÆ(const t &½Ç) const;	//ÏŞÖÆÔÚ(-Æ½½Ç,Æ½½Ç]·¶Î§ÄÚ
-	t fÈ¡°ë(const t &½Ç) const;	//ÏŞÖÆÔÚ[0,Æ½½Ç)·¶Î§ÄÚ
-	t fĞı×ª½¥±ä(const t &Ô´, const t &Ä¿±ê, const t &×î´ó) const;
-	t f¼Ğ½Ç(const t &½Ç1, const t &½Ç2) const;
-	t f·½Ïò(const t &x, const t &y) const;	//Ô­µãµ½Ä¿±êµãµÄ·½Ïò
-	t f²åÖµ(const t &½Ç1, const t &½Ç2, const t &²åÖµ) const;
+	static const Cè§’åº¦è®¡ç®— cåº¦, cå¼§åº¦;
+	t må‘¨è§’;
+	t må¹³è§’;
+	Cè§’åº¦è®¡ç®—(const t &);
+	t få¹³å‡(const t &è§’1, const t &è§’2) const;
+	t få–æ­£(const t &è§’) const;	//é™åˆ¶åœ¨[0,å‘¨è§’)èŒƒå›´å†…
+	t fé™åˆ¶(const t &è§’) const;	//é™åˆ¶åœ¨(-å¹³è§’,å¹³è§’]èŒƒå›´å†…
+	t få–åŠ(const t &è§’) const;	//é™åˆ¶åœ¨[0,å¹³è§’)èŒƒå›´å†…
+	t fæ—‹è½¬æ¸å˜(const t &æº, const t &ç›®æ ‡, const t &æœ€å¤§) const;
+	t få¤¹è§’(const t &è§’1, const t &è§’2) const;
+	t fæ–¹å‘(const t &x, const t &y) const;	//åŸç‚¹åˆ°ç›®æ ‡ç‚¹çš„æ–¹å‘
+	t fæ’å€¼(const t &è§’1, const t &è§’2, const t &æ’å€¼) const;
 };
 //==============================================================================
-// Î»ÖÃ¹ØÏµ
+// ä½ç½®å…³ç³»
 //==============================================================================
-enum EÎ»ÖÃ¹ØÏµ {
-	eÄÚº¬ = -2,
-	eÄÚÇĞ = -1,
-	eÏà½» = 0,
-	eÍâÇĞ = 1,
-	eÍâÀë = 2
+enum Eä½ç½®å…³ç³» {
+	eå†…å« = -2,
+	eå†…åˆ‡ = -1,
+	eç›¸äº¤ = 0,
+	eå¤–åˆ‡ = 1,
+	eå¤–ç¦» = 2
 };
-//std::weak_equality operator <=>(EÎ»ÖÃ¹ØÏµ, int);
-}	//ÃüÃû¿Õ¼ä½áÊø
-#include "cflwÊıÑ§.inl"
+//std::weak_equality operator <=>(Eä½ç½®å…³ç³», int);
+}	//å‘½åç©ºé—´ç»“æŸ
+#include "cflwæ•°å­¦.inl"

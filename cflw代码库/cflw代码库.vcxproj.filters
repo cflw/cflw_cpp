@@ -106,9 +106,6 @@
     <ClInclude Include="cflw视窗.h">
       <Filter>工具</Filter>
     </ClInclude>
-    <ClInclude Include="cflw算法.h">
-      <Filter>帮助</Filter>
-    </ClInclude>
     <ClInclude Include="cflw工具_属性.h">
       <Filter>工具</Filter>
     </ClInclude>
@@ -123,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="cflw文件_obj模型.h">
       <Filter>文件</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw工具_运算.h">
+      <Filter>工具</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,51 +1,51 @@
-#pragma once
+ï»¿#pragma once
 #include <array>
 #include <memory>
-#include <windef.h>
-#include "cflwÊäÈë.h"
+#include <windows.h>
+#include "cflwè¾“å…¥.h"
 #pragma comment(lib, "xinput.lib")
-namespace cflw::ÊäÈë::xi {
-using namespace cflw::ÊäÈë;
+namespace cflw::è¾“å…¥::xi {
+using namespace cflw::è¾“å…¥;
 bool IsXInputDevice(const GUID *pGuidProductFromDirectInput);
 //==============================================================================
-enum class EÊÖ±ú°´¼ü {
-	eÉÏ,
-	eÏÂ,
-	e×ó,
-	eÓÒ,
-	e¿ªÊ¼,
-	eºóÍË,
-	e×óÒ¡¸Ë,
-	eÓÒÒ¡¸Ë,
-	e×ó¼ç,
-	eÓÒ¼ç,
-	e±£Áô0,
-	e±£Áô1,
+enum class Eæ‰‹æŸ„æŒ‰é”® {
+	eä¸Š,
+	eä¸‹,
+	eå·¦,
+	eå³,
+	eå¼€å§‹,
+	eåé€€,
+	eå·¦æ‘‡æ†,
+	eå³æ‘‡æ†,
+	eå·¦è‚©,
+	eå³è‚©,
+	eä¿ç•™0,
+	eä¿ç•™1,
 	a,
 	b,
 	x,
 	y,
 };
-enum class EÊÖ±ú·½Ïò {
-	e·½Ïò¼ü,
-	e×óÒ¡¸Ë,
-	eÓÒÒ¡¸Ë,
-	eºÏ²¢
+enum class Eæ‰‹æŸ„æ–¹å‘ {
+	eæ–¹å‘é”®,
+	eå·¦æ‘‡æ†,
+	eå³æ‘‡æ†,
+	eåˆå¹¶
 };
-enum class EÊÖ±ú´¥·¢ {
-	e×ó,
-	eÓÒ
+enum class Eæ‰‹æŸ„è§¦å‘ {
+	eå·¦,
+	eå³
 };
 //==============================================================================
-class CÊÖ±ú;
-class CÊäÈë {
+class Cæ‰‹æŸ„;
+class Cè¾“å…¥ {
 public:
-	CÊäÈë();
-	~CÊäÈë();
-	void f´´½¨ÊÖ±ú(tpÊÖ±ú &, DWORD = 0);
-	void f¸üĞÂ();
+	Cè¾“å…¥();
+	~Cè¾“å…¥();
+	void fåˆ›å»ºæ‰‹æŸ„(tpæ‰‹æŸ„ &, DWORD = 0);
+	void fæ›´æ–°();
 private:
-	std::array<std::shared_ptr<CÊÖ±ú>, 4> maÊÖ±ú;
+	std::array<std::shared_ptr<Cæ‰‹æŸ„>, 4> maæ‰‹æŸ„;
 };
 //==============================================================================
-}	//namespace cflw::ÊäÈë::xi
+}	//namespace cflw::è¾“å…¥::xi

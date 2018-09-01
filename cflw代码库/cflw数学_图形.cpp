@@ -1,67 +1,67 @@
-#include <assert.h>
-#include "cflwÊıÑ§_Í¼ĞÎ.h"
-#include "cflwÊıÑ§_ÏòÁ¿.h"
-#include "cflwÊıÑ§_¾ØÕó.h"
-namespace cflw::ÊıÑ§ {
+ï»¿#include <assert.h>
+#include "cflwæ•°å­¦_å›¾å½¢.h"
+#include "cflwæ•°å­¦_å‘é‡.h"
+#include "cflwæ•°å­¦_çŸ©é˜µ.h"
+namespace cflw::æ•°å­¦ {
 //=============================================================================
-// º¯Êı
+// å‡½æ•°
 //=============================================================================
-template<> SÑÕÉ« f²åÖµ<SÑÕÉ«>(const SÑÕÉ« &pÆğÊ¼Öµ, const SÑÕÉ« &pÖÕÖ¹Öµ, float pÖĞ¼äÖµ) {
-	return pÆğÊ¼Öµ.fÈ«²åÖµ(pÖÕÖ¹Öµ, pÖĞ¼äÖµ);
+template<> Sé¢œè‰² fæ’å€¼<Sé¢œè‰²>(const Sé¢œè‰² &pèµ·å§‹å€¼, const Sé¢œè‰² &pç»ˆæ­¢å€¼, float pä¸­é—´å€¼) {
+	return pèµ·å§‹å€¼.få…¨æ’å€¼(pç»ˆæ­¢å€¼, pä¸­é—´å€¼);
 }
-template<> SËÄÔªÊı f²åÖµ(const SËÄÔªÊı &q0, const SËÄÔªÊı &q1, float p) {
-	return q0.f²åÖµ(q1, p);
+template<> Så››å…ƒæ•° fæ’å€¼(const Så››å…ƒæ•° &q0, const Så››å…ƒæ•° &q1, float p) {
+	return q0.fæ’å€¼(q1, p);
 }
 //=============================================================================
-// ÑÕÉ«rgb
+// é¢œè‰²rgb
 //=============================================================================
-const SÑÕÉ« SÑÕÉ«::c°×{1, 1, 1, 1};
-const SÑÕÉ« SÑÕÉ«::cºÚ{0, 0, 0, 1};
-const SÑÕÉ« SÑÕÉ«::cºì{1, 0, 0, 1};
-const SÑÕÉ« SÑÕÉ«::c³È{1, 0.5f, 0, 1};
-const SÑÕÉ« SÑÕÉ«::c»Æ{1, 1, 0, 1};
-const SÑÕÉ« SÑÕÉ«::cÂÌ{0, 1, 0, 1};
-const SÑÕÉ« SÑÕÉ«::cÇà{0, 1, 1, 1};
-const SÑÕÉ« SÑÕÉ«::cÀ¶{0, 0, 1, 1};
-const SÑÕÉ« SÑÕÉ«::c×Ï{1, 0, 1, 1};
-const SÑÕÉ« SÑÕÉ«::c·Û{1, 0.5f, 0.5f, 1};
-const SÑÕÉ« SÑÕÉ«::c»Ò{0.5f, 0.5f, 0.5f, 1};
-//¹¹Ôìº¯Êı
-SÑÕÉ«::SÑÕÉ«() : r(0), g(0), b(0), a(0) {
+const Sé¢œè‰² Sé¢œè‰²::cç™½{1, 1, 1, 1};
+const Sé¢œè‰² Sé¢œè‰²::cé»‘{0, 0, 0, 1};
+const Sé¢œè‰² Sé¢œè‰²::cçº¢{1, 0, 0, 1};
+const Sé¢œè‰² Sé¢œè‰²::cæ©™{1, 0.5f, 0, 1};
+const Sé¢œè‰² Sé¢œè‰²::cé»„{1, 1, 0, 1};
+const Sé¢œè‰² Sé¢œè‰²::cç»¿{0, 1, 0, 1};
+const Sé¢œè‰² Sé¢œè‰²::cé’{0, 1, 1, 1};
+const Sé¢œè‰² Sé¢œè‰²::cè“{0, 0, 1, 1};
+const Sé¢œè‰² Sé¢œè‰²::cç´«{1, 0, 1, 1};
+const Sé¢œè‰² Sé¢œè‰²::cç²‰{1, 0.5f, 0.5f, 1};
+const Sé¢œè‰² Sé¢œè‰²::cç°{0.5f, 0.5f, 0.5f, 1};
+//æ„é€ å‡½æ•°
+Sé¢œè‰²::Sé¢œè‰²() : r(0), g(0), b(0), a(0) {
 }
-SÑÕÉ«::SÑÕÉ«(EÑÕÉ«Öµ p): r(fÑÕÉ«ÖµÌáÈ¡_ºì(p)), g(fÑÕÉ«ÖµÌáÈ¡_ÂÌ(p)), b(fÑÕÉ«ÖµÌáÈ¡_À¶(p)), a(fÑÕÉ«ÖµÌáÈ¡_°¢(p)) {
+Sé¢œè‰²::Sé¢œè‰²(Eé¢œè‰²å€¼ p): r(fé¢œè‰²å€¼æå–_çº¢(p)), g(fé¢œè‰²å€¼æå–_ç»¿(p)), b(fé¢œè‰²å€¼æå–_è“(p)), a(fé¢œè‰²å€¼æå–_é˜¿(p)) {
 }
-SÑÕÉ«::SÑÕÉ«(float R, float G, float B, float A) : r(R), g(G), b(B), a(A) {
+Sé¢œè‰²::Sé¢œè‰²(float R, float G, float B, float A) : r(R), g(G), b(B), a(A) {
 }
-SÑÕÉ«::operator unsigned long() {
+Sé¢œè‰²::operator unsigned long() {
 	return (unsigned long)(a * 255) * 0x1000000 + (unsigned long)(r * 255) * 0x10000 + (unsigned long)(g * 255) * 0x100 + (unsigned long)(b * 255);
 }
-SÑÕÉ« SÑÕÉ«::fc²Êºç(float R, float A, float l, float s) {
-	R = fÑ­»·<float>(R, 0, 7);
-	SÑÕÉ« c(0, 0, 0, A);
-	if (R <= 2) {//ºì->³È->»Æ
+Sé¢œè‰² Sé¢œè‰²::fcå½©è™¹(float R, float A, float l, float s) {
+	R = få¾ªç¯<float>(R, 0, 7);
+	Sé¢œè‰² c(0, 0, 0, A);
+	if (R <= 2) {//çº¢->æ©™->é»„
 		c.r = 1;
-		c.g = f²åÖµ<float>(0, 1, R / 2);
-	} else if (R <= 3) {//»Æ->ÂÌ
-		c.r = f²åÖµ<float>(0, 1, 3 - R);
+		c.g = fæ’å€¼<float>(0, 1, R / 2);
+	} else if (R <= 3) {//é»„->ç»¿
+		c.r = fæ’å€¼<float>(0, 1, 3 - R);
 		c.g = 1;
-	} else if (R <= 4) {//ÂÌ->Çà
+	} else if (R <= 4) {//ç»¿->é’
 		c.g = 1;
-		c.b = f²åÖµ<float>(0, 1, R - 3);
-	} else if (R <= 5) {//Çà->À¶
-		c.g = f²åÖµ<float>(0, 1, 5 - R);
+		c.b = fæ’å€¼<float>(0, 1, R - 3);
+	} else if (R <= 5) {//é’->è“
+		c.g = fæ’å€¼<float>(0, 1, 5 - R);
 		c.b = 1;
-	} else if (R <= 6) {//À¶->×Ï
-		c.r = f²åÖµ<float>(0, 1, R - 5);
+	} else if (R <= 6) {//è“->ç´«
+		c.r = fæ’å€¼<float>(0, 1, R - 5);
 		c.b = 1;
-	} else if (R <= 7) {//×Ï->ºì
+	} else if (R <= 7) {//ç´«->çº¢
 		c.r = 1;
-		c.b = f²åÖµ<float>(0, 1, 7 - R);
+		c.b = fæ’å€¼<float>(0, 1, 7 - R);
 	}
 	if (s != 1) {
-		c.r = f²åÖµ<float>(c.r, 1, s);
-		c.g = f²åÖµ<float>(c.g, 1, s);
-		c.b = f²åÖµ<float>(c.b, 1, s);
+		c.r = fæ’å€¼<float>(c.r, 1, s);
+		c.g = fæ’å€¼<float>(c.g, 1, s);
+		c.b = fæ’å€¼<float>(c.b, 1, s);
 	}
 	if (l != 1) {
 		c.r *= l;
@@ -70,26 +70,26 @@ SÑÕÉ« SÑÕÉ«::fc²Êºç(float R, float A, float l, float s) {
 	}
 	return c;
 }
-SÑÕÉ« SÑÕÉ«::fcÈı»ùÉ«(float R, float A, float l, float s) {
-	R = fÑ­»·<float>(R, 0, 3);
-	SÑÕÉ« c(0, 0, 0, A);
+Sé¢œè‰² Sé¢œè‰²::fcä¸‰åŸºè‰²(float R, float A, float l, float s) {
+	R = få¾ªç¯<float>(R, 0, 3);
+	Sé¢œè‰² c(0, 0, 0, A);
 	if (R <= 1) {	//[0,1]
-		const float v²åÖµ = R;
-		c.r = f²åÖµ<float>(1, 0, v²åÖµ);
-		c.g = f²åÖµ<float>(0, 1, v²åÖµ);
+		const float væ’å€¼ = R;
+		c.r = fæ’å€¼<float>(1, 0, væ’å€¼);
+		c.g = fæ’å€¼<float>(0, 1, væ’å€¼);
 	} else if (R <= 2) {	//(1,2]
-		const float v²åÖµ = R - 1;
-		c.g = f²åÖµ<float>(1, 0, v²åÖµ);
-		c.b = f²åÖµ<float>(0, 1, v²åÖµ);
+		const float væ’å€¼ = R - 1;
+		c.g = fæ’å€¼<float>(1, 0, væ’å€¼);
+		c.b = fæ’å€¼<float>(0, 1, væ’å€¼);
 	} else {	//(2,3)
-		const float v²åÖµ = R - 2;
-		c.b = f²åÖµ<float>(1, 0, v²åÖµ);
-		c.r = f²åÖµ<float>(0, 1, v²åÖµ);
+		const float væ’å€¼ = R - 2;
+		c.b = fæ’å€¼<float>(1, 0, væ’å€¼);
+		c.r = fæ’å€¼<float>(0, 1, væ’å€¼);
 	}
 	if (s != 1) {
-		c.r = f²åÖµ<float>(c.r, 1, s);
-		c.g = f²åÖµ<float>(c.g, 1, s);
-		c.b = f²åÖµ<float>(c.b, 1, s);
+		c.r = fæ’å€¼<float>(c.r, 1, s);
+		c.g = fæ’å€¼<float>(c.g, 1, s);
+		c.b = fæ’å€¼<float>(c.b, 1, s);
 	}
 	if (l != 1) {
 		c.r *= l;
@@ -98,32 +98,32 @@ SÑÕÉ« SÑÕÉ«::fcÈı»ùÉ«(float R, float A, float l, float s) {
 	}
 	return c;
 }
-SÑÕÉ« SÑÕÉ«::fcºÚ°×(float W, float A) {
-	return SÑÕÉ«(W, W, W, A);
+Sé¢œè‰² Sé¢œè‰²::fcé»‘ç™½(float W, float A) {
+	return Sé¢œè‰²(W, W, W, A);
 }
-constexpr float SÑÕÉ«::fÑÕÉ«ÖµÌáÈ¡(EÑÕÉ«Öµ pÖµ, EÑÕÉ«ÖµÌáÈ¡ pÌáÈ¡) {
-	return static_cast<float>((static_cast<unsigned int>(pÖµ) >> (static_cast<unsigned int>(pÌáÈ¡) * 8)) % 0x100) / 255.f;
+constexpr float Sé¢œè‰²::fé¢œè‰²å€¼æå–(Eé¢œè‰²å€¼ på€¼, Eé¢œè‰²å€¼æå– pæå–) {
+	return static_cast<float>((static_cast<unsigned int>(på€¼) >> (static_cast<unsigned int>(pæå–) * 8)) % 0x100) / 255.f;
 }
-constexpr float SÑÕÉ«::fÑÕÉ«ÖµÌáÈ¡_ºì(EÑÕÉ«Öµ p) {
-	return fÑÕÉ«ÖµÌáÈ¡(p, eÌáÈ¡ºì);
+constexpr float Sé¢œè‰²::fé¢œè‰²å€¼æå–_çº¢(Eé¢œè‰²å€¼ p) {
+	return fé¢œè‰²å€¼æå–(p, eæå–çº¢);
 }
-constexpr float SÑÕÉ«::fÑÕÉ«ÖµÌáÈ¡_ÂÌ(EÑÕÉ«Öµ p) {
-	return fÑÕÉ«ÖµÌáÈ¡(p, eÌáÈ¡ÂÌ);
+constexpr float Sé¢œè‰²::fé¢œè‰²å€¼æå–_ç»¿(Eé¢œè‰²å€¼ p) {
+	return fé¢œè‰²å€¼æå–(p, eæå–ç»¿);
 }
-constexpr float SÑÕÉ«::fÑÕÉ«ÖµÌáÈ¡_À¶(EÑÕÉ«Öµ p) {
-	return fÑÕÉ«ÖµÌáÈ¡(p, eÌáÈ¡À¶);
+constexpr float Sé¢œè‰²::fé¢œè‰²å€¼æå–_è“(Eé¢œè‰²å€¼ p) {
+	return fé¢œè‰²å€¼æå–(p, eæå–è“);
 }
-constexpr float SÑÕÉ«::fÑÕÉ«ÖµÌáÈ¡_°¢(EÑÕÉ«Öµ p) {
-	return fÑÕÉ«ÖµÌáÈ¡(p, eÌáÈ¡°¢);
+constexpr float Sé¢œè‰²::fé¢œè‰²å€¼æå–_é˜¿(Eé¢œè‰²å€¼ p) {
+	return fé¢œè‰²å€¼æå–(p, eæå–é˜¿);
 }
-void SÑÕÉ«::fÑÕÉ«Ğ£Õı() {
+void Sé¢œè‰²::fé¢œè‰²æ ¡æ­£() {
 	for (int i = 0; i != 4; ++i) {
 		if (v[i] > 1) v[i] = 1;
 		if (v[i] < 0) v[i] = 0;
 	}
 }
-SÑÕÉ« SÑÕÉ«::f¶Ô±È¶È(const float &_) const {
-	SÑÕÉ« v = *this;
+Sé¢œè‰² Sé¢œè‰²::få¯¹æ¯”åº¦(const float &_) const {
+	Sé¢œè‰² v = *this;
 	for (int i = 0; i != 4; ++i) {
 		v.v[i] *= _;
 		if (v.v[i] > 1) v.v[i] = 1;
@@ -131,39 +131,39 @@ SÑÕÉ« SÑÕÉ«::f¶Ô±È¶È(const float &_) const {
 	}
 	return v;
 }
-SÑÕÉ« SÑÕÉ«::f±¥ºÍ¶È(const float &) const {
+Sé¢œè‰² Sé¢œè‰²::fé¥±å’Œåº¦(const float &) const {
 	return *this;
 }
-SÑÕÉ« SÑÕÉ«::fÑÕÉ«·ÖÁ¿³Ë(const float &p) const {
-	SÑÕÉ« v = *this;
+Sé¢œè‰² Sé¢œè‰²::fé¢œè‰²åˆ†é‡ä¹˜(const float &p) const {
+	Sé¢œè‰² v = *this;
 	for (int i = 0; i != 3; ++i) {
 		v.v[i] *= p;
 	}
 	return v;
 }
-SÑÕÉ« SÑÕÉ«::fÍ¸Ã÷¶È³Ë(const float &p) const {
-	SÑÕÉ« v = *this;
+Sé¢œè‰² Sé¢œè‰²::fé€æ˜åº¦ä¹˜(const float &p) const {
+	Sé¢œè‰² v = *this;
 	v.a *= p;
 	return v;
 }
-SÑÕÉ« SÑÕÉ«::fÈ«²åÖµ(const SÑÕÉ« &pÑÕÉ«, const float &p²åÖµ) const {
-	return SÑÕÉ«{
-		f²åÖµ<float>(r, pÑÕÉ«.r, p²åÖµ),
-		f²åÖµ<float>(g, pÑÕÉ«.g, p²åÖµ),
-		f²åÖµ<float>(b, pÑÕÉ«.b, p²åÖµ),
-		f²åÖµ<float>(a, pÑÕÉ«.a, p²åÖµ)
+Sé¢œè‰² Sé¢œè‰²::få…¨æ’å€¼(const Sé¢œè‰² &pé¢œè‰², const float &pæ’å€¼) const {
+	return Sé¢œè‰²{
+		fæ’å€¼<float>(r, pé¢œè‰².r, pæ’å€¼),
+		fæ’å€¼<float>(g, pé¢œè‰².g, pæ’å€¼),
+		fæ’å€¼<float>(b, pé¢œè‰².b, pæ’å€¼),
+		fæ’å€¼<float>(a, pé¢œè‰².a, pæ’å€¼)
 	};
 }
-SÑÕÉ« SÑÕÉ«::fÑÕÉ«·ÖÁ¿²åÖµ(const SÑÕÉ« &pÑÕÉ«, const float &p²åÖµ) const {
-	return SÑÕÉ«{
-		f²åÖµ<float>(r, pÑÕÉ«.r, p²åÖµ),
-		f²åÖµ<float>(g, pÑÕÉ«.g, p²åÖµ),
-		f²åÖµ<float>(b, pÑÕÉ«.b, p²åÖµ),
+Sé¢œè‰² Sé¢œè‰²::fé¢œè‰²åˆ†é‡æ’å€¼(const Sé¢œè‰² &pé¢œè‰², const float &pæ’å€¼) const {
+	return Sé¢œè‰²{
+		fæ’å€¼<float>(r, pé¢œè‰².r, pæ’å€¼),
+		fæ’å€¼<float>(g, pé¢œè‰².g, pæ’å€¼),
+		fæ’å€¼<float>(b, pé¢œè‰².b, pæ’å€¼),
 		a
 	};
 }
-SÑÕÉ« SÑÕÉ«::f»ìºÏ_Ïà¼Ó(const SÑÕÉ« &p) const {
-	SÑÕÉ« v = *this;
+Sé¢œè‰² Sé¢œè‰²::fæ··åˆ_ç›¸åŠ (const Sé¢œè‰² &p) const {
+	Sé¢œè‰² v = *this;
 	for (int i = 0; i != 4; ++i) {
 		v.v[i] += p.v[i];
 		if (v.v[i] > 1) v.v[i] = 1;
@@ -171,8 +171,8 @@ SÑÕÉ« SÑÕÉ«::f»ìºÏ_Ïà¼Ó(const SÑÕÉ« &p) const {
 	}
 	return v;
 }
-SÑÕÉ« SÑÕÉ«::f»ìºÏ_Ïà³Ë(const SÑÕÉ« &p) const {
-	SÑÕÉ« v = *this;
+Sé¢œè‰² Sé¢œè‰²::fæ··åˆ_ç›¸ä¹˜(const Sé¢œè‰² &p) const {
+	Sé¢œè‰² v = *this;
 	for (int i = 0; i != 4; ++i) {
 		v.v[i] *= p.v[i];
 		if (v.v[i] > 1) v.v[i] = 1;
@@ -180,328 +180,328 @@ SÑÕÉ« SÑÕÉ«::f»ìºÏ_Ïà³Ë(const SÑÕÉ« &p) const {
 	}
 	return v;
 }
-SÑÕÉ« SÑÕÉ«::f»ìºÏ_µş¼Ó(const SÑÕÉ« &p) const {
-	SÑÕÉ« v;
+Sé¢œè‰² Sé¢œè‰²::fæ··åˆ_å åŠ (const Sé¢œè‰² &p) const {
+	Sé¢œè‰² v;
 	v.r = this->r * this->a + p.r * (1 - this->a);
 	v.g = this->g * this->a + p.g * (1 - this->a);
 	v.b = this->b * this->a + p.b * (1 - this->a);
 	v.a = this->a;
 	return v;
 }
-SÑÕÉ« SÑÕÉ«::f»ìºÏ_µşµ×(const SÑÕÉ« &p) const {
-	SÑÕÉ« v;
+Sé¢œè‰² Sé¢œè‰²::fæ··åˆ_å åº•(const Sé¢œè‰² &p) const {
+	Sé¢œè‰² v;
 	v.r = this->r * (1 - p.a) + p.r * p.a;
 	v.g = this->g * (1 - p.a) + p.g * p.a;
 	v.b = this->b * (1 - p.a) + p.b * p.a;
 	v.a = p.a;
 	return v;
 }
-SÑÕÉ« SÑÕÉ«::f»ìºÏ_×î´ó(const SÑÕÉ« &p) const {
-	SÑÕÉ« v;
+Sé¢œè‰² Sé¢œè‰²::fæ··åˆ_æœ€å¤§(const Sé¢œè‰² &p) const {
+	Sé¢œè‰² v;
 	for (int i = 0; i != 4; ++i)
 		v.v[i] = std::max<float>(this->v[i], p.v[i]);
 	return v;
 }
-SÑÕÉ« SÑÕÉ«::f»ìºÏ_×îĞ¡(const SÑÕÉ« &p) const {
-	SÑÕÉ« v;
+Sé¢œè‰² Sé¢œè‰²::fæ··åˆ_æœ€å°(const Sé¢œè‰² &p) const {
+	Sé¢œè‰² v;
 	for (int i = 0; i != 4; ++i)
 		v.v[i] = std::min<float>(this->v[i], p.v[i]);
 	return v;
 }
-SÑÕÉ«yuv SÑÕÉ«::fµ½yuv() const {
-	SÑÕÉ«yuv v;
+Sé¢œè‰²_äº®è‰²æµ“ Sé¢œè‰²::ftäº®è‰²æµ“() const {
+	Sé¢œè‰²_äº®è‰²æµ“ v;
 	v.y = 0.299f * r + 0.587f * g + 0.114f * b;
 	v.u = 0.436f * (b - v.y) / (1 - 0.114f) + 0.5f;
 	v.v = 0.615f * (r - v.y) / (1 - 0.299f) + 0.5f;
 	return v;
 }
 //=============================================================================
-// ÑÕÉ«yuv
+// é¢œè‰²yuv
 //=============================================================================
-SÑÕÉ« SÑÕÉ«yuv::fµ½rgb() const {
-	SÑÕÉ« v;
+Sé¢œè‰² Sé¢œè‰²_äº®è‰²æµ“::ftçº¢ç»¿è“() const {
+	Sé¢œè‰² v;
 	v.r = y + 1.14f * v;
 	v.g = y - 0.39f * u - 0.58f * v;
 	v.b = y + 2.03f * u;
 	return v;
 }
 //=============================================================================
-// ÊÀ½ç¾ØÕó2
+// ä¸–ç•ŒçŸ©é˜µ2
 //=============================================================================
-SÊÀ½ç¾ØÕó2::SÊÀ½ç¾ØÕó2(const SÏòÁ¿2 &pÆ½ÒÆ, const float &pĞı×ª, const SÏòÁ¿2 &pËõ·Å): mÆ½ÒÆ(pÆ½ÒÆ), mĞı×ª(pĞı×ª), mËõ·Å(pËõ·Å) {
+Sä¸–ç•ŒçŸ©é˜µ2::Sä¸–ç•ŒçŸ©é˜µ2(const Så‘é‡2 &på¹³ç§», const float &pæ—‹è½¬, const Så‘é‡2 &pç¼©æ”¾): må¹³ç§»(på¹³ç§»), mæ—‹è½¬(pæ—‹è½¬), mç¼©æ”¾(pç¼©æ”¾) {
 }
-S¾ØÕó2 SÊÀ½ç¾ØÕó2::ft¾ØÕó2() const {
-	//Ã»ÓĞÆ½ÒÆ
-	return S¾ØÕó2::fcĞı×ª(mĞı×ª) * S¾ØÕó2::fcËõ·Å(mËõ·Å.x, mËõ·Å.y);
-}
-//=============================================================================
-// ÊÀ½ç¾ØÕó3
-//=============================================================================
-SÊÀ½ç¾ØÕó3::SÊÀ½ç¾ØÕó3(const SÏòÁ¿3 &pÆ½ÒÆ, const SÏòÁ¿3 &pĞı×ª, const SÏòÁ¿3 &pËõ·Å): mÆ½ÒÆ(pÆ½ÒÆ), mĞı×ª(pĞı×ª), mËõ·Å(pËõ·Å) {
-}
-S¾ØÕó4 SÊÀ½ç¾ØÕó3::ft¾ØÕó4() const {
-	return S¾ØÕó4::fcÆ½ÒÆ(mÆ½ÒÆ.x, mÆ½ÒÆ.y, mÆ½ÒÆ.z) * S¾ØÕó4::fcĞı×ª(mĞı×ª.x, mĞı×ª.y, mĞı×ª.z) * S¾ØÕó4::fcËõ·Å(mËõ·Å.x, mËõ·Å.y, mËõ·Å.z);
+SçŸ©é˜µ2 Sä¸–ç•ŒçŸ©é˜µ2::ftçŸ©é˜µ2() const {
+	//æ²¡æœ‰å¹³ç§»
+	return SçŸ©é˜µ2::fcæ—‹è½¬(mæ—‹è½¬) * SçŸ©é˜µ2::fcç¼©æ”¾(mç¼©æ”¾.x, mç¼©æ”¾.y);
 }
 //=============================================================================
-// Ïà»ú
+// ä¸–ç•ŒçŸ©é˜µ3
 //=============================================================================
-SÏà»ú::SÏà»ú(const SÏòÁ¿3 &p×ø±ê, const SÏòÁ¿3 &pÄ¿±ê, const SÏòÁ¿3 &pÉÏ·½): m×ø±ê(p×ø±ê), mÄ¿±ê(pÄ¿±ê), mÉÏ·½(pÉÏ·½) {
+Sä¸–ç•ŒçŸ©é˜µ3::Sä¸–ç•ŒçŸ©é˜µ3(const Så‘é‡3 &på¹³ç§», const Så‘é‡3 &pæ—‹è½¬, const Så‘é‡3 &pç¼©æ”¾): må¹³ç§»(på¹³ç§»), mæ—‹è½¬(pæ—‹è½¬), mç¼©æ”¾(pç¼©æ”¾) {
 }
-S¾ØÕó4 SÏà»ú::ft¾ØÕó4l() const {
-	return S¾ØÕó4::fc¿´l(m×ø±ê, mÄ¿±ê, mÉÏ·½);
-}
-S¾ØÕó4 SÏà»ú::ft¾ØÕó4r() const {
-	return S¾ØÕó4::fc¿´r(m×ø±ê, mÄ¿±ê, mÉÏ·½);
+SçŸ©é˜µ4 Sä¸–ç•ŒçŸ©é˜µ3::ftçŸ©é˜µ4() const {
+	return SçŸ©é˜µ4::fcå¹³ç§»(må¹³ç§».x, må¹³ç§».y, må¹³ç§».z) * SçŸ©é˜µ4::fcæ—‹è½¬(mæ—‹è½¬.x, mæ—‹è½¬.y, mæ—‹è½¬.z) * SçŸ©é˜µ4::fcç¼©æ”¾(mç¼©æ”¾.x, mç¼©æ”¾.y, mç¼©æ”¾.z);
 }
 //=============================================================================
-// Í¶Ó°
+// ç›¸æœº
 //=============================================================================
-SÍ¶Ó°::SÍ¶Ó°(float a¿í, float a¸ß, float aÊÓ½Ç, float a½ü²Ã¼ôÃæ, float aÔ¶²Ã¼ôÃæ):
-	mÊÓ½Ç(aÊÓ½Ç), m¿í(a¿í), m¸ß(a¸ß), m½ü²Ã¼ôÃæ(a½ü²Ã¼ôÃæ), mÔ¶²Ã¼ôÃæ(aÔ¶²Ã¼ôÃæ) {
+Sç›¸æœº::Sç›¸æœº(const Så‘é‡3 &påæ ‡, const Så‘é‡3 &pç›®æ ‡, const Så‘é‡3 &pä¸Šæ–¹): måæ ‡(påæ ‡), mç›®æ ‡(pç›®æ ‡), mä¸Šæ–¹(pä¸Šæ–¹) {
 }
-S¾ØÕó4 SÍ¶Ó°::ft¾ØÕó4l() const {
-	return S¾ØÕó4::fcÍ¸ÊÓÍ¶Ó°ÊÓ½Çl(mÊÓ½Ç, m¿í / m¸ß, m½ü²Ã¼ôÃæ, mÔ¶²Ã¼ôÃæ);
+SçŸ©é˜µ4 Sç›¸æœº::ftçŸ©é˜µ4l() const {
+	return SçŸ©é˜µ4::fcçœ‹l(måæ ‡, mç›®æ ‡, mä¸Šæ–¹);
 }
-S¾ØÕó4 SÍ¶Ó°::ft¾ØÕó4r() const {
-	return S¾ØÕó4::fcÍ¸ÊÓÍ¶Ó°ÊÓ½Çr(mÊÓ½Ç, m¿í / m¸ß, m½ü²Ã¼ôÃæ, mÔ¶²Ã¼ôÃæ);
+SçŸ©é˜µ4 Sç›¸æœº::ftçŸ©é˜µ4r() const {
+	return SçŸ©é˜µ4::fcçœ‹r(måæ ‡, mç›®æ ‡, mä¸Šæ–¹);
 }
 //=============================================================================
-//Å·À­½Ç
+// æŠ•å½±
 //=============================================================================
-void SÅ·À­½Ç::fsµ¥Î»() {
-	mÍ· = m²à = m±³ = 0.f;
+SæŠ•å½±::SæŠ•å½±(float aå®½, float aé«˜, float aè§†è§’, float aè¿‘è£å‰ªé¢, float aè¿œè£å‰ªé¢):
+	mè§†è§’(aè§†è§’), må®½(aå®½), mé«˜(aé«˜), mè¿‘è£å‰ªé¢(aè¿‘è£å‰ªé¢), mè¿œè£å‰ªé¢(aè¿œè£å‰ªé¢) {
 }
-void SÅ·À­½Ç::fÏŞÖÆ() {
-	m²à = C½Ç¶È¼ÆËã<float>::c»¡¶È.fÏŞÖÆ(m²à);
-	if (m²à < -(float)c¦Ğ / 2.f) {
-		m²à = -(float)c¦Ğ - m²à;
-		mÍ· += (float)c¦Ğ;
-		m±³ += (float)c¦Ğ;
-	} else if (m²à >(float)c¦Ğ / 2.f) {
-		m²à = (float)c¦Ğ - m²à;
-		mÍ· += (float)c¦Ğ;
-		m±³ += (float)c¦Ğ;
+SçŸ©é˜µ4 SæŠ•å½±::ftçŸ©é˜µ4l() const {
+	return SçŸ©é˜µ4::fcé€è§†æŠ•å½±è§†è§’l(mè§†è§’, må®½ / mé«˜, mè¿‘è£å‰ªé¢, mè¿œè£å‰ªé¢);
+}
+SçŸ©é˜µ4 SæŠ•å½±::ftçŸ©é˜µ4r() const {
+	return SçŸ©é˜µ4::fcé€è§†æŠ•å½±è§†è§’r(mè§†è§’, må®½ / mé«˜, mè¿‘è£å‰ªé¢, mè¿œè£å‰ªé¢);
+}
+//=============================================================================
+//æ¬§æ‹‰è§’
+//=============================================================================
+void Sæ¬§æ‹‰è§’::fså•ä½() {
+	må¤´ = mä¾§ = mèƒŒ = 0.f;
+}
+void Sæ¬§æ‹‰è§’::fé™åˆ¶() {
+	mä¾§ = Cè§’åº¦è®¡ç®—<float>::cå¼§åº¦.fé™åˆ¶(mä¾§);
+	if (mä¾§ < -(float)cÏ€ / 2.f) {
+		mä¾§ = -(float)cÏ€ - mä¾§;
+		må¤´ += (float)cÏ€;
+		mèƒŒ += (float)cÏ€;
+	} else if (mä¾§ >(float)cÏ€ / 2.f) {
+		mä¾§ = (float)cÏ€ - mä¾§;
+		må¤´ += (float)cÏ€;
+		mèƒŒ += (float)cÏ€;
 	}
-	if (fabs(m²à) > (float)c¦Ğ / 2.f - 1e-4) {
-		mÍ· += m±³;
-		m±³ = 0.0f;
+	if (fabs(mä¾§) > (float)cÏ€ / 2.f - 1e-4) {
+		må¤´ += mèƒŒ;
+		mèƒŒ = 0.0f;
 	} else {
-		m±³ = C½Ç¶È¼ÆËã<float>::c»¡¶È.fÏŞÖÆ(m±³);
+		mèƒŒ = Cè§’åº¦è®¡ç®—<float>::cå¼§åº¦.fé™åˆ¶(mèƒŒ);
 	}
-	mÍ· = C½Ç¶È¼ÆËã<float>::c»¡¶È.fÏŞÖÆ(mÍ·);
+	må¤´ = Cè§’åº¦è®¡ç®—<float>::cå¼§åº¦.fé™åˆ¶(må¤´);
 }
-void SÅ·À­½Ç::fsÎïÌåµ½¹ßĞÔ(const SËÄÔªÊı &q) {
+void Sæ¬§æ‹‰è§’::fsç‰©ä½“åˆ°æƒ¯æ€§(const Så››å…ƒæ•° &q) {
 	float sp = -2.0f * (q.y*q.z - q.w*q.x);
 	if (fabs(sp) > 0.9999f) {
-		m²à = (float)c¦Ğ / 2 * sp;
-		mÍ· = atan2(-q.x*q.z + q.w*q.y, 0.5f - q.y*q.y - q.z*q.z);
-		m±³ = 0.0f;
+		mä¾§ = (float)cÏ€ / 2 * sp;
+		må¤´ = atan2(-q.x*q.z + q.w*q.y, 0.5f - q.y*q.y - q.z*q.z);
+		mèƒŒ = 0.0f;
 	} else {
-		m²à = asin(sp);
-		mÍ· = atan2(q.x*q.z + q.w*q.y, 0.5f - q.x*q.x - q.y*q.y);
-		m±³ = atan2(q.x*q.y + q.w*q.z, 0.5f - q.x*q.x - q.z*q.z);
+		mä¾§ = asin(sp);
+		må¤´ = atan2(q.x*q.z + q.w*q.y, 0.5f - q.x*q.x - q.y*q.y);
+		mèƒŒ = atan2(q.x*q.y + q.w*q.z, 0.5f - q.x*q.x - q.z*q.z);
 	}
 }
-void SÅ·À­½Ç::fs¹ßĞÔµ½ÎïÌå(const SËÄÔªÊı &q) {
+void Sæ¬§æ‹‰è§’::fsæƒ¯æ€§åˆ°ç‰©ä½“(const Så››å…ƒæ•° &q) {
 	float sp = -2.0f * (q.y*q.z + q.w*q.x);
 	if (fabs(sp) > 0.9999f) {
-		m²à = (float)c¦Ğ / 2 * sp;
-		mÍ· = atan2(-q.x*q.z - q.w*q.y, 0.5f - q.y*q.y - q.z*q.z);
-		m±³ = 0.0f;
+		mä¾§ = (float)cÏ€ / 2 * sp;
+		må¤´ = atan2(-q.x*q.z - q.w*q.y, 0.5f - q.y*q.y - q.z*q.z);
+		mèƒŒ = 0.0f;
 	} else {
-		m²à = asin(sp);
-		mÍ· = atan2(q.x*q.z - q.w*q.y, 0.5f - q.x*q.x - q.y*q.y);
-		m±³ = atan2(q.x*q.y - q.w*q.z, 0.5f - q.x*q.x - q.z*q.z);
+		mä¾§ = asin(sp);
+		må¤´ = atan2(q.x*q.z - q.w*q.y, 0.5f - q.x*q.x - q.y*q.y);
+		mèƒŒ = atan2(q.x*q.y - q.w*q.z, 0.5f - q.x*q.x - q.z*q.z);
 	}
 }
-void SÅ·À­½Ç::fsÎïÌåµ½ÊÀ½ç(const S¾ØÕó4 &m) {
+void Sæ¬§æ‹‰è§’::fsç‰©ä½“åˆ°ä¸–ç•Œ(const SçŸ©é˜µ4 &m) {
 	float	sp = -m.m[3][2];
 	if (fabs(sp) > 9.99999f) {
-		m²à = (float)c¦Ğ / 2 * sp;
-		mÍ· = atan2(-m.m[2][3], m.m[1][1]);
-		m±³ = 0.0f;
+		mä¾§ = (float)cÏ€ / 2 * sp;
+		må¤´ = atan2(-m.m[2][3], m.m[1][1]);
+		mèƒŒ = 0.0f;
 	} else {
-		mÍ· = atan2(m.m[3][1], m.m[3][3]);
-		m²à = asin(sp);
-		m±³ = atan2(m.m[1][2], m.m[2][2]);
+		må¤´ = atan2(m.m[3][1], m.m[3][3]);
+		mä¾§ = asin(sp);
+		mèƒŒ = atan2(m.m[1][2], m.m[2][2]);
 	}
 }
-void SÅ·À­½Ç::fsÊÀ½çµ½ÎïÌå(const S¾ØÕó4 &m) {
+void Sæ¬§æ‹‰è§’::fsä¸–ç•Œåˆ°ç‰©ä½“(const SçŸ©é˜µ4 &m) {
 	float	sp = -m.m[2][3];
 	if (fabs(sp) > 9.99999f) {
-		m²à = (float)c¦Ğ / 2.f * sp;
-		mÍ· = atan2(-m.m[3][1], m.m[1][1]);
-		m±³ = 0.0f;
+		mä¾§ = (float)cÏ€ / 2.f * sp;
+		må¤´ = atan2(-m.m[3][1], m.m[1][1]);
+		mèƒŒ = 0.0f;
 	} else {
-		mÍ· = atan2(m.m[1][3], m.m[3][3]);
-		m²à = asin(sp);
-		m±³ = atan2(m.m[2][1], m.m[2][2]);
+		må¤´ = atan2(m.m[1][3], m.m[3][3]);
+		mä¾§ = asin(sp);
+		mèƒŒ = atan2(m.m[2][1], m.m[2][2]);
 	}
 }
 //=============================================================================
-// ËÄÔªÊı
+// å››å…ƒæ•°
 //=============================================================================
-SËÄÔªÊı::SËÄÔªÊı() : w(0), x(0), y(0), z(0) {}
-SËÄÔªÊı::SËÄÔªÊı(const float &W, const float &X, const float &Y, const float &Z) : w(W), x(X), y(Y), z(Z) {}
-SËÄÔªÊı &SËÄÔªÊı::operator *=(const float &a) {
+Så››å…ƒæ•°::Så››å…ƒæ•°() : w(0), x(0), y(0), z(0) {}
+Så››å…ƒæ•°::Så››å…ƒæ•°(const float &W, const float &X, const float &Y, const float &Z) : w(W), x(X), y(Y), z(Z) {}
+Så››å…ƒæ•° &Så››å…ƒæ•°::operator *=(const float &a) {
 	*this = *this * a;
 	return *this;
 }
-SËÄÔªÊı &SËÄÔªÊı::operator *=(const t¸´Êı &a) {
+Så››å…ƒæ•° &Så››å…ƒæ•°::operator *=(const tå¤æ•° &a) {
 	*this = *this * a;
 	return *this;
 }
-SËÄÔªÊı &SËÄÔªÊı::operator *=(const SËÄÔªÊı &a) {
+Så››å…ƒæ•° &Så››å…ƒæ•°::operator *=(const Så››å…ƒæ•° &a) {
 	*this = *this * a;
 	return *this;
 }
-SËÄÔªÊı SËÄÔªÊı::operator *(const float &a) const {
-	SËÄÔªÊı v;
+Så››å…ƒæ•° Så››å…ƒæ•°::operator *(const float &a) const {
+	Så››å…ƒæ•° v;
 	v.w = w * a;
 	v.x = x * a;
 	v.y = y * a;
 	v.z = z * a;
 	return v;
 }
-SËÄÔªÊı SËÄÔªÊı::operator *(const t¸´Êı &a) const {
-	SËÄÔªÊı v;
+Så››å…ƒæ•° Så››å…ƒæ•°::operator *(const tå¤æ•° &a) const {
+	Så››å…ƒæ•° v;
 	v.w = -x * a._Val[0] - y * a._Val[1];
 	v.x = w * a._Val[0] + z * a._Val[1];
 	v.y = w * a._Val[1] - z * a._Val[0];
 	v.z = y * a._Val[0] - x * a._Val[1];
 	return v;
 }
-SËÄÔªÊı SËÄÔªÊı::operator *(const SËÄÔªÊı &a) const {
-	SËÄÔªÊı v;
+Så››å…ƒæ•° Så››å…ƒæ•°::operator *(const Så››å…ƒæ•° &a) const {
+	Så››å…ƒæ•° v;
 	v.w = w * a.w - x * a.x - y * a.y - z * a.z;
 	v.x = w * a.x + x * a.w + z * a.y - y * a.z;
 	v.y = w * a.y + y * a.w + x * a.z - z * a.x;
 	v.z = w * a.z + z * a.w + y * a.x - x * a.y;
 	return v;
 }
-//×ª»»µ½ËÄÔªÊı
-SËÄÔªÊı &SËÄÔªÊı::fsÎïÌåµ½¹ßĞÔ(const SÅ·À­½Ç &a) {
-	const auto[sp, cp] = sincos(a.m²à * 0.5f);
-	const auto[sb, cb] = sincos(a.m±³ * 0.5f);
-	const auto[sh, ch] = sincos(a.mÍ· * 0.5f);
+//è½¬æ¢åˆ°å››å…ƒæ•°
+Så››å…ƒæ•° &Så››å…ƒæ•°::fsç‰©ä½“åˆ°æƒ¯æ€§(const Sæ¬§æ‹‰è§’ &a) {
+	const auto[sp, cp] = sincos(a.mä¾§ * 0.5f);
+	const auto[sb, cb] = sincos(a.mèƒŒ * 0.5f);
+	const auto[sh, ch] = sincos(a.må¤´ * 0.5f);
 	w = ch * cp*cb + sh * sp*sb;
 	x = ch * sp*cb + sh * cp*sb;
 	y = -ch * sp*sb + sh * cp*cb;
 	z = -sh * sp*cb + ch * cp*sb;
 	return *this;
 }
-SËÄÔªÊı &SËÄÔªÊı::fs¹ßĞÔµ½ÎïÌå(const SÅ·À­½Ç &a) {
-	const auto[sp, cp] = sincos(a.m²à * 0.5f);
-	const auto[sb, cb] = sincos(a.m±³ * 0.5f);
-	const auto[sh, ch] = sincos(a.mÍ· * 0.5f);
+Så››å…ƒæ•° &Så››å…ƒæ•°::fsæƒ¯æ€§åˆ°ç‰©ä½“(const Sæ¬§æ‹‰è§’ &a) {
+	const auto[sp, cp] = sincos(a.mä¾§ * 0.5f);
+	const auto[sb, cb] = sincos(a.mèƒŒ * 0.5f);
+	const auto[sh, ch] = sincos(a.må¤´ * 0.5f);
 	w = ch * cp*cb + sh * sp*sb;
 	x = -ch * sp*cb - sh * cp*sb;
 	y = ch * sp*sb - sh * cb*cp;
 	z = sh * sp*cb - ch * cp*sb;
 	return *this;
 }
-SËÄÔªÊı SËÄÔªÊı::fcÎïÌåµ½¹ßĞÔ(const SÅ·À­½Ç &a) {
-	const auto[sp, cp] = sincos(a.m²à * 0.5f);
-	const auto[sb, cb] = sincos(a.m±³ * 0.5f);
-	const auto[sh, ch] = sincos(a.mÍ· * 0.5f);
-	SËÄÔªÊı v;
+Så››å…ƒæ•° Så››å…ƒæ•°::fcç‰©ä½“åˆ°æƒ¯æ€§(const Sæ¬§æ‹‰è§’ &a) {
+	const auto[sp, cp] = sincos(a.mä¾§ * 0.5f);
+	const auto[sb, cb] = sincos(a.mèƒŒ * 0.5f);
+	const auto[sh, ch] = sincos(a.må¤´ * 0.5f);
+	Så››å…ƒæ•° v;
 	v.w = ch * cp*cb + sh * sp*sb;
 	v.x = ch * sp*cb + sh * cp*sb;
 	v.y = -ch * sp*sb + sh * cp*cb;
 	v.z = -sh * sp*cb + ch * cp*sb;
 	return v;
 }
-SËÄÔªÊı SËÄÔªÊı::fc¹ßĞÔµ½ÎïÌå(const SÅ·À­½Ç &a) {
-	const auto[sp, cp] = sincos(a.m²à * 0.5f);
-	const auto[sb, cb] = sincos(a.m±³ * 0.5f);
-	const auto[sh, ch] = sincos(a.mÍ· * 0.5f);
-	SËÄÔªÊı v;
+Så››å…ƒæ•° Så››å…ƒæ•°::fcæƒ¯æ€§åˆ°ç‰©ä½“(const Sæ¬§æ‹‰è§’ &a) {
+	const auto[sp, cp] = sincos(a.mä¾§ * 0.5f);
+	const auto[sb, cb] = sincos(a.mèƒŒ * 0.5f);
+	const auto[sh, ch] = sincos(a.må¤´ * 0.5f);
+	Så››å…ƒæ•° v;
 	v.w = ch * cp*cb + sh * sp*sb;
 	v.x = -ch * sp*cb - sh * cp*sb;
 	v.y = ch * sp*sb - sh * cb*cp;
 	v.z = sh * sp*cb - ch * cp*sb;
 	return v;
 }
-//ËÄÔªÊıĞı×ª
-SËÄÔªÊı &SËÄÔªÊı::fsĞı×ªx(float r) {
-	*this *= fcĞı×ªx(r);
+//å››å…ƒæ•°æ—‹è½¬
+Så››å…ƒæ•° &Så››å…ƒæ•°::fsæ—‹è½¬x(float r) {
+	*this *= fcæ—‹è½¬x(r);
 	return *this;
 }
-SËÄÔªÊı &SËÄÔªÊı::fsĞı×ªy(float r) {
-	*this *= fcĞı×ªy(r);
+Så››å…ƒæ•° &Så››å…ƒæ•°::fsæ—‹è½¬y(float r) {
+	*this *= fcæ—‹è½¬y(r);
 	return *this;
 }
-SËÄÔªÊı &SËÄÔªÊı::fsĞı×ªz(float r) {
-	*this *= fcĞı×ªz(r);
+Så››å…ƒæ•° &Så››å…ƒæ•°::fsæ—‹è½¬z(float r) {
+	*this *= fcæ—‹è½¬z(r);
 	return *this;
 }
-SËÄÔªÊı &SËÄÔªÊı::fsĞı×ª(const SÏòÁ¿3 &v, float r) {
-	*this *= fcĞı×ª(v, r);
+Så››å…ƒæ•° &Så››å…ƒæ•°::fsæ—‹è½¬(const Så‘é‡3 &v, float r) {
+	*this *= fcæ—‹è½¬(v, r);
 	return *this;
 }
-SËÄÔªÊı SËÄÔªÊı::fcĞı×ªx(float r) {
-	const float °ër = r * .5f;
-	return SËÄÔªÊı(cos(°ër), sin(°ër), 0, 0);
+Så››å…ƒæ•° Så››å…ƒæ•°::fcæ—‹è½¬x(float r) {
+	const float åŠr = r * .5f;
+	return Så››å…ƒæ•°(cos(åŠr), sin(åŠr), 0, 0);
 }
-SËÄÔªÊı SËÄÔªÊı::fcĞı×ªy(float r) {
-	const float °ër = r * .5f;
-	return SËÄÔªÊı(cos(°ër), 0, sin(°ër), 0);
+Så››å…ƒæ•° Så››å…ƒæ•°::fcæ—‹è½¬y(float r) {
+	const float åŠr = r * .5f;
+	return Så››å…ƒæ•°(cos(åŠr), 0, sin(åŠr), 0);
 }
-SËÄÔªÊı SËÄÔªÊı::fcĞı×ªz(float r) {
-	const float °ër = r * .5f;
-	return SËÄÔªÊı(cos(°ër), 0, 0, sin(°ër));
+Så››å…ƒæ•° Så››å…ƒæ•°::fcæ—‹è½¬z(float r) {
+	const float åŠr = r * .5f;
+	return Så››å…ƒæ•°(cos(åŠr), 0, 0, sin(åŠr));
 }
-SËÄÔªÊı SËÄÔªÊı::fcĞı×ª(const SÏòÁ¿3 &v, float r) {
-	assert(fabs(v.fg´óĞ¡() - 1.0f) > .0001f);	//±ØĞëÊÇµ¥Î»ÏòÁ¿
-	const float °ër = r * .5f;
-	const float s°ër = sin(°ër);
-	return SËÄÔªÊı(cos(°ër), v.x * s°ër, v.y * s°ër, v.z * s°ër);
+Så››å…ƒæ•° Så››å…ƒæ•°::fcæ—‹è½¬(const Så‘é‡3 &v, float r) {
+	assert(fabs(v.fgå¤§å°() - 1.0f) > .0001f);	//å¿…é¡»æ˜¯å•ä½å‘é‡
+	const float åŠr = r * .5f;
+	const float såŠr = sin(åŠr);
+	return Så››å…ƒæ•°(cos(åŠr), v.x * såŠr, v.y * såŠr, v.z * såŠr);
 }
-void SËÄÔªÊı::fsµ¥Î»() {
+void Så››å…ƒæ•°::fså•ä½() {
 	w = 1;
 	x = y = z = 0;
 }
-float SËÄÔªÊı::fgĞı×ª½Ç() {
+float Så››å…ƒæ•°::fgæ—‹è½¬è§’() {
 	return acos(w) * 2;
 }
-SËÄÔªÊı SËÄÔªÊı::fg¸º() const {
-	return SËÄÔªÊı(w, -x, -y, -z);
+Så››å…ƒæ•° Så››å…ƒæ•°::fgè´Ÿ() const {
+	return Så››å…ƒæ•°(w, -x, -y, -z);
 }
-SËÄÔªÊı &SËÄÔªÊı::fs¸º() {
+Så››å…ƒæ•° &Så››å…ƒæ•°::fsè´Ÿ() {
 	x = -x;
 	y = -y;
 	z = -z;
 	return *this;
 }
-SËÄÔªÊı &SËÄÔªÊı::fs´Î·½(const float &a) {
-	return *this = this->fg´Î·½(a);
+Så››å…ƒæ•° &Så››å…ƒæ•°::fsæ¬¡æ–¹(const float &a) {
+	return *this = this->fgæ¬¡æ–¹(a);
 }
-void SËÄÔªÊı::fs¹éÒ»() {
-	const float vÄ£ = (float)sqrt(w*w + x * x + y * y + z * z);
-	if (vÄ£ > 0.0f) {
-		const float mµ¹Êı = 1.0f / vÄ£;
-		w *= mµ¹Êı;
-		x *= mµ¹Êı;
-		y *= mµ¹Êı;
-		z *= mµ¹Êı;
+void Så››å…ƒæ•°::fså½’ä¸€() {
+	const float væ¨¡ = (float)sqrt(w*w + x * x + y * y + z * z);
+	if (væ¨¡ > 0.0f) {
+		const float må€’æ•° = 1.0f / væ¨¡;
+		w *= må€’æ•°;
+		x *= må€’æ•°;
+		y *= må€’æ•°;
+		z *= må€’æ•°;
 	} else {
-		assert(false);	//Ä£ÎªÁã
-		fsµ¥Î»();
+		assert(false);	//æ¨¡ä¸ºé›¶
+		fså•ä½();
 	}
 }
-SÏòÁ¿3 SËÄÔªÊı::fgĞı×ªÖá() {
+Så‘é‡3 Så››å…ƒæ•°::fgæ—‹è½¬è½´() {
 	float s = 1.0f - w * w;	//(sin(theta/2))^2
-	if (s <= 0.0f)	//ÊÇ·ñµ¥Î»ÏòÁ¿
-		return SÏòÁ¿3(1.0f, 0.0f, 0.0f);
+	if (s <= 0.0f)	//æ˜¯å¦å•ä½å‘é‡
+		return Så‘é‡3(1.0f, 0.0f, 0.0f);
 	float d = 1.0f / sqrt(s);	//1/sin(theta/2)
-	return SÏòÁ¿3(x*d, y*d, z*d);
+	return Så‘é‡3(x*d, y*d, z*d);
 }
-SËÄÔªÊı SËÄÔªÊı::fg´Î·½(const float &e) const {
+Så››å…ƒæ•° Så››å…ƒæ•°::fgæ¬¡æ–¹(const float &e) const {
 	if (fabs(w) > .9999f)
 		return *this;
-	float a = acos(w);	//a = Ğı×ª½Ç/2
+	float a = acos(w);	//a = æ—‹è½¬è§’/2
 	float aa = a * e;
-	SËÄÔªÊı v;
+	Så››å…ƒæ•° v;
 	v.w = cos(aa);
 	float	mult = sin(aa) / sin(a);
 	v.x = x * mult;
@@ -509,10 +509,10 @@ SËÄÔªÊı SËÄÔªÊı::fg´Î·½(const float &e) const {
 	v.z = z * mult;
 	return v;
 }
-SËÄÔªÊı SËÄÔªÊı::f²åÖµ(const SËÄÔªÊı &q, float t) const {
+Så››å…ƒæ•° Så››å…ƒæ•°::fæ’å€¼(const Så››å…ƒæ•° &q, float t) const {
 	if (t <= 0.0f) return *this;
 	if (t >= 1.0f) return q;
-	float co = fµã³Ë(q);
+	float co = fç‚¹ä¹˜(q);
 	float q1w = q.w;
 	float q1x = q.x;
 	float q1y = q.y;
@@ -536,48 +536,48 @@ SËÄÔªÊı SËÄÔªÊı::f²åÖµ(const SËÄÔªÊı &q, float t) const {
 		k0 = sin((1.0f - t) * o) * rso;
 		k1 = sin(t * o) * rso;
 	}
-	SËÄÔªÊı v;
+	Så››å…ƒæ•° v;
 	v.x = k0 * q.x + k1 * q1x;
 	v.y = k0 * q.y + k1 * q1y;
 	v.z = k0 * q.z + k1 * q1z;
 	v.w = k0 * q.w + k1 * q1w;
 	return v;
 }
-float SËÄÔªÊı::fµã³Ë(const SËÄÔªÊı &q) const {
+float Så››å…ƒæ•°::fç‚¹ä¹˜(const Så››å…ƒæ•° &q) const {
 	return w * q.w + x * q.x + y * q.y + z * q.z;
 }
 //=============================================================================
-//×ø±ê¼ÆËã
+//åæ ‡è®¡ç®—
 //=============================================================================
-//×ø±êÖá
-S×ø±êÖá::S×ø±êÖá() :mÎ»ÖÃ(E×ø±êÎ»ÖÃ::eÖĞ), m·½Ïò(E×ø±ê·½Ïò::eÉÏ) {}
-S×ø±êÖá::S×ø±êÖá(E×ø±êÎ»ÖÃ pÎ»ÖÃ, E×ø±ê·½Ïò p·½Ïò) : mÎ»ÖÃ(pÎ»ÖÃ), m·½Ïò(p·½Ïò) {}
-const S×ø±êÖá cÖ±½Ç×ø±êx{E×ø±êÎ»ÖÃ::eÖĞ, E×ø±ê·½Ïò::eÓÒ};
-const S×ø±êÖá cÖ±½Ç×ø±êy{E×ø±êÎ»ÖÃ::eÖĞ, E×ø±ê·½Ïò::eÉÏ};
-const S×ø±êÖá c´°¿Ú×ø±êx{E×ø±êÎ»ÖÃ::eÉÏ, E×ø±ê·½Ïò::eÓÒ};
-const S×ø±êÖá c´°¿Ú×ø±êy{E×ø±êÎ»ÖÃ::e×ó, E×ø±ê·½Ïò::eÏÂ};
-//×ø±ê¸ñÊ½
-S×ø±ê¸ñÊ½::S×ø±ê¸ñÊ½() :x(cÖ±½Ç×ø±êx), y(cÖ±½Ç×ø±êy) {}
-S×ø±ê¸ñÊ½::S×ø±ê¸ñÊ½(const S×ø±êÖá &px, const S×ø±êÖá &py) : x(px), y(py) {}
-const S×ø±ê¸ñÊ½ cÖ±½Ç×ø±ê{cÖ±½Ç×ø±êx, cÖ±½Ç×ø±êy};
-const S×ø±ê¸ñÊ½ c´°¿Ú×ø±ê{c´°¿Ú×ø±êx, c´°¿Ú×ø±êy};
-//×ø±ê¼ÆËã
-C×ø±ê¼ÆËã::C×ø±ê¼ÆËã() :mÇøÓò´óĞ¡{} {}
-void C×ø±ê¼ÆËã::fs´óĞ¡(float px, float py) {
-	mÇøÓò´óĞ¡[0] = px;
-	mÇøÓò´óĞ¡[1] = py;
+//åæ ‡è½´
+Såæ ‡è½´::Såæ ‡è½´() :mä½ç½®(Eåæ ‡ä½ç½®::eä¸­), mæ–¹å‘(Eåæ ‡æ–¹å‘::eä¸Š) {}
+Såæ ‡è½´::Såæ ‡è½´(Eåæ ‡ä½ç½® pä½ç½®, Eåæ ‡æ–¹å‘ pæ–¹å‘) : mä½ç½®(pä½ç½®), mæ–¹å‘(pæ–¹å‘) {}
+const Såæ ‡è½´ cç›´è§’åæ ‡x{Eåæ ‡ä½ç½®::eä¸­, Eåæ ‡æ–¹å‘::eå³};
+const Såæ ‡è½´ cç›´è§’åæ ‡y{Eåæ ‡ä½ç½®::eä¸­, Eåæ ‡æ–¹å‘::eä¸Š};
+const Såæ ‡è½´ cçª—å£åæ ‡x{Eåæ ‡ä½ç½®::eä¸Š, Eåæ ‡æ–¹å‘::eå³};
+const Såæ ‡è½´ cçª—å£åæ ‡y{Eåæ ‡ä½ç½®::eå·¦, Eåæ ‡æ–¹å‘::eä¸‹};
+//åæ ‡æ ¼å¼
+Såæ ‡æ ¼å¼::Såæ ‡æ ¼å¼() :x(cç›´è§’åæ ‡x), y(cç›´è§’åæ ‡y) {}
+Såæ ‡æ ¼å¼::Såæ ‡æ ¼å¼(const Såæ ‡è½´ &px, const Såæ ‡è½´ &py) : x(px), y(py) {}
+const Såæ ‡æ ¼å¼ cç›´è§’åæ ‡{cç›´è§’åæ ‡x, cç›´è§’åæ ‡y};
+const Såæ ‡æ ¼å¼ cçª—å£åæ ‡{cçª—å£åæ ‡x, cçª—å£åæ ‡y};
+//åæ ‡è®¡ç®—
+Cåæ ‡è®¡ç®—::Cåæ ‡è®¡ç®—() :måŒºåŸŸå¤§å°{} {}
+void Cåæ ‡è®¡ç®—::fså¤§å°(float px, float py) {
+	måŒºåŸŸå¤§å°[0] = px;
+	måŒºåŸŸå¤§å°[1] = py;
 }
-float C×ø±ê¼ÆËã::f¼ÆËã(float pi, const S×ø±êÖá &pif, const S×ø±êÖá &pof, int i) {
-	const float m×ª»»×ø±ê = (pif.m·½Ïò == pof.m·½Ïò) ? pi : -pi;
-	const float mÎ»ÖÃ²î = mÇøÓò´óĞ¡[i] * ((int)pof.mÎ»ÖÃ - (int)pif.mÎ»ÖÃ) * 0.5f;
-	return m×ª»»×ø±ê + mÎ»ÖÃ²î;
+float Cåæ ‡è®¡ç®—::fè®¡ç®—(float pi, const Såæ ‡è½´ &pif, const Såæ ‡è½´ &pof, int i) {
+	const float mè½¬æ¢åæ ‡ = (pif.mæ–¹å‘ == pof.mæ–¹å‘) ? pi : -pi;
+	const float mä½ç½®å·® = måŒºåŸŸå¤§å°[i] * ((int)pof.mä½ç½® - (int)pif.mä½ç½®) * 0.5f;
+	return mè½¬æ¢åæ ‡ + mä½ç½®å·®;
 }
-SÏòÁ¿2 C×ø±ê¼ÆËã::f¼ÆËã(const SÏòÁ¿2 &pi, const S×ø±ê¸ñÊ½ &pif, const S×ø±ê¸ñÊ½ &pof) {
-	SÏòÁ¿2 mÊä³ö;
-	mÊä³ö.x = f¼ÆËã(pi.x, pif.x, pof.x, 0);
-	mÊä³ö.y = f¼ÆËã(pi.y, pif.y, pof.y, 1);
-	return mÊä³ö;
+Så‘é‡2 Cåæ ‡è®¡ç®—::fè®¡ç®—(const Så‘é‡2 &pi, const Såæ ‡æ ¼å¼ &pif, const Såæ ‡æ ¼å¼ &pof) {
+	Så‘é‡2 mè¾“å‡º;
+	mè¾“å‡º.x = fè®¡ç®—(pi.x, pif.x, pof.x, 0);
+	mè¾“å‡º.y = fè®¡ç®—(pi.y, pif.y, pof.y, 1);
+	return mè¾“å‡º;
 }
 
-//ÃüÃû¿Õ¼ä½áÊø
-}	//namespace cflw::ÊıÑ§
+//å‘½åç©ºé—´ç»“æŸ
+}	//namespace cflw::æ•°å­¦

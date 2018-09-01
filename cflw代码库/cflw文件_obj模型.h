@@ -17,7 +17,7 @@ struct S索引 {
 	int m顶点 = 0, m纹理 = 0, m法线 = 0;
 };
 struct S面 {
-	size_t m开始位置 = 0, m数量 = 0;	//索引
+	size_t m开始位置 = 0, m分配数量 = 0;	//索引
 	size_t fg结束位置() const;
 };
 class C对象模型 {

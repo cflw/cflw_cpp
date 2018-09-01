@@ -190,7 +190,7 @@
     <ClInclude Include="cflw文件_csv.h" />
     <ClInclude Include="cflw文件_obj模型.h" />
     <ClInclude Include="cflw时间.h" />
-    <ClInclude Include="cflw算法.h" />
+    <ClInclude Include="cflw工具_运算.h" />
     <ClInclude Include="cflw视窗.h" />
     <ClInclude Include="cflw辅助.h" />
     <ClInclude Include="cflw辅助_win.h" />
