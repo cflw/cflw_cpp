@@ -24,15 +24,17 @@ constexpr double c弧度到度 = 57.295779513082320876798154814105;
 //==============================================================================
 int f取整数位数(const int &);
 template<typename t> int f取符号(const t &x);
+template <typename t> int f取符号(const t &x, const t &零范围);
 template<> int f取符号<bool>(const bool &x);
 template<typename t> const t& f最大值(const t &a, const t &b);
 template<typename t> const t& f最小值(const t &a, const t &b);
+template<typename t> std::pair<const t &, const t &> f小大(const t &, const t &);
 template<typename t> t f限制(const t &值, const t &最小值, const t &最大值);
 template<typename t> t f接近(const t &源值, const t &目标值, const t &接近差);
 template<typename t> t f倍数渐变(const t &源值, const t &目标值, const float &差值渐变倍数, const t &最小渐变, const t &最大渐变);
 template<typename t> t f线性渐变(const t &源值, const t &目标值, const float &渐变值);
-template<typename t> t f求余(const t &p源值, const t &p除数);
-template<typename t> bool f限制循环(t &p值, const t &p最大值);
+template<typename t> t f求余(const t &源值, const t &除数);
+template<typename t> bool f限制循环(t &值, const t &最大值);
 int f10的次方(const int &x);
 template<typename t> t f绝对值(const t &);
 template<typename t> std::tuple<t, t> sincos(const t &);
@@ -51,7 +53,7 @@ template<typename tk, typename tv> tv f插值2(const std::pair<tk, tv> &, const 
 template<typename tk, typename tv> tv f插值2(const tk &, const tv &, const tk &, const tv &, const tk &);
 template<typename t> t f反勾股(const t &, const t &);	//已知斜边和一直角边求另一直角边
 template<typename t> t f四舍五入(const t &);	//
-template<typename t> t f等腰梯形插值(const t &p小, const t &p大, float p斜宽, float p中间值);
+template<typename t> t f等腰梯形插值(const t &小, const t &大, float 斜宽, float 中间值);
 template<typename...t参数> auto f算术平均(t参数 &&...);
 template<typename...t参数> auto f几何平均(t参数 &&...);
 template<typename...t参数> auto f绝对值最大值(t参数 &&...);	//计算出绝对值最大值,返回原值

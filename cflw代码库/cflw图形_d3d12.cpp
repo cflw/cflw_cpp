@@ -205,7 +205,7 @@ HRESULT C三维::f创建根签名(tp根签名 &a, const C根签名参数 &a参数) {
 			const auto &v1 = a参数.ma描述符表[v0.m位置];
 			D3D12_ROOT_PARAMETER v参数;
 			v参数.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-			v参数.DescriptorTable.NumDescriptorRanges = v1.m分配数量;
+			v参数.DescriptorTable.NumDescriptorRanges = v1.m数量;
 			v参数.DescriptorTable.pDescriptorRanges = &a参数.ma描述范围[v1.m开始位置];
 			v参数.ShaderVisibility = v1.m可见性;
 			va参数.push_back(v参数);
@@ -686,7 +686,7 @@ C根签名参数 &C根签名参数::f添加范围(E类型 a类型, UINT a数量, UINT a开始寄存器, U
 	f实现_添加索引(E根参数类型::e描述符表);
 	S描述符表 v描述表;
 	v描述表.m开始位置 = ma描述范围.size();
-	v描述表.m分配数量 = 1;
+	v描述表.m数量 = 1;
 	v描述表.m可见性 = f计算可见性(a可见性);
 	ma描述符表.push_back(v描述表);
 	f实现_添加范围(a类型, a数量, a开始寄存器, a寄存器空间, a偏移);
@@ -695,14 +695,14 @@ C根签名参数 &C根签名参数::f添加范围(E类型 a类型, UINT a数量, UINT a开始寄存器, U
 C根签名参数 &C根签名参数::f连续添加范围(E类型 a类型, UINT a数量, UINT a开始寄存器, UINT a寄存器空间, UINT a偏移) {
 	assert(mw连续添加 == true);
 	f实现_添加范围(a类型, a数量, a开始寄存器, a寄存器空间, a偏移);
-	++m连续添加.m分配数量;
+	++m连续添加.m数量;
 	return *this;
 }
 C根签名参数 &C根签名参数::f连续添加范围开始(E着色器 a可见性) {
 	assert(mw连续添加 == false);
 	f实现_添加索引(E根参数类型::e描述符表);
 	m连续添加.m开始位置 = ma描述范围.size();
-	m连续添加.m分配数量 = 0;
+	m连续添加.m数量 = 0;
 	m连续添加.m可见性 = f计算可见性(a可见性);
 	mw连续添加 = true;
 	return *this;

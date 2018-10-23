@@ -10,7 +10,7 @@ const std::map<std::wstring, void (C¶ÔÏóÄ£ĞÍ::*)(std::wistringstream &)> ca¶ÁÈ¡µ
 	{L"f", &C¶ÔÏóÄ£ĞÍ::f¶ÁÈ¡_Ãæ},
 };
 size_t SÃæ::fg½áÊøÎ»ÖÃ() const {
-	return m¿ªÊ¼Î»ÖÃ + m·ÖÅäÊıÁ¿;
+	return m¿ªÊ¼Î»ÖÃ + mÊıÁ¿;
 }
 //==============================================================================
 // ¶ÔÏóÄ£ĞÍ
@@ -69,7 +69,7 @@ void C¶ÔÏóÄ£ĞÍ::f¶ÁÈ¡_Ãæ(std::wistringstream &aÁ÷) {
 		SË÷Òı vË÷Òı;
 		const bool v½á¹û = fÌáÈ¡(vË÷Òı);
 		if (v½á¹û) {
-			++vÃæ.m·ÖÅäÊıÁ¿;
+			++vÃæ.mÊıÁ¿;
 			maË÷Òı.push_back(vË÷Òı);
 		} else {
 			break;

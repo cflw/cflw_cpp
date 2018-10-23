@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="内联文件">
-      <UniqueIdentifier>{7b2e1084-2d86-42d8-9f69-8fcbb0a98c0c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="数学">
       <UniqueIdentifier>{0233ea9a-b1f7-43b6-9653-c5171442fc9a}</UniqueIdentifier>
     </Filter>

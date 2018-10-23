@@ -20,7 +20,7 @@ struct S行 {
 class C行循环 : public 工具::循环::I循环<C行循环> {
 public:
 	C行循环(std::wifstream &);
-	bool f循环控制_w继续();
+	bool f循环控制_i继续();
 	S行 f循环控制_解引用();
 private:
 	std::vector<std::wstring> m数组;

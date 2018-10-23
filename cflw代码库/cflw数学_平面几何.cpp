@@ -7,24 +7,24 @@ namespace cflw::数学 {
 //形状几何
 //=============================================================================
 //散开的参数
-bool f圆形相交判定(const S向量2 &a坐标, float a半径, const S向量2 &b坐标, float b半径) {
-	const float m距离 = a坐标.f到点距离(b坐标);
-	const float m半径和 = a半径 + b半径;
-	return m距离 <= m半径和;
+bool f圆形相交判定(const S向量2 &a坐标0, float a半径0, const S向量2 &a坐标1, float a半径1) {
+	const float v距离 = a坐标0.f到点距离(a坐标1);
+	const float v半径和 = a半径0 + a半径1;
+	return v距离 <= v半径和;
 }
-bool f圆形旋转矩形相交判定(const S向量2 &a坐标, float a半径, const S向量2 &b坐标, const S向量2 &b半尺寸, float b方向) {
-	S向量2 v圆形坐标 = a坐标 - b坐标;	//←矩形坐标为原点
-	v圆形坐标 = v圆形坐标.f旋转r(-b方向);	//←把矩形旋转角度调整为0度,并旋转圆形坐标
+bool f圆形旋转矩形相交判定(const S向量2 &a圆形坐标, float a圆形半径, const S向量2 &a矩形坐标, const S向量2 &a矩形半尺寸, float a矩形方向) {
+	S向量2 v圆形坐标 = a圆形坐标 - a矩形坐标;	//←矩形坐标为原点
+	v圆形坐标 = v圆形坐标.f旋转r(-a矩形方向);	//←把矩形旋转角度调整为0度,并旋转圆形坐标
 	v圆形坐标 = f绝对值<S向量2>(v圆形坐标);	//←把判定全部扔到第一象限
-	//↓开始判断	//↓一堆变量,用于节省计算时间
-	const float vx距离和 = b半尺寸.x + a半径;
-	const float vy距离和 = b半尺寸.y + a半径;
+	//↓开始判断
+	const float vx距离和 = a矩形半尺寸.x + a圆形半径;
+	const float vy距离和 = a矩形半尺寸.y + a圆形半径;
 	if (v圆形坐标.x <= vx距离和 && v圆形坐标.y <= vy距离和) {
 		//↑圆形x坐标和y坐标是否在距离内	//↓可能相交
-		if (v圆形坐标.x > b半尺寸.x && v圆形坐标.y > b半尺寸.y) {
+		if (v圆形坐标.x > a矩形半尺寸.x && v圆形坐标.y > a矩形半尺寸.y) {
 			//在矩形边长外
-			v圆形坐标 -= b半尺寸;
-			return v圆形坐标.fg大小() <= a半径;	//在矩形角半径内
+			v圆形坐标 -= a矩形半尺寸;
+			return v圆形坐标.fg大小() <= a圆形半径;	//在矩形角半径内
 		} else {
 			return true;	//在边长边缘或里面
 		}
@@ -32,9 +32,54 @@ bool f圆形旋转矩形相交判定(const S向量2 &a坐标, float a半径, const S向量2 &b坐标
 		return false;	//没有相交
 	}
 }
+bool f线段相交判定(const S向量2 &a点0, const S向量2 &a点1, const S向量2 &a点2, const S向量2 &a点3) {
+	//计算范围
+	const S向量2 v1最大(std::max<float>(a点0.x, a点1.x), std::max<float>(a点0.y, a点1.y));
+	const S向量2 v1最小(std::min<float>(a点0.x, a点1.x), std::min<float>(a点0.y, a点1.y));
+	const S向量2 v2最大(std::max<float>(a点2.x, a点3.x), std::max<float>(a点2.y, a点3.y));
+	const S向量2 v2最小(std::min<float>(a点2.x, a点3.x), std::min<float>(a点2.y, a点3.y));
+	if (v1最大.x < v2最小.x) return false;
+	if (v2最大.x < v1最小.x) return false;
+	if (v1最大.y < v2最小.y) return false;
+	if (v2最大.y < v1最小.y) return false;
+	const float v范围左 = std::max<float>(v1最小.x, v2最小.x);
+	const float v范围右 = std::min<float>(v1最大.x, v2最大.x);
+	//计算直线方程
+	const S直线方程 v直线0 = S直线方程::fc两点(a点0, a点1);
+	const S直线方程 v直线1 = S直线方程::fc两点(a点2, a点3);
+	if (v直线0.f平行(v直线1)) {
+		return false;
+	}
+	auto f线段平行y轴时判断 = [](float x, float y0, float y1, const S向量2 &a正常0, const S向量2 &a正常1)->bool {
+		const float vx长 = a正常0.x - a正常1.x;
+		const float v位置 = (x - a正常1.x) / vx长;
+		const float vy长 = a正常0.y - a正常1.y;
+		const float vy = a正常1.y + v位置 * vy长;
+		const auto[v下点, v上点] = 数学::f小大<float>(y0, y1);
+		return vy >= v下点 && vy <= v上点;
+	};
+	if (v直线0.fi平行y轴()) {
+		if (f线段平行y轴时判断(a点0.x, a点0.y, a点1.y, a点2, a点3)) {
+			return true;
+		}
+	}
+	if (v直线1.fi平行y轴()) {
+		if (f线段平行y轴时判断(a点2.x, a点2.y, a点3.y, a点0, a点1)) {
+			return true;
+		}
+	}
+	//计算公共区域相交
+	const float v点[2][2] = {
+		{v直线0.f求y(v范围左), v直线1.f求y(v范围左)},
+		{v直线0.f求y(v范围右), v直线1.f求y(v范围右)}
+	};
+	if (v点[0][0] == v点[0][1]) return true;
+	if (v点[1][0] == v点[1][1]) return true;
+	return (v点[0][0] > v点[0][1]) != (v点[1][0] > v点[1][1]);
+}
 //组合类型
-bool f向量重叠判定(float *a1, float *a2, int pv) {
-	for (int i = 0; i != pv; ++i) {
+bool f向量重叠判定(float *a1, float *a2, int a参数数量) {
+	for (int i = 0; i != a参数数量; ++i) {
 		if (a1 != a2) {
 			return false;
 		}
@@ -42,8 +87,8 @@ bool f向量重叠判定(float *a1, float *a2, int pv) {
 	return true;
 }
 //
-bool f向量线段相交判定(const S向量2 &a点, const S线段2 &p线) {
-	S向量2 v点[2] = {p线.m点[0] - a点, p线.m点[1] - a点};
+bool f向量线段相交判定(const S向量2 &a点, const S线段2 &a线) {
+	S向量2 v点[2] = {a线.m点[0] - a点, a线.m点[1] - a点};
 	if (v点[0].x * v点[1].x > 0) {
 		return false;
 	}
@@ -62,8 +107,8 @@ bool f圆形相交判定(const S圆形 &a圆形1, const S圆形 &a圆形2) {
 bool f圆形旋转矩形相交判定(const S圆形 &a圆形, const S旋转矩形 &a矩形) {
 	return f圆形旋转矩形相交判定(a圆形.m坐标, a圆形.m半径, a矩形.m坐标, a矩形.m半尺寸, a矩形.m方向);
 }
-bool f圆形线段相交判定(const S圆形 &a圆形, const S线段2 &p线段) {
-	S线段2 v线段 = p线段;
+bool f圆形线段相交判定(const S圆形 &a圆形, const S线段2 &a线段) {
+	S线段2 v线段 = a线段;
 	v线段.fs平移(-a圆形.m坐标);
 	if (v线段.m点[0].fg大小() <= a圆形.m半径) {
 		return true;
@@ -71,7 +116,7 @@ bool f圆形线段相交判定(const S圆形 &a圆形, const S线段2 &p线段) {
 	if (v线段.m点[1].fg大小() <= a圆形.m半径) {
 		return true;
 	}
-	v线段.fs旋转r(-p线段.fg方向r() + (float)c半π);
+	v线段.fs旋转r(-a线段.fg方向r() + (float)c半π);
 	if (f同符号(v线段.m点[0].y, v线段.m点[1].y)) {
 		return false;
 	} else {
@@ -82,9 +127,9 @@ bool f圆形线段相交判定(const S圆形 &a圆形, const S线段2 &p线段) {
 	return false;
 }
 bool f圆形射线相交判定(const S圆形 &a圆形, const S射线2 &a射线) {
-	const S向量2 m相对距离 = a射线.f相对距离(a圆形.m坐标);
-	if (m相对距离.x < 0) {
-		return m相对距离.y <= a圆形.m半径;
+	const S向量2 v相对距离 = a射线.f相对距离(a圆形.m坐标);
+	if (v相对距离.x < 0) {
+		return v相对距离.y <= a圆形.m半径;
 	} else {
 		return a射线.m坐标.f到点距离(a圆形.m坐标) <= a圆形.m半径;
 	}
@@ -102,15 +147,18 @@ bool f圆形直线相交判定(const S圆形 &a圆形, const S直线方程 &a直线) {
 bool f旋转矩形相交判定(const S旋转矩形 &a1, const S旋转矩形 &a2) {
 	//计算是否太远或太近
 	const float v距离 = (a1.m坐标 - a2.m坐标).fg大小();
-	if (v距离 > a1.fg半对角线长() + a2.fg半对角线长())
+	if (v距离 > a1.fg半对角线长() + a2.fg半对角线长()) {
 		return false;	//太远
-	if (v距离 <= a1.fg短半轴长() + a2.fg短半轴长())
+	}
+	if (v距离 <= a1.fg短半轴长() + a2.fg短半轴长()) {
 		return true;	//太近
+	}
 	//获得矩形所有顶点
 	const S向量2 v顶点[2][4] = {
 		{a1.fg点(1, 1), a1.fg点(1, -1), a1.fg点(-1, 1), a1.fg点(-1, -1)},
 		{a2.fg点(1, 1), a2.fg点(1, -1), a2.fg点(-1, 1), a2.fg点(-1, -1)}
 	};
+	//线段两两相交判定
 	auto f0 = [&v顶点](const S向量2 &a点1, const S向量2 &a点2)->bool {
 		S线段2 v线段1{a点1, a点2};
 		auto f1 = [&v线段1](const S向量2 &a点1, const S向量2 &a点2)->bool {
@@ -129,13 +177,13 @@ bool f旋转矩形相交判定(const S旋转矩形 &a1, const S旋转矩形 &a2) {
 	if (f0(v顶点[1][3], v顶点[1][0])) return true;
 	return false;
 }
-bool f旋转矩形线段相交判定(const S旋转矩形 &a矩形, const S线段2 &p线段) {
-	if (f向量旋转矩形相交判定(p线段.m点[0], a矩形)) return true;
-	if (f向量旋转矩形相交判定(p线段.m点[1], a矩形)) return true;
+bool f旋转矩形线段相交判定(const S旋转矩形 &a矩形, const S线段2 &a线段) {
+	if (f向量旋转矩形相交判定(a线段.m点[0], a矩形)) return true;
+	if (f向量旋转矩形相交判定(a线段.m点[1], a矩形)) return true;
 	const S向量2 v顶点[4] = {a矩形.fg点(1, 1), a矩形.fg点(1, -1), a矩形.fg点(-1, 1), a矩形.fg点(-1, -1)};
-	auto f = [&p线段](const S向量2 &a点1, const S向量2 &a点2)->bool {
+	auto f = [&a线段](const S向量2 &a点1, const S向量2 &a点2)->bool {
 		S线段2 m线段{a点1, a点2};
-		return f线段相交判定(p线段, m线段);
+		return f线段相交判定(a线段, m线段);
 	};
 	if (f(v顶点[0], v顶点[1])) return true;
 	if (f(v顶点[1], v顶点[2])) return true;
@@ -162,53 +210,14 @@ bool f旋转矩形射线相交判定(const S旋转矩形 &a矩形, const S射线2 &a射线) {
 	if (f(v顶点[3], v顶点[0])) return true;
 	return false;
 }
-bool f线段相交判定(const S线段2 &a1, const S线段2 &a2) {
-	//计算范围
-	const S向量2 v1最大(std::max<float>(a1.m点[0].x, a1.m点[1].x), std::max<float>(a1.m点[0].y, a1.m点[1].y));
-	const S向量2 v1最小(std::min<float>(a1.m点[0].x, a1.m点[1].x), std::min<float>(a1.m点[0].y, a1.m点[1].y));
-	const S向量2 v2最大(std::max<float>(a2.m点[0].x, a2.m点[1].x), std::max<float>(a2.m点[0].y, a2.m点[1].y));
-	const S向量2 v2最小(std::min<float>(a2.m点[0].x, a2.m点[1].x), std::min<float>(a2.m点[0].y, a2.m点[1].y));
-	if (v1最大.x < v2最小.x) return false;
-	if (v2最大.x < v1最小.x) return false;
-	if (v1最大.y < v2最小.y) return false;
-	if (v2最大.y < v1最小.y) return false;
-	float m范围[2];	//[0]表示左,[1]表示右
-	m范围[0] = std::max<float>(v1最小.x, v2最小.x);
-	m范围[1] = std::min<float>(v1最大.x, v2最大.x);
-	//计算直线方程
-	S直线方程 v直线[2] = {
-		S直线方程::fc两点(a1.m点[0], a1.m点[1]),
-		S直线方程::fc两点(a2.m点[0], a2.m点[1])
-	};
-	if (v直线[0].f平行(v直线[1]))
-		return false;
-	auto f线段平行y轴时判断 = [](const S线段2 &a平行y轴, const S线段2 &a正常)->bool {
-		assert(a平行y轴.m点[0].x == a平行y轴.m点[1].x);
-		const float vx长 = a正常.m点[0].x - a正常.m点[1].x;
-		const float m位置 = (a平行y轴.m点[0].x - a正常.m点[1].x) / vx长;
-		const float vy长 = a正常.m点[0].y - a正常.m点[1].y;
-		const float vy = a正常.m点[1].y + m位置 * vy长;
-		const float m上点 = std::max<float>(a平行y轴.m点[0].y, a平行y轴.m点[1].y);
-		const float m下点 = std::min<float>(a平行y轴.m点[0].y, a平行y轴.m点[1].y);
-		return vy >= m下点 && vy <= m上点;
-	};
-	if (v直线[0].a == 0)
-		if (f线段平行y轴时判断(a1, a2))
-			return true;
-	if (v直线[1].a == 0)
-		if (f线段平行y轴时判断(a2, a1))
-			return true;
-	//计算公共区域相交
-	const float m点[2][2] = {{v直线[0].f求y(m范围[0]), v直线[1].f求y(m范围[0])},
-	{v直线[0].f求y(m范围[1]), v直线[1].f求y(m范围[1])}};
-	if (m点[0][0] == m点[0][1]) return true;
-	if (m点[1][0] == m点[1][1]) return true;
-	return (m点[0][0] > m点[0][1]) != (m点[1][0] > m点[1][1]);
+bool f线段相交判定(const S线段2 &a0, const S线段2 &a1) {
+	return f线段相交判定(a0.m点[0], a0.m点[1], a1.m点[0], a1.m点[1]);
 }
-bool f线段三角形相交判定(const S线段2 &p线段, const S三角形 &p三角形) {
+bool f线段三角形相交判定(const S线段2 &a线段, const S三角形 &a三角形) {
 	for (int i = 0; i != 3; ++i) {
-		if (f线段相交判定(p线段, p三角形.fg边(i)))
+		if (f线段相交判定(a线段, a三角形.fg边(i))) {
 			return true;
+		}
 	}
 	return false;
 }
@@ -247,9 +256,9 @@ S圆形::S圆形(void) :
 	m坐标(),
 	m半径(0) {
 }
-S圆形::S圆形(const S向量2 &p坐标, const float &p半径) :
-	m坐标(p坐标),
-	m半径(p半径) {
+S圆形::S圆形(const S向量2 &a坐标, const float &a半径) :
+	m坐标(a坐标),
+	m半径(a半径) {
 }
 S向量2 S圆形::f取点r(const float &r) const {
 	S向量2 v = S向量2::fc方向r(m半径, r);
@@ -397,8 +406,8 @@ S窗口矩形::S窗口矩形(const S向量2 &a1, const S向量2 &a2) {
 		m下 = a1.x;
 	}
 }
-S窗口矩形 S窗口矩形::fc坐标半尺寸(const S向量2 &p坐标, const S向量2 &p半尺寸) {
-	return{p坐标.x - p半尺寸.x, p坐标.y - p半尺寸.y, p坐标.x + p半尺寸.x, p坐标.y + p半尺寸.y};
+S窗口矩形 S窗口矩形::fc坐标半尺寸(const S向量2 &a坐标, const S向量2 &p半尺寸) {
+	return{a坐标.x - p半尺寸.x, a坐标.y - p半尺寸.y, a坐标.x + p半尺寸.x, a坐标.y + p半尺寸.y};
 }
 float S窗口矩形::fg宽() {
 	return m右 - m左;
@@ -585,10 +594,10 @@ float S线段2::fg斜率() const {
 // 射线2
 //=============================================================================
 S射线2::S射线2() : m坐标(), m方向(0) {}
-S射线2::S射线2(const S向量2 &p坐标, float p方向) : m坐标(p坐标), m方向(p方向) {}
-void S射线2::fs点向(const S向量2 &a点, const S向量2 &p方向) {
+S射线2::S射线2(const S向量2 &a坐标, float a方向) : m坐标(a坐标), m方向(a方向) {}
+void S射线2::fs点向(const S向量2 &a点, const S向量2 &a方向) {
 	m坐标 = a点;
-	m方向 = p方向.fg方向r();
+	m方向 = a方向.fg方向r();
 }
 void S射线2::fs两点(const S向量2 &a1, const S向量2 &a2) {
 	m坐标 = a1;
@@ -625,9 +634,9 @@ S向量2 S椭圆::f取点(float t) const {
 // 椭圆
 //=============================================================================
 S旋转椭圆::S旋转椭圆() : m坐标(), m半径(), m方向(0) {}
-S旋转椭圆::S旋转椭圆(const S向量2 &p坐标, const S向量2 &p半径, float p方向) : m坐标(p坐标), m半径(p半径), m方向(p方向) {}
-S旋转椭圆 S旋转椭圆::fc圆(const S向量2 &p坐标, float p半径) {
-	return {p坐标, {p半径, p半径}, 0};
+S旋转椭圆::S旋转椭圆(const S向量2 &a坐标, const S向量2 &a半径, float a方向) : m坐标(a坐标), m半径(a半径), m方向(a方向) {}
+S旋转椭圆 S旋转椭圆::fc圆(const S向量2 &a坐标, float a半径) {
+	return {a坐标, {a半径, a半径}, 0};
 }
 bool S旋转椭圆::fw圆() const {
 	return m半径.x == m半径.y;
@@ -642,7 +651,7 @@ S向量2 S旋转椭圆::f取点(float t) const {
 // 圆角矩形
 //=============================================================================
 S圆角矩形::S圆角矩形() : m坐标(), m半尺寸(), m角半径() {}
-S圆角矩形::S圆角矩形(const S向量2 &p坐标, const S向量2 &p半尺寸, const S向量2 &p角半径) : m坐标(p坐标), m半尺寸(p半尺寸), m角半径(p角半径) {}
+S圆角矩形::S圆角矩形(const S向量2 &a坐标, const S向量2 &p半尺寸, const S向量2 &p角半径) : m坐标(a坐标), m半尺寸(p半尺寸), m角半径(p角半径) {}
 
 
 }

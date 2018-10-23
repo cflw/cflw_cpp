@@ -21,7 +21,7 @@ std::vector<std::wstring> &S行::fe() const {
 C行循环::C行循环(std::wifstream &p文件) :
 	m文件{&p文件} {
 }
-bool C行循环::f循环控制_w继续() {
+bool C行循环::f循环控制_i继续() {
 	return !m文件->eof();
 }
 S行 C行循环::f循环控制_解引用() {

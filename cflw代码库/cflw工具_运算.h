@@ -1,6 +1,52 @@
 #pragma once
 #include <algorithm>
 namespace cflw::工具 {
+//四则运算
+template<typename t> using F加 = std::plus<t>;
+template<typename t> using F减 = std::minus<t>;
+template<typename t> using F乘 = std::multiplies<t>;
+//简单比较
+template<typename t>
+bool f等于(const t &a0, const t &a1) {
+	return a0 < a1;
+}
+template<typename t>
+bool f不等于(const t &a0, const t &a1) {
+	return a0 < a1;
+}
+template<typename t>
+bool f小于(const t &a0, const t &a1) {
+	return a0 < a1;
+}
+template<typename t>
+bool f大于(const t &a0, const t &a1) {
+	return a0 > a1;
+}
+template<typename t>
+bool f小于等于(const t &a0, const t &a1) {
+	return a0 <= a1;
+}
+template<typename t>
+bool f大于等于(const t &a0, const t &a1) {
+	return a0 >= a1;
+}
+template<typename t> using F等于 = std::equal_to<t>;
+template<typename t> using F不等于 = std::not_equal_to<t>;
+template<typename t> using F小于 = std::less<t>;
+template<typename t> using F小于等于 = std::less_equal<t>;
+template<typename t> using F大于 = std::greater<t>;
+template<typename t> using F大于等于 = std::greater_equal<t>;
+//逻辑运算
+inline constexpr bool f且(bool a0, bool a1) {
+	return a0 && a1;
+}
+inline constexpr bool f或(bool a0, bool a1) {
+	return a0 || a1;
+}
+inline constexpr bool f非(bool a) {
+	return !a;
+}
+//复杂比较
 template<typename t, typename tF = std::hash<t>>
 struct F哈希相等 {
 	bool operator()(const t &a, const t &b) const {

@@ -551,7 +551,7 @@ void C自动缓冲::f复制(const void *a顶点, size_t a顶点大小, const void *a索引, si
 	m顶点缓冲.f复制(a顶点, a顶点大小);
 	m索引缓冲.f复制(a索引, a索引大小);
 }
-bool C自动缓冲::fw修改() const {
+bool C自动缓冲::fi修改() const {
 	return m顶点缓冲.m修改 != 0 || m索引缓冲.m修改 != 0;
 }
 //缓存

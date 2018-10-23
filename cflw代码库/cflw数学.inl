@@ -7,11 +7,18 @@ namespace cflw::数学 {
 template<typename t> int f取符号(const t &x) {
 	return (x < 0) ? -1 : (x > 0 ? 1 : 0);
 }
+template<typename t> int f取符号(const t &x, const t &a零) {
+	return (x < -a零) ? -1 : (x > a零 ? 1 : 0);
+}
 template<typename t> const t& f最大值(const t &a, const t &b) {
 	return a > b ? a : b;
 }
 template<typename t> const t& f最小值(const t &a, const t &b) {
 	return a < b ? a : b;
+}
+template<typename t> std::pair<const t &, const t &> f小大(const t &a, const t &b) {
+	using r = std::pair<const t &, const t &>;
+	return a < b ? r{a, b} : r{b, a};
 }
 template<typename t> t f限制(const t &值, const t &最小值, const t &最大值) {
 	return (值 > 最大值) ? 最大值 : ((值 < 最小值) ? 最小值 : 值);

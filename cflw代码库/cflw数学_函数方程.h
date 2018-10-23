@@ -11,7 +11,7 @@ struct S二次函数 {
 	S二次函数(const S向量2 &, const S向量2 &, const S向量2 &);
 	S二次函数 &fs(const S向量2 &, const S向量2 &, const S向量2 &);
 	float f求y(float) const;//y=f(x)
-	float f垂直方向(const S向量2 &) const;//p.y-f(p.x)
+	float f垂直方向(const S向量2 &) const;//参数.y-f(参数.x)
 };
 struct S直线方程 {
 	float a, b, c;	// a*x + b*y + c = 0
@@ -36,6 +36,10 @@ struct S直线方程 {
 	S向量2 fg法向量() const;
 	bool f交x轴(int) const;
 	bool f交y轴(int) const;
+	bool fi平行x轴() const;
+	bool fi平行y轴() const;
+	bool fi垂直x轴() const;
+	bool fi垂直y轴() const;
 };
 struct S直线方程3 {
 	float x[2], y[2], z[2];//参数方程的形式

@@ -393,7 +393,7 @@ public:
 	};
 	struct S描述符表 {
 		size_t m开始位置;
-		size_t m分配数量;
+		size_t m数量;
 		D3D12_SHADER_VISIBILITY m可见性;
 	};
 	static D3D12_SHADER_VISIBILITY f计算可见性(E着色器);

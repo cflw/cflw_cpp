@@ -284,7 +284,7 @@ public:
 	C自动缓冲(C三维 &);
 	bool f刷新();
 	void f复制(const void *顶点数据, size_t 顶点大小, const void *索引数据, size_t 索引大小);
-	bool fw修改() const;
+	bool fi修改() const;
 };
 //=============================================================================
 // 状态

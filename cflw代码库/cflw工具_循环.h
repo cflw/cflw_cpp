@@ -17,7 +17,7 @@ public:	//在循环类中继承
 			return *this;
 		}
 		bool operator !=(const C迭代器 &) {
-			return mp循环->f循环控制_w继续();
+			return mp循环->f循环控制_i继续();
 		}
 		decltype(std::declval<t循环>().f循环控制_解引用()) operator *() {
 			return mp循环->f循环控制_解引用();
@@ -33,7 +33,7 @@ public:	//在循环类中继承
 	//可重写
 	void f循环控制_自增() {
 	}
-	bool f循环控制_w继续() {
+	bool f循环控制_i继续() {
 		return false;
 	}
 	t循环 &f循环控制_解引用() {
@@ -51,7 +51,7 @@ public:
 	void f循环控制_自增() {
 		++m计数;
 	}
-	bool f循环控制_w继续() {
+	bool f循环控制_i继续() {
 		return m计数 != m总数;
 	}
 	t &f循环控制_解引用() {
@@ -132,7 +132,7 @@ public:
 	void f循环控制_自增() {
 		++m当前;
 	}
-	bool f循环控制_w继续() {
+	bool f循环控制_i继续() {
 		const bool vw继续 = (m当前 != m结束);
 		if (!vw继续) {
 			f循环控制_开始();
@@ -165,7 +165,7 @@ public:
 		m当前{p容器.begin()}, m结束{p容器.end()} {
 		m引用.m前 = m引用.m这 = f这();
 	}
-	bool f循环控制_w继续() {
+	bool f循环控制_i继续() {
 		if (m当前 != m结束) {
 			m引用.m这 = f这();
 			m引用.m后 = f后();
@@ -221,7 +221,7 @@ public:
 			m后面 + 1;
 		}
 	}
-	bool f循环控制_w继续() {
+	bool f循环控制_i继续() {
 		return m后面 != m结束;
 	}
 	S引用 &f循环控制_解引用() {
