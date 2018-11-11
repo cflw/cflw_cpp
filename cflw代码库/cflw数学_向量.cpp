@@ -183,102 +183,102 @@ float S向量2::f到点方向d(const S向量2 &_) const {
 	const S向量2 v = _ - *this;
 	return C角度计算<float>::c度.f方向(v.x, v.y);
 }
-S向量2 S向量2::f旋转r(const float &p角度) const {
-	const float s = sin(p角度);
-	const float c = cos(p角度);
+S向量2 S向量2::f旋转r(const float &a角度) const {
+	const float s = sin(a角度);
+	const float c = cos(a角度);
 	return S向量2{x * c - y * s, x * s + y * c};
 }
-S向量2 S向量2::f旋转d(const float &p角度) const {
-	return f旋转r(p角度 * (float)c度到弧度);
+S向量2 S向量2::f旋转d(const float &a角度) const {
+	return f旋转r(a角度 * (float)c度到弧度);
 }
-S向量2 S向量2::f绕点旋转r(const S向量2 &p中心, const float &p角度) const {
-	return (*this - p中心).f旋转r(p角度) += p中心;
+S向量2 S向量2::f绕点旋转r(const S向量2 &a中心, const float &a角度) const {
+	return (*this - a中心).f旋转r(a角度) += a中心;
 }
-S向量2 S向量2::f绕点旋转d(const S向量2 &p中心, const float &p角度) const {
-	return f绕点旋转r(p中心, p角度 * (float)c度到弧度);
+S向量2 S向量2::f绕点旋转d(const S向量2 &a中心, const float &a角度) const {
+	return f绕点旋转r(a中心, a角度 * (float)c度到弧度);
 }
-float S向量2::f到点距离(const S向量2 &p) const {
-	const float _x = p.x - x;
-	const float _y = p.y - y;
+float S向量2::f到点距离(const S向量2 &a) const {
+	const float _x = a.x - x;
+	const float _y = a.y - y;
 	return sqrt(_x*_x + _y * _y);
 }
-S向量2 S向量2::f到点向量(const S向量2 &p) const {
-	return S向量2{p.x - x, p.y - y};
+S向量2 S向量2::f到点向量(const S向量2 &a) const {
+	return S向量2{a.x - x, a.y - y};
 }
-S向量2 S向量2::f到点方位r(const S向量2 &p点, const float &a方向) const {
-	const S向量2 v点 = f到点向量(p点);
+S向量2 S向量2::f到点方位r(const S向量2 &a点, const float &a方向) const {
+	const S向量2 v点 = f到点向量(a点);
 	return v点.f旋转r(-a方向);
 }
-S向量2 S向量2::f到点方位d(const S向量2 &p点, const float &a方向) const {
-	return f到点方位r(p点, a方向 * (float)c度到弧度);
+S向量2 S向量2::f到点方位d(const S向量2 &a点, const float &a方向) const {
+	return f到点方位r(a点, a方向 * (float)c度到弧度);
 }
-float S向量2::f点乘(const S向量2 &p) const {
-	return x * p.x + y * p.y;
+float S向量2::f点乘(const S向量2 &a) const {
+	return x * a.x + y * a.y;
 }
-S向量2 &S向量2::fs线性渐变(const S向量2 &p, const float &p渐变) {
-	S向量2 v = p - *this;
-	if (v.fg大小() <= p渐变)
-		return *this = p;
-	v.fs大小(p渐变);
+S向量2 &S向量2::fs线性渐变(const S向量2 &a, const float &a渐变) {
+	S向量2 v = a - *this;
+	if (v.fg大小() <= a渐变)
+		return *this = a;
+	v.fs大小(a渐变);
 	return *this += v;
 }
-S向量2 S向量2::f线性渐变(const S向量2 &p, const float &p渐变) const {
-	S向量2 v = p - *this;
-	if (v.fg大小() <= p渐变)
-		return p;
-	v.fs大小(p渐变);
+S向量2 S向量2::f线性渐变(const S向量2 &a, const float &a渐变) const {
+	S向量2 v = a - *this;
+	if (v.fg大小() <= a渐变)
+		return a;
+	v.fs大小(a渐变);
 	return *this + v;
 }
-S向量2 &S向量2::fs倍数渐变(const S向量2 &p, const float &p渐变, const float &p最小, const float &p最大) {
-	S向量2 v = (p - *this) * p渐变;
+S向量2 &S向量2::fs倍数渐变(const S向量2 &a, const float &a渐变, const float &a最小, const float &a最大) {
+	S向量2 v = (a - *this) * a渐变;
 	const float v模 = v.fg大小();
 	if (v模 == 0)
 		return *this;
-	if (v模 < p最小)
-		v.fs大小(p最小);
-	else if (v模 > p最大)
-		v.fs大小(p最大);
+	if (v模 < a最小)
+		v.fs大小(a最小);
+	else if (v模 > a最大)
+		v.fs大小(a最大);
 	return *this += v;
 }
-S向量2 S向量2::f倍数渐变(const S向量2 &p, const float &p渐变, const float &p最小, const float &p最大) const {
-	S向量2 v = (p - *this) * p渐变;
+S向量2 S向量2::f倍数渐变(const S向量2 &a, const float &a渐变, const float &a最小, const float &a最大) const {
+	S向量2 v = (a - *this) * a渐变;
 	const float v模 = v.fg大小();
 	if (v模 == 0)
 		return *this;
-	if (v模 < p最小)
-		v.fs大小(p最小);
-	else if (v模 > p最大)
-		v.fs大小(p最大);
+	if (v模 < a最小)
+		v.fs大小(a最小);
+	else if (v模 > a最大)
+		v.fs大小(a最大);
 	return *this + v;
 }
-S向量2 S向量2::f翻折(const S直线方程 &p) const {
-	assert(p.a != 0 || p.b != 0);
+S向量2 S向量2::f翻折(const S直线方程 &a直线方程) const {
+	assert(a直线方程.a != 0 || a直线方程.b != 0);
 	S向量2 v = *this;
-	if (p.a == 0) {//直线平行于y轴
-		const float d = -p.c / p.b;
+	if (a直线方程.a == 0) {//直线平行于y轴
+		const float d = -a直线方程.c / a直线方程.b;
 		v.x = 数学::f翻折(v.x, d);
-	} else if (p.b == 0) {//直线平行于x轴
-		const float d = -p.c / p.a;
+	} else if (a直线方程.b == 0) {//直线平行于x轴
+		const float d = -a直线方程.c / a直线方程.a;
 		v.y = 数学::f翻折(v.y, d);
 	} else {
-		const float v2d = p.f到点距离(*this);
-		const float m斜 = hypotf(p.a, p.b);
-		v.x = x - p.a / m斜 * v2d;
-		v.y = y - p.b / m斜 * v2d;
+		const float v2d = a直线方程.f到点距离(*this);
+		const float m斜 = hypotf(a直线方程.a, a直线方程.b);
+		v.x = x - a直线方程.a / m斜 * v2d;
+		v.y = y - a直线方程.b / m斜 * v2d;
 	}
 	return v;
 }
-S向量2 S向量2::f翻折(const float &p) const {
-	return S向量2::fc方向r(fg大小(), 数学::f翻折(fg方向r(), p));
+S向量2 S向量2::f翻折(const float &a) const {
+	return S向量2::fc方向r(fg大小(), 数学::f翻折(fg方向r(), a));
 }
-S向量2 S向量2::f翻折(const S圆形 &p) const {
-	const S向量2 m相对 = *this - p.m坐标;
+S向量2 S向量2::f翻折(const S圆形 &a) const {
+	const S向量2 m相对 = *this - a.m坐标;
 	const float m距离 = m相对.fg大小();
 	const float m方向 = m相对.fg方向r();
-	return fc方向r(数学::f翻折(m距离, p.m半径), m方向);
+	return fc方向r(数学::f翻折(m距离, a.m半径), m方向);
 }
-S向量2 S向量2::f对齐(const float &p) const {
-	return{数学::f对齐(x, p), 数学::f对齐(y, p)};
+S向量2 S向量2::f对齐(const float &a) const {
+	return{数学::f对齐(x, a), 数学::f对齐(y, a)};
 }
 S向量2 S向量2::f直角坐标(float sx, float sy) const {
 	return{f直角坐标x(x, sx), f直角坐标y(y, sy)};
@@ -289,8 +289,8 @@ S向量2 S向量2::f窗口坐标(float sx, float sy) const {
 S向量2 S向量2::f分量乘(float a, float b) const {
 	return {x * a, y * b};
 }
-S向量2 S向量2::f分量乘(const S向量2 &p) const {
-	return {x * p.x, y * p.y};
+S向量2 S向量2::f分量乘(const S向量2 &a) const {
+	return {x * a.x, y * a.y};
 }
 bool S向量2::fi分量相等() const {
 	return x == y;
@@ -361,21 +361,21 @@ S向量3 S向量3::fg归一() const {
 	const float v模 = fg大小();
 	return S向量3(x / v模, y / v模, z / v模);
 }
-S向量3 &S向量3::fs大小(const float &p) {
-	*this = fg归一() / p;
+S向量3 &S向量3::fs大小(const float &a) {
+	*this = fg归一() / a;
 	return *this;
 }
-float S向量3::f点乘(const S向量3 &p) const {
-	return x * p.x + y * p.y + z * p.z;
+float S向量3::f点乘(const S向量3 &a) const {
+	return x * a.x + y * a.y + z * a.z;
 }
-S向量3 S向量3::f叉乘(const S向量3 &p) const {
+S向量3 S向量3::f叉乘(const S向量3 &a) const {
 	return S向量3(
-		y * p.z - z * p.y,
-		z * p.x - x * p.z,
-		x * p.y - y * p.x);
+		y * a.z - z * a.y,
+		z * a.x - x * a.z,
+		x * a.y - y * a.x);
 }
-S向量3 &S向量3::fs(const float &p) {
-	x = y = z = p;
+S向量3 &S向量3::fs(const float &a) {
+	x = y = z = a;
 	return *this;
 }
 S向量3 &S向量3::fs(const float &X, const float &Y, const float &Z) {
@@ -399,12 +399,12 @@ S向量4::S向量4(const float &X, const float &Y, const float &Z, const float &W) :
 S向量3 S向量4::ft向量3() const {
 	return S向量3(x, y, z);
 }
-S向量4 S向量4::operator *(const S矩阵4 &p) const {
-	S向量4 _;
+S向量4 S向量4::operator *(const S矩阵4 &a) const {
+	S向量4 v;
 	for (int i = 0; i != 4; ++i)
 		for (int j = 0; j != 4; ++j)
-			_.m[i] += p.m[i][j] * m[j];
-	return _;
+			v.m[i] += a.m[i][j] * m[j];
+	return v;
 }
 
 }

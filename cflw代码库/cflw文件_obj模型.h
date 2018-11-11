@@ -35,7 +35,7 @@ public:
 	const S顶点坐标 &fg顶点(const S索引 &) const;
 	const S纹理坐标 &fg纹理(const S索引 &) const;
 	const S法线坐标 &fg法线(const S索引 &) const;
-	static size_t ft索引0(int, size_t);
+	static size_t ft索引0(int 索引, size_t 数量);
 	std::vector<S顶点坐标> ma顶点;
 	std::vector<S纹理坐标> ma纹理;
 	std::vector<S法线坐标> ma法线;

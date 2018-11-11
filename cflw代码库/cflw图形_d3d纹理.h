@@ -11,7 +11,7 @@ bool f检查srgb(IWICBitmapFrameDecode *);
 DXGI_FORMAT f到dxgi(const GUID &);
 GUID f到通用格式(const GUID &);
 DXGI_FORMAT f到srgb(DXGI_FORMAT);
-bool fw通用格式(const GUID &);
+bool fi通用格式(const GUID &);
 }
 //声明
 using Microsoft::WRL::ComPtr;

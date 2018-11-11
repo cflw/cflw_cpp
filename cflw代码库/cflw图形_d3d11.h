@@ -65,9 +65,9 @@ class C着色器工厂;
 class C图形管线;
 struct S图形管线参数;
 typedef std::shared_ptr<C图形管线> tp图形管线;
-//=============================================================================
+//==============================================================================
 // 常量
-//=============================================================================
+//==============================================================================
 enum E图元拓扑 {
 	e列表点 = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST,
 	e列表线段 = D3D11_PRIMITIVE_TOPOLOGY_LINELIST,
@@ -94,9 +94,9 @@ constexpr DXGI_FORMAT c交换链格式 = DXGI_FORMAT_R8G8B8A8_UNORM;
 constexpr DXGI_FORMAT c深度模板格式 = DXGI_FORMAT_D32_FLOAT_S8X24_UINT;
 constexpr float c清屏深度l = 1;
 constexpr float c清屏深度r = 0;
-//=============================================================================
+//==============================================================================
 // 结构
-//=============================================================================
+//==============================================================================
 struct S着色器字节代码 {
 	const void *m数据 = nullptr;
 	size_t m大小 = 0;
@@ -123,13 +123,13 @@ struct S图形管线参数 {
 	void fs混合(ID3D11BlendState *);
 	void fs深度模板(ID3D11DepthStencilState *);
 };
-//=============================================================================
+//==============================================================================
 // 图形引擎
-//=============================================================================
+//==============================================================================
 class C创建设备;
 class C三维 {
 public:
-	enum E标记 {
+	enum E标志 {
 		e调试,
 		e软件设备
 	};
@@ -164,7 +164,7 @@ public:
 private:	//窗口
 	HWND m窗口 = nullptr;
 	int m窗口大小[2];
-	std::bitset<32> m标记;
+	std::bitset<32> m标志;
 	//图形设备
 	ComPtr<ID3D11Device> m设备;
 	std::unique_ptr<C创建设备> m创建设备;	//在f初始化设备()中创建
@@ -190,23 +190,23 @@ class C创建设备 {
 public:
 	static const D3D_FEATURE_LEVEL c功能级别组[3];
 	static const UINT c功能级别数 = 3;
-	static const UINT c创建标记;
+	static const UINT c创建标志;
 public:
 	C创建设备() = default;
 	ComPtr<IDXGIFactory1> fg工厂();
 	HRESULT f检查兼容性();
 	HRESULT f取显卡(IDXGIAdapter1**);
-	void fs调试标记(bool);
+	void fs调试标志(bool);
 	HRESULT f创建设备(IDXGIAdapter1*, ID3D11Device**, ID3D11DeviceContext**);
 	HRESULT f创建软件设备(ID3D11Device**, ID3D11DeviceContext**);
 public:
 	ComPtr<IDXGIFactory1> m工厂 = nullptr;
-	UINT m创建标记 = c创建标记;
+	UINT m创建标志 = c创建标志;
 	D3D_FEATURE_LEVEL m功能级别 = D3D_FEATURE_LEVEL_10_0;
 };
-//=============================================================================
+//==============================================================================
 // 渲染控制
-//=============================================================================
+//==============================================================================
 class C渲染控制 {
 	friend C三维;
 public:
@@ -268,7 +268,7 @@ public:
 		UINT m缓冲大小 = 0;
 		UINT m单位大小 = 0;
 		UINT m修改 = 0;	//修改的位置
-		E缓冲 m标记;
+		E缓冲 m标志;
 		C缓冲(ID3D11DeviceContext &, C缓冲工厂 &, E缓冲);
 		void f初始化(size_t 单位大小, size_t 数量);	//索引数一般是顶点数的2倍
 		bool f映射();
@@ -286,9 +286,9 @@ public:
 	void f复制(const void *顶点数据, size_t 顶点大小, const void *索引数据, size_t 索引大小);
 	bool fi修改() const;
 };
-//=============================================================================
+//==============================================================================
 // 状态
-//=============================================================================
+//==============================================================================
 class C渲染状态 {
 public:
 	//值
@@ -355,9 +355,9 @@ public:
 	ComPtr<ID3D11SamplerState> m采样器;
 	ComPtr<ID3D11DepthStencilState> m深度模板;
 };
-//=============================================================================
+//==============================================================================
 // 工厂
-//=============================================================================
+//==============================================================================
 //输入布局
 class C顶点格式 {
 public:
@@ -380,15 +380,13 @@ public:
 //创建缓存
 class C缓冲工厂 {
 public:
-	ComPtr<ID3D11Device> m设备;
-public:
 	void f初始化(ID3D11Device *);
-	HRESULT f创建缓冲(tp缓冲 &, const void *a数据, UINT a大小, E缓冲 p标记, E资源用法 = e默认);
+	HRESULT f创建缓冲(tp缓冲 &, const void *a数据, UINT 大小, E缓冲 标志, E资源用法 = e默认);
+public:
+	ComPtr<ID3D11Device> m设备;
 };
 //着色器工厂
 class C着色器工厂 {
-private:
-	ComPtr<ID3D11Device> m设备;
 public:
 	void f初始化(ID3D11Device*);
 	//从文件中编译着色器
@@ -420,6 +418,8 @@ public:
 	static HRESULT f编译着色器(const wchar_t *a文件名, const char *a入口, const char *a着色模型, ID3DBlob** a输出);
 	static HRESULT f读取着色器(const wchar_t *a文件名, std::unique_ptr<std::byte[]> &a数据, DWORD &a大小);
 	static HRESULT f读取着色器(ComPtr<ID3DBlob> &, const wchar_t *a文件名);
+private:
+	ComPtr<ID3D11Device> m设备;
 };
 //纹理工厂
 class C纹理工厂 {

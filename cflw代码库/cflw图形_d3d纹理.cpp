@@ -121,7 +121,7 @@ std::unique_ptr<C固定纹理> C图像工厂::f一键读取(const wchar_t *a文件名) {
 	GUID v图像格式 = v描述.Format;
 	v纹理->m宽 = v描述.Width;
 	v纹理->m高 = v描述.Height;
-	if (格式::fw通用格式(v图像格式)) {
+	if (格式::fi通用格式(v图像格式)) {
 		v纹理->mp数据 = f复制像素数据(v图像.Get(), &v纹理->m像素大小, &v纹理->m行距, nullptr);
 	} else {
 		ComPtr<IWICFormatConverter> v格式转换;
@@ -281,7 +281,7 @@ DXGI_FORMAT f到srgb(DXGI_FORMAT a格式) {
 	}
 	return a格式;
 }
-bool fw通用格式(const GUID &a格式) {
+bool fi通用格式(const GUID &a格式) {
 	static const std::unordered_set<GUID> v格式表 = {
 		GUID_WICPixelFormat128bppRGBAFloat,
 

@@ -86,7 +86,7 @@ void C对象模型::f读取_索引(S索引 &a索引, const std::wstring &a串) {
 			v位置 = v找到位置 + 1;
 			return true;
 		} else {
-			a输出 = std::stoi(a串);
+			a输出 = std::stoi(a串.substr(v位置));
 			return false;
 		}
 	};
@@ -115,7 +115,7 @@ const S法线坐标 &C对象模型::fg法线(const S索引 &a) const {
 }
 size_t C对象模型::ft索引0(int i, size_t a数量) {
 	if (i < 0) {
-		return a数量 - abs(i);
+		return a数量 - -i;
 	} else {
 		return i - 1;
 	}

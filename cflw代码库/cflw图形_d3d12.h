@@ -44,7 +44,7 @@ using tp索引 = std::shared_ptr<C索引缓冲>;
 using tp固定 = std::shared_ptr<C固定缓冲>;
 using tp纹理 = std::shared_ptr<C纹理资源>;
 //==============================================================================
-// 常量&标记
+// 常量&标志
 //==============================================================================
 enum class E图元拓扑 {
 	e列表点 = D3D_PRIMITIVE_TOPOLOGY_POINTLIST,
@@ -69,7 +69,7 @@ enum class E着色器 {
 	e像素着色器,
 	e计算着色器
 };
-enum class E根签名标记 {
+enum class E根签名标志 {
 	e无 = D3D12_ROOT_SIGNATURE_FLAG_NONE,
 	e允许输入集成输入层 = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT,
 	e阻止顶点着色器根访问 = D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS,
@@ -79,14 +79,14 @@ enum class E根签名标记 {
 	e阻止像素着色器根访问 = D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS,
 	e允许流输出 = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_STREAM_OUTPUT,
 };
-constexpr D3D12_ROOT_SIGNATURE_FLAGS fc根签名标记(bool p允许输入集成输入层 = false, bool p阻止顶点着色器根访问 = false, bool p阻止外壳着色器根访问 = false, bool p阻止域着色器根访问 = false, bool p阻止几何着色器根访问 = false, bool p阻止像素着色器根访问 = false, bool p允许流输出 = false) {
-	return (p允许输入集成输入层 ? D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
-		(p阻止顶点着色器根访问 ? D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
-		(p阻止外壳着色器根访问 ? D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
-		(p阻止域着色器根访问 ? D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
-		(p阻止几何着色器根访问 ? D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
-		(p阻止像素着色器根访问 ? D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
-		(p允许流输出 ? D3D12_ROOT_SIGNATURE_FLAG_ALLOW_STREAM_OUTPUT : D3D12_ROOT_SIGNATURE_FLAG_NONE);
+constexpr D3D12_ROOT_SIGNATURE_FLAGS fc根签名标志(bool a允许输入集成输入层 = false, bool a阻止顶点着色器根访问 = false, bool a阻止外壳着色器根访问 = false, bool a阻止域着色器根访问 = false, bool a阻止几何着色器根访问 = false, bool a阻止像素着色器根访问 = false, bool a允许流输出 = false) {
+	return (a允许输入集成输入层 ? D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
+		(a阻止顶点着色器根访问 ? D3D12_ROOT_SIGNATURE_FLAG_DENY_VERTEX_SHADER_ROOT_ACCESS : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
+		(a阻止外壳着色器根访问 ? D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
+		(a阻止域着色器根访问 ? D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
+		(a阻止几何着色器根访问 ? D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
+		(a阻止像素着色器根访问 ? D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
+		(a允许流输出 ? D3D12_ROOT_SIGNATURE_FLAG_ALLOW_STREAM_OUTPUT : D3D12_ROOT_SIGNATURE_FLAG_NONE);
 }
 constexpr DXGI_FORMAT c交换链格式 = DXGI_FORMAT_R16G16B16A16_FLOAT;
 constexpr DXGI_FORMAT c深度模板格式 = DXGI_FORMAT_D32_FLOAT_S8X24_UINT;
@@ -119,7 +119,7 @@ struct S图形管线参数 : public D3D12_GRAPHICS_PIPELINE_STATE_DESC {
 	void fs图元拓扑类型(E图元拓扑类型);
 };
 struct S资源栅栏 : public D3D12_RESOURCE_BARRIER {
-	static S资源栅栏 fc变换(ID3D12Resource* 资源, D3D12_RESOURCE_STATES 前, D3D12_RESOURCE_STATES 后, UINT 子资源 = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES, D3D12_RESOURCE_BARRIER_FLAGS 标记 = D3D12_RESOURCE_BARRIER_FLAG_NONE);
+	static S资源栅栏 fc变换(ID3D12Resource* 资源, D3D12_RESOURCE_STATES 前, D3D12_RESOURCE_STATES 后, UINT 子资源 = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES, D3D12_RESOURCE_BARRIER_FLAGS 标志 = D3D12_RESOURCE_BARRIER_FLAG_NONE);
 };
 struct S堆属性 : public D3D12_HEAP_PROPERTIES {
 	static S堆属性 fc类型(D3D12_HEAP_TYPE 类型, UINT 创建节点掩码 = 1, UINT 可见节点掩码 = 1);
@@ -138,13 +138,13 @@ struct S清除值 : public D3D12_CLEAR_VALUE {
 class C三维 {
 public:
 	static constexpr UINT c帧数 = 2;
-	enum E标记 {
+	enum E标志 {
 		e调试,
 		e软件设备
 	};
 	~C三维();
 	//手动初始化
-	void f初始化窗口(HWND p);
+	void f初始化窗口(HWND);
 	HRESULT f初始化设备();
 	HRESULT f初始化命令队列();
 	HRESULT f初始化交换链();
@@ -173,7 +173,7 @@ public:
 public:
 	HWND m窗口 = nullptr;
 	int m窗口大小[2];
-	std::bitset<32> m标记;
+	std::bitset<32> m标志;
 	ComPtr<ID3D12Device> m设备;
 	ComPtr<ID3D12CommandQueue> m命令队列;
 	ComPtr<IDXGISwapChain3> m交换链;
@@ -242,10 +242,10 @@ public:
 	ComPtr<ID3D12GraphicsCommandList> m命令列表;
 	ComPtr<ID3D12PipelineState> m图形管线;
 	std::vector<ComPtr<ID3D12Resource>> ma更新资源;
-	C渲染目标管理 *m渲染目标管理;
-	C深度模板管理 *m深度模板管理;
+	C渲染目标管理 *m渲染目标管理 = nullptr;
+	C深度模板管理 *m深度模板管理 = nullptr;
 	D3D12_CPU_DESCRIPTOR_HANDLE m深度模板视图;
-	UINT m帧索引;
+	UINT m帧索引 = 0;
 	D3D12_VIEWPORT m视口;
 	D3D12_RECT m裁剪矩形;
 	HANDLE m围栏事件;
@@ -322,7 +322,7 @@ public:
 class C渲染状态 {
 public:
 	struct S光栅化 {
-		D3D12_RASTERIZER_DESC m默认, m线框渲染;
+		D3D12_RASTERIZER_DESC m默认, m线框渲染, m显示隐藏面, m反面渲染;
 	} m光栅化;
 	struct S混合 {
 		D3D12_BLEND_DESC m默认, m开启透明;
@@ -335,8 +335,8 @@ public:
 	} m采样器;
 	C渲染状态();
 	~C渲染状态();
-	static D3D12_SAMPLER_DESC f采样器转换(const D3D12_STATIC_SAMPLER_DESC &);
-	static D3D12_STATIC_SAMPLER_DESC f采样器转换(const D3D12_SAMPLER_DESC &, UINT = 0, UINT = 0, D3D12_SHADER_VISIBILITY = D3D12_SHADER_VISIBILITY_ALL);
+	static D3D12_SAMPLER_DESC ft采样器(const D3D12_STATIC_SAMPLER_DESC &);
+	static D3D12_STATIC_SAMPLER_DESC ft静态采样器(const D3D12_SAMPLER_DESC &, UINT 寄存器 = 0, UINT 空间 = 0, D3D12_SHADER_VISIBILITY 可视性 = D3D12_SHADER_VISIBILITY_ALL);
 };
 //==============================================================================
 // 修改
@@ -401,23 +401,23 @@ public:
 	static D3D12_DESCRIPTOR_RANGE_TYPE f计算描述范围类型(E类型);
 	C根签名参数 &f添加描述符(E类型, UINT 寄存器, UINT 空间, E着色器 可见性 = E着色器::e全部);
 	C根签名参数 &f添加采样器(const D3D12_SAMPLER_DESC &, UINT 寄存器, UINT 空间, E着色器 可见性 = E着色器::e全部);
-	C根签名参数 &f添加范围(E类型 m类型, UINT m分配数量 = 1, UINT m开始寄存器 = 0, UINT m寄存器空间 = 0, UINT m偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND, E着色器 可见性 = E着色器::e全部);
-	C根签名参数 &f连续添加范围(E类型 m类型, UINT m分配数量 = 1, UINT m开始寄存器 = 0, UINT m寄存器空间 = 0, UINT m偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND);
+	C根签名参数 &f添加范围(E类型 类型, UINT 分配数量 = 1, UINT 开始寄存器 = 0, UINT 寄存器空间 = 0, UINT 偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND, E着色器 可见性 = E着色器::e全部);
+	C根签名参数 &f连续添加范围(E类型 类型, UINT 分配数量 = 1, UINT 开始寄存器 = 0, UINT 寄存器空间 = 0, UINT 偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND);
 	C根签名参数 &f连续添加范围开始(E着色器 可见性 = E着色器::e全部);
 	C根签名参数 &f连续添加范围结束();
-	void fs标记(E根签名标记);
-	void fs标记(D3D12_ROOT_SIGNATURE_FLAGS);
+	void fs标志(E根签名标志);
+	void fs标志(D3D12_ROOT_SIGNATURE_FLAGS);
 public:
-	void f实现_添加范围(E类型 m类型, UINT m分配数量 = 1, UINT m开始寄存器 = 0, UINT m寄存器空间 = 0, UINT m偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND);
+	void f实现_添加范围(E类型 类型, UINT 分配数量 = 1, UINT 开始寄存器 = 0, UINT 寄存器空间 = 0, UINT 偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND);
 	void f实现_添加索引(E根参数类型);
 	std::vector<S根参数索引> ma索引;
 	std::vector<D3D12_ROOT_PARAMETER> ma参数;
 	std::vector<D3D12_STATIC_SAMPLER_DESC> ma采样器;
 	std::vector<D3D12_DESCRIPTOR_RANGE> ma描述范围;
 	std::vector<S描述符表> ma描述符表;
-	D3D12_ROOT_SIGNATURE_FLAGS m标记 = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	D3D12_ROOT_SIGNATURE_FLAGS m标志 = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 	S描述符表 m连续添加;
-	bool mw连续添加 = false;
+	bool mi连续添加 = false;
 };
 //资源工厂
 class C缓冲工厂 {
