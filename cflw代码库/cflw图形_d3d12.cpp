@@ -3,7 +3,6 @@
 #include "d3dx12.h"
 #include "cflw视窗.h"
 #include "cflw辅助.h"
-#include "cflw辅助_win.h"
 namespace cflw::图形::d3d12 {
 //=============================================================================
 // 三维
@@ -101,47 +100,64 @@ HRESULT C三维::f初始化交换链() {
 HRESULT C三维::f初始化渲染目标视图() {
 	assert(m设备);
 	m渲染目标管理 = std::make_unique<C渲染目标管理>();
+	//堆
 	D3D12_DESCRIPTOR_HEAP_DESC v描述 = {};
 	v描述.NumDescriptors = c帧数;
 	v描述.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 	v描述.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 	m设备->CreateDescriptorHeap(&v描述, IID_PPV_ARGS(&m渲染目标管理->m渲染目标堆));
 	m渲染目标管理->m渲染目标视图大小 = m设备->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	//循环
 	D3D12_CPU_DESCRIPTOR_HANDLE v渲染目标视图句柄 = m渲染目标管理->m渲染目标堆->GetCPUDescriptorHandleForHeapStart();
-	for (UINT n = 0; n < c帧数; ++n) {
-		auto &v渲染目标 = m渲染目标管理->m渲染目标[n];
-		m交换链->GetBuffer(n, IID_PPV_ARGS(&v渲染目标));
+	for (UINT i = 0; i < c帧数; ++i) {
+		auto &v渲染目标 = m渲染目标管理->m渲染目标[i];
+		//资源
+		m交换链->GetBuffer(i, IID_PPV_ARGS(&v渲染目标));
+		//视图
 		m设备->CreateRenderTargetView(v渲染目标.Get(), nullptr, v渲染目标视图句柄);
 		v渲染目标视图句柄.ptr += m渲染目标管理->m渲染目标视图大小;
-		const std::wstring v名称 = std::wstring(L"渲染目标") + std::to_wstring(n);
+		//名称
+		const std::wstring v名称 = std::wstring(L"渲染目标") + std::to_wstring(i);
 		v渲染目标->SetName(v名称.c_str());
 	}
 	return S_OK;
 }
 HRESULT C三维::f初始化深度模板视图() {
 	m深度模板管理 = std::make_unique<C深度模板管理>();
-	//资源
-	const D3D12_RESOURCE_DESC v资源描述 = S资源描述::fc纹理2(m窗口大小[0], m窗口大小[1], c深度模板格式, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
-	const D3D12_HEAP_PROPERTIES v堆属性 = S堆属性::fc类型(D3D12_HEAP_TYPE_DEFAULT);
-	const D3D12_CLEAR_VALUE v清除值 = S清除值::fc深度模板(c深度模板格式, c清屏深度r, 0);
-	HRESULT hr = m设备->CreateCommittedResource(&v堆属性, D3D12_HEAP_FLAG_NONE, &v资源描述, D3D12_RESOURCE_STATE_DEPTH_WRITE, &v清除值, IID_PPV_ARGS(&m深度模板管理->m深度模板));
-	if (FAILED(hr)) {
-		return hr;
-	}
 	//堆
 	D3D12_DESCRIPTOR_HEAP_DESC v堆描述 = {};
 	v堆描述.NumDescriptors = 1;
 	v堆描述.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 	v堆描述.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-	hr = m设备->CreateDescriptorHeap(&v堆描述, IID_PPV_ARGS(&m深度模板管理->m深度模板堆));
+	HRESULT hr = m设备->CreateDescriptorHeap(&v堆描述, IID_PPV_ARGS(&m深度模板管理->m深度模板堆));
 	if (FAILED(hr)) {
 		return hr;
 	}
+	//资源准备
+	const D3D12_RESOURCE_DESC v资源描述 = S资源描述::fc纹理2(m窗口大小[0], m窗口大小[1], c深度模板格式, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
+	const D3D12_HEAP_PROPERTIES v堆属性 = S堆属性::fc类型(D3D12_HEAP_TYPE_DEFAULT);
+	const D3D12_CLEAR_VALUE v清除值 = S清除值::fc深度模板(c深度模板格式, c清屏深度r, 0);
+	//视图准备
 	D3D12_DEPTH_STENCIL_VIEW_DESC v视图描述 = {};
 	v视图描述.Format = c深度模板格式;
 	v视图描述.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 	v视图描述.Texture2D.MipSlice = 0;
-	m设备->CreateDepthStencilView(m深度模板管理->m深度模板.Get(), &v视图描述, m深度模板管理->m深度模板堆->GetCPUDescriptorHandleForHeapStart());
+	//循环
+	D3D12_CPU_DESCRIPTOR_HANDLE v深度模板视图句柄 = m深度模板管理->m深度模板堆->GetCPUDescriptorHandleForHeapStart();
+	for (UINT i = 0; i != c帧数; ++i) {
+		auto &v深度模板 = m深度模板管理->m深度模板[i];
+		//资源
+		hr = m设备->CreateCommittedResource(&v堆属性, D3D12_HEAP_FLAG_NONE, &v资源描述, D3D12_RESOURCE_STATE_DEPTH_WRITE, &v清除值, IID_PPV_ARGS(&v深度模板));
+		if (FAILED(hr)) {
+			return hr;
+		}
+		//视图
+		m设备->CreateDepthStencilView(v深度模板.Get(), &v视图描述, v深度模板视图句柄);
+		v深度模板视图句柄.ptr += m深度模板管理->m深度模板视图大小;
+		//名称
+		const std::wstring v名称 = std::wstring(L"深度模板") + std::to_wstring(i);
+		v深度模板->SetName(v名称.c_str());
+	}
 	return S_OK;
 }
 HRESULT C三维::f初始化根签名() {
@@ -156,12 +172,12 @@ HRESULT C三维::f初始化根签名() {
 bool C三维::f初始化(const HWND &a) {
 	try {
 		f初始化窗口(a);
-		辅助::f失败则抛出(f初始化设备());
-		辅助::f失败则抛出(f初始化命令队列());
-		辅助::f失败则抛出(f初始化交换链());
-		辅助::f失败则抛出(f初始化渲染目标视图());
-		辅助::f失败则抛出(f初始化深度模板视图());
-		辅助::f失败则抛出(f初始化根签名());
+		视窗::f失败则抛出(f初始化设备());
+		视窗::f失败则抛出(f初始化命令队列());
+		视窗::f失败则抛出(f初始化交换链());
+		视窗::f失败则抛出(f初始化渲染目标视图());
+		视窗::f失败则抛出(f初始化深度模板视图());
+		视窗::f失败则抛出(f初始化根签名());
 		return true;
 	} catch (HRESULT hr) {
 		return false;
@@ -187,10 +203,10 @@ HRESULT C三维::f创建命令列表(tp命令列表 &a, ID3D12PipelineState *a图形管线) {
 	if (FAILED(hr)) {
 		return hr;
 	}
-	//hr = a->Close();
-	//if (FAILED(hr)) {
-	//	return hr;
-	//}
+	hr = a->Close();
+	if (FAILED(hr)) {
+		return hr;
+	}
 	return S_OK;
 }
 HRESULT C三维::f创建根签名(tp根签名 &a, const C根签名参数 &a参数) {
@@ -278,6 +294,7 @@ C渲染控制 &C三维::fg渲染控制() {
 		m渲染控制->m渲染目标管理 = m渲染目标管理.get();
 		m渲染控制->m深度模板管理 = m深度模板管理.get();
 		m渲染目标管理->m帧索引 = &m渲染控制->m帧索引;
+		m深度模板管理->m帧索引 = &m渲染控制->m帧索引;
 		m渲染控制->m视口 = fg窗口视口();
 		m渲染控制->m裁剪矩形 = fg窗口矩形();
 		m渲染控制->f初始化围栏(m设备.Get());
@@ -315,6 +332,9 @@ C纹理工厂 &C三维::fg纹理工厂() {
 }
 ID3D12RootSignature *C三维::fg默认根签名() {
 	return m根签名.Get();
+}
+ComPtr<ID3D12Device> C三维::fg设备() const {
+	return m设备;
 }
 //=============================================================================
 // 创建设备
@@ -396,16 +416,14 @@ HRESULT C渲染控制::f初始化围栏(ID3D12Device *a设备) {
 	return S_OK;
 }
 void C渲染控制::f开始() {
-	m命令分配器->Reset();
-	m命令列表->Reset(m命令分配器.Get(), m图形管线.Get());
 	m命令列表->SetGraphicsRootSignature(m根签名.Get());
 	m命令列表->RSSetViewports(1, &m视口);
 	m命令列表->RSSetScissorRects(1, &m裁剪矩形);
 	const D3D12_RESOURCE_BARRIER v栅栏 = fc渲染视图栅栏变换(D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
 	m命令列表->ResourceBarrier(1, &v栅栏);
 	m渲染目标管理->f更新视图();
-	m深度模板视图 = m深度模板管理->m深度模板堆->GetCPUDescriptorHandleForHeapStart();
-	m命令列表->OMSetRenderTargets(1, &m渲染目标管理->fg当前视图(), FALSE, &m深度模板视图);
+	m深度模板管理->f更新视图();
+	m命令列表->OMSetRenderTargets(1, &m渲染目标管理->fg当前视图(), FALSE, &m深度模板管理->fg当前视图());
 }
 void C渲染控制::f结束() {
 	const D3D12_RESOURCE_BARRIER v栅栏 = fc渲染视图栅栏变换(D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
@@ -414,23 +432,31 @@ void C渲染控制::f结束() {
 void C渲染控制::f清屏() {
 	m命令列表->ClearRenderTargetView(m渲染目标管理->fg当前视图(), m清屏颜色.v, 0, nullptr);
 	constexpr D3D12_CLEAR_FLAGS c清除深度模板标志 = D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL;
-	m命令列表->ClearDepthStencilView(m深度模板视图, c清除深度模板标志, m清屏深度, m清屏模板, 0, nullptr);
+	m命令列表->ClearDepthStencilView(m深度模板管理->fg当前视图(), c清除深度模板标志, m清屏深度, m清屏模板, 0, nullptr);
+}
+void C渲染控制::f显示() {
+	m交换链->Present(1, 0);
+	f等待完成帧();
+	f更新帧索引();
+	ma更新资源.clear();
+}
+void C渲染控制::f重置命令() {
+	m命令分配器->Reset();
+	m命令列表->Reset(m命令分配器.Get(), m图形管线.Get());
 }
 void C渲染控制::f执行命令() {
 	m命令列表->Close();
 	ID3D12CommandList* v命令列表[] = {m命令列表.Get()};
 	m命令队列->ExecuteCommandLists(_countof(v命令列表), v命令列表);
+}
+void C渲染控制::f执行命令并等待() {
+	f执行命令();
 	f等待完成帧();
 	ma更新资源.clear();
 }
 void C渲染控制::f执行命令并显示() {
-	m命令列表->Close();
-	ID3D12CommandList* v命令列表[] = {m命令列表.Get()};
-	m命令队列->ExecuteCommandLists(_countof(v命令列表), v命令列表);
-	m交换链->Present(1, 0);
-	f等待完成帧();
-	f更新帧索引();
-	ma更新资源.clear();
+	f执行命令();
+	f显示();
 }
 void C渲染控制::f绘制(UINT a顶点数, UINT a开始) {
 	m命令列表->DrawInstanced(a顶点数, 1, a开始, 0);
@@ -450,6 +476,9 @@ void C渲染控制::f等待完成帧() {
 }
 UINT C渲染控制::f更新帧索引() {
 	m帧索引 = m交换链->GetCurrentBackBufferIndex();
+	return m帧索引;
+}
+UINT C渲染控制::fg帧索引() const {
 	return m帧索引;
 }
 void C渲染控制::f更新资源(ID3D12Resource *a目标, ID3D12Resource *a源) {
@@ -521,6 +550,20 @@ const D3D12_CPU_DESCRIPTOR_HANDLE &C渲染目标管理::fg当前视图() const {
 ID3D12Resource *C渲染目标管理::fg当前资源() const {
 	return m渲染目标[*m帧索引].Get();
 }
+const D3D12_CPU_DESCRIPTOR_HANDLE &C深度模板管理::f更新视图() {
+	m当前深度模板视图 = m深度模板堆->GetCPUDescriptorHandleForHeapStart();
+	m当前深度模板视图.ptr += *m帧索引 * m深度模板视图大小;
+	return m当前深度模板视图;
+
+}
+const D3D12_CPU_DESCRIPTOR_HANDLE &C深度模板管理::fg当前视图() const {
+	return m当前深度模板视图;
+
+}
+ID3D12Resource *C深度模板管理::fg当前资源() const {
+	return m深度模板[*m帧索引].Get();
+}
+
 //=============================================================================
 // 资源
 //=============================================================================
@@ -1080,8 +1123,8 @@ S资源描述 S资源描述::fc纹理2(UINT64 a宽, UINT a高, DXGI_FORMAT a格式, D3D12_RESO
 //==============================================================================
 // 图形管线参数
 //==============================================================================
-S图形管线参数::S图形管线参数() {
-	辅助::f清零(*this);
+S图形管线参数::S图形管线参数():
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC() {
 	NumRenderTargets = 1;
 	RTVFormats[0] = c交换链格式;
 	SampleDesc.Count = 1;

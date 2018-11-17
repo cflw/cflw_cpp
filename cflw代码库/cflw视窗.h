@@ -47,28 +47,28 @@ enum class E通用权限: unsigned long {	//行:6510-6513
 //==============================================================================
 // winbase.h
 //==============================================================================
-inline void *f内存移动(void *const&目标, void *const&源, const size_t &大小){
-	return MoveMemory (目标, 源, 大小);
+inline void *f内存移动(void *a目标, void *a源, size_t a大小) {
+	return MoveMemory(a目标, a源, a大小);
 };	//行:103
-inline void *f内存复制(void *const&目标, void *const&源, const size_t &大小){
-	return CopyMemory (目标, 源, 大小);
+inline void *f内存复制(void *a目标, void *a源, size_t a大小) {
+	return CopyMemory(a目标, a源, a大小);
 };	//行:104
-inline void *f内存填充(void *const&目标, const int &值, const size_t &大小){
-	return FillMemory (目标, 值, 大小);
+inline void *f内存填充(void *a目标, int a值, size_t a大小) {
+	return FillMemory(a目标, a值, a大小);
 };	//行:105
-inline void *f内存清空(void *const&目标, const size_t &大小){
-	return ZeroMemory (目标, 大小);
+inline void *f内存清空(void *a目标, size_t a大小) {
+	return ZeroMemory(a目标, a大小);
 };	//行:106
-inline DWORD f设置文件指针(HANDLE 文件, LONG 移动距离, PLONG 移动高度距离, DWORD 移动方式){
-	return SetFilePointer(文件, 移动距离, 移动高度距离, 移动方式);
+inline DWORD f设置文件指针(HANDLE a文件, LONG a移动距离, PLONG a移动高度距离, DWORD a移动方式) {
+	return SetFilePointer(a文件, a移动距离, a移动高度距离, a移动方式);
 };	//行:4984-4992
-inline BOOL f关闭句柄(HANDLE 句柄){
-	return CloseHandle(句柄);
+inline BOOL f关闭句柄(HANDLE a句柄) {
+	return CloseHandle(a句柄);
 };	//行:5068
 //==============================================================================
 // winuser.h
 //==============================================================================
-typedef WNDPROC t窗口过程;//行:62
+typedef WNDPROC tf窗口过程;//行:62
 enum class E窗口消息 : unsigned int {	//行:1723
 	e无 = WM_NULL,
 	e创建 = WM_CREATE,
@@ -107,12 +107,38 @@ enum class E文本格式 : unsigned long {	//行:6594
 //==============================================================================
 // winerror.h
 //==============================================================================
-inline bool fi成功(HRESULT a结果) {
-	return a结果 >= 0;
-};	//行:23775
-inline bool fi失败(HRESULT a结果) {
-	return a结果 < 0;
-};	//行:23775
+inline void f失败则抛出(HRESULT hr) {
+	if (FAILED(hr)) {
+		__debugbreak();
+		throw hr;
+	}
+}
+inline bool fi成功(HRESULT hr) {
+	return SUCCEEDED(hr);
+}
+inline bool fi失败(HRESULT hr) {
+	return FAILED(hr);
+}
+//==============================================================================
+// COM组件对象模型
+//==============================================================================
+template<typename t> inline void f释放(t &a) {
+	static_assert(std::is_base_of<IUnknown, std::remove_pointer<t>::type>::value, "必需是IUnknown的派生类");
+	if (a) {
+		a->Release();
+		a = nullptr;
+	}
+}
+template<typename t> inline void f释放1(t *a, int a1) {
+	for (int i = 0; i < a1; ++i) {
+		f释放(a[i]);
+	}
+}
+template<typename t> inline void f释放2(t *a, int a1, int a2) {
+	for (int i1 = 0; i1 < a1; ++i1) {
+		f释放1(a[i1], a2);
+	}
+}
 //==============================================================================
 // 使用类/结构
 //==============================================================================
@@ -241,5 +267,16 @@ public:
 private:
 	HWND m窗口 = nullptr;
 	HIMC m输入法 = nullptr;
+};
+//==============================================================================
+// 区域
+//==============================================================================
+class C语言区域 {
+public:
+	static LANGID f提取主语言标识(LANGID);
+	static LANGID f提取子语言标识(LANGID);
+	static LANGID f合并语言标识(LANGID 主, LANGID 子);
+	static LANGID fg语言标识();
+	static std::wstring fg语言名称();
 };
 }	//namespace cflw::视窗

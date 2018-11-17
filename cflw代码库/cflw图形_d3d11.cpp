@@ -2,9 +2,7 @@
 #include <wrl.h>
 #include <D3Dcompiler.h>
 #include "cflw图形_d3d11.h"
-#include "cflw辅助_win.h"
 #include "cflw视窗.h"
-#include "cflw图形_d3d纹理.h"
 using Microsoft::WRL::ComPtr;
 namespace cflw::图形::d3d11 {
 //=============================================================================
@@ -145,10 +143,10 @@ HRESULT C三维::f初始化深度模板视图() {
 bool C三维::f初始化(HWND a) {
 	try {
 		f初始化窗口(a);
-		辅助::f失败则抛出(f初始化设备());
-		辅助::f失败则抛出(f初始化交换链());
-		辅助::f失败则抛出(f初始化渲染目标视图());
-		辅助::f失败则抛出(f初始化深度模板视图());
+		视窗::f失败则抛出(f初始化设备());
+		视窗::f失败则抛出(f初始化交换链());
+		视窗::f失败则抛出(f初始化渲染目标视图());
+		视窗::f失败则抛出(f初始化深度模板视图());
 		m上下文->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		f设置视口();
 		return true;
@@ -256,13 +254,18 @@ C渲染状态 &C三维::fg渲染状态() {
 	}
 	return *m渲染状态;
 }
-ComPtr<ID3D11Device> C三维::fg设备() {
+ComPtr<ID3D11Device> C三维::fg设备() const {
 	return m设备;
 }
-ComPtr<ID3D11DeviceContext> C三维::fg上下文() {
+ComPtr<IDXGIDevice> C三维::fg基础设备() const {
+	ComPtr<IDXGIDevice> v设备;
+	m设备.As(&v设备);
+	return v设备;
+}
+ComPtr<ID3D11DeviceContext> C三维::fg上下文() const {
 	return m上下文;
 }
-ComPtr<IDXGISwapChain> C三维::fg交换链() {
+ComPtr<IDXGISwapChain> C三维::fg交换链() const {
 	return m交换链;
 }
 D3D11_VIEWPORT C三维::fg窗口视口() const {

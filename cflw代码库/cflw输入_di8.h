@@ -9,7 +9,6 @@
 #include <wrl.h>
 #include "cflw输入.h"
 #include "cflw辅助.h"
-#include "cflw辅助_win.h"
 //代码开始
 #define DINPUT_BUFFERSIZE 16
 namespace cflw::输入::di8 {

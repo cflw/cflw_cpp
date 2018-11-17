@@ -4,7 +4,7 @@
 #include <wrl.h>
 #include <dxgi.h>
 #include "cflw数学_图形.h"
-namespace cflw::图形::纹理 {
+namespace cflw::图形::dx纹理 {
 //格式
 namespace 格式 {
 bool f检查srgb(IWICBitmapFrameDecode *);

@@ -79,13 +79,7 @@
     <ClInclude Include="cflw数学_函数方程.h">
       <Filter>数学</Filter>
     </ClInclude>
-    <ClInclude Include="cflw图形_d3d纹理.h">
-      <Filter>图形</Filter>
-    </ClInclude>
     <ClInclude Include="cflw辅助.h">
-      <Filter>帮助</Filter>
-    </ClInclude>
-    <ClInclude Include="cflw辅助_win.h">
       <Filter>帮助</Filter>
     </ClInclude>
     <ClInclude Include="cflw异常.h">
@@ -120,6 +114,12 @@
     </ClInclude>
     <ClInclude Include="cflw工具_运算.h">
       <Filter>工具</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw图形_dx纹理.h">
+      <Filter>图形</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw图形_d3d11上12.h">
+      <Filter>图形</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -171,9 +171,6 @@
     <ClCompile Include="cflw数学_函数方程.cpp">
       <Filter>数学</Filter>
     </ClCompile>
-    <ClCompile Include="cflw图形_d3d纹理.cpp">
-      <Filter>图形</Filter>
-    </ClCompile>
     <ClCompile Include="cflw辅助.cpp">
       <Filter>帮助</Filter>
     </ClCompile>
@@ -204,6 +201,12 @@
     <ClCompile Include="常用代码\窗口模板.cpp">
       <Filter>常用代码</Filter>
     </ClCompile>
+    <ClCompile Include="cflw图形_dx纹理.cpp">
+      <Filter>图形</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw图形_d3d11上12.cpp">
+      <Filter>图形</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cflw数学_杂烩.inl">
@@ -220,6 +223,9 @@
     </None>
     <None Include="常用代码\3d.hlsl">
       <Filter>常用代码</Filter>
+    </None>
+    <None Include="cflw图形_d2d.inl">
+      <Filter>图形</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@
 #include <d3d12.h>
 #include <wrl.h>
 #include "cflw数学_图形.h"
-#include "cflw图形_d3d纹理.h"
+#include "cflw图形_dx纹理.h"
 #ifdef _WINDOWS
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "D3dcompiler.lib")
@@ -15,6 +15,8 @@
 #endif
 
 namespace cflw::图形::d3d12 {
+namespace 纹理 = dx纹理;
+//接口
 using Microsoft::WRL::ComPtr;
 typedef ComPtr<IDXGIFactory4> tp基础工厂;
 typedef ComPtr<IDXGIAdapter3> tp显卡;
@@ -26,15 +28,20 @@ typedef ComPtr<ID3D12Resource> tp资源;
 typedef ComPtr<ID3DBlob> tp着色器;
 typedef ComPtr<ID3D12RootSignature> tp根签名;
 typedef ComPtr<ID3D12DescriptorHeap> tp描述符堆;
+//主要
 class C创建设备;
 class C渲染控制;
 class C渲染状态;
 class C缓冲工厂;
 class C纹理工厂;
+//管理
 class C渲染目标管理;
 class C深度模板管理;
+class C命令分配器管理;
+//参数
 class C顶点格式;
 class C根签名参数;
+//资源
 class C顶点缓冲;
 class C索引缓冲;
 class C固定缓冲;
@@ -170,6 +177,7 @@ public:
 	C缓冲工厂 &fg缓冲工厂();
 	C纹理工厂 &fg纹理工厂();
 	ID3D12RootSignature *fg默认根签名();
+	ComPtr<ID3D12Device> fg设备() const;
 public:
 	HWND m窗口 = nullptr;
 	int m窗口大小[2];
@@ -211,7 +219,10 @@ public:
 	void f开始();	//重置命令,并做一些重要设置
 	void f结束();	//结束录制命令列表
 	void f清屏();
+	void f显示();
+	void f重置命令();
 	void f执行命令();
+	void f执行命令并等待();
 	void f执行命令并显示();
 	void f绘制(UINT 顶点数, UINT 开始 = 0);
 	void f绘制索引(UINT 索引数, UINT 开始索引 = 0, INT 开始顶点 = 0);
@@ -219,6 +230,7 @@ public:
 	UINT f更新帧索引();
 	void f更新资源(ID3D12Resource *目标, ID3D12Resource *源);
 	void f更新纹理(ID3D12Resource *目标, ID3D12Resource *源, D3D12_SUBRESOURCE_DATA &);
+	UINT fg帧索引() const;
 	//设置
 	void fs清屏颜色(const 数学::S颜色 &);
 	void fs清屏深度(float);
@@ -231,7 +243,6 @@ public:
 	void fs固定缓冲(UINT, const D3D12_GPU_VIRTUAL_ADDRESS &);
 	void fs纹理(UINT, const D3D12_GPU_VIRTUAL_ADDRESS &);
 	void fs描述符表(UINT, ID3D12DescriptorHeap *);
-	//void fs描述符表(const std::initializer_list<ID3D12DescriptorHeap*> &);
 	//其它
 	D3D12_RESOURCE_BARRIER fc渲染视图栅栏变换(D3D12_RESOURCE_STATES, D3D12_RESOURCE_STATES);
 public:
@@ -244,7 +255,6 @@ public:
 	std::vector<ComPtr<ID3D12Resource>> ma更新资源;
 	C渲染目标管理 *m渲染目标管理 = nullptr;
 	C深度模板管理 *m深度模板管理 = nullptr;
-	D3D12_CPU_DESCRIPTOR_HANDLE m深度模板视图;
 	UINT m帧索引 = 0;
 	D3D12_VIEWPORT m视口;
 	D3D12_RECT m裁剪矩形;
@@ -272,8 +282,19 @@ public:
 };
 class C深度模板管理 {
 public:
-	ComPtr<ID3D12Resource> m深度模板;
+	const D3D12_CPU_DESCRIPTOR_HANDLE &f更新视图();
+	const D3D12_CPU_DESCRIPTOR_HANDLE &fg当前视图() const;
+	ID3D12Resource *fg当前资源() const;
+public:
+	ComPtr<ID3D12Resource> m深度模板[C三维::c帧数];
 	ComPtr<ID3D12DescriptorHeap> m深度模板堆;
+	D3D12_CPU_DESCRIPTOR_HANDLE m当前深度模板视图;
+	UINT m深度模板视图大小;
+	const UINT *m帧索引;
+};
+class C命令分配器管理 {
+public:
+
 };
 //==============================================================================
 // 资源&缓冲&视图

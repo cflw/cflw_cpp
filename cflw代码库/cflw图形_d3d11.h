@@ -17,9 +17,10 @@
 #include "cflw辅助.h"
 #include "cflw数学.h"
 #include "cflw数学_图形.h"
-#include "cflw图形_d3d纹理.h"
+#include "cflw图形_dx纹理.h"
 //命名空间
 namespace cflw::图形::d3d11 {
+namespace 纹理 = dx纹理;
 //=============================================================================
 // 前置声明
 //=============================================================================
@@ -146,9 +147,10 @@ public:
 	// 资源
 	C渲染控制 &fg渲染控制();	//必须在初始化完成之后才能调用
 	C渲染状态 &fg渲染状态();
-	ComPtr<ID3D11Device> fg设备();
-	ComPtr<ID3D11DeviceContext> fg上下文();
-	ComPtr<IDXGISwapChain> fg交换链();
+	ComPtr<ID3D11Device> fg设备() const;
+	ComPtr<IDXGIDevice> fg基础设备() const;
+	ComPtr<ID3D11DeviceContext> fg上下文() const;
+	ComPtr<IDXGISwapChain> fg交换链() const;
 	D3D11_VIEWPORT fg窗口视口() const;
 	数学::S向量2 fg窗口大小() const;
 	// 设置

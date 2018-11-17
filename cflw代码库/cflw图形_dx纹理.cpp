@@ -1,7 +1,7 @@
 #include <cassert>
 #include <unordered_map>
 #include <unordered_set>
-#include "cflw图形_d3d纹理.h"
+#include "cflw图形_dx纹理.h"
 namespace std {
 template<> struct hash<GUID> {
 	size_t operator()(const GUID &a) const {
@@ -12,7 +12,7 @@ template<> struct hash<GUID> {
 	}
 };
 }
-namespace cflw::图形::纹理 {
+namespace cflw::图形::dx纹理 {
 C图像工厂::~C图像工厂() {
 	m工厂.Reset();
 	CoUninitialize();

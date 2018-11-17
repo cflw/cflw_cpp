@@ -1,7 +1,6 @@
 #include <wrl.h>
 #include "cflw工具.h"
 #include "cflw图形_d2d.h"
-#include "cflw辅助_win.h"
 #include "cflw视窗.h"
 //声明
 using Microsoft::WRL::ComPtr;
@@ -20,26 +19,27 @@ HRESULT C二维::f初始化(HWND a窗口, float a缩放) {
 	const 视窗::S客户区尺寸 v尺寸 = 视窗::S客户区尺寸::fc窗口(a窗口);
 	f初始化_窗口大小(v尺寸.fg宽(), v尺寸.fg高());
 	HRESULT hr;
-	hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, m二维工厂.GetAddressOf());
+	hr = f初始化_工厂();
 	if (FAILED(hr)) {
 		return hr;
 	}
-	数学::S向量2 dpi = fg每英寸点数(a缩放);
+	const 数学::S向量2 dpi = fg每英寸点数(a缩放);
 	const D2D1_RENDER_TARGET_PROPERTIES v渲染目标属性 = D2D1::RenderTargetProperties(
 		D2D1_RENDER_TARGET_TYPE_DEFAULT,
 		D2D1::PixelFormat(),
 		dpi.x, dpi.y
 	);
+	ComPtr<ID2D1HwndRenderTarget> v窗口渲染目标;
 	hr = m二维工厂->CreateHwndRenderTarget(
 		v渲染目标属性,
 		D2D1::HwndRenderTargetProperties(
 			a窗口, D2D1::SizeU(v尺寸.fg宽(), v尺寸.fg高())
 		),
-		&m窗口渲染目标);
+		&v窗口渲染目标);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	f初始化_渲染目标(m窗口渲染目标.Get());
+	f初始化_渲染目标(v窗口渲染目标.Get());
 	return S_OK;
 }
 HRESULT C二维::f初始化(IDXGISwapChain *a交换链, float a缩放) {
@@ -49,22 +49,47 @@ HRESULT C二维::f初始化(IDXGISwapChain *a交换链, float a缩放) {
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, m二维工厂.GetAddressOf());
+	hr = f初始化_工厂();
 	if (FAILED(hr)) {
 		return hr;
 	}
-	数学::S向量2 dpi = fg每英寸点数(a缩放);
-	const D2D1_RENDER_TARGET_PROPERTIES m渲染目标属性 = D2D1::RenderTargetProperties(
+	const 数学::S向量2 dpi = fg每英寸点数(a缩放);
+	const D2D1_RENDER_TARGET_PROPERTIES v渲染目标属性 = D2D1::RenderTargetProperties(
 		D2D1_RENDER_TARGET_TYPE_DEFAULT,
 		D2D1::PixelFormat(DXGI_FORMAT_R8G8B8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
 		dpi.x, dpi.y);
-	hr = m二维工厂->CreateDxgiSurfaceRenderTarget(v后台缓冲.Get(), m渲染目标属性, &m后台渲染目标);
+	ComPtr<ID2D1RenderTarget> v后台渲染目标;
+	hr = m二维工厂->CreateDxgiSurfaceRenderTarget(v后台缓冲.Get(), v渲染目标属性, &v后台渲染目标);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	auto v大小 = m后台渲染目标->GetSize();
+	const D2D1_SIZE_F v大小 = v后台渲染目标->GetSize();
 	f初始化_窗口大小(v大小.width, v大小.height);
-	f初始化_渲染目标(m后台渲染目标.Get());
+	f初始化_渲染目标(v后台渲染目标.Get());
+	return S_OK;
+}
+HRESULT C二维::f初始化_工厂() {
+	if (m二维工厂 == nullptr) {
+		HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, m二维工厂.GetAddressOf());
+		return hr;
+	} else {
+		return S_OK;
+	}
+}
+HRESULT C二维::f初始化_设备(IDXGIDevice *a设备) {
+	HRESULT hr = f初始化_工厂();
+	if (FAILED(hr)) {
+		return hr;
+	}
+	m二维工厂->CreateDevice(a设备, &m设备);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	hr = m设备->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &m上下文);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	f初始化_渲染目标(m上下文.Get());
 	return S_OK;
 }
 void C二维::f初始化_窗口大小(float x, float y) {
@@ -78,7 +103,29 @@ void C二维::f初始化_窗口大小(float x, float y) {
 void C二维::f初始化_渲染目标(ID2D1RenderTarget *a) {
 	m渲染目标 = a;
 	m渲染目标->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
-	//HMONITOR m显示器 = MonitorFromPoint({0, 0}, MONITOR_DEFAULTTONEAREST);
+}
+HRESULT C二维::f初始化_单个位图(IDXGISwapChain *a交换链, float a缩放) {
+	ComPtr<IDXGISurface> v后台缓冲 = nullptr;
+	HRESULT hr = a交换链->GetBuffer(0, IID_PPV_ARGS(&v后台缓冲));
+	if (FAILED(hr)) {
+		return hr;
+	}
+	const 数学::S向量2 dpi = fg每英寸点数(a缩放);
+	const D2D1_BITMAP_PROPERTIES1 v位图属性 = D2D1::BitmapProperties1(
+		D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
+		D2D1::PixelFormat(DXGI_FORMAT_UNKNOWN, D2D1_ALPHA_MODE_PREMULTIPLIED),
+		dpi.x, dpi.y
+	);
+	m上下文->SetDpi(dpi.x, dpi.y);
+	ComPtr<ID2D1Bitmap1> v位图目标;
+	hr = m上下文->CreateBitmapFromDxgiSurface(v后台缓冲.Get(), &v位图属性, &v位图目标);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	m上下文->SetTarget(v位图目标.Get());
+	const D2D1_SIZE_F v大小 = v位图目标->GetSize();
+	f初始化_窗口大小(v大小.width, v大小.height);
+	return S_OK;
 }
 void C二维::fs缩放(float a) {
 	float v = 96 * a;
@@ -87,6 +134,10 @@ void C二维::fs缩放(float a) {
 //绘制控制
 void C二维::f开始() {
 	m渲染目标->BeginDraw();
+}
+void C二维::f开始(UINT a) {
+	m上下文->SetTarget(ma位图目标[a].Get());
+	m上下文->BeginDraw();
 }
 void C二维::f清屏() {
 	m渲染目标->Clear(c清屏颜色);
@@ -154,7 +205,7 @@ ComPtr<C文本效果> C二维::fc文本效果(const 数学::S颜色 &a描边, const 数学::S颜色 
 	*v1.GetAddressOf() = v0;
 	return v1;
 }
-ComPtr<ID2D1Factory> C二维::fg二维工厂() {
+ComPtr<ID2D1Factory3> C二维::fg二维工厂() {
 	if (m二维工厂 == nullptr) {
 		HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, m二维工厂.GetAddressOf());
 	}

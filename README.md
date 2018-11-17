@@ -1,6 +1,10 @@
 # 乘风龙王的代码库(C++)
 随便写的一些东西。
 因为visual studio新建文件的默认编码问题，导致有些代码文件编码是**gb2312**，github会显示乱码。另外一些文件的编码是**utf-8带bom**，因为微软vc编译器无法识别utf-8无bom编码。
+
+项目依赖项
+* boost库
+
 ## 内容包含
 
 ### 工具
@@ -9,7 +13,7 @@
 * **cflw工具_属性**：提供属性(Property)支持。*没什么用*。
 * **cflw工具_运算**：为了方便函数式编程写的一些小函数。
 * **cflw辅助**：c++语言强化。*没什么用*。
-* **cflw辅助_win**：win32 api辅助函数。*没什么用*。
+* ~~cflw辅助_win~~(已废弃)：win32 api辅助函数。代码已合并到**cflw视窗**。
 * **cflw时间**：封装一些时间类
 * **cflw异常**：定义常用异常类
 * **cflw视窗**：win32 api的一些封装
@@ -32,7 +36,7 @@
 * **cflw图形_d3d12**：Direct3D 12的封装
 	* 要编译`cflw图形_d3d12.cpp`，其中的`d3dx12.h`来自[微软DirectX图形示例](https://github.com/Microsoft/DirectX-Graphics-Samples)
 * **cflw图形_d2d**：Direct2D 1的封装。支持高分屏。
-* **cflw图形_d3d纹理**：载入常见图片格式。
+* **cflw图形_dx纹理**：载入常见图片格式。
 
 ### 输入
 * **cflw输入**：统一的输入接口和按键相关实用工具。

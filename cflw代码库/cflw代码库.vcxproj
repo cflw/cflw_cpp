@@ -26,7 +26,7 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccLocalPath>SAK</SccLocalPath>
     <SccProvider>SAK</SccProvider>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -100,7 +100,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>$(boost)</AdditionalIncludeDirectories>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -116,7 +116,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>$(boost)</AdditionalIncludeDirectories>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -133,7 +133,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>$(boost)</AdditionalIncludeDirectories>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -152,7 +152,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>$(boost)</AdditionalIncludeDirectories>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -167,13 +167,14 @@
     <ClInclude Include="cflw单位.h" />
     <ClInclude Include="cflw图形_d2d.h" />
     <ClInclude Include="cflw图形_d3d11.h" />
+    <ClInclude Include="cflw图形_d3d11上12.h" />
     <ClInclude Include="cflw图形_d3d12.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="cflw图形_d3d纹理.h" />
+    <ClInclude Include="cflw图形_dx纹理.h" />
     <ClInclude Include="cflw多媒体.h" />
     <ClInclude Include="cflw工具.h" />
     <ClInclude Include="cflw工具_属性.h" />
@@ -193,7 +194,6 @@
     <ClInclude Include="cflw工具_运算.h" />
     <ClInclude Include="cflw视窗.h" />
     <ClInclude Include="cflw辅助.h" />
-    <ClInclude Include="cflw辅助_win.h" />
     <ClInclude Include="cflw工具_循环.h" />
     <ClInclude Include="cflw输入.h" />
     <ClInclude Include="cflw输入_di8.h" />
@@ -205,13 +205,14 @@
     <ClCompile Include="cflw图形_d2d.cpp" />
     <ClCompile Include="cflw图形_d2d助手.cpp" />
     <ClCompile Include="cflw图形_d3d11.cpp" />
+    <ClCompile Include="cflw图形_d3d11上12.cpp" />
     <ClCompile Include="cflw图形_d3d12.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="cflw图形_d3d纹理.cpp" />
+    <ClCompile Include="cflw图形_dx纹理.cpp" />
     <ClCompile Include="cflw多媒体.cpp" />
     <ClCompile Include="cflw工具.cpp" />
     <ClCompile Include="cflw异常.cpp" />
@@ -246,6 +247,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="cflw图形_d2d.inl" />
     <None Include="cflw工具.inl" />
     <None Include="cflw数学.inl" />
     <None Include="cflw数学_杂烩.inl" />
