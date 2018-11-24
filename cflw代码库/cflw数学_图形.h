@@ -44,7 +44,7 @@ struct S颜色 {
 		struct {
 			float r, g, b, a;
 		};
-		float v[4];
+		float m值[4];
 	};
 	//常量
 	static const S颜色 c白, c黑, c灰, c红, c橙, c黄, c绿, c青, c蓝, c紫, c粉;

@@ -9,7 +9,7 @@ struct S二次函数 {
 	float a, b, c;	// y = a * x^2 + b * x + c
 	S二次函数();
 	S二次函数(const S向量2 &, const S向量2 &, const S向量2 &);
-	S二次函数 &fs(const S向量2 &, const S向量2 &, const S向量2 &);
+	S二次函数 &fs三点(const S向量2 &, const S向量2 &, const S向量2 &);
 	float f求y(float) const;//y=f(x)
 	float f垂直方向(const S向量2 &) const;//参数.y-f(参数.x)
 };

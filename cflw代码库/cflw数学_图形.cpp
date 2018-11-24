@@ -118,16 +118,16 @@ constexpr float S颜色::f颜色值提取_阿(E颜色值 p) {
 }
 void S颜色::f颜色校正() {
 	for (int i = 0; i != 4; ++i) {
-		if (v[i] > 1) v[i] = 1;
-		if (v[i] < 0) v[i] = 0;
+		if (m值[i] > 1) m值[i] = 1;
+		if (m值[i] < 0) m值[i] = 0;
 	}
 }
 S颜色 S颜色::f对比度(const float &_) const {
 	S颜色 v = *this;
 	for (int i = 0; i != 4; ++i) {
-		v.v[i] *= _;
-		if (v.v[i] > 1) v.v[i] = 1;
-		if (v.v[i] < 0) v.v[i] = 0;
+		v.m值[i] *= _;
+		if (v.m值[i] > 1) v.m值[i] = 1;
+		if (v.m值[i] < 0) v.m值[i] = 0;
 	}
 	return v;
 }
@@ -137,7 +137,7 @@ S颜色 S颜色::f饱和度(const float &) const {
 S颜色 S颜色::f颜色分量乘(const float &p) const {
 	S颜色 v = *this;
 	for (int i = 0; i != 3; ++i) {
-		v.v[i] *= p;
+		v.m值[i] *= p;
 	}
 	return v;
 }
@@ -165,18 +165,18 @@ S颜色 S颜色::f颜色分量插值(const S颜色 &p颜色, const float &p插�
 S颜色 S颜色::f混合_相加(const S颜色 &p) const {
 	S颜色 v = *this;
 	for (int i = 0; i != 4; ++i) {
-		v.v[i] += p.v[i];
-		if (v.v[i] > 1) v.v[i] = 1;
-		if (v.v[i] < 0) v.v[i] = 0;
+		v.m值[i] += p.m值[i];
+		if (v.m值[i] > 1) v.m值[i] = 1;
+		if (v.m值[i] < 0) v.m值[i] = 0;
 	}
 	return v;
 }
 S颜色 S颜色::f混合_相乘(const S颜色 &p) const {
 	S颜色 v = *this;
 	for (int i = 0; i != 4; ++i) {
-		v.v[i] *= p.v[i];
-		if (v.v[i] > 1) v.v[i] = 1;
-		if (v.v[i] < 0) v.v[i] = 0;
+		v.m值[i] *= p.m值[i];
+		if (v.m值[i] > 1) v.m值[i] = 1;
+		if (v.m值[i] < 0) v.m值[i] = 0;
 	}
 	return v;
 }
@@ -199,13 +199,13 @@ S颜色 S颜色::f混合_叠底(const S颜色 &p) const {
 S颜色 S颜色::f混合_最大(const S颜色 &p) const {
 	S颜色 v;
 	for (int i = 0; i != 4; ++i)
-		v.v[i] = std::max<float>(this->v[i], p.v[i]);
+		v.m值[i] = std::max<float>(this->m值[i], p.m值[i]);
 	return v;
 }
 S颜色 S颜色::f混合_最小(const S颜色 &p) const {
 	S颜色 v;
 	for (int i = 0; i != 4; ++i)
-		v.v[i] = std::min<float>(this->v[i], p.v[i]);
+		v.m值[i] = std::min<float>(this->m值[i], p.m值[i]);
 	return v;
 }
 S颜色_亮色浓 S颜色::ft亮色浓() const {
@@ -318,27 +318,27 @@ void S欧拉角::fs惯性到物体(const S四元数 &q) {
 	}
 }
 void S欧拉角::fs物体到世界(const S矩阵4 &m) {
-	float	sp = -m.m[3][2];
+	float	sp = -m.m值[3][2];
 	if (fabs(sp) > 9.99999f) {
 		m侧 = (float)cπ / 2 * sp;
-		m头 = atan2(-m.m[2][3], m.m[1][1]);
+		m头 = atan2(-m.m值[2][3], m.m值[1][1]);
 		m背 = 0.0f;
 	} else {
-		m头 = atan2(m.m[3][1], m.m[3][3]);
+		m头 = atan2(m.m值[3][1], m.m值[3][3]);
 		m侧 = asin(sp);
-		m背 = atan2(m.m[1][2], m.m[2][2]);
+		m背 = atan2(m.m值[1][2], m.m值[2][2]);
 	}
 }
 void S欧拉角::fs世界到物体(const S矩阵4 &m) {
-	float	sp = -m.m[2][3];
+	float	sp = -m.m值[2][3];
 	if (fabs(sp) > 9.99999f) {
 		m侧 = (float)cπ / 2.f * sp;
-		m头 = atan2(-m.m[3][1], m.m[1][1]);
+		m头 = atan2(-m.m值[3][1], m.m值[1][1]);
 		m背 = 0.0f;
 	} else {
-		m头 = atan2(m.m[1][3], m.m[3][3]);
+		m头 = atan2(m.m值[1][3], m.m值[3][3]);
 		m侧 = asin(sp);
-		m背 = atan2(m.m[2][1], m.m[2][2]);
+		m背 = atan2(m.m值[2][1], m.m值[2][2]);
 	}
 }
 //=============================================================================

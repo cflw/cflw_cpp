@@ -15,7 +15,7 @@ bool fi通用格式(const GUID &);
 }
 //声明
 using Microsoft::WRL::ComPtr;
-class C固定纹理;
+class C只读纹理;
 //==============================================================================
 // 工厂
 //==============================================================================
@@ -29,7 +29,7 @@ public:
 	WICBitmapPlaneDescription f取图像描述(IWICBitmapSource *);
 	HRESULT f图像尺寸变换(IWICBitmapSource *, size_t, size_t, IWICBitmapScaler **);
 	HRESULT f图像格式变换(IWICBitmapSource *, const GUID &, IWICFormatConverter **);
-	std::unique_ptr<C固定纹理> f一键读取(const wchar_t *);
+	std::unique_ptr<C只读纹理> f一键读取(const wchar_t *);
 	//格式转换&计算
 public:
 	ComPtr<IWICImagingFactory> m工厂;
@@ -65,7 +65,7 @@ public:
 	virtual const std::byte *fg数据() const = 0;
 	virtual S纹理描述 fg描述() const;
 };
-class C固定纹理 : public I纹理 {
+class C只读纹理 : public I纹理 {
 	friend class C图像工厂;
 public:
 	size_t fg宽() const override;

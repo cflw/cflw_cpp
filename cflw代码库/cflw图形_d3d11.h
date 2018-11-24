@@ -12,9 +12,11 @@
 #include <map>
 #include <memory>
 #include <bitset>
+#include <variant>
 #include <d3d11.h>
 #include <wrl.h>
 #include "cflw辅助.h"
+#include "cflw工具_运算.h"
 #include "cflw数学.h"
 #include "cflw数学_图形.h"
 #include "cflw图形_dx纹理.h"
@@ -66,6 +68,7 @@ class C着色器工厂;
 class C图形管线;
 struct S图形管线参数;
 typedef std::shared_ptr<C图形管线> tp图形管线;
+typedef uint16_t t索引;
 //==============================================================================
 // 常量
 //==============================================================================
@@ -85,16 +88,41 @@ enum E资源用法 {
 enum E缓冲 {
 	e顶点 = D3D11_BIND_VERTEX_BUFFER,
 	e索引 = D3D11_BIND_INDEX_BUFFER,
-	e固定 = D3D11_BIND_CONSTANT_BUFFER,
+	e常量 = D3D11_BIND_CONSTANT_BUFFER,
 	e着色器 = D3D11_BIND_SHADER_RESOURCE
 };
-//常量
-typedef uint16_t t索引;
+constexpr D3D11_COMPARISON_FUNC ft比较(工具::E比较 a比较) {
+	switch (a比较) {
+	case 工具::E比较::e永不:
+		return D3D11_COMPARISON_NEVER;
+	case 工具::E比较::e小于:
+		return D3D11_COMPARISON_LESS;
+	case 工具::E比较::e等于:
+		return D3D11_COMPARISON_EQUAL;
+	case 工具::E比较::e小于等于:
+		return D3D11_COMPARISON_LESS_EQUAL;
+	case 工具::E比较::e大于:
+		return D3D11_COMPARISON_GREATER;
+	case 工具::E比较::e不等于:
+		return D3D11_COMPARISON_NOT_EQUAL;
+	case 工具::E比较::e大于等于:
+		return D3D11_COMPARISON_GREATER_EQUAL;
+	case 工具::E比较::e总是:
+		return D3D11_COMPARISON_ALWAYS;
+	default:
+		return D3D11_COMPARISON_NEVER;
+	}
+}
 constexpr DXGI_FORMAT c索引格式 = DXGI_FORMAT_R16_UINT;
 constexpr DXGI_FORMAT c交换链格式 = DXGI_FORMAT_R8G8B8A8_UNORM;
 constexpr DXGI_FORMAT c深度模板格式 = DXGI_FORMAT_D32_FLOAT_S8X24_UINT;
 constexpr float c清屏深度l = 1;
 constexpr float c清屏深度r = 0;
+constexpr D3D11_RASTERIZER_DESC c默认光栅化 = {D3D11_FILL_SOLID, D3D11_CULL_BACK, FALSE, D3D11_DEFAULT_DEPTH_BIAS, D3D11_DEFAULT_DEPTH_BIAS_CLAMP, D3D11_DEFAULT_SLOPE_SCALED_DEPTH_BIAS, TRUE, FALSE, true, FALSE};
+constexpr D3D11_BLEND_DESC c默认混合 = {FALSE, FALSE, {
+	{FALSE, D3D11_BLEND_ONE, D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD, D3D11_BLEND_ONE, D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD, D3D11_COLOR_WRITE_ENABLE_ALL}, {0}, {0}, {0}, {0}, {0}, {0}, {0}
+}};
+constexpr D3D11_DEPTH_STENCIL_DESC c默认深度模板 = {FALSE, D3D11_DEPTH_WRITE_MASK_ALL, D3D11_COMPARISON_LESS, FALSE, D3D11_DEFAULT_STENCIL_READ_MASK, D3D11_DEFAULT_STENCIL_WRITE_MASK, {D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_KEEP, D3D11_COMPARISON_ALWAYS}, {D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_KEEP, D3D11_COMPARISON_ALWAYS}};
 //==============================================================================
 // 结构
 //==============================================================================
@@ -111,18 +139,26 @@ struct S图形管线参数 {
 	S着色器字节代码 m几何着色器;
 	S着色器字节代码 m外壳着色器;
 	S着色器字节代码 m域着色器;
-	ID3D11RasterizerState *m光栅化 = nullptr;
-	ID3D11BlendState *m混合 = nullptr;
-	ID3D11DepthStencilState *m深度模板 = nullptr;
+	std::variant<D3D11_RASTERIZER_DESC, ID3D11RasterizerState*> m光栅化 = nullptr;
+	std::variant<D3D11_BLEND_DESC, ID3D11BlendState*> m混合 = nullptr;
+	std::variant<D3D11_DEPTH_STENCIL_DESC, ID3D11DepthStencilState*> m深度模板 = nullptr;
 	void fs输入布局(const C顶点格式 &);
-	void fs顶点着色器(const S着色器字节代码 &);
-	void fs像素着色器(const S着色器字节代码 &);
-	void fs几何着色器(const S着色器字节代码 &);
-	void fs外壳着色器(const S着色器字节代码 &);
-	void fs域着色器(const S着色器字节代码 &);
+	void fs顶点着色器(ID3DBlob *);
+	void fs像素着色器(ID3DBlob *);
+	void fs几何着色器(ID3DBlob *);
+	void fs外壳着色器(ID3DBlob *);
+	void fs域着色器(ID3DBlob *);
+	void fs光栅化(const D3D11_RASTERIZER_DESC &);
+	void fs混合(const D3D11_BLEND_DESC &);
+	void fs深度模板(const D3D11_DEPTH_STENCIL_DESC &);
 	void fs光栅化(ID3D11RasterizerState *);
 	void fs混合(ID3D11BlendState *);
 	void fs深度模板(ID3D11DepthStencilState *);
+};
+struct S深度模板参数 : public D3D11_DEPTH_STENCIL_DESC {
+	S深度模板参数();
+	void fs深度部分(const D3D11_DEPTH_STENCIL_DESC &);
+	void fs模板部分(const D3D11_DEPTH_STENCIL_DESC &);
 };
 //==============================================================================
 // 图形引擎
@@ -234,15 +270,16 @@ public:
 	//状态控制
 	void fs混合(ID3D11BlendState * = nullptr, const 数学::S颜色 & = {0, 0, 0, 0}, UINT = 0xffffffff);
 	void fs深度模板(ID3D11DepthStencilState * = nullptr, UINT = 1);
+	void fs模板参考值(UINT);
 	void fs光栅化(ID3D11RasterizerState *);
 	void fs顶点缓冲(ID3D11Buffer *, UINT 单位大小);
 	void fs索引缓冲(ID3D11Buffer *);
-	void fs固定缓冲(UINT, ID3D11Buffer *);
-	void fs固定缓冲v(UINT, ID3D11Buffer *);
-	void fs固定缓冲p(UINT, ID3D11Buffer *);
-	void fs固定缓冲g(UINT, ID3D11Buffer *);
-	void fs固定缓冲h(UINT, ID3D11Buffer *);
-	void fs固定缓冲d(UINT, ID3D11Buffer *);
+	void fs常量缓冲(UINT, ID3D11Buffer *);
+	void fs常量缓冲v(UINT, ID3D11Buffer *);
+	void fs常量缓冲p(UINT, ID3D11Buffer *);
+	void fs常量缓冲g(UINT, ID3D11Buffer *);
+	void fs常量缓冲h(UINT, ID3D11Buffer *);
+	void fs常量缓冲d(UINT, ID3D11Buffer *);
 	void fs纹理(UINT, ID3D11ShaderResourceView *);
 	void fs采样器(UINT, ID3D11SamplerState *);
 	void fs输入布局(ID3D11InputLayout *);
@@ -310,7 +347,9 @@ public:
 		D3D11_DEPTH_STENCIL_DESC m默认,
 			m正常深度l,
 			m正常深度r,
-			m总是覆盖;
+			m总是覆盖,
+			m模板标记,
+			m模板比较;
 	} m深度模板参数;
 	struct S采样器参数 {
 		D3D11_SAMPLER_DESC m纹理,
@@ -334,7 +373,8 @@ public:
 		ComPtr<ID3D11DepthStencilState> m默认,
 			m正常深度l,
 			m正常深度r,
-			m总是覆盖;
+			m总是覆盖,
+			m模板标记;
 	} m深度模板;
 	struct S采样器 {
 		ComPtr<ID3D11SamplerState> m纹理,

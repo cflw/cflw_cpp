@@ -5,9 +5,9 @@
 #include "cflw视窗.h"
 using Microsoft::WRL::ComPtr;
 namespace cflw::图形::d3d11 {
-//=============================================================================
+//==============================================================================
 // 图形引擎
-//=============================================================================
+//==============================================================================
 C三维::~C三维() {
 	f销毁();
 }
@@ -154,52 +154,64 @@ bool C三维::f初始化(HWND a) {
 		return false;
 	}
 }
-HRESULT C三维::f创建输入布局(tp输入布局 &p输入布局, C顶点格式 &p顶点格式, const void *a数据, size_t a大小) {
-	return m设备->CreateInputLayout(p顶点格式.m数组.data(), p顶点格式.m数组.size(), a数据, a大小, &p输入布局);
+HRESULT C三维::f创建输入布局(tp输入布局 &a输入布局, C顶点格式 &a顶点格式, const void *a数据, size_t a大小) {
+	return m设备->CreateInputLayout(a顶点格式.m数组.data(), a顶点格式.m数组.size(), a数据, a大小, &a输入布局);
 }
-HRESULT C三维::f创建图形管线(tp图形管线 &a, const S图形管线参数 &p参数) {
+HRESULT C三维::f创建图形管线(tp图形管线 &a, const S图形管线参数 &a参数) {
 	C着色器工厂 &v着色器工厂 = fg着色器工厂();
 	HRESULT hr;
 	std::shared_ptr<C图形管线> v = std::make_shared<C图形管线>();
-	if (p参数.m顶点着色器) {
-		hr = v着色器工厂.f创建顶点着色器(v->m顶点着色器, p参数.m顶点着色器);
+	if (a参数.m顶点着色器) {
+		hr = v着色器工厂.f创建顶点着色器(v->m顶点着色器, a参数.m顶点着色器);
 		if (FAILED(hr)) {
 			return hr;
 		}
-		if (p参数.m顶点格式) {
-			hr = v着色器工厂.f创建输入布局(v->m输入布局, p参数.m顶点着色器, *p参数.m顶点格式);
+		if (a参数.m顶点格式) {
+			hr = v着色器工厂.f创建输入布局(v->m输入布局, a参数.m顶点着色器, *a参数.m顶点格式);
 			if (FAILED(hr)) {
 				return hr;
 			}
 		}
 	}
-	if (p参数.m几何着色器) {
-		hr = v着色器工厂.f创建几何着色器(v->m几何着色器, p参数.m几何着色器);
+	if (a参数.m几何着色器) {
+		hr = v着色器工厂.f创建几何着色器(v->m几何着色器, a参数.m几何着色器);
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
-	if (p参数.m外壳着色器) {
-		hr = v着色器工厂.f创建外壳着色器(v->m外壳着色器, p参数.m外壳着色器);
+	if (a参数.m外壳着色器) {
+		hr = v着色器工厂.f创建外壳着色器(v->m外壳着色器, a参数.m外壳着色器);
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
-	if (p参数.m域着色器) {
-		hr = v着色器工厂.f创建域着色器(v->m域着色器, p参数.m域着色器);
+	if (a参数.m域着色器) {
+		hr = v着色器工厂.f创建域着色器(v->m域着色器, a参数.m域着色器);
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
-	if (p参数.m像素着色器) {
-		hr = v着色器工厂.f创建像素着色器(v->m像素着色器, p参数.m像素着色器);
+	if (a参数.m像素着色器) {
+		hr = v着色器工厂.f创建像素着色器(v->m像素着色器, a参数.m像素着色器);
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
-	v->m光栅化 = p参数.m光栅化;
-	v->m混合 = p参数.m混合;
-	v->m深度模板 = p参数.m深度模板;
+	if (std::holds_alternative<D3D11_RASTERIZER_DESC>(a参数.m光栅化)) {
+		m设备->CreateRasterizerState(&std::get<D3D11_RASTERIZER_DESC>(a参数.m光栅化), &v->m光栅化);
+	} else {
+		v->m光栅化 = std::get<ID3D11RasterizerState*>(a参数.m光栅化);
+	}
+	if (std::holds_alternative<D3D11_BLEND_DESC>(a参数.m混合)) {
+		m设备->CreateBlendState(&std::get<D3D11_BLEND_DESC>(a参数.m混合), &v->m混合);
+	} else {
+		v->m混合 = std::get<ID3D11BlendState*>(a参数.m混合);
+	}
+	if (std::holds_alternative<D3D11_DEPTH_STENCIL_DESC>(a参数.m深度模板)) {
+		m设备->CreateDepthStencilState(&std::get<D3D11_DEPTH_STENCIL_DESC>(a参数.m深度模板), &v->m深度模板);
+	} else {
+		v->m深度模板 = std::get<ID3D11DepthStencilState*>(a参数.m深度模板);
+	}
 	a = std::move(v);
 	return S_OK;
 }
@@ -303,9 +315,9 @@ C着色器工厂 &C三维::fg着色器工厂() {
 	}
 	return *m着色器工厂;
 }
-//=============================================================================
+//==============================================================================
 // 创建设备
-//=============================================================================
+//==============================================================================
 const D3D_FEATURE_LEVEL C创建设备::c功能级别组[3] = {
 	D3D_FEATURE_LEVEL_11_0,
 	D3D_FEATURE_LEVEL_10_1,
@@ -380,14 +392,14 @@ HRESULT C创建设备::f创建软件设备(ID3D11Device **a设备, ID3D11DeviceContext **p上
 	HRESULT hr = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_WARP, nullptr, m创建标志, c功能级别组, c功能级别数, D3D11_SDK_VERSION, a设备, &m功能级别, p上下文);
 	return hr;
 }
-//=============================================================================
+//==============================================================================
 // 渲染控制
-//=============================================================================
+//==============================================================================
 //清屏
 C渲染控制::C渲染控制() {
 }
 void C渲染控制::f清屏() {
-	m上下文->ClearRenderTargetView(m渲染目标视图.Get(), m清屏颜色.v);
+	m上下文->ClearRenderTargetView(m渲染目标视图.Get(), m清屏颜色.m值);
 	if (m深度模板视图) {
 		m上下文->ClearDepthStencilView(m深度模板视图.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, m清屏深度, m清屏模板);
 	}
@@ -449,10 +461,17 @@ void C渲染控制::fs域着色器(ID3D11DomainShader *a) {
 }
 //状态
 void C渲染控制::fs混合(ID3D11BlendState *a混合, const 数学::S颜色 &a颜色, UINT a掩码) {
-	m上下文->OMSetBlendState(a混合, (float*)&a颜色, a掩码);	//32个采样点都有效
+	m上下文->OMSetBlendState(a混合, (float*)&a颜色, a掩码);
 }
 void C渲染控制::fs深度模板(ID3D11DepthStencilState *a深度模板, UINT a参考) {
 	m上下文->OMSetDepthStencilState(a深度模板, a参考);
+}
+void C渲染控制::fs模板参考值(UINT a参考) {
+	ComPtr<ID3D11DepthStencilState> v深度模板;
+	UINT v参考;
+	m上下文->OMGetDepthStencilState(&v深度模板, &v参考);
+	v参考 = a参考;
+	m上下文->OMSetDepthStencilState(v深度模板.Get(), v参考);
 }
 void C渲染控制::fs光栅化(ID3D11RasterizerState *a光栅化) {
 	m上下文->RSSetState(a光栅化);
@@ -464,26 +483,26 @@ void C渲染控制::fs顶点缓冲(ID3D11Buffer *a, UINT a单位大小) {
 void C渲染控制::fs索引缓冲(ID3D11Buffer *a) {
 	m上下文->IASetIndexBuffer(a, DXGI_FORMAT_R16_UINT, 0);
 }
-void C渲染控制::fs固定缓冲(UINT a位置, ID3D11Buffer *a缓冲) {
+void C渲染控制::fs常量缓冲(UINT a位置, ID3D11Buffer *a缓冲) {
 	m上下文->VSSetConstantBuffers(a位置, 1, &a缓冲);
 	m上下文->PSSetConstantBuffers(a位置, 1, &a缓冲);
 	m上下文->HSSetConstantBuffers(a位置, 1, &a缓冲);
 	m上下文->DSSetConstantBuffers(a位置, 1, &a缓冲);
 	m上下文->GSSetConstantBuffers(a位置, 1, &a缓冲);
 }
-void C渲染控制::fs固定缓冲v(UINT a位置, ID3D11Buffer *a缓冲) {
+void C渲染控制::fs常量缓冲v(UINT a位置, ID3D11Buffer *a缓冲) {
 	m上下文->VSSetConstantBuffers(a位置, 1, &a缓冲);
 }
-void C渲染控制::fs固定缓冲p(UINT a位置, ID3D11Buffer *a缓冲) {
+void C渲染控制::fs常量缓冲p(UINT a位置, ID3D11Buffer *a缓冲) {
 	m上下文->PSSetConstantBuffers(a位置, 1, &a缓冲);
 }
-void C渲染控制::fs固定缓冲g(UINT a位置, ID3D11Buffer *a缓冲) {
+void C渲染控制::fs常量缓冲g(UINT a位置, ID3D11Buffer *a缓冲) {
 	m上下文->GSSetConstantBuffers(a位置, 1, &a缓冲);
 }
-void C渲染控制::fs固定缓冲h(UINT a位置, ID3D11Buffer *a缓冲) {
+void C渲染控制::fs常量缓冲h(UINT a位置, ID3D11Buffer *a缓冲) {
 	m上下文->HSSetConstantBuffers(a位置, 1, &a缓冲);
 }
-void C渲染控制::fs固定缓冲d(UINT a位置, ID3D11Buffer *a缓冲) {
+void C渲染控制::fs常量缓冲d(UINT a位置, ID3D11Buffer *a缓冲) {
 	m上下文->DSSetConstantBuffers(a位置, 1, &a缓冲);
 }
 void C渲染控制::fs纹理(UINT a位置, ID3D11ShaderResourceView *a纹理) {
@@ -503,9 +522,9 @@ void C渲染控制::f更新资源(ID3D11Buffer *a缓冲, const void *a资源) {
 	m上下文->UpdateSubresource(a缓冲, 0, nullptr, a资源, 0, 0);
 }
 
-//=============================================================================
+//==============================================================================
 // 图形管线
-//=============================================================================
+//==============================================================================
 C自动缓冲::C自动缓冲(C三维 &a三维) : 
 	m上下文(a三维.fg上下文().Get()),
 	m缓冲工厂(&a三维.fg缓冲工厂()),
@@ -602,18 +621,18 @@ bool C自动缓冲::C缓冲::f复制(const void *p指针, size_t a大小) {
 UINT C自动缓冲::C缓冲::fg数量() {
 	return m修改 / m单位大小;
 }
-//=============================================================================
+//==============================================================================
 // 渲染状态
-//=============================================================================
+//==============================================================================
 C渲染状态::~C渲染状态() {
 }
 C渲染状态::C渲染状态(ID3D11Device *a设备) {
 	HRESULT hr;
 	//无光栅化
-	m光栅化参数.m默认 = {D3D11_FILL_SOLID, D3D11_CULL_BACK, FALSE, D3D11_DEFAULT_DEPTH_BIAS, D3D11_DEFAULT_DEPTH_BIAS_CLAMP, D3D11_DEFAULT_SLOPE_SCALED_DEPTH_BIAS, TRUE, FALSE, true, FALSE};
+	m光栅化参数.m默认 = c默认光栅化;
 	m光栅化.m默认 = nullptr;
 	//线框渲染
-	m光栅化参数.m线框渲染 = m光栅化参数.m默认;
+	m光栅化参数.m线框渲染 = c默认光栅化;
 	m光栅化参数.m线框渲染.CullMode = D3D11_CULL_BACK;
 	m光栅化参数.m线框渲染.FillMode = D3D11_FILL_WIREFRAME;
 	hr = a设备->CreateRasterizerState(&m光栅化参数.m线框渲染, &m光栅化.m线框渲染);
@@ -621,7 +640,7 @@ C渲染状态::C渲染状态(ID3D11Device *a设备) {
 		return;
 	}
 	//取消隐藏面消除
-	m光栅化参数.m显示隐藏面 = m光栅化参数.m默认;
+	m光栅化参数.m显示隐藏面 = c默认光栅化;
 	m光栅化参数.m显示隐藏面.CullMode = D3D11_CULL_NONE;
 	m光栅化参数.m显示隐藏面.FillMode = D3D11_FILL_SOLID;
 	hr = a设备->CreateRasterizerState(&m光栅化参数.m显示隐藏面, &m光栅化.m显示隐藏面);
@@ -629,26 +648,24 @@ C渲染状态::C渲染状态(ID3D11Device *a设备) {
 		return;
 	}
 	//设置逆时针为正面
-	m光栅化参数.m反面渲染 = m光栅化参数.m默认;
+	m光栅化参数.m反面渲染 = c默认光栅化;
 	m光栅化参数.m反面渲染.FrontCounterClockwise = true;
 	hr = a设备->CreateRasterizerState(&m光栅化参数.m反面渲染, &m光栅化.m反面渲染);
 	if(FAILED(hr)) {
 		return;
 	}
 	//无混合
-	m混合参数.m默认 = {FALSE, FALSE, {
-		{FALSE, D3D11_BLEND_ONE, D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD, D3D11_BLEND_ONE, D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD, D3D11_COLOR_WRITE_ENABLE_ALL}, {0}, {0}, {0}, {0}, {0}, {0}, {0}
-	}};
+	m混合参数.m默认 = c默认混合;
 	m混合.m默认 = nullptr;
 	//开启透明
-	m混合参数.m开启透明 = m混合参数.m默认;
+	m混合参数.m开启透明 = c默认混合;
 	m混合参数.m开启透明.RenderTarget[0].BlendEnable = true;
 	m混合参数.m开启透明.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 	m混合参数.m开启透明.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 	m混合参数.m开启透明.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	m混合参数.m开启透明.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-	m混合参数.m开启透明.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-	m混合参数.m开启透明.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	m混合参数.m开启透明.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+	m混合参数.m开启透明.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_DEST_ALPHA;
+	m混合参数.m开启透明.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_MAX;
 	m混合参数.m开启透明.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 	hr = a设备->CreateBlendState(&m混合参数.m开启透明, &m混合.m开启透明);
 	if(FAILED(hr)) {
@@ -657,12 +674,14 @@ C渲染状态::C渲染状态(ID3D11Device *a设备) {
 	//颜色叠加
 	m混合参数.m颜色叠加 = m混合参数.m开启透明;
 	m混合参数.m颜色叠加.RenderTarget[0].DestBlend = D3D11_BLEND_DEST_ALPHA;
+	m混合参数.m颜色叠加.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+	m混合参数.m颜色叠加.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_DEST_ALPHA;
 	hr = a设备->CreateBlendState(&m混合参数.m颜色叠加, &m混合.m颜色叠加);
 	if(FAILED(hr)) {
 		return;
 	}
 	//禁止写颜色
-	m混合参数.m禁止写颜色 = m混合参数.m默认;
+	m混合参数.m禁止写颜色 = c默认混合;
 	m混合参数.m禁止写颜色.RenderTarget[0].BlendEnable = false;
 	m混合参数.m禁止写颜色.RenderTarget[0].RenderTargetWriteMask = 0;
 	hr = a设备->CreateBlendState(&m混合参数.m禁止写颜色, &m混合.m禁止写颜色);
@@ -670,10 +689,10 @@ C渲染状态::C渲染状态(ID3D11Device *a设备) {
 		return;
 	}
 	//无深度模板
-	m深度模板参数.m默认 = {FALSE, D3D11_DEPTH_WRITE_MASK_ALL, D3D11_COMPARISON_LESS, FALSE, D3D11_DEFAULT_STENCIL_READ_MASK, D3D11_DEFAULT_STENCIL_WRITE_MASK, {D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_KEEP, D3D11_COMPARISON_ALWAYS}, {D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_KEEP, D3D11_STENCIL_OP_KEEP, D3D11_COMPARISON_ALWAYS}};
+	m深度模板参数.m默认 = c默认深度模板;
 	m深度模板.m默认 = nullptr;
 	//正常深度
-	m深度模板参数.m正常深度l = m深度模板参数.m默认;
+	m深度模板参数.m正常深度l = c默认深度模板;
 	m深度模板参数.m正常深度l.DepthEnable = true;
 	m深度模板参数.m正常深度l.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	m深度模板参数.m正常深度l.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
@@ -694,6 +713,25 @@ C渲染状态::C渲染状态(ID3D11Device *a设备) {
 	if (FAILED(hr)) {
 		return;
 	}
+	//模板标记
+	m深度模板参数.m模板标记 = c默认深度模板;
+	m深度模板参数.m模板标记.DepthEnable = false;
+	m深度模板参数.m模板标记.StencilEnable = true;
+	m深度模板参数.m模板标记.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	m深度模板参数.m模板标记.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	m深度模板参数.m模板标记.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
+	m深度模板参数.m模板标记.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+	m深度模板参数.m模板标记.BackFace = m深度模板参数.m模板标记.FrontFace;
+	hr = a设备->CreateDepthStencilState(&m深度模板参数.m模板标记, &m深度模板.m模板标记);
+	if (FAILED(hr)) {
+		return;
+	}
+	//模板比较
+	m深度模板参数.m模板比较 = c默认深度模板;
+	m深度模板参数.m模板比较.StencilEnable = true;
+	m深度模板参数.m模板比较.FrontFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+	m深度模板参数.m模板比较.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+
 	//纹理
 	m采样器参数.m纹理.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	m采样器参数.m纹理.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -729,9 +767,9 @@ C渲染状态::C渲染状态(ID3D11Device *a设备) {
 		return;
 	}
 }
-//=============================================================================
+//==============================================================================
 // 顶点格式
-//=============================================================================
+//==============================================================================
 void C顶点格式::f清空() {
 	m数组.clear();
 	m类型累计.clear();
@@ -798,14 +836,14 @@ HRESULT C缓冲工厂::f创建缓冲(tp缓冲 &a输出, const void *a数据, UINT a大小, E缓冲
 	}
 	return hr;
 }
-//=============================================================================
+//==============================================================================
 // 着色器工厂
-//=============================================================================
+//==============================================================================
 void C着色器工厂::f初始化(ID3D11Device *a设备) {
 	m设备 = a设备;
 }
 //编译着色器
-HRESULT C着色器工厂::f编译并创建顶点着色器(tp顶点着色器 &a, const wchar_t *a文件, const char *a入口, tp输入布局 &p输入布局, const C顶点格式 &p顶点格式) {
+HRESULT C着色器工厂::f编译并创建顶点着色器(tp顶点着色器 &a, const wchar_t *a文件, const char *a入口, tp输入布局 &a输入布局, const C顶点格式 &a顶点格式) {
 	ComPtr<ID3DBlob> vs;
 	HRESULT hr = f编译顶点着色器(vs, a文件, a入口);
 	if (FAILED(hr)) {
@@ -819,7 +857,7 @@ HRESULT C着色器工厂::f编译并创建顶点着色器(tp顶点着色器 &a, const wchar_t *a文件
 		return hr;
 	}
 	// 创建输入布局
-	hr = f创建输入布局(p输入布局, v代码, p顶点格式);
+	hr = f创建输入布局(a输入布局, v代码, a顶点格式);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -882,7 +920,7 @@ HRESULT C着色器工厂::f编译并创建域着色器(tp域着色器 &a, const wchar_t *a文件, co
 	return hr;
 }
 //读取着色器
-HRESULT C着色器工厂::f读取并创建顶点着色器(tp顶点着色器 &a, const wchar_t *a文件名, tp输入布局 &p输入布局, const C顶点格式 &p顶点格式) {
+HRESULT C着色器工厂::f读取并创建顶点着色器(tp顶点着色器 &a, const wchar_t *a文件名, tp输入布局 &a输入布局, const C顶点格式 &a顶点格式) {
 	HRESULT hr;
 	std::unique_ptr<std::byte[]> v数据;
 	DWORD v大小;
@@ -896,7 +934,7 @@ HRESULT C着色器工厂::f读取并创建顶点着色器(tp顶点着色器 &a, const wchar_t *a文件
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = f创建输入布局(p输入布局, v代码, p顶点格式);
+	hr = f创建输入布局(a输入布局, v代码, a顶点格式);
 	if(FAILED(hr)) {
 		return hr;
 	}
@@ -974,8 +1012,8 @@ HRESULT C着色器工厂::f创建外壳着色器(tp外壳着色器 &a, const S着色器字节代码 &p代
 HRESULT C着色器工厂::f创建域着色器(tp域着色器 &a, const S着色器字节代码 &p代码) {
 	return m设备->CreateDomainShader(p代码.m数据, p代码.m大小, nullptr, &a);
 }
-HRESULT C着色器工厂::f创建输入布局(tp输入布局 &a, const S着色器字节代码 &p代码, const C顶点格式 &p顶点格式) {
-	return m设备->CreateInputLayout(p顶点格式.m数组.data(), p顶点格式.m数组.size(), p代码.m数据, p代码.m大小, &a);
+HRESULT C着色器工厂::f创建输入布局(tp输入布局 &a, const S着色器字节代码 &p代码, const C顶点格式 &a顶点格式) {
+	return m设备->CreateInputLayout(a顶点格式.m数组.data(), a顶点格式.m数组.size(), p代码.m数据, p代码.m大小, &a);
 }
 HRESULT C着色器工厂::f编译顶点着色器(ComPtr<ID3DBlob> &a, const wchar_t *a文件名, const char *a函数名) {
 	return f编译着色器(a文件名, a函数名, "vs_5_0", &a);
@@ -1033,9 +1071,9 @@ HRESULT C着色器工厂::f读取着色器(ComPtr<ID3DBlob> &a, const wchar_t *a文件名) {
 	a = std::move(v);
 	return S_OK;
 }
-//=============================================================================
+//==============================================================================
 // 纹理加载器
-//=============================================================================
+//==============================================================================
 C纹理工厂::~C纹理工厂() {
 	m工厂.reset();
 }
@@ -1049,7 +1087,7 @@ HRESULT C纹理工厂::f初始化(ID3D11Device *a设备) {
 }
 //创建纹理
 HRESULT C纹理工厂::f从文件创建纹理(tp纹理 &a输出, const wchar_t *a文件) {
-	std::unique_ptr<纹理::C固定纹理> v纹理 = m工厂->f一键读取(a文件);
+	std::unique_ptr<纹理::C只读纹理> v纹理 = m工厂->f一键读取(a文件);
 	if (v纹理 == nullptr) {
 		return E_FAIL;
 	}
@@ -1094,9 +1132,9 @@ HRESULT C纹理工厂::f创建纹理资源视图(tp纹理 &a输出, tp纹理2 a纹理, DXGI_FORMAT a
 const D3D11_TEXTURE2D_DESC &C纹理工厂::fg最近纹理描述() const {
 	return m纹理描述;
 }
-//=============================================================================
+//==============================================================================
 // 结构
-//=============================================================================
+//==============================================================================
 S着色器字节代码 S着色器字节代码::fc二进制大对象(ID3DBlob *a) {
 	return {a->GetBufferPointer(), a->GetBufferSize()};
 }
@@ -1106,20 +1144,29 @@ S着色器字节代码::operator bool() const {
 void S图形管线参数::fs输入布局(const C顶点格式 &a) {
 	m顶点格式 = &a;
 }
-void S图形管线参数::fs顶点着色器(const S着色器字节代码 &a) {
-	m顶点着色器 = a;
+void S图形管线参数::fs顶点着色器(ID3DBlob *a) {
+	m顶点着色器 = S着色器字节代码::fc二进制大对象(a);
 }
-void S图形管线参数::fs像素着色器(const S着色器字节代码 &a) {
-	m像素着色器 = a;
+void S图形管线参数::fs像素着色器(ID3DBlob *a) {
+	m像素着色器 = S着色器字节代码::fc二进制大对象(a);
 }
-void S图形管线参数::fs几何着色器(const S着色器字节代码 &a) {
-	m几何着色器 = a;
+void S图形管线参数::fs几何着色器(ID3DBlob *a) {
+	m几何着色器 = S着色器字节代码::fc二进制大对象(a);
 }
-void S图形管线参数::fs外壳着色器(const S着色器字节代码 &a) {
-	m外壳着色器 = a;
+void S图形管线参数::fs外壳着色器(ID3DBlob *a) {
+	m外壳着色器 = S着色器字节代码::fc二进制大对象(a);
 }
-void S图形管线参数::fs域着色器(const S着色器字节代码 &a) {
-	m域着色器 = a;
+void S图形管线参数::fs域着色器(ID3DBlob *a) {
+	m域着色器 = S着色器字节代码::fc二进制大对象(a);
+}
+void S图形管线参数::fs光栅化(const D3D11_RASTERIZER_DESC &a) {
+	m光栅化 = a;
+}
+void S图形管线参数::fs混合(const D3D11_BLEND_DESC &a) {
+	m混合 = a;
+}
+void S图形管线参数::fs深度模板(const D3D11_DEPTH_STENCIL_DESC &a) {
+	m深度模板 = a;
 }
 void S图形管线参数::fs光栅化(ID3D11RasterizerState *a) {
 	m光栅化 = a;
@@ -1130,4 +1177,20 @@ void S图形管线参数::fs混合(ID3D11BlendState *a) {
 void S图形管线参数::fs深度模板(ID3D11DepthStencilState *a) {
 	m深度模板 = a;
 }
+S深度模板参数::S深度模板参数():
+	D3D11_DEPTH_STENCIL_DESC(c默认深度模板) {
+}
+void S深度模板参数::fs深度部分(const D3D11_DEPTH_STENCIL_DESC &a) {
+	DepthEnable = a.DepthEnable;
+	DepthWriteMask = a.DepthWriteMask;
+	DepthFunc = a.DepthFunc;
+}
+void S深度模板参数::fs模板部分(const D3D11_DEPTH_STENCIL_DESC &a) {
+	StencilEnable = a.StencilEnable;
+	StencilReadMask = a.StencilReadMask;
+	StencilWriteMask = a.StencilWriteMask;
+	FrontFace = a.FrontFace;
+	BackFace = a.BackFace;
+}
+
 }	//namespace cflw::图形::d3d11

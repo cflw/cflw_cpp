@@ -430,7 +430,7 @@ void C渲染控制::f结束() {
 	m命令列表->ResourceBarrier(1, &v栅栏);
 }
 void C渲染控制::f清屏() {
-	m命令列表->ClearRenderTargetView(m渲染目标管理->fg当前视图(), m清屏颜色.v, 0, nullptr);
+	m命令列表->ClearRenderTargetView(m渲染目标管理->fg当前视图(), m清屏颜色.m值, 0, nullptr);
 	constexpr D3D12_CLEAR_FLAGS c清除深度模板标志 = D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL;
 	m命令列表->ClearDepthStencilView(m深度模板管理->fg当前视图(), c清除深度模板标志, m清屏深度, m清屏模板, 0, nullptr);
 }
@@ -499,6 +499,9 @@ void C渲染控制::fs清屏深度(float a) {
 void C渲染控制::fs清屏模板(UINT8 a) {
 	m清屏模板 = a;
 }
+void C渲染控制::fs模板参考值(UINT a) {
+	m命令列表->OMSetStencilRef(a);
+}
 void C渲染控制::fs图形管线(ID3D12PipelineState *a) {
 	m图形管线 = a;
 	m命令列表->SetPipelineState(a);
@@ -516,7 +519,7 @@ void C渲染控制::fs顶点缓冲(const D3D12_VERTEX_BUFFER_VIEW &a) {
 void C渲染控制::fs索引缓冲(const D3D12_INDEX_BUFFER_VIEW &a) {
 	m命令列表->IASetIndexBuffer(&a);
 }
-void C渲染控制::fs固定缓冲(UINT a槽, const D3D12_GPU_VIRTUAL_ADDRESS &a位置) {
+void C渲染控制::fs常量缓冲(UINT a槽, const D3D12_GPU_VIRTUAL_ADDRESS &a位置) {
 	m命令列表->SetGraphicsRootConstantBufferView(a槽, a位置);
 }
 void C渲染控制::fs纹理(UINT a槽, const D3D12_GPU_VIRTUAL_ADDRESS &a位置) {
@@ -526,13 +529,6 @@ void C渲染控制::fs描述符表(UINT a槽, ID3D12DescriptorHeap *a堆) {
 	m命令列表->SetDescriptorHeaps(1, &a堆);
 	m命令列表->SetGraphicsRootDescriptorTable(a槽, a堆->GetGPUDescriptorHandleForHeapStart());
 }
-//void C渲染控制::fs描述符表(const std::initializer_list<ID3D12DescriptorHeap*> &a) {
-//	m命令列表->SetDescriptorHeaps(a.size(), a.begin());
-//	UINT i = 0;
-//	for (const auto &v : a) {
-//		m命令列表->SetGraphicsRootDescriptorTable(i++, v->GetGPUDescriptorHandleForHeapStart());
-//	}
-//}
 D3D12_RESOURCE_BARRIER C渲染控制::fc渲染视图栅栏变换(D3D12_RESOURCE_STATES a前, D3D12_RESOURCE_STATES a后) {
 	return S资源栅栏::fc变换(m渲染目标管理->fg当前资源(), a前, a后);
 }
@@ -567,7 +563,7 @@ ID3D12Resource *C深度模板管理::fg当前资源() const {
 //=============================================================================
 // 资源
 //=============================================================================
-void C固定缓冲::f复制(void *a数据, size_t a大小) {
+void C常量缓冲::f复制(void *a数据, size_t a大小) {
 	assert(m映射);
 	memcpy(m映射, a数据, a大小);
 }
@@ -621,7 +617,7 @@ C渲染状态::C渲染状态() {
 	const D3D12_RENDER_TARGET_BLEND_DESC v透明渲染目标混合 = {
 		FALSE, FALSE,
 		D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_INV_SRC_ALPHA, D3D12_BLEND_OP_ADD,
-		D3D12_BLEND_ONE, D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD,
+		D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_DEST_ALPHA, D3D12_BLEND_OP_MAX,
 		D3D12_LOGIC_OP_NOOP,
 		D3D12_COLOR_WRITE_ENABLE_ALL,
 	};
@@ -814,7 +810,7 @@ D3D12_ROOT_PARAMETER_TYPE C根签名参数::f计算根参数类型(E类型 a) {
 	switch (a) {
 	case E类型::e着色器资源视图:
 		return D3D12_ROOT_PARAMETER_TYPE_SRV;
-	case E类型::e固定缓冲视图:
+	case E类型::e常量缓冲视图:
 		return D3D12_ROOT_PARAMETER_TYPE_CBV;
 	case E类型::e无序访问视图:
 		return D3D12_ROOT_PARAMETER_TYPE_UAV;
@@ -828,7 +824,7 @@ D3D12_DESCRIPTOR_RANGE_TYPE C根签名参数::f计算描述范围类型(E类型 a) {
 	switch (a) {
 	case E类型::e着色器资源视图:
 		return D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	case E类型::e固定缓冲视图:
+	case E类型::e常量缓冲视图:
 		return D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
 	case E类型::e无序访问视图:
 		return D3D12_DESCRIPTOR_RANGE_TYPE_UAV;
@@ -922,13 +918,13 @@ HRESULT C缓冲工厂::f创建索引(tp索引 &a, const void *a数据, UINT a类型大小, UINT 
 	a = std::move(v);
 	return S_OK;
 }
-HRESULT C缓冲工厂::f创建固定(tp固定 &a, const void *a数据, UINT a类型大小, UINT a数据大小) {
+HRESULT C缓冲工厂::f创建常量(tp常量 &a, const void *a数据, UINT a类型大小, UINT a数据大小) {
 	//堆描述符
 	D3D12_DESCRIPTOR_HEAP_DESC cbvHeapDesc = {};
 	cbvHeapDesc.NumDescriptors = 1;
 	cbvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	cbvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	tp固定 v = std::make_shared<C固定缓冲>();
+	tp常量 v = std::make_shared<C常量缓冲>();
 	HRESULT hr = m设备->CreateDescriptorHeap(&cbvHeapDesc, IID_PPV_ARGS(&v->m描述符堆));
 	if (FAILED(hr)) {
 		return hr;
@@ -941,7 +937,7 @@ HRESULT C缓冲工厂::f创建固定(tp固定 &a, const void *a数据, UINT a类型大小, UINT 
 	if (FAILED(hr)) {
 		return hr;
 	}
-	v->m资源->SetName(L"固定");
+	v->m资源->SetName(L"常量");
 	//视图
 	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvd = {};
 	cbvd.BufferLocation = v->m资源->GetGPUVirtualAddress();
@@ -1012,7 +1008,7 @@ HRESULT C纹理工厂::f初始化() {
 	return m工厂->f初始化();
 }
 HRESULT C纹理工厂::f从文件创建纹理(tp纹理 &a输出, const wchar_t *a文件) {
-	std::unique_ptr<纹理::C固定纹理> v纹理 = m工厂->f一键读取(a文件);
+	std::unique_ptr<纹理::C只读纹理> v纹理 = m工厂->f一键读取(a文件);
 	if (v纹理 == nullptr) {
 		return E_FAIL;
 	}

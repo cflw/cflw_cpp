@@ -403,7 +403,7 @@ S向量4 S向量4::operator *(const S矩阵4 &a) const {
 	S向量4 v;
 	for (int i = 0; i != 4; ++i)
 		for (int j = 0; j != 4; ++j)
-			v.m[i] += a.m[i][j] * m[j];
+			v.m值[i] += a.m值[i][j] * m值[j];
 	return v;
 }
 

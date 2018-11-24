@@ -30,12 +30,53 @@ template<typename t>
 bool f大于等于(const t &a0, const t &a1) {
 	return a0 >= a1;
 }
+template<typename t>
+bool f永不(const t &a0, const t &a1) {
+	return false;
+}
+template<typename t>
+bool f总是(const t &a0, const t &a1) {
+	return true;
+}
 template<typename t> using F等于 = std::equal_to<t>;
 template<typename t> using F不等于 = std::not_equal_to<t>;
 template<typename t> using F小于 = std::less<t>;
 template<typename t> using F小于等于 = std::less_equal<t>;
 template<typename t> using F大于 = std::greater<t>;
 template<typename t> using F大于等于 = std::greater_equal<t>;
+//比较枚举
+enum E比较 {
+	e永不,
+	e小于,
+	e等于,
+	e小于等于,
+	e大于,
+	e不等于,
+	e大于等于,
+	e总是,
+};
+template<typename t> constexpr auto F比较(E比较 a比较)->bool(*)(const t &, const t &) {
+	switch (a比较) {
+	case e永不:
+		return f永不<t>;
+	case e小于:
+		return f小于<t>;
+	case e等于:
+		return f等于<t>;
+	case e小于等于:
+		return f小于等于<t>;
+	case e大于:
+		return f大于<t>;
+	case e不等于:
+		return f不等于<t>;
+	case e大于等于:
+		return f大于等于<t>;
+	case e总是:
+		return f总是<t>;
+	default:
+		return f永不<t>;
+	}
+}
 //逻辑运算
 inline constexpr bool f且(bool a0, bool a1) {
 	return a0 && a1;

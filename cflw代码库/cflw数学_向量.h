@@ -124,7 +124,7 @@ struct S向量4 {
 		struct {
 			float x, y, z, w;
 		};
-		float m[4];
+		float m值[4];
 	};
 	S向量4();
 	S向量4(const float &, const float &, const float &, const float &);

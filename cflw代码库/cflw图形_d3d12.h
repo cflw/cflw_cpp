@@ -6,6 +6,7 @@
 #include <dxgi1_4.h>
 #include <d3d12.h>
 #include <wrl.h>
+#include "cflw工具_运算.h"
 #include "cflw数学_图形.h"
 #include "cflw图形_dx纹理.h"
 #ifdef _WINDOWS
@@ -44,11 +45,11 @@ class C根签名参数;
 //资源
 class C顶点缓冲;
 class C索引缓冲;
-class C固定缓冲;
+class C常量缓冲;
 class C纹理资源;
 using tp顶点 = std::shared_ptr<C顶点缓冲>;
 using tp索引 = std::shared_ptr<C索引缓冲>;
-using tp固定 = std::shared_ptr<C固定缓冲>;
+using tp常量 = std::shared_ptr<C常量缓冲>;
 using tp纹理 = std::shared_ptr<C纹理资源>;
 //==============================================================================
 // 常量&标志
@@ -94,6 +95,28 @@ constexpr D3D12_ROOT_SIGNATURE_FLAGS fc根签名标志(bool a允许输入集成�
 		(a阻止几何着色器根访问 ? D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
 		(a阻止像素着色器根访问 ? D3D12_ROOT_SIGNATURE_FLAG_DENY_PIXEL_SHADER_ROOT_ACCESS : D3D12_ROOT_SIGNATURE_FLAG_NONE) |
 		(a允许流输出 ? D3D12_ROOT_SIGNATURE_FLAG_ALLOW_STREAM_OUTPUT : D3D12_ROOT_SIGNATURE_FLAG_NONE);
+}
+constexpr D3D12_COMPARISON_FUNC ft比较(工具::E比较 a比较) {
+	switch (a比较) {
+	case 工具::E比较::e永不:
+		return D3D12_COMPARISON_FUNC_NEVER;
+	case 工具::E比较::e小于:
+		return D3D12_COMPARISON_FUNC_LESS;
+	case 工具::E比较::e等于:
+		return D3D12_COMPARISON_FUNC_EQUAL;
+	case 工具::E比较::e小于等于:
+		return D3D12_COMPARISON_FUNC_LESS_EQUAL;
+	case 工具::E比较::e大于:
+		return D3D12_COMPARISON_FUNC_GREATER;
+	case 工具::E比较::e不等于:
+		return D3D12_COMPARISON_FUNC_NOT_EQUAL;
+	case 工具::E比较::e大于等于:
+		return D3D12_COMPARISON_FUNC_GREATER_EQUAL;
+	case 工具::E比较::e总是:
+		return D3D12_COMPARISON_FUNC_ALWAYS;
+	default:
+		return D3D12_COMPARISON_FUNC_NEVER;
+	}
 }
 constexpr DXGI_FORMAT c交换链格式 = DXGI_FORMAT_R16G16B16A16_FLOAT;
 constexpr DXGI_FORMAT c深度模板格式 = DXGI_FORMAT_D32_FLOAT_S8X24_UINT;
@@ -235,13 +258,14 @@ public:
 	void fs清屏颜色(const 数学::S颜色 &);
 	void fs清屏深度(float);
 	void fs清屏模板(UINT8);
+	void fs模板参考值(UINT);
 	void fs图形管线(ID3D12PipelineState *);
 	void fs根签名(ID3D12RootSignature *);
 	void fs图元拓扑(E图元拓扑);
 	void fs顶点缓冲(const D3D12_VERTEX_BUFFER_VIEW &);
 	void fs索引缓冲(const D3D12_INDEX_BUFFER_VIEW &);
-	void fs固定缓冲(UINT, const D3D12_GPU_VIRTUAL_ADDRESS &);
-	void fs纹理(UINT, const D3D12_GPU_VIRTUAL_ADDRESS &);
+	void fs常量缓冲(UINT, const D3D12_GPU_VIRTUAL_ADDRESS &);
+	void fs纹理(UINT, const D3D12_GPU_VIRTUAL_ADDRESS &);	//如果根签名添加的是范围，则应该使用fs描述符表
 	void fs描述符表(UINT, ID3D12DescriptorHeap *);
 	//其它
 	D3D12_RESOURCE_BARRIER fc渲染视图栅栏变换(D3D12_RESOURCE_STATES, D3D12_RESOURCE_STATES);
@@ -299,7 +323,7 @@ public:
 //==============================================================================
 // 资源&缓冲&视图
 //==============================================================================
-class C固定缓冲 {
+class C常量缓冲 {
 public:
 	operator D3D12_GPU_VIRTUAL_ADDRESS() const {
 		return m资源->GetGPUVirtualAddress();
@@ -399,7 +423,7 @@ public:
 	enum E类型 {
 		e着色器资源视图,
 		e无序访问视图,
-		e固定缓冲视图,
+		e常量缓冲视图,
 		e根常量,
 		e采样器,
 	};
@@ -450,7 +474,7 @@ public:
 	HRESULT f创建只读资源(ComPtr<ID3D12Resource> &, const void *数据, UINT 数据大小);	//创建完不能改
 	HRESULT f创建顶点(tp顶点 &, const void *数据, UINT 类型大小, UINT 数据大小);
 	HRESULT f创建索引(tp索引 &, const void *数据, UINT 类型大小, UINT 数据大小);
-	HRESULT f创建固定(tp固定 &, const void *数据, UINT 类型大小, UINT 数据大小);
+	HRESULT f创建常量(tp常量 &, const void *数据, UINT 类型大小, UINT 数据大小);
 };
 //着色器工厂
 class C着色器工厂 {

@@ -14,11 +14,11 @@ struct S平面方程;
 template<unsigned int 行, unsigned int 列> struct S矩阵 {
 	const static unsigned int c行 = 行;
 	const static unsigned int c列 = 列;
-	float m[行][列];
+	float m值[行][列];
 	S矩阵();
 	S矩阵(std::initializer_list<float>);
 	float &operator ()(unsigned int i, unsigned int j) {
-		return m[i][j];
+		return m值[i][j];
 	}
 };
 struct S矩阵信息 {
@@ -101,33 +101,33 @@ struct S矩阵4 : public S矩阵 < 4, 4 > {
 //=============================================================================
 // 矩阵
 //=============================================================================
-template<unsigned int 行, unsigned int 列> S矩阵<行, 列>::S矩阵() :m{0} {}
+template<unsigned int 行, unsigned int 列> S矩阵<行, 列>::S矩阵() :m值{0} {}
 template<unsigned int 行, unsigned int 列> S矩阵<行, 列>::S矩阵(std::initializer_list<float> p) {
 	for (int i = 0; i != 行; ++i) {
 		for (int j = 0; j != 列; ++j) {
 			const int n = i * 行 + j;
 			assert(n <= p.size());
-			m[i][j] = p[n];
+			m值[i][j] = p[n];
 		}
 	}
 }
-template<unsigned int 行, unsigned int 列> void C矩阵::f空矩阵(S矩阵<行, 列> &p) {
-	f空矩阵_(*p.m, p.c行, p.c列);
+template<unsigned int 行, unsigned int 列> void C矩阵::f空矩阵(S矩阵<行, 列> &a矩阵) {
+	f空矩阵_(*a矩阵.m值, a矩阵.c行, a矩阵.c列);
 }
-template<unsigned int 一, unsigned int 二, unsigned int 三> void C矩阵::f矩阵相乘(S矩阵<一, 三> &p出, const S矩阵<一, 二> &p一, const S矩阵<二, 三> &p二) {
-	f矩阵相乘_(*p出.m, *p一.m, *p二.m, 一, 二, 三);
+template<unsigned int 一, unsigned int 二, unsigned int 三> void C矩阵::f矩阵相乘(S矩阵<一, 三> &a输出, const S矩阵<一, 二> &a矩阵0, const S矩阵<二, 三> &a矩阵1) {
+	f矩阵相乘_(*a输出.m值, *a矩阵0.m值, *a矩阵1.m值, 一, 二, 三);
 }
-template<unsigned int 一> void C矩阵::f单位矩阵(S矩阵<一, 一> &p) {
-	f单位矩阵_(*p.m, 一);
+template<unsigned int 一> void C矩阵::f单位矩阵(S矩阵<一, 一> &a矩阵) {
+	f单位矩阵_(*a矩阵.m值, 一);
 }
-template<unsigned int i, unsigned int j> void C矩阵::f矩阵相加(S矩阵<i, j> &o, const S矩阵<i, j> &p1, const S矩阵<i, j> &p2) {
-	f矩阵相加_(*o.m, *p1.m, *p2.m, i, j);
+template<unsigned int i, unsigned int j> void C矩阵::f矩阵相加(S矩阵<i, j> &a输出, const S矩阵<i, j> &a矩阵0, const S矩阵<i, j> &a矩阵1) {
+	f矩阵相加_(*a输出.m值, *a矩阵0.m值, *a矩阵1.m值, i, j);
 }
-template<unsigned int i, unsigned int j>  void C矩阵::f矩阵转置(S矩阵<i, j> &po, const S矩阵<j, i> &pi) {
-	f矩阵转置_(*po.m, *pi.m, i, j);
+template<unsigned int i, unsigned int j>  void C矩阵::f矩阵转置(S矩阵<i, j> &a输出, const S矩阵<j, i> &a输入) {
+	f矩阵转置_(*a输出.m值, *a输入.m值, i, j);
 }
-template<unsigned int i> float C矩阵::f算行列式(S矩阵<i, i> &pi) {
-	return f算行列式_(pi.m, i);
+template<unsigned int i> float C矩阵::f算行列式(S矩阵<i, i> &a矩阵) {
+	return f算行列式_(a矩阵.m值, i);
 }
 
 }	//namespace cflw::数学

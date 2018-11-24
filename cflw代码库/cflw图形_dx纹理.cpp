@@ -109,7 +109,7 @@ HRESULT C图像工厂::f图像格式变换(IWICBitmapSource *a图像, const GUID &a格式, IWI
 	}
 	return S_OK;
 }
-std::unique_ptr<C固定纹理> C图像工厂::f一键读取(const wchar_t *a文件名) {
+std::unique_ptr<C只读纹理> C图像工厂::f一键读取(const wchar_t *a文件名) {
 	ComPtr<IWICBitmapFrameDecode> v图像;
 	HRESULT hr = f读取图像(a文件名, &v图像);
 	if (FAILED(hr)) {
@@ -117,7 +117,7 @@ std::unique_ptr<C固定纹理> C图像工厂::f一键读取(const wchar_t *a文件名) {
 	}
 	//格式转换并复制数据
 	const WICBitmapPlaneDescription v描述 = f取图像描述(v图像.Get());
-	std::unique_ptr<C固定纹理> v纹理 = std::make_unique<C固定纹理>();
+	std::unique_ptr<C只读纹理> v纹理 = std::make_unique<C只读纹理>();
 	GUID v图像格式 = v描述.Format;
 	v纹理->m宽 = v描述.Width;
 	v纹理->m高 = v描述.Height;
@@ -328,30 +328,30 @@ S纹理描述 I纹理::fg描述() const {
 	return S纹理描述{this->fg宽(), this->fg高(), this->fg像素大小(), this->fg格式()};
 }
 //=============================================================================
-// 固定纹理
+// 常量纹理
 //=============================================================================
-size_t C固定纹理::fg宽() const {
+size_t C只读纹理::fg宽() const {
 	return m宽;
 }
-size_t C固定纹理::fg高() const {
+size_t C只读纹理::fg高() const {
 	return m高;
 }
-size_t C固定纹理::fg像素大小() const {
+size_t C只读纹理::fg像素大小() const {
 	return m像素大小;
 }
-size_t C固定纹理::fg面积() const {
+size_t C只读纹理::fg面积() const {
 	return m宽 * m高;
 }
-size_t C固定纹理::fg行距() const {
+size_t C只读纹理::fg行距() const {
 	return m宽 * m像素大小;
 }
-size_t C固定纹理::fg图像大小() const {
+size_t C只读纹理::fg图像大小() const {
 	return fg面积() * m像素大小;
 }
-DXGI_FORMAT C固定纹理::fg格式() const {
+DXGI_FORMAT C只读纹理::fg格式() const {
 	return m格式;
 }
-const std::byte *C固定纹理::fg数据() const {
+const std::byte *C只读纹理::fg数据() const {
 	return mp数据.get();
 }
 //=============================================================================
