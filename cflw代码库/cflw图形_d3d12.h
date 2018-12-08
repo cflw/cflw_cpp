@@ -5,6 +5,7 @@
 #include <bitset>
 #include <dxgi1_4.h>
 #include <d3d12.h>
+#include <dxcapi.h>
 #include <wrl.h>
 #include "cflw工具_运算.h"
 #include "cflw数学_图形.h"
@@ -13,6 +14,7 @@
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "D3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
+#pragma comment(lib, "dxcompiler.lib")
 #endif
 
 namespace cflw::图形::d3d12 {
@@ -29,12 +31,15 @@ typedef ComPtr<ID3D12Resource> tp资源;
 typedef ComPtr<ID3DBlob> tp着色器;
 typedef ComPtr<ID3D12RootSignature> tp根签名;
 typedef ComPtr<ID3D12DescriptorHeap> tp描述符堆;
+using tp着色器1 = ComPtr<ID3DBlob>;
+using tp着色器2 = ComPtr<IDxcBlob>;
 //主要
 class C创建设备;
 class C渲染控制;
 class C渲染状态;
 class C缓冲工厂;
 class C纹理工厂;
+class C着色器工厂2;
 //管理
 class C渲染目标管理;
 class C深度模板管理;
@@ -59,7 +64,43 @@ enum class E图元拓扑 {
 	e列表线段 = D3D_PRIMITIVE_TOPOLOGY_LINELIST,
 	e连续线段 = D3D_PRIMITIVE_TOPOLOGY_LINESTRIP,
 	e列表三角形 = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
-	e连续三角形 = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP
+	e连续三角形 = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,
+	e邻接列表线段 = D3D_PRIMITIVE_TOPOLOGY_LINELIST_ADJ,
+	e邻接连续线段 = D3D_PRIMITIVE_TOPOLOGY_LINESTRIP_ADJ,
+	e邻接列表三角形 = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST_ADJ,
+	e邻接连接三角形 = D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP_ADJ,
+	e补丁1 = D3D_PRIMITIVE_TOPOLOGY_1_CONTROL_POINT_PATCHLIST,
+	e补丁2 = D3D_PRIMITIVE_TOPOLOGY_2_CONTROL_POINT_PATCHLIST,
+	e补丁3 = D3D_PRIMITIVE_TOPOLOGY_3_CONTROL_POINT_PATCHLIST,
+	e补丁4 = D3D_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST,
+	e补丁5 = D3D_PRIMITIVE_TOPOLOGY_5_CONTROL_POINT_PATCHLIST,
+	e补丁6 = D3D_PRIMITIVE_TOPOLOGY_6_CONTROL_POINT_PATCHLIST,
+	e补丁7 = D3D_PRIMITIVE_TOPOLOGY_7_CONTROL_POINT_PATCHLIST,
+	e补丁8 = D3D_PRIMITIVE_TOPOLOGY_8_CONTROL_POINT_PATCHLIST,
+	e补丁9 = D3D_PRIMITIVE_TOPOLOGY_9_CONTROL_POINT_PATCHLIST,
+	e补丁10 = D3D_PRIMITIVE_TOPOLOGY_10_CONTROL_POINT_PATCHLIST,
+	e补丁11 = D3D_PRIMITIVE_TOPOLOGY_11_CONTROL_POINT_PATCHLIST,
+	e补丁12 = D3D_PRIMITIVE_TOPOLOGY_12_CONTROL_POINT_PATCHLIST,
+	e补丁13 = D3D_PRIMITIVE_TOPOLOGY_13_CONTROL_POINT_PATCHLIST,
+	e补丁14 = D3D_PRIMITIVE_TOPOLOGY_14_CONTROL_POINT_PATCHLIST,
+	e补丁15 = D3D_PRIMITIVE_TOPOLOGY_15_CONTROL_POINT_PATCHLIST,
+	e补丁16 = D3D_PRIMITIVE_TOPOLOGY_16_CONTROL_POINT_PATCHLIST,
+	e补丁17 = D3D_PRIMITIVE_TOPOLOGY_17_CONTROL_POINT_PATCHLIST,
+	e补丁18 = D3D_PRIMITIVE_TOPOLOGY_18_CONTROL_POINT_PATCHLIST,
+	e补丁19 = D3D_PRIMITIVE_TOPOLOGY_19_CONTROL_POINT_PATCHLIST,
+	e补丁20 = D3D_PRIMITIVE_TOPOLOGY_20_CONTROL_POINT_PATCHLIST,
+	e补丁21 = D3D_PRIMITIVE_TOPOLOGY_21_CONTROL_POINT_PATCHLIST,
+	e补丁22 = D3D_PRIMITIVE_TOPOLOGY_22_CONTROL_POINT_PATCHLIST,
+	e补丁23 = D3D_PRIMITIVE_TOPOLOGY_23_CONTROL_POINT_PATCHLIST,
+	e补丁24 = D3D_PRIMITIVE_TOPOLOGY_24_CONTROL_POINT_PATCHLIST,
+	e补丁25 = D3D_PRIMITIVE_TOPOLOGY_25_CONTROL_POINT_PATCHLIST,
+	e补丁26 = D3D_PRIMITIVE_TOPOLOGY_26_CONTROL_POINT_PATCHLIST,
+	e补丁27 = D3D_PRIMITIVE_TOPOLOGY_27_CONTROL_POINT_PATCHLIST,
+	e补丁28 = D3D_PRIMITIVE_TOPOLOGY_28_CONTROL_POINT_PATCHLIST,
+	e补丁29 = D3D_PRIMITIVE_TOPOLOGY_29_CONTROL_POINT_PATCHLIST,
+	e补丁30 = D3D_PRIMITIVE_TOPOLOGY_30_CONTROL_POINT_PATCHLIST,
+	e补丁31 = D3D_PRIMITIVE_TOPOLOGY_31_CONTROL_POINT_PATCHLIST,
+	e补丁32 = D3D_PRIMITIVE_TOPOLOGY_32_CONTROL_POINT_PATCHLIST,
 };
 enum class E图元拓扑类型 {
 	e点 = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT,
@@ -123,11 +164,16 @@ constexpr DXGI_FORMAT c深度模板格式 = DXGI_FORMAT_D32_FLOAT_S8X24_UINT;
 constexpr float c清屏深度l = 1;
 constexpr float c清屏深度r = 0;
 constexpr UINT c描述符范围默认偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+constexpr D3D12_RASTERIZER_DESC c默认光栅化 = {D3D12_FILL_MODE_SOLID, D3D12_CULL_MODE_BACK, FALSE, D3D12_DEFAULT_DEPTH_BIAS, D3D12_DEFAULT_DEPTH_BIAS_CLAMP, D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS, TRUE, FALSE, FALSE, 0, D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF};
+constexpr D3D12_RENDER_TARGET_BLEND_DESC c默认渲染目标混合 = {FALSE, FALSE, D3D12_BLEND_ONE, D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE, D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD, D3D12_LOGIC_OP_NOOP, D3D12_COLOR_WRITE_ENABLE_ALL};
+constexpr D3D12_BLEND_DESC c默认混合 = {FALSE, FALSE, c默认渲染目标混合, {}, {}, {}, {}, {}, {}, {}};
+constexpr D3D12_DEPTH_STENCIL_DESC c默认深度模板 = {FALSE, D3D12_DEPTH_WRITE_MASK_ALL, D3D12_COMPARISON_FUNC_LESS, FALSE, D3D12_DEFAULT_STENCIL_READ_MASK, D3D12_DEFAULT_STENCIL_WRITE_MASK, {D3D12_STENCIL_OP_KEEP, D3D12_STENCIL_OP_KEEP, D3D12_STENCIL_OP_KEEP, D3D12_COMPARISON_FUNC_ALWAYS}, {D3D12_STENCIL_OP_KEEP, D3D12_STENCIL_OP_KEEP, D3D12_STENCIL_OP_KEEP, D3D12_COMPARISON_FUNC_ALWAYS}};
 //==============================================================================
 // 结构
 //==============================================================================
 struct S着色器字节代码 : public D3D12_SHADER_BYTECODE {
 	static S着色器字节代码 fc二进制大对象(ID3DBlob *);
+	static S着色器字节代码 fc二进制大对象(IDxcBlob *);
 };
 struct S资源描述 : public D3D12_RESOURCE_DESC {
 	static S资源描述 fc缓存(UINT64);
@@ -142,6 +188,11 @@ struct S图形管线参数 : public D3D12_GRAPHICS_PIPELINE_STATE_DESC {
 	void fs几何着色器(ID3DBlob *);
 	void fs外壳着色器(ID3DBlob *);
 	void fs域着色器(ID3DBlob *);
+	void fs顶点着色器(IDxcBlob *);
+	void fs像素着色器(IDxcBlob *);
+	void fs几何着色器(IDxcBlob *);
+	void fs外壳着色器(IDxcBlob *);
+	void fs域着色器(IDxcBlob *);
 	void fs光栅化(const D3D12_RASTERIZER_DESC &);
 	void fs混合(const D3D12_BLEND_DESC &);
 	void fs深度模板(const D3D12_DEPTH_STENCIL_DESC &);
@@ -161,6 +212,11 @@ struct S纹理复制区 : public D3D12_TEXTURE_COPY_LOCATION {
 struct S清除值 : public D3D12_CLEAR_VALUE {
 	static S清除值 fc颜色(DXGI_FORMAT, const 数学::S颜色 &);
 	static S清除值 fc深度模板(DXGI_FORMAT, float, UINT8);
+};
+struct S深度模板参数 : public D3D12_DEPTH_STENCIL_DESC {
+	S深度模板参数();
+	void fs深度部分(const D3D12_DEPTH_STENCIL_DESC &);
+	void fs模板部分(const D3D12_DEPTH_STENCIL_DESC &);
 };
 //==============================================================================
 // 图形引擎
@@ -199,6 +255,7 @@ public:
 	C创建设备 &fg创建设备();
 	C缓冲工厂 &fg缓冲工厂();
 	C纹理工厂 &fg纹理工厂();
+	C着色器工厂2 &fg着色器工厂();
 	ID3D12RootSignature *fg默认根签名();
 	ComPtr<ID3D12Device> fg设备() const;
 public:
@@ -215,6 +272,7 @@ public:
 	std::unique_ptr<C创建设备> m创建设备;
 	std::unique_ptr<C缓冲工厂> m缓冲工厂;
 	std::unique_ptr<C纹理工厂> m纹理工厂;
+	std::unique_ptr<C着色器工厂2> m着色器工厂;
 	std::unique_ptr<C渲染目标管理> m渲染目标管理;
 	std::unique_ptr<C深度模板管理> m深度模板管理;
 };
@@ -367,13 +425,17 @@ public:
 class C渲染状态 {
 public:
 	struct S光栅化 {
-		D3D12_RASTERIZER_DESC m默认, m线框渲染, m显示隐藏面, m反面渲染;
+		D3D12_RASTERIZER_DESC m默认 = c默认光栅化,
+			m线框渲染, m显示隐藏面, m反面渲染;
 	} m光栅化;
 	struct S混合 {
-		D3D12_BLEND_DESC m默认, m开启透明;
+		D3D12_BLEND_DESC m默认 = c默认混合,
+			m开启透明, m颜色叠加, m禁止写颜色;
 	} m混合;
 	struct S深度模板 {
-		D3D12_DEPTH_STENCIL_DESC m默认, m正常深度l, m正常深度r, m总是覆盖;
+		D3D12_DEPTH_STENCIL_DESC m默认 = c默认深度模板,
+			m正常深度l, m正常深度r, m总是覆盖, 
+			m模板标记, m模板比较;
 	} m深度模板;
 	struct S采样器 {
 		D3D12_SAMPLER_DESC m纹理, m图案, m各向异性过滤;
@@ -444,6 +506,7 @@ public:
 	static D3D12_SHADER_VISIBILITY f计算可见性(E着色器);
 	static D3D12_ROOT_PARAMETER_TYPE f计算根参数类型(E类型);
 	static D3D12_DESCRIPTOR_RANGE_TYPE f计算描述范围类型(E类型);
+	void f清空();
 	C根签名参数 &f添加描述符(E类型, UINT 寄存器, UINT 空间, E着色器 可见性 = E着色器::e全部);
 	C根签名参数 &f添加采样器(const D3D12_SAMPLER_DESC &, UINT 寄存器, UINT 空间, E着色器 可见性 = E着色器::e全部);
 	C根签名参数 &f添加范围(E类型 类型, UINT 分配数量 = 1, UINT 开始寄存器 = 0, UINT 寄存器空间 = 0, UINT 偏移 = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND, E着色器 可见性 = E着色器::e全部);
@@ -486,8 +549,25 @@ public:
 	static HRESULT f编译外壳着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *函数名);
 	static HRESULT f编译域着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *函数名);
 	//静态函数
-	static HRESULT f编译着色器(const wchar_t *文件名, const char *入口, const char *着色模型, ID3DBlob** 输出);
-	static HRESULT f读取着色器(const wchar_t *文件名, std::unique_ptr<std::byte[]> &数据, DWORD &大小);
+	static HRESULT f编译着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *入口, const char *着色模型);
+	static HRESULT f读取着色器(std::unique_ptr<std::byte[]> &数据, DWORD &大小, const wchar_t *文件名);
+};
+class C着色器工厂2 {
+public:
+	HRESULT f初始化();
+	//编译着色器
+	HRESULT f编译顶点着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *函数名);
+	HRESULT f编译像素着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *函数名);
+	HRESULT f编译几何着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *函数名);
+	HRESULT f编译外壳着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *函数名);
+	HRESULT f编译域着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *函数名);
+	HRESULT f编译计算着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *函数名);
+	//其它函数
+	HRESULT f编译着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *入口, const wchar_t *着色模型);
+	HRESULT f读取着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名);
+public:
+	ComPtr<IDxcCompiler> m编译器;
+	ComPtr<IDxcLibrary> m库;
 };
 //纹理工厂
 class C纹理工厂 {

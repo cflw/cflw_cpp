@@ -25,14 +25,14 @@ HRESULT C图像工厂::f初始化() {
 	}
 	return S_OK;
 }
-HRESULT C图像工厂::f读取图像(const wchar_t *p文件, IWICBitmapFrameDecode **p帧) {
+HRESULT C图像工厂::f读取图像(const wchar_t *a文件, IWICBitmapFrameDecode **a帧) {
 	HRESULT hr;
 	ComPtr<IWICBitmapDecoder> v解码器;
-	hr = m工厂->CreateDecoderFromFilename(p文件, 0, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &v解码器);
+	hr = m工厂->CreateDecoderFromFilename(a文件, 0, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &v解码器);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = v解码器->GetFrame(0, p帧);
+	hr = v解码器->GetFrame(0, a帧);
 	if (FAILED(hr)) {
 		return hr;
 	}

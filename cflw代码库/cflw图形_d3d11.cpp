@@ -628,6 +628,7 @@ C渲染状态::~C渲染状态() {
 }
 C渲染状态::C渲染状态(ID3D11Device *a设备) {
 	HRESULT hr;
+	//光栅化	================================================================
 	//无光栅化
 	m光栅化参数.m默认 = c默认光栅化;
 	m光栅化.m默认 = nullptr;
@@ -654,6 +655,8 @@ C渲染状态::C渲染状态(ID3D11Device *a设备) {
 	if(FAILED(hr)) {
 		return;
 	}
+
+	//混合	====================================================================
 	//无混合
 	m混合参数.m默认 = c默认混合;
 	m混合.m默认 = nullptr;
@@ -688,6 +691,8 @@ C渲染状态::C渲染状态(ID3D11Device *a设备) {
 	if(FAILED(hr)) {
 		return;
 	}
+
+	//深度模板	================================================================
 	//无深度模板
 	m深度模板参数.m默认 = c默认深度模板;
 	m深度模板.m默认 = nullptr;
@@ -732,6 +737,7 @@ C渲染状态::C渲染状态(ID3D11Device *a设备) {
 	m深度模板参数.m模板比较.FrontFace.StencilFunc = D3D11_COMPARISON_EQUAL;
 	m深度模板参数.m模板比较.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
 
+	//采样器	================================================================
 	//纹理
 	m采样器参数.m纹理.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	m采样器参数.m纹理.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -924,7 +930,7 @@ HRESULT C着色器工厂::f读取并创建顶点着色器(tp顶点着色器 &a, const wchar_t *a文件
 	HRESULT hr;
 	std::unique_ptr<std::byte[]> v数据;
 	DWORD v大小;
-	hr = f读取着色器(a文件名, v数据, v大小);
+	hr = f读取着色器(v数据, v大小, a文件名);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -945,7 +951,7 @@ HRESULT C着色器工厂::f读取并创建像素着色器(tp像素着色器 &a, const wchar_t *a文件
 	HRESULT hr;
 	std::unique_ptr<std::byte[]> v数据;
 	DWORD v大小;
-	hr = f读取着色器(a文件名, v数据, v大小);
+	hr = f读取着色器(v数据, v大小, a文件名);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -959,7 +965,7 @@ HRESULT C着色器工厂::f读取并创建几何着色器(tp几何着色器 &a, const wchar_t *a文件
 	HRESULT hr;
 	std::unique_ptr<std::byte[]> v数据;
 	DWORD v大小;
-	hr = f读取着色器(a文件名, v数据, v大小);
+	hr = f读取着色器(v数据, v大小, a文件名);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -973,7 +979,7 @@ HRESULT C着色器工厂::f读取并创建外壳着色器(tp外壳着色器 &a, const wchar_t *a文件
 	HRESULT hr;
 	std::unique_ptr<std::byte[]> v数据;
 	DWORD v大小;
-	hr = f读取着色器(a文件名, v数据, v大小);
+	hr = f读取着色器(v数据, v大小, a文件名);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -987,7 +993,7 @@ HRESULT C着色器工厂::f读取并创建域着色器(tp域着色器 &a, const wchar_t *a文件名) 
 	HRESULT hr;
 	std::unique_ptr<std::byte[]> v数据;
 	DWORD v大小;
-	hr = f读取着色器(a文件名, v数据, v大小);
+	hr = f读取着色器(v数据, v大小, a文件名);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -997,47 +1003,47 @@ HRESULT C着色器工厂::f读取并创建域着色器(tp域着色器 &a, const wchar_t *a文件名) 
 	}
 	return hr;
 }
-HRESULT C着色器工厂::f创建顶点着色器(tp顶点着色器 &a, const S着色器字节代码 &p代码) {
-	return m设备->CreateVertexShader(p代码.m数据, p代码.m大小, nullptr, &a);
+HRESULT C着色器工厂::f创建顶点着色器(tp顶点着色器 &a, const S着色器字节代码 &a代码) {
+	return m设备->CreateVertexShader(a代码.m数据, a代码.m大小, nullptr, &a);
 }
-HRESULT C着色器工厂::f创建像素着色器(tp像素着色器 &a, const S着色器字节代码 &p代码) {
-	return m设备->CreatePixelShader(p代码.m数据, p代码.m大小, nullptr, &a);
+HRESULT C着色器工厂::f创建像素着色器(tp像素着色器 &a, const S着色器字节代码 &a代码) {
+	return m设备->CreatePixelShader(a代码.m数据, a代码.m大小, nullptr, &a);
 }
-HRESULT C着色器工厂::f创建几何着色器(tp几何着色器 &a, const S着色器字节代码 &p代码) {
-	return m设备->CreateGeometryShader(p代码.m数据, p代码.m大小, nullptr, &a);
+HRESULT C着色器工厂::f创建几何着色器(tp几何着色器 &a, const S着色器字节代码 &a代码) {
+	return m设备->CreateGeometryShader(a代码.m数据, a代码.m大小, nullptr, &a);
 }
-HRESULT C着色器工厂::f创建外壳着色器(tp外壳着色器 &a, const S着色器字节代码 &p代码) {
-	return m设备->CreateHullShader(p代码.m数据, p代码.m大小, nullptr, &a);
+HRESULT C着色器工厂::f创建外壳着色器(tp外壳着色器 &a, const S着色器字节代码 &a代码) {
+	return m设备->CreateHullShader(a代码.m数据, a代码.m大小, nullptr, &a);
 }
-HRESULT C着色器工厂::f创建域着色器(tp域着色器 &a, const S着色器字节代码 &p代码) {
-	return m设备->CreateDomainShader(p代码.m数据, p代码.m大小, nullptr, &a);
+HRESULT C着色器工厂::f创建域着色器(tp域着色器 &a, const S着色器字节代码 &a代码) {
+	return m设备->CreateDomainShader(a代码.m数据, a代码.m大小, nullptr, &a);
 }
-HRESULT C着色器工厂::f创建输入布局(tp输入布局 &a, const S着色器字节代码 &p代码, const C顶点格式 &a顶点格式) {
-	return m设备->CreateInputLayout(a顶点格式.m数组.data(), a顶点格式.m数组.size(), p代码.m数据, p代码.m大小, &a);
+HRESULT C着色器工厂::f创建输入布局(tp输入布局 &a, const S着色器字节代码 &a代码, const C顶点格式 &a顶点格式) {
+	return m设备->CreateInputLayout(a顶点格式.m数组.data(), a顶点格式.m数组.size(), a代码.m数据, a代码.m大小, &a);
 }
 HRESULT C着色器工厂::f编译顶点着色器(ComPtr<ID3DBlob> &a, const wchar_t *a文件名, const char *a函数名) {
-	return f编译着色器(a文件名, a函数名, "vs_5_0", &a);
+	return f编译着色器(a, a文件名, a函数名, "vs_5_0");
 }
 HRESULT C着色器工厂::f编译像素着色器(ComPtr<ID3DBlob> &a, const wchar_t *a文件名, const char *a函数名) {
-	return f编译着色器(a文件名, a函数名, "ps_5_0", &a);
+	return f编译着色器(a, a文件名, a函数名, "ps_5_0");
 }
 HRESULT C着色器工厂::f编译几何着色器(ComPtr<ID3DBlob> &a, const wchar_t *a文件名, const char *a函数名) {
-	return f编译着色器(a文件名, a函数名, "gs_5_0", &a);
+	return f编译着色器(a, a文件名, a函数名, "gs_5_0");
 }
 HRESULT C着色器工厂::f编译外壳着色器(ComPtr<ID3DBlob> &a, const wchar_t *a文件名, const char *a函数名) {
-	return f编译着色器(a文件名, a函数名, "hs_5_0", &a);
+	return f编译着色器(a, a文件名, a函数名, "hs_5_0");
 }
 HRESULT C着色器工厂::f编译域着色器(ComPtr<ID3DBlob> &a, const wchar_t *a文件名, const char *a函数名) {
-	return f编译着色器(a文件名, a函数名, "ds_5_0", &a);
+	return f编译着色器(a, a文件名, a函数名, "ds_5_0");
 }
-HRESULT C着色器工厂::f编译着色器(const wchar_t *a文件名, const char *a入口, const char *a着色模型, ID3DBlob** a输出) {
+HRESULT C着色器工厂::f编译着色器(ComPtr<ID3DBlob> &a, const wchar_t *a文件名, const char *a入口, const char *a着色模型) {
 	HRESULT hr = S_OK;
 	DWORD v着色标志 = D3DCOMPILE_ENABLE_STRICTNESS;
 #if defined( DEBUG ) || defined( _DEBUG )
 	v着色标志 |= D3DCOMPILE_DEBUG;
 #endif
 	ComPtr<ID3DBlob> v错误;
-	hr = D3DCompileFromFile(a文件名, nullptr, nullptr, a入口, a着色模型, v着色标志, 0, a输出, &v错误);
+	hr = D3DCompileFromFile(a文件名, nullptr, nullptr, a入口, a着色模型, v着色标志, 0, &a, &v错误);
 	if(FAILED(hr)) {
 		if (v错误 != nullptr) {
 			OutputDebugStringA((char*)v错误->GetBufferPointer());
@@ -1046,7 +1052,7 @@ HRESULT C着色器工厂::f编译着色器(const wchar_t *a文件名, const char *a入口, cons
 	}
 	return S_OK;
 }
-HRESULT C着色器工厂::f读取着色器(const wchar_t *a文件名, std::unique_ptr<std::byte[]> &a数据, DWORD &a大小) {
+HRESULT C着色器工厂::f读取着色器(std::unique_ptr<std::byte[]> &a数据, DWORD &a大小, const wchar_t *a文件名) {
 	HANDLE v文件 = CreateFileW(a文件名, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_ALWAYS, 0, nullptr);
 	if (v文件 == INVALID_HANDLE_VALUE) {
 		return ERROR_FILE_NOT_FOUND;
