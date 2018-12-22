@@ -26,30 +26,46 @@ template<typename t> t f限制(const t &值, const t &最小值, const t &最大
 template<typename t> t f接近(const t &源值, const t &目标值, const t &接近差) {
 	return ((f绝对值(源值 - 目标值) <= 接近差) ? 目标值 : 源值);
 }
-template<typename t> t f倍数渐变(const t &源值, const t &目标值,
-		const float &差值渐变倍数, const t &最小渐变 = (t)0, const t &最大渐变 = (t)9999) {
-	if (源值 == 目标值) {
-		return 源值;
+template<typename t> t f倍数渐变(const t &a源值, const t &a目标值, const float &a差值渐变倍数, const t &a最小渐变 = (t)0, const t &a最大渐变 = std::numeric_limits<t>::max()) {
+	if (a源值 == a目标值) {
+		return a源值;
 	} else {
-		const t v差值 = 目标值 - 源值;
-		const t v渐变值 = (t)(v差值 * 差值渐变倍数);
-		const t v限制渐变值 = f限制<t>(f绝对值<t>(v渐变值), f绝对值<t>(最小渐变), f绝对值<t>(最大渐变)) * f取符号<t>(v差值);
-		const t v接近值 = f接近<t>(源值 + v限制渐变值, 目标值, f绝对值<t>(最小渐变));
+		const t v差值 = a目标值 - a源值;
+		const t v渐变值 = (t)(v差值 * a差值渐变倍数);
+		const t v限制渐变值 = f限制<t>(f绝对值<t>(v渐变值), f绝对值<t>(a最小渐变), f绝对值<t>(a最大渐变)) * f取符号<t>(v差值);
+		const t v接近值 = f接近<t>(a源值 + v限制渐变值, a目标值, f绝对值<t>(a最小渐变));
 		return v接近值;
 	}
 }
-template<typename t> t f线性渐变(const t &源值, const t &目标值, const float &渐变值) {
-	if (源值 == 目标值) {
-		return 源值;
+template<typename t> t f线性渐变(const t &a源值, const t &a目标值, const float &a渐变值) {
+	if (a源值 == a目标值) {
+		return a源值;
 	} else {
-		return f接近<t>(源值 + (t)(渐变值 * f取符号(目标值 - 源值)), 目标值, (t)渐变值);
+		return f接近<t>(a源值 + (t)(a渐变值 * f取符号(a目标值 - a源值)), a目标值, (t)a渐变值);
 	}
 }
-template<class t> t f求余(const t &a源值, const t &a除数) {
-	const t v倍数 = floor(a源值 / a除数);
-	return a源值 - a除数 * v倍数;
+template<typename t> t f地板除(const t &a被除数, const t &a除数) {
+	if constexpr (std::is_integral_v<t>) {
+		return (a被除数 < 0) ?
+			(a被除数 / a除数 + ((a被除数 % a除数 == 0) ? 0 : -1)) :
+			(a被除数 / a除数);
+	} else {
+		return floor(a被除数 / a除数);
+	}
 }
-template<class t> bool f限制循环(t &a值, const t &a最大值) {
+template<typename t> t f天花板除(const t &a被除数, const t &a除数) {
+	if constexpr (std::is_integral_v<t>) {
+		return (a被除数 <= 0) ?
+			(int)(a被除数 / a除数) :
+			(int)(a被除数 / a除数 + ((a被除数 % a除数 == 0) ? 0 : 1));
+	} else {
+		return ceil(a被除数 / a除数);
+	}
+}
+template<typename t> t f求余(const t &a源值, const t &a除数) {
+	return a源值 - a除数 * f地板除<t>(a源值, a除数);
+}
+template<typename t> bool f限制循环(t &a值, const t &a最大值) {
 	//达到最大值则清零并返回真
 	if (a值 >= a最大值) {
 		a值 -= a最大值;
@@ -58,8 +74,8 @@ template<class t> bool f限制循环(t &a值, const t &a最大值) {
 		return false;
 	}
 }
-template<typename t> t f绝对值(const t &_) {
-	return ((_ > 0) ? (_) : (-_));
+template<typename t> t f绝对值(const t &a) {
+	return ((a > 0) ? (a) : (-a));
 }
 template<typename t> std::tuple<t, t> sincos(const t &a) {
 	return {sin(a), cos(a)};
@@ -70,20 +86,20 @@ template<typename t> t f插值(const t &a0, const t &a1, float p) {
 }
 //限
 template<typename t> int f限(t &a0, const t &a1) {
-	const int r = floor(a0 / a1);
-	a0 -= r * a1;
-	return r;
+	const int v倍数 = f地板除<int>(a0, a1);
+	a0 -= v倍数 * a1;
+	return v倍数;
 }
 //
 template<typename t> bool f同符号(const t &a1, const t &p2) {
 	return (f取符号<t>(a1) == f取符号<t>(p2));
 }
 //平方立方
-template<typename t> t f平方(const t &p) {
-	return p * p;
+template<typename t> t f平方(const t &a) {
+	return a * a;
 }
-template<typename t> t f立方(const t &p) {
-	return p * p * p;
+template<typename t> t f立方(const t &a) {
+	return a * a * a;
 }
 //
 template<typename t> t f对齐(const t &x, const t &y) {
@@ -98,8 +114,8 @@ template<typename t> t f对齐(const t &x, const t &y) {
 }
 template<typename t> t f循环(const t &a, const t &a最小, const t &a最大) {
 	const t v差 = a最大 - a最小;
-	const t v基本倍 = floor(a / v差);
-	const t v循环倍 = ceil(a最小 / v差);
+	const t v基本倍 = f地板除<t>(a, v差);
+	const t v循环倍 = f天花板除<t>(a最小, v差);
 	return a - v差 * (v基本倍 - v循环倍);
 }
 template<typename t> t f差(const t &a, const t &b) {
@@ -117,12 +133,12 @@ template<typename tk, typename tv> tv f插值2(const tk &a键0, const tv &a值0,
 	const tk k = (a键 - a键0) / (a键1 - a键0);
 	return f插值<tv>(a值0, a值1, k);
 }
-template<typename t> t f反勾股(const t &p斜边, const t &p直角边) {
-	return sqrt(p斜边*p斜边 - p直角边*p直角边);
+template<typename t> t f反勾股(const t &a斜边, const t &a直角边) {
+	return sqrt(a斜边*a斜边 - a直角边*a直角边);
 }
-template<typename t> t f四舍五入(const t &p) {
-	const float v舍 = floor(p);
-	return (p - v舍 < (t)0.5) ? v舍 : (v舍 + 1);
+template<typename t> t f四舍五入(const t &a数字) {
+	const float v舍 = floor(a数字);
+	return (a数字 - v舍 < (t)0.5) ? v舍 : (v舍 + 1);
 }
 template<typename t> t f等腰梯形插值(const t &a小, const t &a大, float a斜宽, float x) {
 	if (x < a斜宽) {

@@ -20,7 +20,7 @@ public:
 	void f结束();
 	//对象
 	ComPtr<IDXGIDevice> fg基础设备() const;
-public:
+private:
 	ComPtr<ID3D11On12Device> m设备;
 	ComPtr<ID3D11DeviceContext> m上下文;
 	std::vector<ComPtr<ID3D11Resource>> ma渲染目标资源;

@@ -70,9 +70,9 @@ public:
 // 全局变量&函数
 //==============================================================================
 const std::tuple<int, int, int> ca对应左右键[] = {
-	std::tuple<int, int, int>(e键shift, e键左shift, e键右shift),
-	std::tuple<int, int, int>(e键ctrl, e键左ctrl, e键右ctrl),
-	std::tuple<int, int, int>(e键alt, e键左alt, e键右alt),
+	std::tuple<int, int, int>((int)E键盘按键::e上档, (int)E键盘按键::e左上档, (int)E键盘按键::e右上档),
+	std::tuple<int, int, int>((int)E键盘按键::e控制, (int)E键盘按键::e左控制, (int)E键盘按键::e右控制),
+	std::tuple<int, int, int>((int)E键盘按键::e交替, (int)E键盘按键::e左交替, (int)E键盘按键::e右交替),
 };
 //==============================================================================
 // 输入引擎
@@ -141,22 +141,22 @@ void C输入::f窗口消息(UINT a消息, WPARAM w, LPARAM l) {
 	if (m鼠标) {
 		switch (a消息) {
 		case WM_LBUTTONDOWN:
-			m鼠标->m缓冲.f按下(E鼠标按键::e左键);
+			m鼠标->m缓冲.f按下((int)E鼠标按键::e左键);
 			break;
 		case WM_RBUTTONDOWN:
-			m鼠标->m缓冲.f按下(E鼠标按键::e右键);
+			m鼠标->m缓冲.f按下((int)E鼠标按键::e右键);
 			break;
 		case WM_MBUTTONDOWN:
-			m鼠标->m缓冲.f按下(E鼠标按键::e中键);
+			m鼠标->m缓冲.f按下((int)E鼠标按键::e中键);
 			break;
 		case WM_LBUTTONUP:
-			m鼠标->m缓冲.f松开(E鼠标按键::e左键);
+			m鼠标->m缓冲.f松开((int)E鼠标按键::e左键);
 			break;
 		case WM_RBUTTONUP:
-			m鼠标->m缓冲.f松开(E鼠标按键::e右键);
+			m鼠标->m缓冲.f松开((int)E鼠标按键::e右键);
 			break;
 		case WM_MBUTTONUP:
-			m鼠标->m缓冲.f松开(E鼠标按键::e中键);
+			m鼠标->m缓冲.f松开((int)E鼠标按键::e中键);
 			break;
 		case WM_MOUSEWHEEL:
 			m鼠标->m滚轮.m这次[0] = GET_WHEEL_DELTA_WPARAM(w) / 120.f;

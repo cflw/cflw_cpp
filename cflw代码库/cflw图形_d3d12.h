@@ -3,7 +3,7 @@
 #include <vector>
 #include <map>
 #include <bitset>
-#include <dxgi1_4.h>
+#include <dxgi1_5.h>
 #include <d3d12.h>
 #include <dxcapi.h>
 #include <wrl.h>
@@ -16,12 +16,14 @@
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxcompiler.lib")
 #endif
-
+namespace cflw::图形::d3d11上12 {
+class C三维;
+};
 namespace cflw::图形::d3d12 {
 namespace 纹理 = dx纹理;
 //接口
 using Microsoft::WRL::ComPtr;
-typedef ComPtr<IDXGIFactory4> tp基础工厂;
+typedef ComPtr<IDXGIFactory5> tp基础工厂;
 typedef ComPtr<IDXGIAdapter3> tp显卡;
 typedef ComPtr<IDXGISwapChain3> tp交换链;
 typedef ComPtr<ID3D12Device> tp设备;
@@ -222,11 +224,14 @@ struct S深度模板参数 : public D3D12_DEPTH_STENCIL_DESC {
 // 图形引擎
 //==============================================================================
 class C三维 {
+	friend C渲染控制;
+	friend d3d11上12::C三维;
 public:
 	static constexpr UINT c帧数 = 2;
 	enum E标志 {
 		e调试,
-		e软件设备
+		e软件设备,
+		e撕裂,
 	};
 	~C三维();
 	//手动初始化
@@ -237,15 +242,25 @@ public:
 	HRESULT f初始化渲染目标视图();
 	HRESULT f初始化深度模板视图();
 	HRESULT f初始化根签名();
-	//
+	HRESULT f重置屏幕资源();	//重置交换链和视图
+	HRESULT f重置交换链();	//注意:会清除所有状态
+	HRESULT f调整目标大小();	//调窗口大小
+	//创建
 	HRESULT f创建图形管线(tp图形管线 &, const D3D12_GRAPHICS_PIPELINE_STATE_DESC &);
 	HRESULT f创建命令列表(tp命令列表 &, ID3D12PipelineState * = nullptr);
 	HRESULT f创建根签名(tp根签名 &, const C根签名参数 &);
 	HRESULT f创建根签名(tp根签名 &, const D3D12_ROOT_SIGNATURE_DESC &);
 	HRESULT f创建上传资源(tp资源 &, const void *, size_t);
+	//属性
 	D3D12_VIEWPORT fg窗口视口();
 	D3D12_RECT fg窗口矩形();
 	数学::S向量2 fg窗口大小() const;
+	void fs窗口大小();	//根据窗口自动设置
+	HRESULT fs窗口大小(int 宽, int 高);	//调用IDXGISwapChain::ResizeTarget
+	void fs窗口大小_(int, int);
+	bool fi全屏() const;
+	bool fi窗口() const;
+	void fs全屏(bool);
 	//一键初始化
 	bool f初始化(const HWND &);
 	void f销毁();
@@ -258,7 +273,7 @@ public:
 	C着色器工厂2 &fg着色器工厂();
 	ID3D12RootSignature *fg默认根签名();
 	ComPtr<ID3D12Device> fg设备() const;
-public:
+private:
 	HWND m窗口 = nullptr;
 	int m窗口大小[2];
 	std::bitset<32> m标志;
@@ -266,7 +281,7 @@ public:
 	ComPtr<ID3D12CommandQueue> m命令队列;
 	ComPtr<IDXGISwapChain3> m交换链;
 	ComPtr<ID3D12CommandAllocator> m命令分配器;
-	ComPtr<ID3D12RootSignature> m根签名;
+	ComPtr<ID3D12RootSignature> m默认根签名;
 	std::unique_ptr<C渲染控制> m渲染控制;
 	std::unique_ptr<C渲染状态> m渲染状态;
 	std::unique_ptr<C创建设备> m创建设备;
@@ -275,16 +290,20 @@ public:
 	std::unique_ptr<C着色器工厂2> m着色器工厂;
 	std::unique_ptr<C渲染目标管理> m渲染目标管理;
 	std::unique_ptr<C深度模板管理> m深度模板管理;
+	D3D12_VIEWPORT m默认视口;
+	D3D12_RECT m默认裁剪矩形;
+	UINT m交换链标志 = 0;
 };
 class C创建设备 {
 public:
-	ComPtr<IDXGIFactory4> fg工厂();
+	ComPtr<IDXGIFactory5> fg工厂();
 	bool f开启调试层();
+	bool f检查撕裂();
 	HRESULT f取显卡(IDXGIAdapter3**);
 	HRESULT f取软件适配器(IDXGIAdapter3**);
 	HRESULT f创建设备(IDXGIAdapter3*, ID3D12Device**);
 public:
-	ComPtr<IDXGIFactory4> m工厂 = nullptr;
+	ComPtr<IDXGIFactory5> m工厂 = nullptr;
 	D3D_FEATURE_LEVEL m功能级别 = D3D_FEATURE_LEVEL_11_0;
 };
 //==============================================================================
@@ -328,18 +347,12 @@ public:
 	//其它
 	D3D12_RESOURCE_BARRIER fc渲染视图栅栏变换(D3D12_RESOURCE_STATES, D3D12_RESOURCE_STATES);
 public:
-	ComPtr<ID3D12CommandAllocator> m命令分配器;
-	ComPtr<ID3D12CommandQueue> m命令队列;
-	ComPtr<IDXGISwapChain3> m交换链;
+	const C三维 *m三维 = nullptr;
 	ComPtr<ID3D12RootSignature> m根签名;
 	ComPtr<ID3D12GraphicsCommandList> m命令列表;
 	ComPtr<ID3D12PipelineState> m图形管线;
 	std::vector<ComPtr<ID3D12Resource>> ma更新资源;
-	C渲染目标管理 *m渲染目标管理 = nullptr;
-	C深度模板管理 *m深度模板管理 = nullptr;
 	UINT m帧索引 = 0;
-	D3D12_VIEWPORT m视口;
-	D3D12_RECT m裁剪矩形;
 	HANDLE m围栏事件;
 	ComPtr<ID3D12Fence> m围栏;
 	UINT64 m围栏值;

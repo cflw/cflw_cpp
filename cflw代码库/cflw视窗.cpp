@@ -4,58 +4,73 @@
 #include "cflw视窗.h"
 namespace cflw::视窗 {
 //==============================================================================
+// 窗口控制
+//==============================================================================
+void fs窗口大小(HWND a窗口, int a宽, int a高) {
+	RECT v矩形;
+	GetWindowRect(a窗口, &v矩形);
+	const auto[v样式, v样式ex] = fg窗口样式(a窗口);
+	const S客户区尺寸 v尺寸 = S客户区尺寸::fc尺寸样式(a宽, a高, v样式, v样式ex);
+	MoveWindow(a窗口, v矩形.left, v矩形.top, v尺寸.fg宽(), v尺寸.fg高(), false);
+}
+std::pair<DWORD, DWORD> fg窗口样式(HWND a窗口) {
+	const DWORD v样式 = (DWORD)GetWindowLongW(a窗口, GWL_STYLE);
+	const DWORD v样式ex = (DWORD)GetWindowLongW(a窗口, GWL_EXSTYLE);
+	return {v样式, v样式ex};
+}
+//==============================================================================
 // 计时器
 //==============================================================================
-C计时器::C计时器() :v时间(0), v计时(0), v间隔(0) {};
+C计时器::C计时器() :m时间(0), m计时(0), m间隔(0) {};
 void C计时器::f重置(float p间隔) {
-	v时间 = timeGetTime() / 1000.f;
-	v计时 = 0;
-	v间隔 = p间隔;
+	m时间 = timeGetTime() / 1000.f;
+	m计时 = 0;
+	m间隔 = p间隔;
 }
 void C计时器::f计时() {
-	float v上次时间 = v时间;
-	v时间 = timeGetTime() / 1000.f;
-	v计时 += v时间 - v上次时间;
+	float v上次时间 = m时间;
+	m时间 = timeGetTime() / 1000.f;
+	m计时 += m时间 - v上次时间;
 }
 int C计时器::fg次数() {
-	return v次数;
+	return m次数;
 }
 float C计时器::fg用时() {
-	return v这次滴答 - v上次滴答;
+	return m这次滴答 - m上次滴答;
 }
 int C计时器::f滴答() {
 	f计时();
-	v次数 = (int)floor(v计时 / v间隔);
-	if (v次数) {
-		v上次滴答 = v这次滴答;
-		v这次滴答 = v时间;
-		v计时 -= v次数 * v间隔;
+	m次数 = (int)floor(m计时 / m间隔);
+	if (m次数) {
+		m上次滴答 = m这次滴答;
+		m这次滴答 = m时间;
+		m计时 -= m次数 * m间隔;
 	}
-	return v次数;
+	return m次数;
 }
 int C计时器::f单次滴答() {
 	f计时();
-	if (v计时 >= v间隔) {
-		v计时 -= v间隔;
-		v上次滴答 = v这次滴答;
-		v这次滴答 = v时间;
-		return v次数 = 1;
+	if (m计时 >= m间隔) {
+		m计时 -= m间隔;
+		m上次滴答 = m这次滴答;
+		m这次滴答 = m时间;
+		return m次数 = 1;
 	} else {
-		return v次数 = 0;
+		return m次数 = 0;
 	}
 }
 int C计时器::f游戏滴答() {
 	f计时();
-	v次数 = (int)floor(v计时 / v间隔);
-	if (v次数) {
-		v计时 -= v次数 * v间隔;
-		v上次滴答 = v这次滴答;
-		v这次滴答 = v时间;
-		if (v次数 >= 2) {
-			v计时 += v间隔;
+	m次数 = (int)floor(m计时 / m间隔);
+	if (m次数) {
+		m计时 -= m次数 * m间隔;
+		m上次滴答 = m这次滴答;
+		m这次滴答 = m时间;
+		if (m次数 >= 2) {
+			m计时 += m间隔;
 		}
 	}
-	return v次数;
+	return m次数;
 }
 //==============================================================================
 // 关键段
@@ -74,29 +89,20 @@ void C关键段::f离开() {
 	LeaveCriticalSection(&m关键段);
 }
 //==============================================================================
-// 窗口风格
+// 窗口样式
 //==============================================================================
-S窗口风格::operator DWORD &() {
-	return m一般风格;
-}
-void S窗口风格::fs层叠(bool) {}
-void S窗口风格::fs标题(bool) {}
-void S窗口风格::fs菜单(bool) {}
-void S窗口风格::fs最按钮(bool /*大*/, bool /*小*/) {}
-void S窗口风格::fs滚动条(bool /*垂直*/, bool /*水平*/) {}
-void S窗口风格::fs层叠窗口() {
-	m一般风格 = WS_OVERLAPPEDWINDOW;
-}
-void S窗口风格::fs弹出窗口() {
-	m一般风格 = WS_POPUPWINDOW;
-}
-void S窗口风格::fs子窗口() {
-	m一般风格 = WS_CHILDWINDOW;
-}
-void S窗口风格::fs游戏窗口() {
-	m一般风格 = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
-	m扩展风格 = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
-}
+const S窗口样式 S窗口样式::c层叠窗口 = {WS_OVERLAPPEDWINDOW, WS_EX_OVERLAPPEDWINDOW};
+const S窗口样式 S窗口样式::c弹出窗口 = {WS_POPUPWINDOW, 0};
+const S窗口样式 S窗口样式::c子窗口 = {WS_CHILDWINDOW, 0};
+const S窗口样式 S窗口样式::c游戏窗口 = {
+	WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
+	WS_EX_APPWINDOW | WS_EX_WINDOWEDGE
+};
+void S窗口样式::fs层叠(bool) {}
+void S窗口样式::fs标题(bool) {}
+void S窗口样式::fs菜单(bool) {}
+void S窗口样式::fs最按钮(bool /*大*/, bool /*小*/) {}
+void S窗口样式::fs滚动条(bool /*垂直*/, bool /*水平*/) {}
 //==============================================================================
 // 客户区尺寸
 //==============================================================================
@@ -111,9 +117,9 @@ S客户区尺寸 S客户区尺寸::fc窗口(HWND p窗口) {
 	GetClientRect(p窗口, &rc);
 	return S客户区尺寸{rc.right - rc.left, rc.bottom - rc.top};
 }
-S客户区尺寸 S客户区尺寸::fc尺寸风格(long px, long py, DWORD p风格, DWORD p风格ex) {
+S客户区尺寸 S客户区尺寸::fc尺寸样式(long px, long py, DWORD p样式, DWORD p样式ex) {
 	RECT v窗口尺寸 = {0, 0, px, py};
-	AdjustWindowRectEx(&v窗口尺寸, p风格, FALSE, p风格ex);
+	AdjustWindowRectEx(&v窗口尺寸, p样式, FALSE, p样式ex);
 	return S客户区尺寸{v窗口尺寸.right - v窗口尺寸.left, v窗口尺寸.bottom - v窗口尺寸.top};
 }
 long S客户区尺寸::fg宽() const {
@@ -200,12 +206,21 @@ UINT C任务栏按钮::f注册消息() {
 // 环境
 //==============================================================================
 SYSTEM_INFO &C环境::fg系统信息() {
-	static SYSTEM_INFO si = []()->SYSTEM_INFO {
-		SYSTEM_INFO si;
-		GetSystemInfo(&si);
-		return si;
-	}();
+	SYSTEM_INFO si;
+	GetSystemInfo(&si);
 	return si;
+}
+std::wstring C环境::fg计算机名称() {
+	WCHAR v文本[256];
+	DWORD v大小 = 256;
+	GetComputerNameW(v文本, &v大小);
+	return v文本;
+}
+std::wstring C环境::fg用户名称() {
+	WCHAR v文本[256];
+	DWORD v大小 = 256;
+	GetUserNameW(v文本, &v大小);
+	return v文本;
 }
 std::wstring C环境::fg执行程序目录() {
 	wchar_t exeFullPath[MAX_PATH] = {0};

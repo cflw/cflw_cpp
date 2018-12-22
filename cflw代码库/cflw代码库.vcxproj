@@ -189,6 +189,7 @@
     <ClInclude Include="cflw数学_矩阵.h" />
     <ClInclude Include="cflw数学_随机.h" />
     <ClInclude Include="cflw文件_csv.h" />
+    <ClInclude Include="cflw文件_json.h" />
     <ClInclude Include="cflw文件_obj模型.h" />
     <ClInclude Include="cflw时间.h" />
     <ClInclude Include="cflw工具_运算.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="cflw数学_矩阵.cpp" />
     <ClCompile Include="cflw数学_随机.cpp" />
     <ClCompile Include="cflw文件_csv.cpp" />
+    <ClCompile Include="cflw文件_json.cpp" />
     <ClCompile Include="cflw文件_obj模型.cpp" />
     <ClCompile Include="cflw时间.cpp" />
     <ClCompile Include="cflw视窗.cpp" />

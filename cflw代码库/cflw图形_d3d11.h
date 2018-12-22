@@ -201,10 +201,11 @@ struct S深度模板参数 : public D3D11_DEPTH_STENCIL_DESC {
 //==============================================================================
 class C创建设备;
 class C三维 {
+	friend C渲染控制;
 public:
 	enum E标志 {
 		e调试,
-		e软件设备
+		e软件设备,
 	};
 	~C三维();
 	//手动初始化
@@ -213,25 +214,35 @@ public:
 	HRESULT f初始化交换链();
 	HRESULT f初始化渲染目标视图();
 	HRESULT f初始化深度模板视图();
+	HRESULT f重置屏幕资源();	//重置交换链和视图
+	HRESULT f重置交换链();	//注意:会清除所有状态
+	HRESULT f调整目标大小();	//调窗口大小
 	//一键初始化
 	bool f初始化(HWND);
 	void f销毁();
-	// 资源
+	//创建
+	HRESULT f创建输入布局(tp输入布局 &输出, C顶点格式 &输入, const void *p着色器数据, size_t);
+	HRESULT f创建图形管线(tp图形管线 &, const S图形管线参数 &);
+	//属性
+	D3D11_VIEWPORT fg窗口视口() const;
+	数学::S向量2 fg窗口大小() const;
+	void fs窗口大小();	//根据窗口自动设置
+	HRESULT fs窗口大小(int 宽, int 高);	//调用IDXGISwapChain::ResizeTarget
+	void fs窗口大小_(int, int);
+	void fs抗锯齿(UINT);	//(已废弃)需要重置屏幕资源
+	DXGI_SAMPLE_DESC f计算抗锯齿(UINT);	//(已废弃)
+	void fs视口();	//直接铺满屏幕
+	bool fi全屏() const;
+	bool fi窗口() const;
+	void fs全屏(bool);
+	//对象
 	C渲染控制 &fg渲染控制();	//必须在初始化完成之后才能调用
 	C渲染状态 &fg渲染状态();
+	C创建设备 &fg创建设备();
 	ComPtr<ID3D11Device> fg设备() const;
 	ComPtr<IDXGIDevice> fg基础设备() const;
 	ComPtr<ID3D11DeviceContext> fg上下文() const;
 	ComPtr<IDXGISwapChain> fg交换链() const;
-	D3D11_VIEWPORT fg窗口视口() const;
-	数学::S向量2 fg窗口大小() const;
-	// 设置
-	HRESULT f创建输入布局(tp输入布局 &输出, C顶点格式 &输入, const void *p着色器数据, size_t);
-	HRESULT f创建图形管线(tp图形管线 &, const S图形管线参数 &);
-	HRESULT f设置抗锯齿(UINT);
-	DXGI_SAMPLE_DESC f计算抗锯齿(UINT);
-	void f设置视口();	//直接铺满屏幕
-	//工厂
 	C缓冲工厂 &fg缓冲工厂();
 	C纹理工厂 &fg纹理工厂();
 	C着色器工厂 &fg着色器工厂();
@@ -322,11 +333,7 @@ public:
 	void fs图元拓扑(E图元拓扑);
 	void f更新资源(ID3D11Buffer *, const void *);
 private:
-	//图形设备
-	ComPtr<ID3D11DeviceContext> m上下文;
-	ComPtr<IDXGISwapChain> m交换链;
-	ComPtr<ID3D11RenderTargetView> m渲染目标视图;
-	ComPtr<ID3D11DepthStencilView> m深度模板视图;
+	const C三维 *m三维 = nullptr;
 	//清屏
 	数学::S颜色 m清屏颜色 = 数学::S颜色::c黑;
 	float m清屏深度 = c清屏深度r;

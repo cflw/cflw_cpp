@@ -37,18 +37,16 @@ void C三维::f销毁() {
 void C三维::f初始化窗口(HWND a) {
 	assert(a);
 	m窗口 = a;
-	视窗::S客户区尺寸 v尺寸 = 视窗::S客户区尺寸::fc窗口(m窗口);
-	m窗口大小[0] = v尺寸.fg宽();
-	m窗口大小[1] = v尺寸.fg高();
+	fs窗口大小();
 }
 HRESULT C三维::f初始化设备() {
-	m创建设备 = std::make_unique<C创建设备>();
+	C创建设备 &v创建设备 = fg创建设备();
 	//检查兼容性
 	m标志[e调试] = c调试;
-	HRESULT hr = m创建设备->f检查兼容性();
+	HRESULT hr = v创建设备.f检查兼容性();
 	if (FAILED(hr)) {
 		if (hr == DXGI_ERROR_SDK_COMPONENT_MISSING) {
-			m创建设备->fs调试标志(false);
+			v创建设备.fs调试标志(false);
 			m标志[e调试] = false;
 		} else {
 			return hr;
@@ -56,15 +54,15 @@ HRESULT C三维::f初始化设备() {
 	}
 	//枚举适配器
 	ComPtr<IDXGIAdapter1> v显卡;
-	hr = m创建设备->f取显卡(&v显卡);
+	hr = v创建设备.f取显卡(&v显卡);
 	if (hr == DXGI_ERROR_UNSUPPORTED) {//0x887A0004 硬件或驱动不支持
-		hr = m创建设备->f创建软件设备(&m设备, &m上下文);
+		hr = v创建设备.f创建软件设备(&m设备, &m上下文);
 		if (FAILED(hr)) {
 			return hr;
 		}
 		m标志[e软件设备] = true;
 	} else {
-		hr = m创建设备->f创建设备(v显卡.Get(), &m设备, &m上下文);
+		hr = v创建设备.f创建设备(v显卡.Get(), &m设备, &m上下文);
 		if (FAILED(hr)) {
 			return hr;
 		}
@@ -88,8 +86,10 @@ HRESULT C三维::f初始化交换链() {
 	sd.BufferDesc.RefreshRate.Numerator = 60;
 	sd.BufferDesc.RefreshRate.Denominator = 1;
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+	sd.SampleDesc.Count = 1;
+	sd.SampleDesc.Quality = 0;
 	sd.OutputWindow = m窗口;
-	sd.SampleDesc = f计算抗锯齿(m当前抗锯齿等级);
 	sd.Windowed = TRUE;
 	//创建交换链
 	ComPtr<IDXGIFactory1> v基础工厂 = m创建设备->fg工厂();
@@ -97,6 +97,12 @@ HRESULT C三维::f初始化交换链() {
 	if(FAILED(hr)) {
 		return hr;
 	}
+	//其它
+	hr = v基础工厂->MakeWindowAssociation(m窗口, DXGI_MWA_NO_ALT_ENTER);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	//返回
 	return S_OK;
 }
 HRESULT C三维::f初始化渲染目标视图() {
@@ -106,6 +112,9 @@ HRESULT C三维::f初始化渲染目标视图() {
 		return hr;
 	}
 	hr = m设备->CreateRenderTargetView(v后台缓存.Get(), nullptr, &m渲染目标视图);
+	if (FAILED(hr)) {
+		return hr;
+	}
 	return S_OK;
 }
 HRESULT C三维::f初始化深度模板视图() {
@@ -139,6 +148,48 @@ HRESULT C三维::f初始化深度模板视图() {
 	m上下文->OMSetRenderTargets(1, m渲染目标视图.GetAddressOf(), m深度模板视图.Get());
 	return S_OK;
 }
+HRESULT C三维::f重置屏幕资源() {
+	HRESULT hr;
+	const bool v重置深度模板 = m深度模板视图;
+	if (m交换链) {
+		hr = f重置交换链();
+		if (FAILED(hr)) {
+			return hr;
+		}
+		hr = f初始化渲染目标视图();
+		if (FAILED(hr)) {
+			return hr;
+		}
+	}
+	if (v重置深度模板) {
+		hr = f初始化深度模板视图();
+		if (FAILED(hr)) {
+			return hr;
+		}
+	}
+	return S_OK;
+}
+HRESULT C三维::f重置交换链() {
+	assert(m交换链);
+	m上下文->ClearState();
+	m渲染目标视图 = nullptr;
+	m深度模板视图 = nullptr;
+	m深度模板 = nullptr;
+	HRESULT hr = m交换链->ResizeBuffers(1, m窗口大小[0], m窗口大小[1], c交换链格式, 0);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	m上下文->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	fs视口();
+	return S_OK;
+}
+HRESULT C三维::f调整目标大小() {
+	DXGI_MODE_DESC v模式描述 = {};
+	v模式描述.Width = m窗口大小[0];
+	v模式描述.Height = m窗口大小[1];
+	HRESULT hr = m交换链->ResizeTarget(&v模式描述);
+	return hr;
+}
 //初始化
 bool C三维::f初始化(HWND a) {
 	try {
@@ -148,7 +199,7 @@ bool C三维::f初始化(HWND a) {
 		视窗::f失败则抛出(f初始化渲染目标视图());
 		视窗::f失败则抛出(f初始化深度模板视图());
 		m上下文->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		f设置视口();
+		fs视口();
 		return true;
 	} catch (HRESULT hr) {
 		return false;
@@ -215,34 +266,50 @@ HRESULT C三维::f创建图形管线(tp图形管线 &a, const S图形管线参数 &a参数) {
 	a = std::move(v);
 	return S_OK;
 }
-void C三维::f设置视口() {
+void C三维::fs视口() {
 	const D3D11_VIEWPORT &v窗口视口 = fg窗口视口();
 	m上下文->RSSetViewports(1, &v窗口视口);
 }
-//抗锯齿
-HRESULT C三维::f设置抗锯齿(UINT a) {
+void C三维::fs全屏(bool a) {
+	m交换链->SetFullscreenState(a, nullptr);
+	if (!a) {
+		f调整目标大小();
+	}
+}
+bool C三维::fi全屏() const {
+	BOOL v;
+	m交换链->GetFullscreenState(&v, nullptr);
+	return v;
+}
+bool C三维::fi窗口() const {
+	return !fi全屏();
+}
+void C三维::fs窗口大小() {
+	视窗::S客户区尺寸 v尺寸 = 视窗::S客户区尺寸::fc窗口(m窗口);
+	fs窗口大小_(v尺寸.fg宽(), v尺寸.fg高());
+}
+HRESULT C三维::fs窗口大小(int a宽, int a高) {
+	fs窗口大小_(a宽, a高);
+	if (!fi全屏()) {
+		HRESULT hr = f调整目标大小();
+		if (FAILED(hr)) {
+			return hr;
+		}
+	}
+	return S_OK;
+}
+void C三维::fs窗口大小_(int a宽, int a高) {
+	m窗口大小[0] = a宽;
+	m窗口大小[1] = a高;
+}
+void C三维::fs抗锯齿(UINT a) {
 	assert(m设备 != nullptr);
 	assert(m抗锯齿等级 >= a);
-	HRESULT hr;
 	if (m抗锯齿等级 < a) {
 		m当前抗锯齿等级 = m抗锯齿等级;
 	} else {
 		m当前抗锯齿等级 = a;
 	}
-	if (m交换链) {
-		m交换链 = nullptr;
-		hr = f初始化交换链();
-		if(FAILED(hr)) {
-			return hr;
-		}
-	}
-	if (m深度模板) {
-		hr = f初始化深度模板视图();
-		if(FAILED(hr)) {
-			return hr;
-		}
-	}
-	return S_OK;
 }
 DXGI_SAMPLE_DESC C三维::f计算抗锯齿(UINT a) {
 	DXGI_SAMPLE_DESC v;
@@ -253,10 +320,7 @@ DXGI_SAMPLE_DESC C三维::f计算抗锯齿(UINT a) {
 C渲染控制 &C三维::fg渲染控制() {
 	if (m渲染控制 == nullptr) {
 		m渲染控制 = std::make_unique<C渲染控制>();
-		m渲染控制->m上下文 = m上下文;
-		m渲染控制->m交换链 = m交换链;
-		m渲染控制->m渲染目标视图 = m渲染目标视图;
-		m渲染控制->m深度模板视图 = m深度模板视图;
+		m渲染控制->m三维 = this;
 	}
 	return *m渲染控制;
 }
@@ -265,6 +329,12 @@ C渲染状态 &C三维::fg渲染状态() {
 		m渲染状态 = std::make_unique<C渲染状态>(m设备.Get());
 	}
 	return *m渲染状态;
+}
+C创建设备 &C三维::fg创建设备() {
+	if (m创建设备 == nullptr) {
+		m创建设备 = std::make_unique<C创建设备>();
+	}
+	return *m创建设备;
 }
 ComPtr<ID3D11Device> C三维::fg设备() const {
 	return m设备;
@@ -338,13 +408,8 @@ ComPtr<IDXGIFactory1> C创建设备::fg工厂() {
 	return m工厂;
 }
 HRESULT C创建设备::f取显卡(IDXGIAdapter1 **a输出) {
+	fg工厂();
 	HRESULT hr = S_OK;
-	if (m工厂 == nullptr) {
-		hr = CreateDXGIFactory1(IID_PPV_ARGS(&m工厂));
-		if (FAILED(hr)) {
-			return hr;
-		}
-	}
 	ComPtr<IDXGIAdapter1> v适配器;
 	ComPtr<IDXGIAdapter1> v目标显卡;
 	D3D_FEATURE_LEVEL v目标等级 = D3D_FEATURE_LEVEL_10_0;
@@ -399,21 +464,21 @@ HRESULT C创建设备::f创建软件设备(ID3D11Device **a设备, ID3D11DeviceContext **p上
 C渲染控制::C渲染控制() {
 }
 void C渲染控制::f清屏() {
-	m上下文->ClearRenderTargetView(m渲染目标视图.Get(), m清屏颜色.m值);
-	if (m深度模板视图) {
-		m上下文->ClearDepthStencilView(m深度模板视图.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, m清屏深度, m清屏模板);
+	m三维->m上下文->ClearRenderTargetView(m三维->m渲染目标视图.Get(), m清屏颜色.m值);
+	if (m三维->m深度模板视图) {
+		m三维->m上下文->ClearDepthStencilView(m三维->m深度模板视图.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, m清屏深度, m清屏模板);
 	}
 }
 //显示
 void C渲染控制::f显示() {
-	m交换链->Present(0, 0);
+	m三维->m交换链->Present(0, 0);
 }
 //绘制
 void C渲染控制::f绘制(unsigned int a顶点数, unsigned int a开始) {
-	m上下文->Draw(a顶点数, a开始);
+	m三维->m上下文->Draw(a顶点数, a开始);
 }
 void C渲染控制::f绘制索引(unsigned int a索引数, unsigned int a开始, int a开始顶点) {
-	m上下文->DrawIndexed(a索引数, a开始, a开始顶点);
+	m三维->m上下文->DrawIndexed(a索引数, a开始, a开始顶点);
 }
 void C渲染控制::fs清屏颜色(const 数学::S颜色 &a) {
 	m清屏颜色 = a;
@@ -437,89 +502,89 @@ void C渲染控制::fs图形管线(const C图形管线 &a) {
 }
 //设置着色器
 void C渲染控制::f重置着色器() {
-	m上下文->VSSetShader(nullptr, nullptr, 0);
-	m上下文->HSSetShader(nullptr, nullptr, 0);
-	m上下文->DSSetShader(nullptr, nullptr, 0);
-	m上下文->GSSetShader(nullptr, nullptr, 0);
-	m上下文->PSSetShader(nullptr, nullptr, 0);
-	m上下文->CSSetShader(nullptr, nullptr, 0);
+	m三维->m上下文->VSSetShader(nullptr, nullptr, 0);
+	m三维->m上下文->HSSetShader(nullptr, nullptr, 0);
+	m三维->m上下文->DSSetShader(nullptr, nullptr, 0);
+	m三维->m上下文->GSSetShader(nullptr, nullptr, 0);
+	m三维->m上下文->PSSetShader(nullptr, nullptr, 0);
+	m三维->m上下文->CSSetShader(nullptr, nullptr, 0);
 }
 void C渲染控制::fs顶点着色器(ID3D11VertexShader *a) {
-	m上下文->VSSetShader(a, nullptr, 0);
+	m三维->m上下文->VSSetShader(a, nullptr, 0);
 }
 void C渲染控制::fs像素着色器(ID3D11PixelShader *a) {
-	m上下文->PSSetShader(a, nullptr, 0);
+	m三维->m上下文->PSSetShader(a, nullptr, 0);
 }
 void C渲染控制::fs几何着色器(ID3D11GeometryShader *a) {
-	m上下文->GSSetShader(a, nullptr, 0);
+	m三维->m上下文->GSSetShader(a, nullptr, 0);
 }
 void C渲染控制::fs外壳着色器(ID3D11HullShader *a) {
-	m上下文->HSSetShader(a, nullptr, 0);
+	m三维->m上下文->HSSetShader(a, nullptr, 0);
 }
 void C渲染控制::fs域着色器(ID3D11DomainShader *a) {
-	m上下文->DSSetShader(a, nullptr, 0);
+	m三维->m上下文->DSSetShader(a, nullptr, 0);
 }
 //状态
 void C渲染控制::fs混合(ID3D11BlendState *a混合, const 数学::S颜色 &a颜色, UINT a掩码) {
-	m上下文->OMSetBlendState(a混合, (float*)&a颜色, a掩码);
+	m三维->m上下文->OMSetBlendState(a混合, (float*)&a颜色, a掩码);
 }
 void C渲染控制::fs深度模板(ID3D11DepthStencilState *a深度模板, UINT a参考) {
-	m上下文->OMSetDepthStencilState(a深度模板, a参考);
+	m三维->m上下文->OMSetDepthStencilState(a深度模板, a参考);
 }
 void C渲染控制::fs模板参考值(UINT a参考) {
 	ComPtr<ID3D11DepthStencilState> v深度模板;
 	UINT v参考;
-	m上下文->OMGetDepthStencilState(&v深度模板, &v参考);
+	m三维->m上下文->OMGetDepthStencilState(&v深度模板, &v参考);
 	v参考 = a参考;
-	m上下文->OMSetDepthStencilState(v深度模板.Get(), v参考);
+	m三维->m上下文->OMSetDepthStencilState(v深度模板.Get(), v参考);
 }
 void C渲染控制::fs光栅化(ID3D11RasterizerState *a光栅化) {
-	m上下文->RSSetState(a光栅化);
+	m三维->m上下文->RSSetState(a光栅化);
 }
 void C渲染控制::fs顶点缓冲(ID3D11Buffer *a, UINT a单位大小) {
 	UINT v偏移 = 0;
-	m上下文->IASetVertexBuffers(0, 1, &a, &a单位大小, &v偏移);
+	m三维->m上下文->IASetVertexBuffers(0, 1, &a, &a单位大小, &v偏移);
 }
 void C渲染控制::fs索引缓冲(ID3D11Buffer *a) {
-	m上下文->IASetIndexBuffer(a, DXGI_FORMAT_R16_UINT, 0);
+	m三维->m上下文->IASetIndexBuffer(a, DXGI_FORMAT_R16_UINT, 0);
 }
 void C渲染控制::fs常量缓冲(UINT a位置, ID3D11Buffer *a缓冲) {
-	m上下文->VSSetConstantBuffers(a位置, 1, &a缓冲);
-	m上下文->PSSetConstantBuffers(a位置, 1, &a缓冲);
-	m上下文->HSSetConstantBuffers(a位置, 1, &a缓冲);
-	m上下文->DSSetConstantBuffers(a位置, 1, &a缓冲);
-	m上下文->GSSetConstantBuffers(a位置, 1, &a缓冲);
+	m三维->m上下文->VSSetConstantBuffers(a位置, 1, &a缓冲);
+	m三维->m上下文->PSSetConstantBuffers(a位置, 1, &a缓冲);
+	m三维->m上下文->HSSetConstantBuffers(a位置, 1, &a缓冲);
+	m三维->m上下文->DSSetConstantBuffers(a位置, 1, &a缓冲);
+	m三维->m上下文->GSSetConstantBuffers(a位置, 1, &a缓冲);
 }
 void C渲染控制::fs常量缓冲v(UINT a位置, ID3D11Buffer *a缓冲) {
-	m上下文->VSSetConstantBuffers(a位置, 1, &a缓冲);
+	m三维->m上下文->VSSetConstantBuffers(a位置, 1, &a缓冲);
 }
 void C渲染控制::fs常量缓冲p(UINT a位置, ID3D11Buffer *a缓冲) {
-	m上下文->PSSetConstantBuffers(a位置, 1, &a缓冲);
+	m三维->m上下文->PSSetConstantBuffers(a位置, 1, &a缓冲);
 }
 void C渲染控制::fs常量缓冲g(UINT a位置, ID3D11Buffer *a缓冲) {
-	m上下文->GSSetConstantBuffers(a位置, 1, &a缓冲);
+	m三维->m上下文->GSSetConstantBuffers(a位置, 1, &a缓冲);
 }
 void C渲染控制::fs常量缓冲h(UINT a位置, ID3D11Buffer *a缓冲) {
-	m上下文->HSSetConstantBuffers(a位置, 1, &a缓冲);
+	m三维->m上下文->HSSetConstantBuffers(a位置, 1, &a缓冲);
 }
 void C渲染控制::fs常量缓冲d(UINT a位置, ID3D11Buffer *a缓冲) {
-	m上下文->DSSetConstantBuffers(a位置, 1, &a缓冲);
+	m三维->m上下文->DSSetConstantBuffers(a位置, 1, &a缓冲);
 }
 void C渲染控制::fs纹理(UINT a位置, ID3D11ShaderResourceView *a纹理) {
-	m上下文->PSSetShaderResources(a位置, 1, &a纹理);
+	m三维->m上下文->PSSetShaderResources(a位置, 1, &a纹理);
 }
 void C渲染控制::fs采样器(UINT a位置, ID3D11SamplerState *a采样器) {
-	m上下文->PSSetSamplers(a位置, 1, &a采样器);
+	m三维->m上下文->PSSetSamplers(a位置, 1, &a采样器);
 }
 void C渲染控制::fs输入布局(ID3D11InputLayout *a布局) {
-	m上下文->IASetInputLayout(a布局);
+	m三维->m上下文->IASetInputLayout(a布局);
 }
 void C渲染控制::fs图元拓扑(E图元拓扑 a拓扑) {
-	m上下文->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)a拓扑);
+	m三维->m上下文->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)a拓扑);
 }
 void C渲染控制::f更新资源(ID3D11Buffer *a缓冲, const void *a资源) {
 	assert(a缓冲);
-	m上下文->UpdateSubresource(a缓冲, 0, nullptr, a资源, 0, 0);
+	m三维->m上下文->UpdateSubresource(a缓冲, 0, nullptr, a资源, 0, 0);
 }
 
 //==============================================================================

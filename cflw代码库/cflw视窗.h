@@ -80,9 +80,9 @@ enum class E窗口消息 : unsigned int {	//行:1723
 	e自定义 = WM_USER
 };
 enum class E窗口样式 : unsigned long {
-	e层叠 = WS_OVERLAPPED,	//产生一个层叠的窗口。一个层叠的窗口有一个标题条和一个边框。与WS_TILED风格相同
-	e弹出 = WS_POPUP,	//创建一个弹出式窗口。该风格不能与WS_CHLD风格同时使用
-	e子 = WS_CHILD,	//创建一个子窗口。这个风格不能与WS_POPUP风格合用
+	e层叠 = WS_OVERLAPPED,	//产生一个层叠的窗口。一个层叠的窗口有一个标题条和一个边框。与WS_TILED样式相同
+	e弹出 = WS_POPUP,	//创建一个弹出式窗口。该样式不能与WS_CHLD样式同时使用
+	e子 = WS_CHILD,	//创建一个子窗口。这个样式不能与WS_POPUP样式合用
 	e最大化 = WS_MINIMIZE,	//创建一个初始状态为最大化状态的窗口
 	e可见 = WS_VISIBLE,	//创建一个初始状态为可见的窗口
 	e禁止 = WS_DISABLED	//创建一个初始状态为禁止的子窗口
@@ -105,6 +105,12 @@ enum class E文本格式 : unsigned long {	//行:6594
 	e系统字体计算 = DT_INTERNAL
 };
 //==============================================================================
+// 窗口控制&计算
+//==============================================================================
+void fs窗口大小(HWND, int 宽, int 高);
+constexpr auto fs窗口标题 = SetWindowTextW;
+std::pair<DWORD, DWORD> fg窗口样式(HWND);
+//==============================================================================
 // winerror.h
 //==============================================================================
 inline void f失败则抛出(HRESULT hr) {
@@ -122,21 +128,24 @@ inline bool fi失败(HRESULT hr) {
 //==============================================================================
 // COM组件对象模型
 //==============================================================================
-template<typename t> inline void f释放(t &a) {
+/*
+template<typename t> concept T未知 = std::is_base_of<IUnknown, std::remove_pointer<t>::type>::value;
+*/
+template<typename t> void f释放(t &a对象) {
 	static_assert(std::is_base_of<IUnknown, std::remove_pointer<t>::type>::value, "必需是IUnknown的派生类");
-	if (a) {
-		a->Release();
-		a = nullptr;
+	if (a对象) {
+		a对象->Release();
+		a对象 = nullptr;
 	}
 }
-template<typename t> inline void f释放1(t *a, int a1) {
+template<typename t> void f释放1(t *a对象, int a1) {
 	for (int i = 0; i < a1; ++i) {
-		f释放(a[i]);
+		f释放(a对象[i]);
 	}
 }
-template<typename t> inline void f释放2(t *a, int a1, int a2) {
+template<typename t> void f释放2(t *a对象, int a1, int a2) {
 	for (int i1 = 0; i1 < a1; ++i1) {
-		f释放1(a[i1], a2);
+		f释放1(a对象[i1], a2);
 	}
 }
 //==============================================================================
@@ -154,12 +163,12 @@ public:
 	float fg用时();	//当前成功滴答的实际过去时间
 private:
 	void f计时();
-	float v时间;
-	float v计时;
-	float v间隔;	//滴答间隔
-	float v上次滴答;	//上次成功滴答的时间
-	float v这次滴答;
-	int v次数;
+	float m时间;
+	float m计时;
+	float m间隔;	//滴答间隔
+	float m上次滴答;	//上次成功滴答的时间
+	float m这次滴答;
+	int m次数;
 };
 //关键段
 class C关键段 {
@@ -172,24 +181,19 @@ private:
 	CRITICAL_SECTION m关键段;
 };
 //==============================================================================
-// 风格&尺寸&坐标
+// 样式&尺寸&坐标
 //==============================================================================
-//窗口风格
-struct S窗口风格 {
-	DWORD m一般风格, m扩展风格;
-	operator DWORD &();
-	//一般风格
+//窗口样式
+struct S窗口样式 {
+	DWORD m一般, m扩展;
+	static const S窗口样式 c层叠窗口, c弹出窗口, c子窗口, c游戏窗口;
+	//一般样式
 	void fs层叠(bool);	//有一个标题栏和边框
 	void fs标题(bool);
 	void fs菜单(bool);
 	void fs最按钮(bool 大, bool 小);	//最大化最小化按钮
 	void fs滚动条(bool 垂直, bool 水平);
-	//扩展风格
-	//组合风格
-	void fs层叠窗口();
-	void fs弹出窗口();
-	void fs子窗口();
-	void fs游戏窗口();
+	//扩展样式
 };
 //客户区尺寸
 struct S客户区尺寸 {
@@ -197,7 +201,7 @@ struct S客户区尺寸 {
 	S客户区尺寸(long, long);
 	S客户区尺寸(RECT);
 	static S客户区尺寸 fc窗口(HWND);
-	static S客户区尺寸 fc尺寸风格(long x, long y, DWORD 风格, DWORD 风格ex = 0);//计算客户区尺寸,变量用作CreateWindow的参数
+	static S客户区尺寸 fc尺寸样式(long x, long y, DWORD 样式, DWORD 样式ex = 0);//计算客户区尺寸,变量用作CreateWindow的参数
 	long fg宽() const;
 	long fg高() const;
 	float f除以尺寸(long, long) const;	//原宽和高除以参数的宽和高,取最小值
@@ -248,6 +252,8 @@ private:
 class C环境 {
 public:
 	static SYSTEM_INFO &fg系统信息();
+	static std::wstring fg计算机名称();
+	static std::wstring fg用户名称();
 	static std::wstring fg执行程序目录();
 	static std::wstring fg执行程序路径();
 	static std::wstring fg工作目录();

@@ -1,9 +1,12 @@
 ﻿#pragma once
 #include <math.h>
+#include <limits>
 #include <complex>
 #include <utility>
 #include <functional>
 #include <algorithm>
+#undef max
+#undef min
 namespace cflw::数学 {
 //==============================================================================
 //数字类型&别名&前置声明
@@ -33,6 +36,8 @@ template<typename t> t f限制(const t &值, const t &最小值, const t &最大
 template<typename t> t f接近(const t &源值, const t &目标值, const t &接近差);
 template<typename t> t f倍数渐变(const t &源值, const t &目标值, const float &差值渐变倍数, const t &最小渐变, const t &最大渐变);
 template<typename t> t f线性渐变(const t &源值, const t &目标值, const float &渐变值);
+template<typename t> t f地板除(const t &, const t &);	//商向下取整
+template<typename t> t f天花板除(const t &, const t &);	//商向上取整
 template<typename t> t f求余(const t &源值, const t &除数);
 template<typename t> bool f限制循环(t &值, const t &最大值);
 int f10的次方(const int &x);
@@ -40,9 +45,9 @@ template<typename t> t f绝对值(const t &);
 template<typename t> std::tuple<t, t> sincos(const t &);
 template<typename t> t f插值(const t&起始值, const t&终止值, float 中间值);
 template<typename t> int f限(t &被限值, const t &限值);
-template<typename t> t f点乘(const t&甲, const t&乙);
-template<typename t> t f叉乘(const t&甲, const t&乙);
-template<typename t> t f负(const t&甲);
+template<typename t> t f点乘(const t&, const t&);
+template<typename t> t f叉乘(const t&, const t&);
+template<typename t> t f负(const t&);
 template<typename t> bool f同符号(const t &, const t &);
 template<typename t> t f平方(const t &);
 template<typename t> t f立方(const t &);
