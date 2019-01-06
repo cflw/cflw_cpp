@@ -1,16 +1,14 @@
 #pragma once
 #include <vector>
-namespace cflw {
-namespace 工具 {
-namespace 循环 {
-//--------------------------------------------------------------------------------
+namespace cflw::工具::循环 {
+//==============================================================================
 // 循环基类
-//--------------------------------------------------------------------------------
+//==============================================================================
 template<typename t循环> class I循环 {
 public:	//在循环类中继承
 	class C迭代器 {
 	public:
-		C迭代器(t循环 *p) : mp循环{p} {
+		C迭代器(t循环 *a) : mp循环{a} {
 		}
 		C迭代器 &operator ++() {
 			mp循环->f循环控制_自增();
@@ -40,9 +38,9 @@ public:	//在循环类中继承
 		return *((t循环*)this);
 	}
 };
-//--------------------------------------------------------------------------------
+//==============================================================================
 // 计数
-//--------------------------------------------------------------------------------
+//==============================================================================
 template<typename t循环, typename t = int> class C循环基础_计数 : public I循环<t循环> {
 public:
 	C循环基础_计数(const t &p) :
@@ -59,66 +57,66 @@ public:
 	}
 	t m计数, m总数;
 };
-//--------------------------------------------------------------------------------
+//==============================================================================
 // 范围
-//--------------------------------------------------------------------------------
+//==============================================================================
 template<typename t容器> class C范围 final {
 public:
 	typedef typename std::conditional<std::is_const<t容器>::value, typename t容器::const_reference, typename t容器::reference>::type t引用;
 	class C迭代器 {
 	public:
-		C迭代器(t容器 *pp, int pi) :
-			mp{pp}, mi{pi} {
+		C迭代器(t容器 *ap容器, int a计数) :
+			mp容器{ap容器}, m计数{a计数} {
 		}
 		C迭代器 &operator ++() {
-			++mi;
+			++m计数;
 			return *this;
 		}
-		bool operator !=(const C迭代器 &p) {
-			return mi != p.mi;
+		bool operator !=(const C迭代器 &a) {
+			return m计数 != a.m计数;
 		}
 		t引用 operator *() {
-			return (*mp)[mi];
+			return (*mp容器)[m计数];
 		}
-		int mi;
-		t容器 *mp;
+		int m计数;
+		t容器 *mp容器;
 	};
-	C范围(t容器 &pp, int p0, int p1) :
-		m0{std::max<int>(p0, 0)}, m1{std::min<int>(p1, (int)pp.size())}, mp{&pp} {
+	C范围(t容器 &a容器, int a开始, int a结束) :
+		m开始{std::max<int>(a开始, 0)}, m结束{std::min<int>(a结束, (int)a容器.size())}, mp容器{&a容器} {
 	}
 	C迭代器 begin() {
-		return C迭代器{mp, m0};
+		return C迭代器{mp容器, m开始};
 	}
 	C迭代器 end() {
-		return C迭代器{mp, m1};
+		return C迭代器{mp容器, m结束};
 	}
-	int m0, m1;
-	t容器 *mp;
+	int m开始, m结束;
+	t容器 *mp容器;
 };
-//--------------------------------------------------------------------------------
-//零散
-//--------------------------------------------------------------------------------
+//==============================================================================
+// 零散
+//==============================================================================
 template<typename t容器> class C零散 final : public I循环<C零散<t容器>> {
 public:
 	typedef decltype(std::declval<t容器>().front()) t引用;
 	typedef decltype(std::declval<t容器>().data()) t指针;
 	C零散() = default;
-	C零散(t容器 &p容器, const std::initializer_list<int> &p表) {
-		const t指针 v指针 = p容器.data();
-		const int v数量 = (int)p表.size();
+	C零散(t容器 &a容器, const std::initializer_list<int> &a表) {
+		const t指针 v指针 = a容器.data();
+		const int v数量 = (int)a表.size();
 		ma指针.reserve(v数量);
-		for (const int &v序号 : p表) {
+		for (const int &v序号 : a表) {
 			if (v序号 >= 0 && v序号 < v数量) {
 				ma指针.push_back(v指针 + v序号);
 			}
 		}
 		f循环控制_开始();
 	}
-	C零散(t容器 &p容器, const std::vector<int> &p表) {
-		const t指针 v指针 = p容器.data();
-		const int v数量 = (int)p容器.size();
+	C零散(t容器 &a容器, const std::vector<int> &a表) {
+		const t指针 v指针 = a容器.data();
+		const int v数量 = (int)a容器.size();
 		ma指针.reserve(v数量);
-		for (const int &v序号 : p表) {
+		for (const int &v序号 : a表) {
 			if (v序号 >= 0 && v序号 < v数量) {
 				ma指针.push_back(v指针 + v序号);
 			}
@@ -133,11 +131,11 @@ public:
 		++m当前;
 	}
 	bool f循环控制_i继续() {
-		const bool vw继续 = (m当前 != m结束);
-		if (!vw继续) {
+		const bool vi继续 = (m当前 != m结束);
+		if (!vi继续) {
 			f循环控制_开始();
 		}
-		return vw继续;
+		return vi继续;
 	}
 	t引用 f循环控制_解引用() {
 		return **m当前;
@@ -145,9 +143,9 @@ public:
 	std::vector<t指针> ma指针;
 	typename std::vector<t指针>::iterator m当前, m结束;
 };
-//--------------------------------------------------------------------------------
+//==============================================================================
 // 前后,引用一个元素的时候还能引用前后
-//--------------------------------------------------------------------------------
+//==============================================================================
 template<typename t容器> class C前后 final : public I循环<C前后<t容器>> {
 public:
 	typedef decltype(std::declval<t容器>().data()) t指针;
@@ -161,8 +159,8 @@ public:
 			return m后 == m这;
 		}
 	};
-	C前后(t容器 &p容器) :
-		m当前{p容器.begin()}, m结束{p容器.end()} {
+	C前后(t容器 &a容器) :
+		m当前{a容器.begin()}, m结束{a容器.end()} {
 		m引用.m前 = m引用.m这 = f这();
 	}
 	bool f循环控制_i继续() {
@@ -195,9 +193,9 @@ public:
 	t迭代器 m当前, m结束;
 	S引用 m引用;
 };
-//--------------------------------------------------------------------------------
+//==============================================================================
 // 线性
-//--------------------------------------------------------------------------------
+//==============================================================================
 template<typename t容器, typename t数值 = float> class C线性 final : public I循环<C线性<t容器>> {
 public:
 	typedef decltype(std::declval<t容器>().data()) t指针;
@@ -206,8 +204,8 @@ public:
 		t指针 m前, m后;
 		t数值 m插值;
 	};
-	C线性(t容器 &p容器, t数值 p数量) :
-		m当前{p容器.begin()}, m后面{m当前 + 1}, m结束{p容器.end()}, m递增{(t数值)(p容器.size() - 1) / p数量} {
+	C线性(t容器 &a容器, t数值 a数量) :
+		m当前{a容器.begin()}, m后面{m当前 + 1}, m结束{a容器.end()}, m递增{(t数值)(a容器.size() - 1) / a数量} {
 		m引用.m前 = &(*m当前);
 		if (m后面 != m结束) {
 			m引用.m后 = &(*m后面);
@@ -231,5 +229,4 @@ public:
 	S引用 m引用;
 	t数值 m递增;
 };
-}	//namespace 循环
-}}	//命名空间结束
+}	//namespace cflw::工具::循环

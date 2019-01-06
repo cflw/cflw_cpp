@@ -3,18 +3,16 @@
 #include <vector>
 #include <map>
 #include <bitset>
+#include <span>
 #include <dxgi1_5.h>
 #include <d3d12.h>
-#include <dxcapi.h>
 #include <wrl.h>
 #include "cflw工具_运算.h"
 #include "cflw数学_图形.h"
 #include "cflw图形_dx纹理.h"
 #ifdef _WINDOWS
 #pragma comment(lib, "dxgi.lib")
-#pragma comment(lib, "D3dcompiler.lib")
 #pragma comment(lib, "d3d12.lib")
-#pragma comment(lib, "dxcompiler.lib")
 #endif
 namespace cflw::图形::d3d11上12 {
 class C三维;
@@ -23,25 +21,21 @@ namespace cflw::图形::d3d12 {
 namespace 纹理 = dx纹理;
 //接口
 using Microsoft::WRL::ComPtr;
-typedef ComPtr<IDXGIFactory5> tp基础工厂;
-typedef ComPtr<IDXGIAdapter3> tp显卡;
-typedef ComPtr<IDXGISwapChain3> tp交换链;
-typedef ComPtr<ID3D12Device> tp设备;
-typedef ComPtr<ID3D12PipelineState> tp图形管线;
-typedef ComPtr<ID3D12GraphicsCommandList> tp命令列表;
-typedef ComPtr<ID3D12Resource> tp资源;
-typedef ComPtr<ID3DBlob> tp着色器;
-typedef ComPtr<ID3D12RootSignature> tp根签名;
-typedef ComPtr<ID3D12DescriptorHeap> tp描述符堆;
-using tp着色器1 = ComPtr<ID3DBlob>;
-using tp着色器2 = ComPtr<IDxcBlob>;
+using tp基础工厂 = ComPtr<IDXGIFactory5>;
+using tp显卡 = ComPtr<IDXGIAdapter3>;
+using tp交换链 = ComPtr<IDXGISwapChain3>;
+using tp设备 = ComPtr<ID3D12Device>;
+using tp图形管线 = ComPtr<ID3D12PipelineState>;
+using tp命令列表 = ComPtr<ID3D12GraphicsCommandList>;
+using tp资源 = ComPtr<ID3D12Resource>;
+using tp根签名 = ComPtr<ID3D12RootSignature>;
+using tp描述符堆 = ComPtr<ID3D12DescriptorHeap>;
 //主要
 class C创建设备;
 class C渲染控制;
 class C渲染状态;
 class C缓冲工厂;
 class C纹理工厂;
-class C着色器工厂2;
 //管理
 class C渲染目标管理;
 class C深度模板管理;
@@ -173,10 +167,6 @@ constexpr D3D12_DEPTH_STENCIL_DESC c默认深度模板 = {FALSE, D3D12_DEPTH_WRI
 //==============================================================================
 // 结构
 //==============================================================================
-struct S着色器字节代码 : public D3D12_SHADER_BYTECODE {
-	static S着色器字节代码 fc二进制大对象(ID3DBlob *);
-	static S着色器字节代码 fc二进制大对象(IDxcBlob *);
-};
 struct S资源描述 : public D3D12_RESOURCE_DESC {
 	static S资源描述 fc缓存(UINT64);
 	static S资源描述 fc纹理2(UINT64 宽, UINT 高, DXGI_FORMAT 格式, D3D12_RESOURCE_FLAGS 标志 = D3D12_RESOURCE_FLAG_NONE);
@@ -185,21 +175,21 @@ struct S图形管线参数 : public D3D12_GRAPHICS_PIPELINE_STATE_DESC {
 	S图形管线参数();
 	void fs输入布局(const C顶点格式 &);
 	void fs根签名(ID3D12RootSignature *);
-	void fs顶点着色器(ID3DBlob *);
-	void fs像素着色器(ID3DBlob *);
-	void fs几何着色器(ID3DBlob *);
-	void fs外壳着色器(ID3DBlob *);
-	void fs域着色器(ID3DBlob *);
-	void fs顶点着色器(IDxcBlob *);
-	void fs像素着色器(IDxcBlob *);
-	void fs几何着色器(IDxcBlob *);
-	void fs外壳着色器(IDxcBlob *);
-	void fs域着色器(IDxcBlob *);
+	void fs顶点着色器(const std::span<const std::byte> &);
+	void fs像素着色器(const std::span<const std::byte> &);
+	void fs几何着色器(const std::span<const std::byte> &);
+	void fs外壳着色器(const std::span<const std::byte> &);
+	void fs域着色器(const std::span<const std::byte> &);
 	void fs光栅化(const D3D12_RASTERIZER_DESC &);
 	void fs混合(const D3D12_BLEND_DESC &);
 	void fs深度模板(const D3D12_DEPTH_STENCIL_DESC &);
 	void f关闭深度模板();
 	void fs图元拓扑类型(E图元拓扑类型);
+};
+struct S计算管线参数 : public D3D12_COMPUTE_PIPELINE_STATE_DESC {
+	S计算管线参数();
+	void fs根签名(ID3D12RootSignature *);
+	void fs计算着色器(const std::span<const std::byte> &);
 };
 struct S资源栅栏 : public D3D12_RESOURCE_BARRIER {
 	static S资源栅栏 fc变换(ID3D12Resource* 资源, D3D12_RESOURCE_STATES 前, D3D12_RESOURCE_STATES 后, UINT 子资源 = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES, D3D12_RESOURCE_BARRIER_FLAGS 标志 = D3D12_RESOURCE_BARRIER_FLAG_NONE);
@@ -270,7 +260,8 @@ public:
 	C创建设备 &fg创建设备();
 	C缓冲工厂 &fg缓冲工厂();
 	C纹理工厂 &fg纹理工厂();
-	C着色器工厂2 &fg着色器工厂();
+	C渲染目标管理 &fg渲染目标管理();
+	C深度模板管理 &fg深度模板管理();
 	ID3D12RootSignature *fg默认根签名();
 	ComPtr<ID3D12Device> fg设备() const;
 private:
@@ -287,7 +278,6 @@ private:
 	std::unique_ptr<C创建设备> m创建设备;
 	std::unique_ptr<C缓冲工厂> m缓冲工厂;
 	std::unique_ptr<C纹理工厂> m纹理工厂;
-	std::unique_ptr<C着色器工厂2> m着色器工厂;
 	std::unique_ptr<C渲染目标管理> m渲染目标管理;
 	std::unique_ptr<C深度模板管理> m深度模板管理;
 	D3D12_VIEWPORT m默认视口;
@@ -551,36 +541,6 @@ public:
 	HRESULT f创建顶点(tp顶点 &, const void *数据, UINT 类型大小, UINT 数据大小);
 	HRESULT f创建索引(tp索引 &, const void *数据, UINT 类型大小, UINT 数据大小);
 	HRESULT f创建常量(tp常量 &, const void *数据, UINT 类型大小, UINT 数据大小);
-};
-//着色器工厂
-class C着色器工厂 {
-public:
-	//编译着色器
-	static HRESULT f编译顶点着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *函数名);
-	static HRESULT f编译像素着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *函数名);
-	static HRESULT f编译几何着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *函数名);
-	static HRESULT f编译外壳着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *函数名);
-	static HRESULT f编译域着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *函数名);
-	//静态函数
-	static HRESULT f编译着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *入口, const char *着色模型);
-	static HRESULT f读取着色器(std::unique_ptr<std::byte[]> &数据, DWORD &大小, const wchar_t *文件名);
-};
-class C着色器工厂2 {
-public:
-	HRESULT f初始化();
-	//编译着色器
-	HRESULT f编译顶点着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *函数名);
-	HRESULT f编译像素着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *函数名);
-	HRESULT f编译几何着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *函数名);
-	HRESULT f编译外壳着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *函数名);
-	HRESULT f编译域着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *函数名);
-	HRESULT f编译计算着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *函数名);
-	//其它函数
-	HRESULT f编译着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名, const wchar_t *入口, const wchar_t *着色模型);
-	HRESULT f读取着色器(ComPtr<IDxcBlob> &, const wchar_t *文件名);
-public:
-	ComPtr<IDxcCompiler> m编译器;
-	ComPtr<IDxcLibrary> m库;
 };
 //纹理工厂
 class C纹理工厂 {

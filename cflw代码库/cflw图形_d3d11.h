@@ -3,7 +3,6 @@
 #ifdef _WINDOWS
 #pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "dxgi.lib")
-#pragma comment(lib, "D3dcompiler.lib")
 #pragma comment(lib, "d3d11.lib")
 #endif
 //包括头文件
@@ -13,6 +12,7 @@
 #include <memory>
 #include <bitset>
 #include <variant>
+#include <span>
 #include <d3d11.h>
 #include <wrl.h>
 #include "cflw辅助.h"
@@ -27,48 +27,32 @@ namespace 纹理 = dx纹理;
 // 前置声明
 //=============================================================================
 using Microsoft::WRL::ComPtr;
-typedef ID3D11Device t设备;
-typedef ID3D11DeviceContext t设备上下文;
-typedef ID3D11VertexShader t顶点着色器;
-typedef ID3D11PixelShader t像素着色器;
-typedef ID3D11GeometryShader t几何着色器;
-typedef ID3D11HullShader t外壳着色器;
-typedef ID3D11DomainShader t域着色器;
-typedef ID3D11Buffer t缓冲;
-typedef ID3D11InputLayout t输入布局;
-typedef ID3D11ShaderResourceView t纹理;
-typedef ID3D11RasterizerState t光栅化;
-typedef ID3D11BlendState t混和;
-typedef ID3D11SamplerState t采样器;
-typedef ID3D11DepthStencilState t深度模板;
-typedef ID3D11Texture2D t纹理2;
-typedef ComPtr<ID3D11Device> tp设备;
-typedef ComPtr<ID3D11DeviceContext> tp设备上下文;
-typedef ComPtr<ID3D11VertexShader> tp顶点着色器;
-typedef ComPtr<ID3D11PixelShader> tp像素着色器;
-typedef ComPtr<ID3D11GeometryShader> tp几何着色器;
-typedef ComPtr<ID3D11HullShader> tp外壳着色器;
-typedef ComPtr<ID3D11DomainShader> tp域着色器;
-typedef ComPtr<ID3D11Buffer> tp缓冲;
-typedef ComPtr<ID3D11InputLayout> tp输入布局;
-typedef ComPtr<ID3D11ShaderResourceView> tp纹理;
-typedef ComPtr<ID3D11RasterizerState> tp光栅化;
-typedef ComPtr<ID3D11BlendState> tp混和;
-typedef ComPtr<ID3D11SamplerState> tp采样器;
-typedef ComPtr<ID3D11DepthStencilState> tp深度模板;
-typedef ComPtr<ID3D11Texture2D> tp纹理2;
-typedef ComPtr<ID3DBlob> tp着色器;
+using tp设备 = ComPtr<ID3D11Device>;
+using tp设备上下文 = ComPtr<ID3D11DeviceContext>;
+using tp顶点着色器 = ComPtr<ID3D11VertexShader>;
+using tp像素着色器 = ComPtr<ID3D11PixelShader>;
+using tp几何着色器 = ComPtr<ID3D11GeometryShader>;
+using tp外壳着色器 = ComPtr<ID3D11HullShader>;
+using tp域着色器 = ComPtr<ID3D11DomainShader>;
+using tp计算着色器 = ComPtr<ID3D11ComputeShader>;
+using tp缓冲 = ComPtr<ID3D11Buffer>;
+using tp输入布局 = ComPtr<ID3D11InputLayout>;
+using tp纹理 = ComPtr<ID3D11ShaderResourceView>;
+using tp光栅化 = ComPtr<ID3D11RasterizerState>;
+using tp混和 = ComPtr<ID3D11BlendState>;
+using tp采样器 = ComPtr<ID3D11SamplerState>;
+using tp深度模板 = ComPtr<ID3D11DepthStencilState>;
+using tp纹理2 = ComPtr<ID3D11Texture2D>;
 //本文件
 class C渲染控制;
 class C渲染状态;
 class C顶点格式;
 class C纹理工厂;
 class C缓冲工厂;
-class C着色器工厂;
 class C图形管线;
 struct S图形管线参数;
-typedef std::shared_ptr<C图形管线> tp图形管线;
-typedef uint16_t t索引;
+using tp图形管线 = std::shared_ptr<C图形管线>;
+using t索引 = uint16_t;
 //==============================================================================
 // 常量
 //==============================================================================
@@ -162,28 +146,18 @@ constexpr D3D11_DEPTH_STENCIL_DESC c默认深度模板 = {FALSE, D3D11_DEPTH_WRI
 //==============================================================================
 // 结构
 //==============================================================================
-struct S着色器字节代码 {
-	const void *m数据 = nullptr;
-	size_t m大小 = 0;
-	static S着色器字节代码 fc二进制大对象(ID3DBlob *);	//返回的结构的生命周期不能超过参数的生命周期
-	operator bool() const;
-};
 struct S图形管线参数 {
 	const C顶点格式 *m顶点格式 = nullptr;
-	S着色器字节代码 m顶点着色器;
-	S着色器字节代码 m像素着色器;
-	S着色器字节代码 m几何着色器;
-	S着色器字节代码 m外壳着色器;
-	S着色器字节代码 m域着色器;
+	std::span<const std::byte> m顶点着色器, m像素着色器, m几何着色器, m外壳着色器, m域着色器;	
 	std::variant<D3D11_RASTERIZER_DESC, ID3D11RasterizerState*> m光栅化 = nullptr;
 	std::variant<D3D11_BLEND_DESC, ID3D11BlendState*> m混合 = nullptr;
 	std::variant<D3D11_DEPTH_STENCIL_DESC, ID3D11DepthStencilState*> m深度模板 = nullptr;
 	void fs输入布局(const C顶点格式 &);
-	void fs顶点着色器(ID3DBlob *);
-	void fs像素着色器(ID3DBlob *);
-	void fs几何着色器(ID3DBlob *);
-	void fs外壳着色器(ID3DBlob *);
-	void fs域着色器(ID3DBlob *);
+	void fs顶点着色器(const std::span<const std::byte> &);
+	void fs像素着色器(const std::span<const std::byte> &);
+	void fs几何着色器(const std::span<const std::byte> &);
+	void fs外壳着色器(const std::span<const std::byte> &);
+	void fs域着色器(const std::span<const std::byte> &);
 	void fs光栅化(const D3D11_RASTERIZER_DESC &);
 	void fs混合(const D3D11_BLEND_DESC &);
 	void fs深度模板(const D3D11_DEPTH_STENCIL_DESC &);
@@ -221,7 +195,12 @@ public:
 	bool f初始化(HWND);
 	void f销毁();
 	//创建
-	HRESULT f创建输入布局(tp输入布局 &输出, C顶点格式 &输入, const void *p着色器数据, size_t);
+	HRESULT f创建顶点着色器(tp顶点着色器 &, const std::span<const std::byte> &);
+	HRESULT f创建像素着色器(tp像素着色器 &, const std::span<const std::byte> &);
+	HRESULT f创建几何着色器(tp几何着色器 &, const std::span<const std::byte> &);
+	HRESULT f创建外壳着色器(tp外壳着色器 &, const std::span<const std::byte> &);
+	HRESULT f创建域着色器(tp域着色器 &, const std::span<const std::byte> &);
+	HRESULT f创建输入布局(tp输入布局 &, const std::span<const std::byte> &, const C顶点格式 &);
 	HRESULT f创建图形管线(tp图形管线 &, const S图形管线参数 &);
 	//属性
 	D3D11_VIEWPORT fg窗口视口() const;
@@ -245,7 +224,6 @@ public:
 	ComPtr<IDXGISwapChain> fg交换链() const;
 	C缓冲工厂 &fg缓冲工厂();
 	C纹理工厂 &fg纹理工厂();
-	C着色器工厂 &fg着色器工厂();
 private:	//窗口
 	HWND m窗口 = nullptr;
 	int m窗口大小[2];
@@ -268,7 +246,6 @@ private:	//窗口
 	std::unique_ptr<C渲染状态> m渲染状态;
 	std::unique_ptr<C纹理工厂> m纹理工厂;
 	std::unique_ptr<C缓冲工厂> m缓冲工厂;
-	std::unique_ptr<C着色器工厂> m着色器工厂;
 };
 //创建设备
 class C创建设备 {
@@ -468,42 +445,6 @@ public:
 	void f初始化(ID3D11Device *);
 	HRESULT f创建缓冲(tp缓冲 &, const void *a数据, UINT 大小, E缓冲 标志, E资源用法 = e默认);
 public:
-	ComPtr<ID3D11Device> m设备;
-};
-//着色器工厂
-class C着色器工厂 {
-public:
-	void f初始化(ID3D11Device*);
-	//从文件中编译着色器
-	HRESULT f编译并创建顶点着色器(tp顶点着色器 &, const wchar_t *文件名, const char *函数名, tp输入布局 &, const C顶点格式 &);
-	HRESULT f编译并创建像素着色器(tp像素着色器 &, const wchar_t *文件名, const char *函数名);
-	HRESULT f编译并创建几何着色器(tp几何着色器 &, const wchar_t *文件名, const char *函数名);
-	HRESULT f编译并创建外壳着色器(tp外壳着色器 &, const wchar_t *文件名, const char *函数名);
-	HRESULT f编译并创建域着色器(tp域着色器 &, const wchar_t *文件名, const char *函数名);
-	//从文件中读取着色器
-	HRESULT f读取并创建顶点着色器(tp顶点着色器 &, const wchar_t *文件名, tp输入布局 &, const C顶点格式 &);
-	HRESULT f读取并创建像素着色器(tp像素着色器 &, const wchar_t *文件名);
-	HRESULT f读取并创建几何着色器(tp几何着色器 &, const wchar_t *文件名);
-	HRESULT f读取并创建外壳着色器(tp外壳着色器 &, const wchar_t *文件名);
-	HRESULT f读取并创建域着色器(tp域着色器 &, const wchar_t *文件名);
-	//创建
-	HRESULT f创建顶点着色器(tp顶点着色器 &, const S着色器字节代码 &);
-	HRESULT f创建像素着色器(tp像素着色器 &, const S着色器字节代码 &);
-	HRESULT f创建几何着色器(tp几何着色器 &, const S着色器字节代码 &);
-	HRESULT f创建外壳着色器(tp外壳着色器 &, const S着色器字节代码 &);
-	HRESULT f创建域着色器(tp域着色器 &, const S着色器字节代码 &);
-	HRESULT f创建输入布局(tp输入布局 &, const S着色器字节代码 &, const C顶点格式 &);
-	//编译
-	static HRESULT f编译顶点着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *函数名);
-	static HRESULT f编译像素着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *函数名);
-	static HRESULT f编译几何着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *函数名);
-	static HRESULT f编译外壳着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *函数名);
-	static HRESULT f编译域着色器(ComPtr<ID3DBlob> &, const wchar_t *文件名, const char *函数名);
-	//静态函数
-	static HRESULT f编译着色器(ComPtr<ID3DBlob> &, const wchar_t *a文件名, const char *a入口, const char *a着色模型);
-	static HRESULT f读取着色器(std::unique_ptr<std::byte[]> &a数据, DWORD &a大小, const wchar_t *a文件名);
-	static HRESULT f读取着色器(ComPtr<ID3DBlob> &, const wchar_t *a文件名);
-private:
 	ComPtr<ID3D11Device> m设备;
 };
 //纹理工厂

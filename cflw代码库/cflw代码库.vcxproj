@@ -174,6 +174,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="cflw图形_d3d着色器.h" />
+    <ClInclude Include="cflw图形_dx着色器.h" />
     <ClInclude Include="cflw图形_dx纹理.h" />
     <ClInclude Include="cflw多媒体.h" />
     <ClInclude Include="cflw工具.h" />
@@ -213,6 +215,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="cflw图形_d3d着色器.cpp" />
+    <ClCompile Include="cflw图形_dx着色器.cpp" />
     <ClCompile Include="cflw图形_dx纹理.cpp" />
     <ClCompile Include="cflw多媒体.cpp" />
     <ClCompile Include="cflw工具.cpp" />

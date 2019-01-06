@@ -36,5 +36,7 @@ ComPtr<IDXGIDevice> C三维::fg基础设备() const {
 	m设备.As(&v设备);
 	return v设备;
 }
-
+std::vector<ComPtr<ID3D11Resource>> &C三维::fe渲染目标资源() {
+	return ma渲染目标资源;
+}
 }

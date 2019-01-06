@@ -19,7 +19,7 @@ HRESULT C二维::f初始化_多个位图(const t范围 &a范围, float a缩放) {
 	const D2D1_BITMAP_PROPERTIES1 v位图属性 = D2D1::BitmapProperties1(
 		D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
 		D2D1::PixelFormat(DXGI_FORMAT_UNKNOWN, D2D1_ALPHA_MODE_PREMULTIPLIED),
-		dpi.x, dpi.y
+		96, 96	//这里禁用缩放,不然创建的位图尺寸会变小
 	);
 	m上下文->SetDpi(dpi.x, dpi.y);
 	auto v开始 = std::begin(a范围);
@@ -36,7 +36,7 @@ HRESULT C二维::f初始化_多个位图(const t范围 &a范围, float a缩放) {
 	const ComPtr<ID2D1Bitmap1> &v位图目标0 = ma位图目标.front();
 	m上下文->SetTarget(v位图目标0.Get());
 	const auto v大小 = v位图目标0->GetSize();
-	f初始化_窗口大小(v大小.width, v大小.height);
+	f初始化_窗口大小(v大小.width, v大小.height, a缩放);
 	return S_OK;
 }
 

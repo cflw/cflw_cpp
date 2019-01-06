@@ -77,8 +77,8 @@ HRESULT CÈıÎ¬::f³õÊ¼»¯½»»»Á´() {
 	//½»»»Á´ÃèÊö
 	DXGI_SWAP_CHAIN_DESC1 sd = {};
 	sd.BufferCount = cÖ¡Êı;
-	sd.Width = 0;
-	sd.Height = 0;
+	sd.Width = m´°¿Ú´óĞ¡[0];
+	sd.Height = m´°¿Ú´óĞ¡[1];
 	sd.Format = c½»»»Á´¸ñÊ½;
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
@@ -418,12 +418,11 @@ CÎÆÀí¹¤³§ &CÈıÎ¬::fgÎÆÀí¹¤³§() {
 	}
 	return *mÎÆÀí¹¤³§;
 }
-C×ÅÉ«Æ÷¹¤³§2 &CÈıÎ¬::fg×ÅÉ«Æ÷¹¤³§() {
-	if (m×ÅÉ«Æ÷¹¤³§ == nullptr) {
-		m×ÅÉ«Æ÷¹¤³§ = std::make_unique<C×ÅÉ«Æ÷¹¤³§2>();
-		m×ÅÉ«Æ÷¹¤³§->f³õÊ¼»¯();
-	}
-	return *m×ÅÉ«Æ÷¹¤³§;
+CäÖÈ¾Ä¿±ê¹ÜÀí &CÈıÎ¬::fgäÖÈ¾Ä¿±ê¹ÜÀí() {
+	return *mäÖÈ¾Ä¿±ê¹ÜÀí;
+}
+CÉî¶ÈÄ£°å¹ÜÀí &CÈıÎ¬::fgÉî¶ÈÄ£°å¹ÜÀí() {
+	return *mÉî¶ÈÄ£°å¹ÜÀí;
 }
 ID3D12RootSignature *CÈıÎ¬::fgÄ¬ÈÏ¸ùÇ©Ãû() {
 	return mÄ¬ÈÏ¸ùÇ©Ãû.Get();
@@ -1064,119 +1063,6 @@ HRESULT C»º³å¹¤³§::f´´½¨³£Á¿(tp³£Á¿ &a, const void *aÊı¾İ, UINT aÀàĞÍ´óĞ¡, UINT 
 	return S_OK;
 }
 //==============================================================================
-// ×ÅÉ«Æ÷¹¤³§
-//==============================================================================
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒë¶¥µã×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû, const char *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, "vs_5_1");
-}
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒëÏñËØ×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû, const char *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, "ps_5_1");
-}
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒë¼¸ºÎ×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû, const char *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, "gs_5_1");
-}
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒëÍâ¿Ç×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû, const char *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, "hs_5_1");
-}
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒëÓò×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû, const char *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, "ds_5_1");
-}
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒë×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû, const char *aÈë¿Ú, const char *a×ÅÉ«Ä£ĞÍ) {
-	HRESULT hr = S_OK;
-	DWORD v×ÅÉ«±êÖ¾ = D3DCOMPILE_ENABLE_STRICTNESS;
-#if defined( DEBUG ) || defined( _DEBUG )
-	v×ÅÉ«±êÖ¾ |= D3DCOMPILE_DEBUG;
-#endif
-	ComPtr<ID3DBlob> v´íÎó;
-	hr = D3DCompileFromFile(aÎÄ¼şÃû, nullptr, nullptr, aÈë¿Ú, a×ÅÉ«Ä£ĞÍ, v×ÅÉ«±êÖ¾, 0, &a, &v´íÎó);
-	if (FAILED(hr)) {
-		if (v´íÎó != nullptr) {
-			OutputDebugStringA((char*)v´íÎó->GetBufferPointer());
-		}
-		return hr;
-	}
-	return S_OK;
-}
-HRESULT C×ÅÉ«Æ÷¹¤³§::f¶ÁÈ¡×ÅÉ«Æ÷(std::unique_ptr<std::byte[]> &aÊı¾İ, DWORD &a´óĞ¡, const wchar_t *aÎÄ¼şÃû) {
-	HANDLE vÎÄ¼ş = CreateFileW(aÎÄ¼şÃû, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_ALWAYS, 0, nullptr);
-	if (vÎÄ¼ş == INVALID_HANDLE_VALUE) {
-		return ERROR_FILE_NOT_FOUND;
-	}
-	a´óĞ¡ = GetFileSize(vÎÄ¼ş, nullptr);
-	aÊı¾İ = std::make_unique<std::byte[]>(a´óĞ¡);
-	DWORD v¶Á´óĞ¡;
-	ReadFile(vÎÄ¼ş, aÊı¾İ.get(), a´óĞ¡, &v¶Á´óĞ¡, nullptr);
-	CloseHandle(vÎÄ¼ş);
-	return S_OK;
-}
-//==============================================================================
-// ×ÅÉ«Æ÷¹¤³§2
-//==============================================================================
-HRESULT C×ÅÉ«Æ÷¹¤³§2::f³õÊ¼»¯() {
-	HRESULT hr;
-	hr = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&m±àÒëÆ÷));
-	if (FAILED(hr)) {
-		return hr;
-	}
-	hr = DxcCreateInstance(CLSID_DxcLibrary, IID_PPV_ARGS(&m¿â));
-	if (FAILED(hr)) {
-		return hr;
-	}
-	return S_OK;
-}
-//±àÒë×ÅÉ«Æ÷
-HRESULT C×ÅÉ«Æ÷¹¤³§2::f±àÒë¶¥µã×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû, const wchar_t *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, L"vs_6_0");
-}
-HRESULT C×ÅÉ«Æ÷¹¤³§2::f±àÒëÏñËØ×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû, const wchar_t *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, L"ps_6_0");
-}
-HRESULT C×ÅÉ«Æ÷¹¤³§2::f±àÒë¼¸ºÎ×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû, const wchar_t *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, L"gs_6_0");
-}
-HRESULT C×ÅÉ«Æ÷¹¤³§2::f±àÒëÍâ¿Ç×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû, const wchar_t *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, L"hs_6_0");
-}
-HRESULT C×ÅÉ«Æ÷¹¤³§2::f±àÒëÓò×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû, const wchar_t *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, L"ds_6_0");
-}
-HRESULT C×ÅÉ«Æ÷¹¤³§2::f±àÒë¼ÆËã×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû, const wchar_t *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, L"cs_6_0");
-}
-//ºËĞÄº¯Êı
-HRESULT C×ÅÉ«Æ÷¹¤³§2::f±àÒë×ÅÉ«Æ÷(ComPtr<IDxcBlob> &aÊä³ö, const wchar_t *aÎÄ¼şÃû, const wchar_t *aÈë¿Ú, const wchar_t *a×ÅÉ«Ä£ĞÍ) {
-	HRESULT hr;
-	ComPtr<IDxcBlobEncoding> vÔ´;
-	hr = m¿â->CreateBlobFromFile(aÎÄ¼şÃû, nullptr, &vÔ´);
-	if (FAILED(hr)) {
-		return hr;
-	}
-	ComPtr<IDxcOperationResult> v½á¹û;
-	hr = m±àÒëÆ÷->Compile(vÔ´.Get(), aÎÄ¼şÃû, aÈë¿Ú, a×ÅÉ«Ä£ĞÍ, nullptr, 0, nullptr, 0, nullptr, &v½á¹û);
-	if (FAILED(hr)) {
-		return hr;
-	}
-	v½á¹û->GetStatus(&hr);
-	if (FAILED(hr)) {
-		ComPtr<IDxcBlobEncoding> v´íÎó;
-		v½á¹û->GetErrorBuffer(&v´íÎó);
-		OutputDebugStringA((char*)v´íÎó->GetBufferPointer());
-		return hr;
-	}
-	v½á¹û->GetResult(&aÊä³ö);
-	return S_OK;
-}
-HRESULT C×ÅÉ«Æ÷¹¤³§2::f¶ÁÈ¡×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû) {
-	HRESULT hr;
-	ComPtr<IDxcBlobEncoding> vÔ´;
-	hr = m¿â->CreateBlobFromFile(aÎÄ¼şÃû, nullptr, &vÔ´);
-	if (FAILED(hr)) {
-		return hr;
-	}
-	vÔ´.As(&a);
-	return S_OK;
-}
-//==============================================================================
 // ÎÆÀí¹¤³§
 //==============================================================================
 CÎÆÀí¹¤³§::~CÎÆÀí¹¤³§() {}
@@ -1260,12 +1146,6 @@ HRESULT CÎÆÀí¹¤³§::f´ÓÎÆÀí×ÊÔ´´´½¨ÎÆÀíÊÓÍ¼(tpÃèÊö·û¶Ñ &aÊä³ö, const tp×ÊÔ´ &a×ÊÔ
 //==============================================================================
 // ×ÊÔ´ÃèÊö
 //==============================================================================
-S×ÅÉ«Æ÷×Ö½Ú´úÂë S×ÅÉ«Æ÷×Ö½Ú´úÂë::fc¶ş½øÖÆ´ó¶ÔÏó(ID3DBlob *a) {
-	return {a->GetBufferPointer(), a->GetBufferSize()};
-}
-S×ÅÉ«Æ÷×Ö½Ú´úÂë S×ÅÉ«Æ÷×Ö½Ú´úÂë::fc¶ş½øÖÆ´ó¶ÔÏó(IDxcBlob *a) {
-	return {a->GetBufferPointer(), a->GetBufferSize()};
-}
 S×ÊÔ´ÃèÊö S×ÊÔ´ÃèÊö::fc»º´æ(UINT64 a¿í) {
 	S×ÊÔ´ÃèÊö v = {};
 	v.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -1312,35 +1192,25 @@ void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÊäÈë²¼¾Ö(const C¶¥µã¸ñÊ½ &a) {
 void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¸ùÇ©Ãû(ID3D12RootSignature *a) {
 	pRootSignature = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¶¥µã×ÅÉ«Æ÷(ID3DBlob *a) {
-	VS = S×ÅÉ«Æ÷×Ö½Ú´úÂë::fc¶ş½øÖÆ´ó¶ÔÏó(a);
+void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¶¥µã×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
+	VS.pShaderBytecode = a.data();
+	VS.BytecodeLength = a.size();
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÏñËØ×ÅÉ«Æ÷(ID3DBlob *a) {
-	PS = S×ÅÉ«Æ÷×Ö½Ú´úÂë::fc¶ş½øÖÆ´ó¶ÔÏó(a);
+void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÏñËØ×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
+	PS.pShaderBytecode = a.data();
+	PS.BytecodeLength = a.size();
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¼¸ºÎ×ÅÉ«Æ÷(ID3DBlob *a) {
-	GS = S×ÅÉ«Æ÷×Ö½Ú´úÂë::fc¶ş½øÖÆ´ó¶ÔÏó(a);
+void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¼¸ºÎ×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
+	GS.pShaderBytecode = a.data();
+	GS.BytecodeLength = a.size();
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÍâ¿Ç×ÅÉ«Æ÷(ID3DBlob *a) {
-	HS = S×ÅÉ«Æ÷×Ö½Ú´úÂë::fc¶ş½øÖÆ´ó¶ÔÏó(a);
+void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÍâ¿Ç×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
+	HS.pShaderBytecode = a.data();
+	HS.BytecodeLength = a.size();
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÓò×ÅÉ«Æ÷(ID3DBlob *a) {
-	DS = S×ÅÉ«Æ÷×Ö½Ú´úÂë::fc¶ş½øÖÆ´ó¶ÔÏó(a);
-}
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¶¥µã×ÅÉ«Æ÷(IDxcBlob *a) {
-	VS = S×ÅÉ«Æ÷×Ö½Ú´úÂë::fc¶ş½øÖÆ´ó¶ÔÏó(a);
-}
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÏñËØ×ÅÉ«Æ÷(IDxcBlob *a) {
-	PS = S×ÅÉ«Æ÷×Ö½Ú´úÂë::fc¶ş½øÖÆ´ó¶ÔÏó(a);
-}
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¼¸ºÎ×ÅÉ«Æ÷(IDxcBlob *a) {
-	GS = S×ÅÉ«Æ÷×Ö½Ú´úÂë::fc¶ş½øÖÆ´ó¶ÔÏó(a);
-}
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÍâ¿Ç×ÅÉ«Æ÷(IDxcBlob *a) {
-	HS = S×ÅÉ«Æ÷×Ö½Ú´úÂë::fc¶ş½øÖÆ´ó¶ÔÏó(a);
-}
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÓò×ÅÉ«Æ÷(IDxcBlob *a) {
-	DS = S×ÅÉ«Æ÷×Ö½Ú´úÂë::fc¶ş½øÖÆ´ó¶ÔÏó(a);
+void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÓò×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
+	DS.pShaderBytecode = a.data();
+	DS.BytecodeLength = a.size();
 }
 void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¹âÕ¤»¯(const D3D12_RASTERIZER_DESC &a) {
 	RasterizerState = a;
@@ -1368,6 +1238,19 @@ S×ÊÔ´Õ¤À¸ S×ÊÔ´Õ¤À¸::fc±ä»»(ID3D12Resource* a×ÊÔ´, D3D12_RESOURCE_STATES aÇ°, D3
 	vÕ¤À¸.Transition.pResource = a×ÊÔ´;
 	vÕ¤À¸.Transition.Subresource = a×Ó×ÊÔ´;
 	return vÕ¤À¸;
+}
+//==============================================================================
+// ¼ÆËã¹ÜÏß²ÎÊı
+//==============================================================================
+S¼ÆËã¹ÜÏß²ÎÊı::S¼ÆËã¹ÜÏß²ÎÊı():
+	D3D12_COMPUTE_PIPELINE_STATE_DESC() {
+}
+void S¼ÆËã¹ÜÏß²ÎÊı::fs¸ùÇ©Ãû(ID3D12RootSignature *a) {
+	pRootSignature = a;
+}
+void S¼ÆËã¹ÜÏß²ÎÊı::fs¼ÆËã×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
+	CS.pShaderBytecode = a.data();
+	CS.BytecodeLength = a.size();
 }
 //==============================================================================
 // ¶ÑÊôĞÔ

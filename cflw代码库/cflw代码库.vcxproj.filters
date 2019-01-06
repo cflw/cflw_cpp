@@ -124,6 +124,12 @@
     <ClInclude Include="cflw文件_json.h">
       <Filter>文件</Filter>
     </ClInclude>
+    <ClInclude Include="cflw图形_d3d着色器.h">
+      <Filter>图形</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw图形_dx着色器.h">
+      <Filter>图形</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cflw数学_单位转换.cpp">
@@ -212,6 +218,12 @@
     </ClCompile>
     <ClCompile Include="cflw文件_json.cpp">
       <Filter>文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw图形_d3d着色器.cpp">
+      <Filter>图形</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw图形_dx着色器.cpp">
+      <Filter>图形</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

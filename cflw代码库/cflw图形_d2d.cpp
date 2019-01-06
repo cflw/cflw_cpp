@@ -9,7 +9,6 @@ namespace cflw::图形::d2d {
 // 二维
 //==============================================================================
 C二维 *C二维::g这 = nullptr;
-const D2D1_COLOR_F C二维::c清屏颜色 = D2D1::ColorF(D2D1::ColorF::Black);
 //函数
 C二维::C二维() {
 	assert(g这 == nullptr);	//单例
@@ -17,7 +16,7 @@ C二维::C二维() {
 }
 HRESULT C二维::f初始化(HWND a窗口, float a缩放) {
 	const 视窗::S客户区尺寸 v尺寸 = 视窗::S客户区尺寸::fc窗口(a窗口);
-	f初始化_窗口大小(v尺寸.fg宽(), v尺寸.fg高());
+	f初始化_窗口大小(v尺寸.fg宽(), v尺寸.fg高(), a缩放);
 	HRESULT hr;
 	hr = f初始化_工厂();
 	if (FAILED(hr)) {
@@ -64,7 +63,7 @@ HRESULT C二维::f初始化(IDXGISwapChain *a交换链, float a缩放) {
 		return hr;
 	}
 	const D2D1_SIZE_F v大小 = v后台渲染目标->GetSize();
-	f初始化_窗口大小(v大小.width, v大小.height);
+	f初始化_窗口大小(v大小.width, v大小.height, a缩放);
 	f初始化_渲染目标(v后台渲染目标.Get());
 	return S_OK;
 }
@@ -92,13 +91,13 @@ HRESULT C二维::f初始化_设备(IDXGIDevice *a设备) {
 	f初始化_渲染目标(m上下文.Get());
 	return S_OK;
 }
-void C二维::f初始化_窗口大小(float x, float y) {
+void C二维::f初始化_窗口大小(float x, float y, float a缩放) {
 	m窗口大小.x = x;
 	m窗口大小.y = y;
 	if (m坐标计算 == nullptr) {
 		m坐标计算 = std::make_unique<C坐标转换>();
 	}
-	m坐标计算->fs大小(m窗口大小);
+	m坐标计算->fs大小(m窗口大小, a缩放);
 }
 void C二维::f初始化_渲染目标(ID2D1RenderTarget *a) {
 	m渲染目标 = a;
@@ -124,26 +123,12 @@ HRESULT C二维::f初始化_单个位图(IDXGISwapChain *a交换链, float a缩放) {
 	}
 	m上下文->SetTarget(v位图目标.Get());
 	const D2D1_SIZE_F v大小 = v位图目标->GetSize();
-	f初始化_窗口大小(v大小.width, v大小.height);
+	f初始化_窗口大小(v大小.width, v大小.height, a缩放);
 	return S_OK;
 }
 void C二维::fs缩放(float a) {
 	float v = 96 * a;
 	m渲染目标->SetDpi(v, v);
-}
-//绘制控制
-void C二维::f开始() {
-	m渲染目标->BeginDraw();
-}
-void C二维::f开始(UINT a) {
-	m上下文->SetTarget(ma位图目标[a].Get());
-	m上下文->BeginDraw();
-}
-void C二维::f清屏() {
-	m渲染目标->Clear(c清屏颜色);
-}
-void C二维::f结束() {
-	m渲染目标->EndDraw();
 }
 //画图
 std::shared_ptr<C画图形> C二维::fc画图形(const 数学::S颜色 &a颜色, float a宽度) {
@@ -224,6 +209,13 @@ C文本工厂 &C二维::fg文本工厂() {
 	}
 	return *m文本工厂;
 }
+C渲染控制 &C二维::fg渲染控制() {
+	if (m渲染控制 == nullptr) {
+		m渲染控制 = std::make_unique<C渲染控制>();
+		m渲染控制->m二维 = this;
+	}
+	return *m渲染控制;
+}
 ComPtr<IDWriteTextFormat> C二维::fg默认文本格式() {
 	if (m默认文本格式 == nullptr) {
 		C文本工厂 &v文本工厂 = fg文本工厂();
@@ -239,6 +231,25 @@ ComPtr<IDWriteTextFormat> C二维::fg默认文本格式() {
 		m二维工厂->GetDesktopDpi(&dpi.x, &dpi.y);
 	}
 	return dpi;
+}
+//==============================================================================
+// 渲染控制
+//==============================================================================
+void C渲染控制::f开始() {
+	m二维->m渲染目标->BeginDraw();
+}
+void C渲染控制::f开始(UINT a) {
+	m二维->m上下文->SetTarget(m二维->ma位图目标[a].Get());
+	m二维->m上下文->BeginDraw();
+}
+void C渲染控制::f清屏() {
+	m二维->m渲染目标->Clear(m清屏颜色);
+}
+void C渲染控制::f结束() {
+	m二维->m渲染目标->EndDraw();
+}
+void C渲染控制::fs清屏颜色(const 数学::S颜色 &a颜色) {
+	m清屏颜色 = C类型转换::f颜色(a颜色);
 }
 //==============================================================================
 // 画图形
@@ -397,8 +408,8 @@ std::vector<D2D1_GRADIENT_STOP> C类型转换::f渐变点(const std::vector<S渐变点> &a
 	return v数组;
 }
 //二维结构坐标
-void C坐标转换::fs大小(const 数学::S向量2 &a坐标) {
-	m窗口大小 = a坐标;
+void C坐标转换::fs大小(const 数学::S向量2 &a坐标, float a缩放) {
+	m窗口大小 = a坐标 / a缩放;
 }
 float C坐标转换::x(float X) const {
 	return 数学::f窗口坐标x(X, m窗口大小.x);

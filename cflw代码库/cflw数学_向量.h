@@ -28,6 +28,9 @@ struct S向量2 {
 	static S向量2 fc方向r(const float &, const float &);	//大小弧度获得向量
 	static S向量2 fc方向d(const float &, const float &);	//大小度获得向量
 	static S向量2 fc相同(const float &);	//x,y都等于参数
+	static S向量2 fc矩形中心(float, float, float, float);
+	static S向量2 fc矩形尺寸(float, float, float, float);
+	static S向量2 fc矩形半尺寸(float, float, float, float);
 	S向量2 &operator +=(const S向量2 &);
 	S向量2 &operator -=(const S向量2 &);
 	S向量2 &operator *=(const float &);

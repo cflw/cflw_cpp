@@ -47,6 +47,7 @@ typedef D2D1_ROUNDED_RECT t圆角矩形;
 typedef DWRITE_TEXT_RANGE t文本范围;
 typedef std::vector<D2D1_GRADIENT_STOP> ta渐变点;
 //本文件
+class C渲染控制;
 class C画图形;
 class C画文本;
 class C类型转换;
@@ -84,26 +85,22 @@ struct S渐变点 {
 // 二维引擎
 //==============================================================================
 class C二维 {
+	friend class C渲染控制;
 public:
 	static C二维 *g这;
-	static const D2D1_COLOR_F c清屏颜色;
 //函数
 	C二维();
 	HRESULT f初始化(HWND, float 缩放 = 0);
 	HRESULT f初始化(IDXGISwapChain*, float 缩放 = 0);	//废弃
 	HRESULT f初始化_工厂();
 	HRESULT f初始化_设备(IDXGIDevice *);
-	void f初始化_窗口大小(float, float);
+	void f初始化_窗口大小(float x, float y, float 缩放);
 	void f初始化_渲染目标(ID2D1RenderTarget*);
 	HRESULT f初始化_单个位图(IDXGISwapChain *, float 缩放 = 0);
 	//template<std::ranges::Range t范围> HRESULT f初始化_多个位图(const t范围 &, float 缩放 = 0);
 	template<typename t范围> HRESULT f初始化_多个位图(const t范围 &, float 缩放 = 0);
 	void fs缩放(float = 1);
 	//绘制控制
-	void f开始();
-	void f开始(UINT);	//使用位图目标
-	void f清屏();
-	void f结束();
 	//画图对象
 	std::shared_ptr<C画图形> fc画图形(const 数学::S颜色 &颜色 = 数学::S颜色::c白, float 宽度 = 1);
 	std::shared_ptr<C画文本> fc画文本(const 数学::S颜色 &颜色 = 数学::S颜色::c白);
@@ -121,6 +118,7 @@ public:
 	C坐标转换 &fg坐标计算() const;
 	C文本工厂 &fg文本工厂();
 	ComPtr<IDWriteTextFormat> fg默认文本格式();
+	C渲染控制 &fg渲染控制();
 private:
 	数学::S向量2 fg每英寸点数(float 缩放 = 0) const;
 	数学::S向量2 m窗口大小;
@@ -132,8 +130,23 @@ private:
 	std::unique_ptr<C坐标转换> m坐标计算;
 	std::unique_ptr<C文本工厂> m文本工厂;
 	ComPtr<IDWriteTextFormat> m默认文本格式;
+	std::unique_ptr<C渲染控制> m渲染控制;
 };
-//各种画
+class C渲染控制 {
+public:
+	void f开始();
+	void f开始(UINT);	//使用位图目标
+	void f清屏();
+	void f结束();
+	//属性
+	void fs清屏颜色(const 数学::S颜色 &);
+public:
+	C二维 *m二维;
+	D2D1_COLOR_F m清屏颜色 = D2D1::ColorF(D2D1::ColorF::Black);
+};
+//==============================================================================
+// 各种画
+//==============================================================================
 class C画图形 {
 public:
 	void f初始化(ID2D1RenderTarget *, const C坐标转换 &);
@@ -198,7 +211,7 @@ public:
 };
 class C坐标转换 {
 public:	//输入直角坐标然后转换成窗口坐标
-	void fs大小(const 数学::S向量2 &);
+	void fs大小(const 数学::S向量2 &, float 缩放);
 	float x(float) const;
 	float y(float) const;
 	float f百分比x(float) const;

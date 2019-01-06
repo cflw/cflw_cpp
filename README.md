@@ -35,9 +35,11 @@
 * **cflw图形_d3d11**：Direct3D 11的封装
 * **cflw图形_d3d12**：Direct3D 12的封装
 	* 要编译`cflw图形_d3d12.cpp`，其中的`d3dx12.h`来自[微软DirectX图形示例](https://github.com/Microsoft/DirectX-Graphics-Samples)
-	* [DirectX着色器编译器](https://github.com/Microsoft/DirectXShaderCompiler)的`dxcompiler.dll`不包含在系统中，需要手动把Windows 10 SDK里的相应文件复制到系统里。
 * **cflw图形_d2d**：Direct2D 1的封装。支持高分屏。
 * **cflw图形_dx纹理**：载入常见图片格式。
+* **cflw图形_d3d着色器**：旧的Direct3D着色器编译器`<d3dcompiler.h>`的封装
+* **cflw图形_dx着色器**：新的[DirectX着色器编译器](https://github.com/Microsoft/DirectXShaderCompiler)`<dxcapi.h>`的封装。
+	* [DirectX着色器编译器](https://github.com/Microsoft/DirectXShaderCompiler)的`dxcompiler.dll`不包含在系统中，需要手动把Windows 10 SDK里的相应文件复制到系统里。
 
 ### 输入
 * **cflw输入**：统一的输入接口和按键相关实用工具。
@@ -53,6 +55,7 @@
 ### 文件
 * **cflw文件_csv**：对csv逗号分隔表格文件的支持
 * **cflw文件_obj模型**：对对象模型文件的支持
+* **cflw文件_json**：方便读写json文件的类
 
 ### 常用代码
 * **窗口模板**.cpp：创建空白窗口的代码，包含主函数、窗口过程。

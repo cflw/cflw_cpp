@@ -28,8 +28,17 @@ S向量2 S向量2::fc方向d(const float &a大小, const float &a方向) {
 	const float r = a方向 / 180.f * (float)cπ;
 	return {cos(r) * a大小, sin(r) * a大小};
 }
-S向量2 S向量2::fc相同(const float &p) {
-	return {p, p};
+S向量2 S向量2::fc相同(const float &a) {
+	return {a, a};
+}
+S向量2 S向量2::fc矩形中心(float a左, float a上, float a右, float a下) {
+	return {(a左 + a右) / 2, (a上 + a下) / 2};
+}
+S向量2 S向量2::fc矩形尺寸(float a左, float a上, float a右, float a下) {
+	return {a右 - a左, a上 - a下};
+}
+S向量2 S向量2::fc矩形半尺寸(float a左, float a上, float a右, float a下) {
+	return {(a右 - a左) / 2, (a上 - a下) / 2};
 }
 //赋值操作符
 S向量2& S向量2::operator +=(const S向量2 &_) {
@@ -84,24 +93,24 @@ S向量2 S向量2::operator -() const {
 	v.y = -v.y;
 	return v;
 }
-bool S向量2::operator ==(const S向量2 &p) const {
-	return (x == p.x) && (y == p.y);
+bool S向量2::operator ==(const S向量2 &a) const {
+	return (x == a.x) && (y == a.y);
 }
-bool S向量2::operator !=(const S向量2 &p) const {
-	return (x != p.x) || (y != p.y);
+bool S向量2::operator !=(const S向量2 &a) const {
+	return (x != a.x) || (y != a.y);
 }
 //复杂比较
-bool S向量2::f全小于(const S向量2 &p) const {
-	return (x < p.x) && (y < p.y);
+bool S向量2::f全小于(const S向量2 &a) const {
+	return (x < a.x) && (y < a.y);
 }
-bool S向量2::f全小于等于(const S向量2 &p) const {
-	return (x <= p.x) && (y <= p.y);
+bool S向量2::f全小于等于(const S向量2 &a) const {
+	return (x <= a.x) && (y <= a.y);
 }
-bool S向量2::f全大于(const S向量2 &p) const {
-	return (x > p.x) && (y > p.y);
+bool S向量2::f全大于(const S向量2 &a) const {
+	return (x > a.x) && (y > a.y);
 }
-bool S向量2::f全大于等于(const S向量2 &p) const {
-	return (x >= p.x) && (y >= p.y);
+bool S向量2::f全大于等于(const S向量2 &a) const {
+	return (x >= a.x) && (y >= a.y);
 }
 bool S向量2::fi零() const {
 	return (x == 0) && (y == 0);

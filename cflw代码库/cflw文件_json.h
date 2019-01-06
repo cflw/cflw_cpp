@@ -2,6 +2,10 @@
 #include <locale>
 #include <fstream>
 #include <boost/property_tree/json_parser.hpp>
+namespace boost::property_tree::json_parser {
+//↓防止中文转义的重载函数，需要把这个声明放到boost/property_tree/json_parser/detail/write.hpp文件中
+std::wstring create_escapes(const std::wstring &);
+}	//namespace boost::property_tree::json_parser
 namespace cflw::文件::json {
 using t树 = boost::property_tree::wptree;
 /*
@@ -21,6 +25,6 @@ public:
 	std::wfstream m流;
 };
 template<typename t> bool C文件::f打开(const t &a路径, int a模式) {
-	return f打开(a路径.c_str());
+	return f打开(a路径.c_str(), a模式);
 }
 }	//namespace cflw::文件::json
