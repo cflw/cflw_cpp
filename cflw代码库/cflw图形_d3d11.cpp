@@ -860,7 +860,8 @@ void C顶点格式::f添加(E类型 a类型, int a大小) {
 		"COLOR",
 		"TEXCOORD",
 		"PSIZE",
-		"TANGENT"
+		"TANGENT",
+		"ALPHA"
 	};
 	f添加(ca语义[a类型], a大小);
 }

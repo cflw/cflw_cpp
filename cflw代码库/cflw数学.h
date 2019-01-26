@@ -70,10 +70,16 @@ float f求余(const float &x, const float &y);
 float f翻折(float, float);
 float f位置(float, float);
 //窗口坐标与直角坐标变换
-float f窗口坐标x(float, float);
-float f窗口坐标y(float, float);
-float f直角坐标x(float, float);
-float f直角坐标y(float, float);
+float f窗口坐标x(float, float 原始);
+float f窗口坐标y(float, float 原始);
+float f直角坐标x(float, float 原始);
+float f直角坐标y(float, float 原始);
+float f窗口坐标x(float, float 原始, float 目标);
+float f窗口坐标y(float, float 原始, float 目标);
+float f直角坐标x(float, float 原始, float 目标);
+float f直角坐标y(float, float 原始, float 目标);
+float f窗口缩放(float 原始, float 目标);
+float f直角缩放(float 原始, float 目标);
 //==============================================================================
 // 各种计算类
 //==============================================================================

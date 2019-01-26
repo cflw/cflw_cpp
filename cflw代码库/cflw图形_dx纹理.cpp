@@ -85,7 +85,7 @@ size_t C图像工厂::f像素大小(const GUID &guid) {
 }
 HRESULT C图像工厂::f图像尺寸变换(IWICBitmapSource *a帧, size_t a宽, size_t a高, IWICBitmapScaler **a输出) {
 	HRESULT hr;
-	IWICBitmapScaler *&v缩放 = *a输出;
+	ComPtr<IWICBitmapScaler> v缩放;
 	hr = m工厂->CreateBitmapScaler(&v缩放);
 	if (FAILED(hr)) {
 		return hr;
@@ -94,22 +94,24 @@ HRESULT C图像工厂::f图像尺寸变换(IWICBitmapSource *a帧, size_t a宽, size_t a高, 
 	if (FAILED(hr)) {
 		return hr;
 	}
+	*a输出 = v缩放.Detach();
 	return S_OK;
 }
 HRESULT C图像工厂::f图像格式变换(IWICBitmapSource *a图像, const GUID &a格式, IWICFormatConverter **a输出) {
 	HRESULT hr;
-	IWICFormatConverter *&v转换 = *a输出;
+	ComPtr<IWICFormatConverter> v转换;
 	hr = m工厂->CreateFormatConverter(&v转换);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = v转换->Initialize(a图像, a格式, WICBitmapDitherTypeErrorDiffusion, 0, 0, WICBitmapPaletteTypeCustom);
+	hr = v转换->Initialize(a图像, a格式, WICBitmapDitherTypeErrorDiffusion, nullptr, 0, WICBitmapPaletteTypeCustom);
 	if (FAILED(hr)) {
 		return hr;
 	}
+	*a输出 = v转换.Detach();
 	return S_OK;
 }
-std::unique_ptr<C只读纹理> C图像工厂::f一键读取(const wchar_t *a文件名) {
+ComPtr<IWICBitmapSource> C图像工厂::f高级读取(const wchar_t *a文件名, const std::function<GUID(const GUID &)> &af格式) {
 	ComPtr<IWICBitmapFrameDecode> v图像;
 	HRESULT hr = f读取图像(a文件名, &v图像);
 	if (FAILED(hr)) {
@@ -117,20 +119,32 @@ std::unique_ptr<C只读纹理> C图像工厂::f一键读取(const wchar_t *a文件名) {
 	}
 	//格式转换并复制数据
 	const WICBitmapPlaneDescription v描述 = f取图像描述(v图像.Get());
+	const GUID v图像格式 = af格式(v描述.Format);
+	if (v图像格式 == v描述.Format) {
+		return v图像;
+	}
+	ComPtr<IWICFormatConverter> v格式转换;
+	hr = f图像格式变换(v图像.Get(), v图像格式, &v格式转换);
+	if (FAILED(hr)) {
+		return nullptr;
+	}
+	return v格式转换;
+}
+std::unique_ptr<C只读纹理> C图像工厂::fc纹理(IWICBitmapSource *a源) {
 	std::unique_ptr<C只读纹理> v纹理 = std::make_unique<C只读纹理>();
-	GUID v图像格式 = v描述.Format;
+	v纹理->mp数据 = f复制像素数据(a源, &v纹理->m像素大小, &v纹理->m行距, nullptr);
+	if (!v纹理->mp数据) {
+		return nullptr;
+	}
+	const WICBitmapPlaneDescription v描述 = f取图像描述(a源);
 	v纹理->m宽 = v描述.Width;
 	v纹理->m高 = v描述.Height;
-	if (格式::fi通用格式(v图像格式)) {
-		v纹理->mp数据 = f复制像素数据(v图像.Get(), &v纹理->m像素大小, &v纹理->m行距, nullptr);
-	} else {
-		ComPtr<IWICFormatConverter> v格式转换;
-		v图像格式 = 格式::f到通用格式(v图像格式);
-		f图像格式变换(v图像.Get(), v图像格式, &v格式转换);
-		v纹理->mp数据 = f复制像素数据(v格式转换.Get(), &v纹理->m像素大小, &v纹理->m行距, nullptr);
-	}
-	v纹理->m格式 = 格式::f到dxgi(v图像格式);
+	v纹理->m格式 = 格式::f到dxgi(v描述.Format);
 	return v纹理;
+}
+std::unique_ptr<C只读纹理> C图像工厂::f一键读取(const wchar_t *a文件名) {
+	auto v源 = f高级读取(a文件名, 格式::f到通用格式);
+	return fc纹理(v源.Get());
 }
 //=============================================================================
 // 格式
@@ -311,7 +325,10 @@ bool fi通用格式(const GUID &a格式) {
 	};
 	return v格式表.count(a格式) != 0;
 }
+GUID f不转换(const GUID &a) {
+	return a;
 }
+}	//namespace 格式
 //=============================================================================
 // 纹理接口
 //=============================================================================

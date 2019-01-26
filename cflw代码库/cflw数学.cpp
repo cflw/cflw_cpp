@@ -41,6 +41,24 @@ float f直角坐标x(float x, float s) {
 float f直角坐标y(float y, float s) {
 	return s / 2 - y;
 }
+float f窗口坐标x(float x, float s, float d) {
+	return f窗口坐标x(x * f窗口缩放(s, d), d);
+}
+float f窗口坐标y(float y, float s, float d) {
+	return f窗口坐标y(y * f窗口缩放(s, d), d);
+}
+float f直角坐标x(float x, float s, float d) {
+	return f直角坐标x(x * f直角缩放(s, d), d);
+}
+float f直角坐标y(float y, float s, float d) {
+	return f直角坐标y(y * f直角缩放(s, d), d);
+}
+float f窗口缩放(float s, float d) {
+	return d / s;
+}
+float f直角缩放(float s, float d) {
+	return d / s;
+}
 //模板实列化
 template<> int f取符号<bool>(const bool &x) {
 	return x ? 1 : -1;

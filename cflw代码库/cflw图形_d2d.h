@@ -26,26 +26,32 @@ HRESULT CreateBezierSpline(
 	__in const std::vector<D2D1_POINT_2F>& points,
 	__out ID2D1PathGeometry** ppPathGeometry);
 //命名空间
+namespace cflw::图形::dx纹理 {
+class I纹理;
+}
 namespace cflw::图形::d2d {
 //外部
 using Microsoft::WRL::ComPtr;
-typedef ComPtr<ID2D1RenderTarget> tp渲染目标;
-typedef ComPtr<ID2D1SolidColorBrush> tp纯色画笔;
-typedef ComPtr<ID2D1GradientStopCollection> tp渐变点集;
-typedef ComPtr<ID2D1LinearGradientBrush> tp线性渐变画笔;
-typedef ComPtr<ID2D1RadialGradientBrush> tp径向渐变画笔;
-typedef ComPtr<IDWriteTextFormat> tp文本格式;
-typedef ComPtr<IDWriteTextLayout> tp文本布局;
-typedef ComPtr<ID2D1PathGeometry> tp路径几何;
-typedef ComPtr<ID2D1GeometrySink> tp几何槽;
-typedef ComPtr<ID2D1Layer> tp层;
-typedef D2D1_POINT_2F t点2f;
-typedef D2D_RECT_F t矩形f;
-typedef D2D1_ELLIPSE t椭圆;
-typedef D2D1_COLOR_F t颜色f;
-typedef D2D1_ROUNDED_RECT t圆角矩形;
-typedef DWRITE_TEXT_RANGE t文本范围;
-typedef std::vector<D2D1_GRADIENT_STOP> ta渐变点;
+using tp渲染目标 = ComPtr<ID2D1RenderTarget>;
+using tp画笔 = ComPtr<ID2D1Brush>;
+using tp纯色画笔 = ComPtr<ID2D1SolidColorBrush>;
+using tp位图 = ComPtr<ID2D1Bitmap>;
+using tp位图画笔 = ComPtr<ID2D1BitmapBrush>;
+using tp渐变点集 = ComPtr<ID2D1GradientStopCollection>;
+using tp线性渐变画笔 = ComPtr<ID2D1LinearGradientBrush>;
+using tp径向渐变画笔 = ComPtr<ID2D1RadialGradientBrush>;
+using tp文本格式 = ComPtr<IDWriteTextFormat>;
+using tp文本布局 = ComPtr<IDWriteTextLayout>;
+using tp路径几何 = ComPtr<ID2D1PathGeometry>;
+using tp几何槽 = ComPtr<ID2D1GeometrySink>;
+using tp层 = ComPtr<ID2D1Layer>;
+using t点2f = D2D1_POINT_2F;
+using t矩形f = D2D_RECT_F;
+using t椭圆 = D2D1_ELLIPSE;
+using t颜色f = D2D1_COLOR_F;
+using t圆角矩形 = D2D1_ROUNDED_RECT;
+using t文本范围 = DWRITE_TEXT_RANGE;
+using ta渐变点 = std::vector<D2D1_GRADIENT_STOP>;
 //本文件
 class C渲染控制;
 class C画图形;
@@ -58,10 +64,10 @@ class C坐标转换;
 class C修改路径几何;
 class C文本工厂;
 class C文本效果;
-typedef std::shared_ptr<C画图形> tp画图形;
-typedef std::shared_ptr<C画文本> tp画文本;
-typedef std::shared_ptr<C坐标转换> tp坐标转换;
-typedef ComPtr<C文本效果> tp文本效果;
+using tp画图形 = std::shared_ptr<C画图形>;
+using tp画文本 = std::shared_ptr<C画文本>;
+using tp坐标转换 = std::shared_ptr<C坐标转换>;
+using tp文本效果 = ComPtr<C文本效果>;
 //枚举
 enum class E文本水平对齐 {
 	e左,
@@ -94,17 +100,19 @@ public:
 	HRESULT f初始化(IDXGISwapChain*, float 缩放 = 0);	//废弃
 	HRESULT f初始化_工厂();
 	HRESULT f初始化_设备(IDXGIDevice *);
-	void f初始化_窗口大小(float x, float y, float 缩放);
+	void f初始化_窗口大小(float x, float y);
 	void f初始化_渲染目标(ID2D1RenderTarget*);
 	HRESULT f初始化_单个位图(IDXGISwapChain *, float 缩放 = 0);
 	//template<std::ranges::Range t范围> HRESULT f初始化_多个位图(const t范围 &, float 缩放 = 0);
 	template<typename t范围> HRESULT f初始化_多个位图(const t范围 &, float 缩放 = 0);
 	void fs缩放(float = 1);
-	//绘制控制
 	//画图对象
-	std::shared_ptr<C画图形> fc画图形(const 数学::S颜色 &颜色 = 数学::S颜色::c白, float 宽度 = 1);
-	std::shared_ptr<C画文本> fc画文本(const 数学::S颜色 &颜色 = 数学::S颜色::c白);
+	std::shared_ptr<C画图形> fc画图形(const ComPtr<ID2D1Brush> & = nullptr, float 宽度 = 1);
+	std::shared_ptr<C画文本> fc画文本(const ComPtr<ID2D1Brush> & = nullptr);
 	ComPtr<ID2D1SolidColorBrush> fc纯色画笔(const 数学::S颜色 &) const;
+	ComPtr<ID2D1Bitmap> fc位图(const ComPtr<IWICBitmapSource> &);
+	ComPtr<ID2D1Bitmap> fc位图(const dx纹理::I纹理 &);
+	ComPtr<ID2D1BitmapBrush> fc位图画笔(const ComPtr<ID2D1Bitmap> &);
 	ComPtr<ID2D1GradientStopCollection> fc渐变点集(const std::vector<S渐变点> &) const;
 	ComPtr<ID2D1LinearGradientBrush> fc线性渐变画笔(const std::vector<S渐变点> &) const;
 	ComPtr<ID2D1RadialGradientBrush> fc径向渐变画笔(const std::vector<S渐变点> &) const;
@@ -149,9 +157,11 @@ public:
 //==============================================================================
 class C画图形 {
 public:
+	~C画图形();
 	void f初始化(ID2D1RenderTarget *, const C坐标转换 &);
-	void f初始化_参数(const 数学::S颜色 &p颜色, float a宽度);
+	void f初始化_纯色画笔(const 数学::S颜色 &颜色);
 	//设置
+	void fs画笔(const ComPtr<ID2D1Brush> &);
 	void fs线条宽度(float);
 	void fs颜色(const 数学::S颜色 &);
 	void fs透明度(float);
@@ -170,17 +180,18 @@ public:
 	void f填充圆角矩形(const 数学::S圆角矩形 &);
 public:
 	ComPtr<ID2D1RenderTarget> m渲染目标;
-	ComPtr<ID2D1SolidColorBrush> m画笔;
+	ComPtr<ID2D1Brush> m画笔;
 	const C坐标转换 *m坐标计算;
-	float m线条宽度;
+	float m线条宽度 = 1;
 };
 class C画文本 {
 public:
 	void f初始化(ID2D1RenderTarget *, const C坐标转换 &);
-	void f初始化_参数(const 数学::S颜色 &);
+	void f初始化_纯色画笔(const 数学::S颜色 &);
 	//设置
 	void fs格式(IDWriteTextFormat *);
 	void fs样式(C修改文本格式 &);
+	void fs画笔(const ComPtr<ID2D1Brush> &);
 	void fs颜色(const 数学::S颜色 &);
 	void fs透明度(float);
 	void fs区域(const 数学::S向量2 &);
@@ -195,7 +206,7 @@ public:
 	void f绘制文本布局(C修改文本布局 &) const;
 public:
 	ComPtr<ID2D1RenderTarget> m渲染目标;
-	ComPtr<ID2D1SolidColorBrush> m画笔;
+	ComPtr<ID2D1Brush> m画笔;
 	ComPtr<IDWriteTextFormat> m格式;
 	const C坐标转换 *m坐标计算;
 	D2D1_RECT_F m矩形;
@@ -211,7 +222,7 @@ public:
 };
 class C坐标转换 {
 public:	//输入直角坐标然后转换成窗口坐标
-	void fs大小(const 数学::S向量2 &, float 缩放);
+	void fs大小(const 数学::S向量2 &);
 	float x(float) const;
 	float y(float) const;
 	float f百分比x(float) const;
@@ -239,9 +250,9 @@ class C修改路径几何 {
 public:
 	C修改路径几何(ID2D1PathGeometry *, const C坐标转换 &);
 	~C修改路径几何();
-	void f点(const 数学::S向量2 &p);
-	void f直线(const 数学::S向量2 &p0, const 数学::S向量2 &p1);
-	void f圆弧(const 数学::S向量2 &p圆心, float p半径, float p开始, float p弧度, bool 顺时针 = true);
+	void f点(const 数学::S向量2 &);
+	void f直线(const 数学::S向量2 &a点0, const 数学::S向量2 &a点1);
+	void f圆弧(const 数学::S向量2 &圆心, float 半径, float 开始, float 弧度, bool 顺时针 = true);
 	void f连续直线(const std::vector<数学::S向量2> &);
 	void f平滑曲线(const std::vector<数学::S向量2> &);
 	void f闭合();
@@ -309,14 +320,14 @@ public:
 //==============================================================================
 enum E中文字号 {
 	e大特号,e特号,
-	e初号,	e小初号,
-	e大一号,e一号,	e小一号,
-	e二号,	e小二号,
-	e三号,	e小三号,
-	e四号,	e小四号,
-	e五号,	e小五号,
-	e六号,	e小六号,
-	e七号,	e小七号,
+	e初号, e小初号,
+	e大一号, e一号, e小一号,
+	e二号, e小二号,
+	e三号, e小三号,
+	e四号, e小四号,
+	e五号, e小五号,
+	e六号, e小六号,
+	e七号, e小七号,
 	e八号,
 };
 constexpr float ca中文字号[] = {

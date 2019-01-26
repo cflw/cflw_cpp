@@ -471,7 +471,8 @@ public:
 		e颜色,
 		e纹理,
 		e点大小,
-		e切线
+		e切线,
+		e阿尔法,
 	};
 	void f清空();
 	void f添加(E类型, int 大小);

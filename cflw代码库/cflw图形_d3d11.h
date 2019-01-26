@@ -430,7 +430,8 @@ public:
 		e颜色,
 		e纹理,
 		e点大小,
-		e切线
+		e切线,
+		e阿尔法,
 	};
 	std::vector<D3D11_INPUT_ELEMENT_DESC> m数组;
 	std::map<std::string, int> m类型累计;

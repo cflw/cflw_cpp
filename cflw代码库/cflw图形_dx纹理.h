@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <functional>
 #include <wincodec.h>
 #include <wrl.h>
 #include <dxgi.h>
@@ -7,11 +8,27 @@
 namespace cflw::图形::dx纹理 {
 //格式
 namespace 格式 {
+//常量
+const GUID c通用rgba = GUID_WICPixelFormat32bppRGBA;
+const GUID c通用bgra = GUID_WICPixelFormat32bppBGRA;
+const GUID c通用pbgra = GUID_WICPixelFormat32bppPBGRA;
+//函数
 bool f检查srgb(IWICBitmapFrameDecode *);
 DXGI_FORMAT f到dxgi(const GUID &);
 GUID f到通用格式(const GUID &);
 DXGI_FORMAT f到srgb(DXGI_FORMAT);
 bool fi通用格式(const GUID &);
+GUID f不转换(const GUID &);
+class F强制转换 {
+public:
+	F强制转换(const GUID &a):
+		m值(a) {
+	}
+	GUID operator ()(const GUID &) const {
+		return m值;
+	}
+	GUID m值;
+};
 }
 //声明
 using Microsoft::WRL::ComPtr;
@@ -29,8 +46,9 @@ public:
 	WICBitmapPlaneDescription f取图像描述(IWICBitmapSource *);
 	HRESULT f图像尺寸变换(IWICBitmapSource *, size_t, size_t, IWICBitmapScaler **);
 	HRESULT f图像格式变换(IWICBitmapSource *, const GUID &, IWICFormatConverter **);
+	ComPtr<IWICBitmapSource> f高级读取(const wchar_t *, const std::function<GUID(const GUID &)> &格式转换 = 格式::f不转换);
+	std::unique_ptr<C只读纹理> fc纹理(IWICBitmapSource *);
 	std::unique_ptr<C只读纹理> f一键读取(const wchar_t *);
-	//格式转换&计算
 public:
 	ComPtr<IWICImagingFactory> m工厂;
 };

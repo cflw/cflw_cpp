@@ -37,6 +37,7 @@ struct S矩形 {
 	static S矩形 fc左上右下(float 左, float 上, float 右, float 下);
 	static S矩形 fc坐标尺寸(const S向量2 &, const S向量2 &);
 	static S矩形 fc坐标半尺寸(const S向量2 &, const S向量2 &);
+	static S矩形 fc正方形(const S向量2 &, float 边长);
 };
 struct S旋转矩形 {
 	S向量2 m坐标 = S向量2::c零;

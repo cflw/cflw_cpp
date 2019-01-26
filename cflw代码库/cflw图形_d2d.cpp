@@ -2,6 +2,7 @@
 #include "cflw工具.h"
 #include "cflw图形_d2d.h"
 #include "cflw视窗.h"
+#include "cflw图形_dx纹理.h"
 //声明
 using Microsoft::WRL::ComPtr;
 namespace cflw::图形::d2d {
@@ -16,7 +17,7 @@ C二维::C二维() {
 }
 HRESULT C二维::f初始化(HWND a窗口, float a缩放) {
 	const 视窗::S客户区尺寸 v尺寸 = 视窗::S客户区尺寸::fc窗口(a窗口);
-	f初始化_窗口大小(v尺寸.fg宽(), v尺寸.fg高(), a缩放);
+	f初始化_窗口大小(v尺寸.fg宽() / a缩放, v尺寸.fg高() / a缩放);
 	HRESULT hr;
 	hr = f初始化_工厂();
 	if (FAILED(hr)) {
@@ -63,7 +64,7 @@ HRESULT C二维::f初始化(IDXGISwapChain *a交换链, float a缩放) {
 		return hr;
 	}
 	const D2D1_SIZE_F v大小 = v后台渲染目标->GetSize();
-	f初始化_窗口大小(v大小.width, v大小.height, a缩放);
+	f初始化_窗口大小(v大小.width, v大小.height);
 	f初始化_渲染目标(v后台渲染目标.Get());
 	return S_OK;
 }
@@ -91,13 +92,13 @@ HRESULT C二维::f初始化_设备(IDXGIDevice *a设备) {
 	f初始化_渲染目标(m上下文.Get());
 	return S_OK;
 }
-void C二维::f初始化_窗口大小(float x, float y, float a缩放) {
+void C二维::f初始化_窗口大小(float x, float y) {
 	m窗口大小.x = x;
 	m窗口大小.y = y;
 	if (m坐标计算 == nullptr) {
 		m坐标计算 = std::make_unique<C坐标转换>();
 	}
-	m坐标计算->fs大小(m窗口大小, a缩放);
+	m坐标计算->fs大小(m窗口大小);
 }
 void C二维::f初始化_渲染目标(ID2D1RenderTarget *a) {
 	m渲染目标 = a;
@@ -123,7 +124,7 @@ HRESULT C二维::f初始化_单个位图(IDXGISwapChain *a交换链, float a缩放) {
 	}
 	m上下文->SetTarget(v位图目标.Get());
 	const D2D1_SIZE_F v大小 = v位图目标->GetSize();
-	f初始化_窗口大小(v大小.width, v大小.height, a缩放);
+	f初始化_窗口大小(v大小.width, v大小.height);
 	return S_OK;
 }
 void C二维::fs缩放(float a) {
@@ -131,22 +132,48 @@ void C二维::fs缩放(float a) {
 	m渲染目标->SetDpi(v, v);
 }
 //画图
-std::shared_ptr<C画图形> C二维::fc画图形(const 数学::S颜色 &a颜色, float a宽度) {
+std::shared_ptr<C画图形> C二维::fc画图形(const ComPtr<ID2D1Brush> &a画笔, float a宽度) {
 	std::shared_ptr<C画图形> v新 = std::make_shared<C画图形>();
 	v新->f初始化(m渲染目标.Get(), fg坐标计算());
-	v新->f初始化_参数(a颜色, a宽度);
+	if (a画笔) {
+		v新->fs画笔(a画笔);
+	} else {
+		v新->f初始化_纯色画笔(数学::S颜色::c白);
+	}
+	v新->fs线条宽度(a宽度);
 	return v新;
 }
-std::shared_ptr<C画文本> C二维::fc画文本(const 数学::S颜色 &a颜色) {
+std::shared_ptr<C画文本> C二维::fc画文本(const ComPtr<ID2D1Brush> &a画笔) {
 	std::shared_ptr<C画文本> v新 = std::make_shared<C画文本>();
 	v新->f初始化(m渲染目标.Get(), fg坐标计算());
-	v新->f初始化_参数(a颜色);
+	if (a画笔) {
+		v新->fs画笔(a画笔);
+	} else {
+		v新->f初始化_纯色画笔(数学::S颜色::c白);
+	}
 	v新->m格式 = fg默认文本格式();
 	return v新;
 }
 ComPtr<ID2D1SolidColorBrush> C二维::fc纯色画笔(const 数学::S颜色 &a颜色) const {
 	ComPtr<ID2D1SolidColorBrush> v画笔;
 	m渲染目标->CreateSolidColorBrush(C类型转换::f颜色(a颜色), &v画笔);
+	return v画笔;
+}
+ComPtr<ID2D1Bitmap> C二维::fc位图(const dx纹理::I纹理 &a纹理) {
+	const D2D1_SIZE_U v大小 = {a纹理.fg宽(), a纹理.fg宽()};
+	const D2D1_BITMAP_PROPERTIES v属性 = {{a纹理.fg格式(), D2D1_ALPHA_MODE_STRAIGHT}, 96, 96};
+	ComPtr<ID2D1Bitmap> v位图;
+	HRESULT hr = m渲染目标->CreateBitmap(v大小, a纹理.fg数据(), a纹理.fg行距(), v属性, &v位图);
+	return v位图;
+}
+ComPtr<ID2D1Bitmap> C二维::fc位图(const ComPtr<IWICBitmapSource> &a源) {
+	ComPtr<ID2D1Bitmap> v位图;
+	HRESULT hr = m渲染目标->CreateBitmapFromWicBitmap(a源.Get(), &v位图);
+	return v位图;
+}
+ComPtr<ID2D1BitmapBrush> C二维::fc位图画笔(const ComPtr<ID2D1Bitmap> &a位图) {
+	ComPtr<ID2D1BitmapBrush> v画笔;
+	HRESULT hr = m渲染目标->CreateBitmapBrush(a位图.Get(), &v画笔);
 	return v画笔;
 }
 ComPtr<ID2D1GradientStopCollection> C二维::fc渐变点集(const std::vector<S渐变点> &a) const {
@@ -254,21 +281,31 @@ void C渲染控制::fs清屏颜色(const 数学::S颜色 &a颜色) {
 //==============================================================================
 // 画图形
 //==============================================================================
+C画图形::~C画图形() {
+	m画笔.Reset();
+	m渲染目标.Reset();
+}
 void C画图形::f初始化(ID2D1RenderTarget *a渲染目标, const C坐标转换 &a坐标计算) {
 	m渲染目标 = a渲染目标;
 	m坐标计算 = &a坐标计算;
 }
-void C画图形::f初始化_参数(const 数学::S颜色 &a颜色, float a宽度) {
+void C画图形::f初始化_纯色画笔(const 数学::S颜色 &a颜色) {
 	const auto &v颜色 = C类型转换::f颜色(a颜色);
-	m渲染目标->CreateSolidColorBrush(v颜色, &m画笔);
-	fs线条宽度(1);
+	ComPtr<ID2D1SolidColorBrush> v画笔;
+	m渲染目标->CreateSolidColorBrush(v颜色, &v画笔);
+	m画笔 = v画笔;
+}
+void C画图形::fs画笔(const ComPtr<ID2D1Brush> &a) {
+	m画笔 = a;
 }
 void C画图形::fs线条宽度(float a) {
 	m线条宽度 = a;
 }
 void C画图形::fs颜色(const 数学::S颜色 &a) {
 	const D2D1_COLOR_F v颜色 = C类型转换::f颜色(a);
-	m画笔->SetColor(v颜色);
+	ComPtr<ID2D1SolidColorBrush> v画笔;
+	m画笔.As(&v画笔);
+	v画笔->SetColor(v颜色);
 }
 void C画图形::fs透明度(float a) {
 	m画笔->SetOpacity(a);
@@ -340,8 +377,11 @@ void C画文本::f初始化(ID2D1RenderTarget *p渲染目标, const C坐标转换 &a坐标计算) 
 	m坐标计算 = &a坐标计算;
 	fs区域(0, 0);
 }
-void C画文本::f初始化_参数(const 数学::S颜色 &a颜色) {
-	m渲染目标->CreateSolidColorBrush(C类型转换::f颜色(a颜色), &m画笔);
+void C画文本::f初始化_纯色画笔(const 数学::S颜色 &a颜色) {
+	const auto &v颜色 = C类型转换::f颜色(a颜色);
+	ComPtr<ID2D1SolidColorBrush> v画笔;
+	m渲染目标->CreateSolidColorBrush(v颜色, &v画笔);
+	m画笔 = v画笔;
 }
 void C画文本::fs格式(IDWriteTextFormat *a) {
 	m格式 = a;
@@ -349,8 +389,14 @@ void C画文本::fs格式(IDWriteTextFormat *a) {
 void C画文本::fs样式(C修改文本格式 &a) {
 	fs格式(a.m格式);
 }
+void C画文本::fs画笔(const ComPtr<ID2D1Brush> &a) {
+	m画笔 = a;
+}
 void C画文本::fs颜色(const 数学::S颜色 &a) {
-	m画笔->SetColor(C类型转换::f颜色(a));
+	const D2D1_COLOR_F v颜色 = C类型转换::f颜色(a);
+	ComPtr<ID2D1SolidColorBrush> v画笔;
+	m画笔.As(&v画笔);
+	v画笔->SetColor(v颜色);
 }
 void C画文本::fs透明度(float a) {
 	m画笔->SetOpacity(a);
@@ -408,8 +454,8 @@ std::vector<D2D1_GRADIENT_STOP> C类型转换::f渐变点(const std::vector<S渐变点> &a
 	return v数组;
 }
 //二维结构坐标
-void C坐标转换::fs大小(const 数学::S向量2 &a坐标, float a缩放) {
-	m窗口大小 = a坐标 / a缩放;
+void C坐标转换::fs大小(const 数学::S向量2 &a窗口大小) {
+	m窗口大小 = a窗口大小;
 }
 float C坐标转换::x(float X) const {
 	return 数学::f窗口坐标x(X, m窗口大小.x);
