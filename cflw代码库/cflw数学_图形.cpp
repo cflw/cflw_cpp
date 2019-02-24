@@ -276,16 +276,16 @@ void S欧拉角::fs单位() {
 }
 void S欧拉角::f限制() {
 	m侧 = C角度计算<float>::c弧度.f限制(m侧);
-	if (m侧 < -(float)cπ / 2.f) {
-		m侧 = -(float)cπ - m侧;
-		m头 += (float)cπ;
-		m背 += (float)cπ;
-	} else if (m侧 >(float)cπ / 2.f) {
-		m侧 = (float)cπ - m侧;
-		m头 += (float)cπ;
-		m背 += (float)cπ;
+	if (m侧 < -cπ<float> / 2.f) {
+		m侧 = -cπ<float> - m侧;
+		m头 += cπ<float>;
+		m背 += cπ<float>;
+	} else if (m侧 >cπ<float> / 2.f) {
+		m侧 = cπ<float> - m侧;
+		m头 += cπ<float>;
+		m背 += cπ<float>;
 	}
-	if (fabs(m侧) > (float)cπ / 2.f - 1e-4) {
+	if (fabs(m侧) > cπ<float> / 2.f - 1e-4) {
 		m头 += m背;
 		m背 = 0.0f;
 	} else {
@@ -296,7 +296,7 @@ void S欧拉角::f限制() {
 void S欧拉角::fs物体到惯性(const S四元数 &q) {
 	float sp = -2.0f * (q.y*q.z - q.w*q.x);
 	if (fabs(sp) > 0.9999f) {
-		m侧 = (float)cπ / 2 * sp;
+		m侧 = cπ<float> / 2 * sp;
 		m头 = atan2(-q.x*q.z + q.w*q.y, 0.5f - q.y*q.y - q.z*q.z);
 		m背 = 0.0f;
 	} else {
@@ -308,7 +308,7 @@ void S欧拉角::fs物体到惯性(const S四元数 &q) {
 void S欧拉角::fs惯性到物体(const S四元数 &q) {
 	float sp = -2.0f * (q.y*q.z + q.w*q.x);
 	if (fabs(sp) > 0.9999f) {
-		m侧 = (float)cπ / 2 * sp;
+		m侧 = cπ<float> / 2 * sp;
 		m头 = atan2(-q.x*q.z - q.w*q.y, 0.5f - q.y*q.y - q.z*q.z);
 		m背 = 0.0f;
 	} else {
@@ -320,7 +320,7 @@ void S欧拉角::fs惯性到物体(const S四元数 &q) {
 void S欧拉角::fs物体到世界(const S矩阵4 &m) {
 	float	sp = -m.m值[3][2];
 	if (fabs(sp) > 9.99999f) {
-		m侧 = (float)cπ / 2 * sp;
+		m侧 = cπ<float> / 2 * sp;
 		m头 = atan2(-m.m值[2][3], m.m值[1][1]);
 		m背 = 0.0f;
 	} else {
@@ -332,7 +332,7 @@ void S欧拉角::fs物体到世界(const S矩阵4 &m) {
 void S欧拉角::fs世界到物体(const S矩阵4 &m) {
 	float	sp = -m.m值[2][3];
 	if (fabs(sp) > 9.99999f) {
-		m侧 = (float)cπ / 2.f * sp;
+		m侧 = cπ<float> / 2.f * sp;
 		m头 = atan2(-m.m值[3][1], m.m值[1][1]);
 		m背 = 0.0f;
 	} else {
@@ -350,7 +350,7 @@ S四元数 &S四元数::operator *=(const float &a) {
 	*this = *this * a;
 	return *this;
 }
-S四元数 &S四元数::operator *=(const t复数 &a) {
+S四元数 &S四元数::operator *=(const t复数<float> &a) {
 	*this = *this * a;
 	return *this;
 }
@@ -366,7 +366,7 @@ S四元数 S四元数::operator *(const float &a) const {
 	v.z = z * a;
 	return v;
 }
-S四元数 S四元数::operator *(const t复数 &a) const {
+S四元数 S四元数::operator *(const t复数<float>&a) const {
 	S四元数 v;
 	v.w = -x * a._Val[0] - y * a._Val[1];
 	v.x = w * a._Val[0] + z * a._Val[1];

@@ -12,16 +12,16 @@ namespace cflw::数学 {
 //数字类型&别名&前置声明
 //==============================================================================
 //标准库类型
-typedef std::complex<float> t复数;
+template<typename t = double> using t复数 = std::complex<t>;
 //==============================================================================
 // 数学常数
 //==============================================================================
-constexpr double c半π = 1.5707963267948966192313216916398;
-constexpr double cπ = 3.1415926535897932384626433832795;
-constexpr double c二π = 6.283185307179586476925286766559;
-constexpr double c根号2 = 1.4142135623730950488016887242097;
-constexpr double c度到弧度 = 0.01745329251994329576923690768489;
-constexpr double c弧度到度 = 57.295779513082320876798154814105;
+template<typename t = double> constexpr t c半π = t(1.5707963267948966192313216916398);
+template<typename t = double> constexpr t cπ = t(3.1415926535897932384626433832795);
+template<typename t = double> constexpr t c二π = t(6.283185307179586476925286766559);
+template<typename t = double> constexpr t c根号2 = t(1.4142135623730950488016887242097);
+template<typename t = double> constexpr t c度到弧度 = t(0.01745329251994329576923690768489);
+template<typename t = double> constexpr t c弧度到度 = t(57.295779513082320876798154814105);
 //==============================================================================
 // 基本数学函数&全局偷懒函数
 //==============================================================================
@@ -36,8 +36,8 @@ template<typename t> t f限制(const t &值, const t &最小值, const t &最大
 template<typename t> t f接近(const t &源值, const t &目标值, const t &接近差);
 template<typename t> t f倍数渐变(const t &源值, const t &目标值, const float &差值渐变倍数, const t &最小渐变, const t &最大渐变);
 template<typename t> t f线性渐变(const t &源值, const t &目标值, const float &渐变值);
-template<typename t> t f地板除(const t &, const t &);	//商向下取整
-template<typename t> t f天花板除(const t &, const t &);	//商向上取整
+template<typename t> t f下整除(const t &, const t &);	//商向下取整
+template<typename t> t f上整除(const t &, const t &);	//商向上取整
 template<typename t> t f求余(const t &源值, const t &除数);
 template<typename t> bool f限制循环(t &值, const t &最大值);
 int f10的次方(const int &x);

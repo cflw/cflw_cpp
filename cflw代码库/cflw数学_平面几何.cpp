@@ -116,7 +116,7 @@ bool f圆形线段相交判定(const S圆形 &a圆形, const S线段2 &a线段) {
 	if (v线段.m点[1].fg大小() <= a圆形.m半径) {
 		return true;
 	}
-	v线段.fs旋转r(-a线段.fg方向r() + (float)c半π);
+	v线段.fs旋转r(-a线段.fg方向r() + c半π<float>);
 	if (f同符号(v线段.m点[0].y, v线段.m点[1].y)) {
 		return false;
 	} else {
@@ -266,7 +266,7 @@ S向量2 S圆形::f取点r(const float &r) const {
 	return v;
 }
 S向量2 S圆形::f取点d(const float &d) const {
-	return f取点r(d * (float)c度到弧度);
+	return f取点r(d * c度到弧度<float>);
 }
 S向量2 S圆形::f离边最近点(const S圆形 &p圆) const {
 	const float m方向1 = m坐标.f到点方向r(p圆.m坐标);
@@ -474,7 +474,7 @@ float S三角形::fg角r(int i) const {
 	return C角度计算<float>::c弧度.f夹角(m点_.f到点方向r(fg点(i + 1)), m点_.f到点方向r(fg点(i + 2)));
 }
 float S三角形::fg角d(int i) const {
-	return fg角r(i) * (float)c弧度到度;
+	return fg角r(i) * c弧度到度<float>;
 }
 S向量2 S三角形::f标准坐标(const S向量3 &p) const {
 	const S向量2 v重心 = fg重心();

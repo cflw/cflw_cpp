@@ -2,7 +2,7 @@
 #include "cflw数学.h"
 namespace cflw::数学 {
 //==============================================================================
-//基本数学函数
+// 基本数学函数
 //==============================================================================
 template<typename t> int f取符号(const t &x) {
 	return (x < 0) ? -1 : (x > 0 ? 1 : 0);
@@ -44,7 +44,7 @@ template<typename t> t f线性渐变(const t &a源值, const t &a目标值, cons
 		return f接近<t>(a源值 + (t)(a渐变值 * f取符号(a目标值 - a源值)), a目标值, (t)a渐变值);
 	}
 }
-template<typename t> t f地板除(const t &a被除数, const t &a除数) {
+template<typename t> t f下整除(const t &a被除数, const t &a除数) {
 	if constexpr (std::is_integral_v<t>) {
 		return (a被除数 < 0) ?
 			(a被除数 / a除数 + ((a被除数 % a除数 == 0) ? 0 : -1)) :
@@ -53,7 +53,7 @@ template<typename t> t f地板除(const t &a被除数, const t &a除数) {
 		return floor(a被除数 / a除数);
 	}
 }
-template<typename t> t f天花板除(const t &a被除数, const t &a除数) {
+template<typename t> t f上整除(const t &a被除数, const t &a除数) {
 	if constexpr (std::is_integral_v<t>) {
 		return (a被除数 <= 0) ?
 			(int)(a被除数 / a除数) :
@@ -63,7 +63,7 @@ template<typename t> t f天花板除(const t &a被除数, const t &a除数) {
 	}
 }
 template<typename t> t f求余(const t &a源值, const t &a除数) {
-	return a源值 - a除数 * f地板除<t>(a源值, a除数);
+	return a源值 - a除数 * f下整除<t>(a源值, a除数);
 }
 template<typename t> bool f限制循环(t &a值, const t &a最大值) {
 	//达到最大值则清零并返回真
@@ -86,7 +86,7 @@ template<typename t> t f插值(const t &a0, const t &a1, float p) {
 }
 //限
 template<typename t> int f限(t &a0, const t &a1) {
-	const int v倍数 = f地板除<int>(a0, a1);
+	const int v倍数 = f下整除<int>(a0, a1);
 	a0 -= v倍数 * a1;
 	return v倍数;
 }
@@ -114,8 +114,8 @@ template<typename t> t f对齐(const t &x, const t &y) {
 }
 template<typename t> t f循环(const t &a, const t &a最小, const t &a最大) {
 	const t v差 = a最大 - a最小;
-	const t v基本倍 = f地板除<t>(a, v差);
-	const t v循环倍 = f天花板除<t>(a最小, v差);
+	const t v基本倍 = f下整除<t>(a, v差);
+	const t v循环倍 = f上整除<t>(a最小, v差);
 	return a - v差 * (v基本倍 - v循环倍);
 }
 template<typename t> t f差(const t &a, const t &b) {
@@ -173,14 +173,14 @@ template<typename...t参数> auto f绝对值最大值(t参数 &&...a参数) {
 // 各种计算类
 //==============================================================================
 template<typename t> const C角度计算<t> C角度计算<t>::c度(360);
-template<typename t> const C角度计算<t> C角度计算<t>::c弧度((t)c二π);
+template<typename t> const C角度计算<t> C角度计算<t>::c弧度(c二π<t>);
 //角度计算
-template<typename t> C角度计算<t>::C角度计算(const t &p周角) :
-	m周角{p周角}, m平角{p周角 / 2} {
+template<typename t> C角度计算<t>::C角度计算(const t &a周角) :
+	m周角{a周角}, m平角{a周角 / 2} {
 }
-template<typename t> t C角度计算<t>::f平均(const t &p角1, const t &p角2) const {
-	t v角1 = f取正(p角1);
-	t v角2 = f取正(p角2);
+template<typename t> t C角度计算<t>::f平均(const t &a角1, const t &a角2) const {
+	t v角1 = f取正(a角1);
+	t v角2 = f取正(a角2);
 	if (v角1 == v角2) {
 		return v角1;
 	} else if (v角1 >= v角2) {
@@ -191,17 +191,17 @@ template<typename t> t C角度计算<t>::f平均(const t &p角1, const t &p角2)
 	}
 	return (v角1 + v角2) / 2;
 }
-template<typename t> t C角度计算<t>::f取正(const t &p角) const {
-	return p角 - floor(p角 / m周角) * m周角;
+template<typename t> t C角度计算<t>::f取正(const t &a角) const {
+	return a角 - floor(a角 / m周角) * m周角;
 }
-template<typename t> t C角度计算<t>::f限制(const t &p角) const {
-	t v角 = p角 + m平角;
+template<typename t> t C角度计算<t>::f限制(const t &a角) const {
+	t v角 = a角 + m平角;
 	v角 -= floor(v角 / m周角) * m周角;
 	v角 -= m平角;
 	return v角;
 }
-template<typename t> t C角度计算<t>::f取半(const t &p角) const {
-	return p角 - floor(p角 / m平角) * m平角;
+template<typename t> t C角度计算<t>::f取半(const t &a角) const {
+	return a角 - floor(a角 / m平角) * m平角;
 }
 template<typename t> t C角度计算<t>::f旋转渐变(const t &s, const t &d, const t &max) const {
 	const t v差 = f取正(d - s);
@@ -215,8 +215,8 @@ template<typename t> t C角度计算<t>::f旋转渐变(const t &s, const t &d, c
 		}
 	}
 }
-template<typename t> t C角度计算<t>::f夹角(const t &p角1, const t &p角2) const {
-	t v = p角1 - p角2;
+template<typename t> t C角度计算<t>::f夹角(const t &a角1, const t &a角2) const {
+	t v = a角1 - a角2;
 	v = f取正(v);
 	if (v >= m平角) {
 		v = m周角 - v;
@@ -224,16 +224,28 @@ template<typename t> t C角度计算<t>::f夹角(const t &p角1, const t &p角2)
 	return v;
 }
 template<typename t> t C角度计算<t>::f方向(const t &x, const t &y) const {
-	return atan2(y, x) / ((t)c二π / m周角);
+	return atan2(y, x) / (c二π<t> / m周角);
 }
-template<typename t> t C角度计算<t>::f插值(const t &p角1, const t &p角2, const t &p插值) const {
-	t v = p角2 - p角1;	//角1到角2的夹角
+template<typename t> t C角度计算<t>::f插值(const t &a角1, const t &a角2, const t &a插值) const {
+	t v = a角2 - a角1;	//角1到角2的夹角
 	v = f取正(v);
 	if (v > m平角) {
 		v = m周角 - v;	//获得夹角
-		return p角1 - v * p插值;
+		return a角1 - v * a插值;
 	} else {
-		return p角1 + v * p插值;
+		return a角1 + v * a插值;
 	}
+}
+//==============================================================================
+// 未实现
+//==============================================================================
+template<typename t> t f点乘(const t&, const t&) {
+	static_assert(false, "未实现");
+}
+template<typename t> t f叉乘(const t&, const t&) {
+	static_assert(false, "未实现");
+}
+template<typename t> t f负(const t&) {
+	static_assert(false, "未实现");
 }
 }	//namespace cflw::数学 

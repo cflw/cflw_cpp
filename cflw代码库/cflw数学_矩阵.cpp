@@ -117,7 +117,7 @@ S¾ØÕó2 S¾ØÕó2::fc·­×ª(const float &x, const float &y) {
 	v.mÖµ[1][0] = 0;		v.mÖµ[1][1] = sin(x);
 	return v;
 }
-S¾ØÕó2 S¾ØÕó2::fc¸´Êı(const t¸´Êı &cx) {
+S¾ØÕó2 S¾ØÕó2::fc¸´Êı(const t¸´Êı<float> &cx) {
 	const float r = cx.real();
 	const float i = cx.imag();
 	const float t = atan2(i, r);

@@ -240,7 +240,6 @@ public:
 	HRESULT f创建命令列表(tp命令列表 &, ID3D12PipelineState * = nullptr);
 	HRESULT f创建根签名(tp根签名 &, const C根签名参数 &);
 	HRESULT f创建根签名(tp根签名 &, const D3D12_ROOT_SIGNATURE_DESC &);
-	HRESULT f创建上传资源(tp资源 &, const void *, size_t);
 	//属性
 	D3D12_VIEWPORT fg窗口视口();
 	D3D12_RECT fg窗口矩形();
@@ -538,7 +537,7 @@ public:
 public:
 	static DXGI_FORMAT f计算索引格式(UINT 类型大小);
 	void f初始化(ID3D12Device *);
-	HRESULT f创建只读资源(ComPtr<ID3D12Resource> &, const void *数据, UINT 数据大小);	//创建完不能改
+	HRESULT f创建上传资源(ComPtr<ID3D12Resource> &, const void *数据, UINT 数据大小);
 	HRESULT f创建顶点(tp顶点 &, const void *数据, UINT 类型大小, UINT 数据大小);
 	HRESULT f创建索引(tp索引 &, const void *数据, UINT 类型大小, UINT 数据大小);
 	HRESULT f创建常量(tp常量 &, const void *数据, UINT 类型大小, UINT 数据大小);
@@ -558,7 +557,7 @@ public:	//创建纹理
 private:
 	std::unique_ptr<纹理::C图像工厂> m工厂;
 	ComPtr<ID3D12Device> m设备;
-	C三维 *m三维 = nullptr;
+	C缓冲工厂 *m缓冲工厂 = nullptr;
 	C渲染控制 *m渲染控制 = nullptr;
 };
 }	//namespace cflw::图形::d3d12

@@ -5,7 +5,7 @@ namespace cflw::数学 {
 // 声明
 //=============================================================================
 //其它文件
-typedef std::complex<float> t复数;
+template<typename t = double> using t复数 = std::complex<t>;
 struct S直线方程;
 struct S矩阵4;
 struct S圆形;
@@ -15,7 +15,6 @@ struct S向量3;
 struct S向量4;
 template<typename t> t f插值(const t&起始值, const t&终止值, float 中间值);
 template<typename t> t f绝对值(const t &);
-
 template<> S向量2 f绝对值<S向量2>(const S向量2 &);
 template<> S向量3 f绝对值<S向量3>(const S向量3 &);
 //=============================================================================
@@ -35,12 +34,12 @@ struct S向量2 {
 	S向量2 &operator -=(const S向量2 &);
 	S向量2 &operator *=(const float &);
 	S向量2 &operator /=(const float &);
-	S向量2 &operator *=(const t复数 &);
+	S向量2 &operator *=(const t复数<float> &);
 	S向量2 operator +(const S向量2 &) const;
 	S向量2 operator -(const S向量2 &) const;
 	S向量2 operator *(const float &) const;
 	S向量2 operator /(const float &) const;
-	S向量2 operator *(const t复数 &) const;
+	S向量2 operator *(const t复数<float> &) const;
 	S向量2 operator -() const;
 	bool operator ==(const S向量2 &) const;
 	bool operator !=(const S向量2 &) const;

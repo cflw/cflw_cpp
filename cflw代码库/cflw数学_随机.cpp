@@ -44,7 +44,7 @@ C圆形分布::C圆形分布(const S圆形 &p圆形):
 }
 S向量2 C圆形分布::f生成(unsigned int p) const {
 	const auto v分割 = C分布工具::f分割2(p);
-	S向量2 v向量 = S向量2::fc方向r(std::get<0>(v分割) * m圆形.m半径, std::get<1>(v分割) * (float)cπ);
+	S向量2 v向量 = S向量2::fc方向r(std::get<0>(v分割) * m圆形.m半径, std::get<1>(v分割) * cπ<float>);
 	return v向量 + m圆形.m坐标;
 }
 //矩形分布=========================================================================

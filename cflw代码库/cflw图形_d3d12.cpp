@@ -311,22 +311,6 @@ HRESULT C三维::f创建根签名(tp根签名 &a, const D3D12_ROOT_SIGNATURE_DESC &a描述) 
 	}
 	return S_OK;
 }
-HRESULT C三维::f创建上传资源(tp资源 &a, const void *a数据, size_t a大小) {
-	HRESULT hr = m设备->CreateCommittedResource(&S堆属性::fc类型(D3D12_HEAP_TYPE_UPLOAD), D3D12_HEAP_FLAG_NONE, &S资源描述::fc缓存(a大小), D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&a));
-	if (FAILED(hr)) {
-		return hr;
-	}
-	if (a数据) {
-		void *vp;
-		hr = a->Map(0, nullptr, &vp);
-		if (FAILED(hr)) {
-			return hr;
-		}
-		memcpy(vp, a数据, a大小);
-		a->Unmap(0, nullptr);
-	}
-	return S_OK;
-}
 D3D12_VIEWPORT C三维::fg窗口视口() {
 	D3D12_VIEWPORT v视口;
 	v视口.Width = (FLOAT)m窗口大小[0];
@@ -411,7 +395,7 @@ C缓冲工厂 &C三维::fg缓冲工厂() {
 C纹理工厂 &C三维::fg纹理工厂() {
 	if (m纹理工厂 == nullptr) {
 		m纹理工厂 = std::make_unique<C纹理工厂>();
-		m纹理工厂->m三维 = this;
+		m纹理工厂->m缓冲工厂 = &fg缓冲工厂();
 		m纹理工厂->m设备 = m设备;
 		m纹理工厂->m渲染控制 = &fg渲染控制();
 		m纹理工厂->f初始化();
@@ -973,28 +957,28 @@ DXGI_FORMAT C缓冲工厂::f计算索引格式(UINT a类型大小) {
 void C缓冲工厂::f初始化(ID3D12Device *a设备) {
 	m设备 = a设备;
 }
-HRESULT C缓冲工厂::f创建只读资源(ComPtr<ID3D12Resource> &a, const void *a数据, UINT a数据大小) {
-	//创建资源
+HRESULT C缓冲工厂::f创建上传资源(ComPtr<ID3D12Resource> &a, const void *a数据, UINT a数据大小) {
 	const D3D12_HEAP_PROPERTIES v堆属性 = {D3D12_HEAP_TYPE_UPLOAD, D3D12_CPU_PAGE_PROPERTY_UNKNOWN, D3D12_MEMORY_POOL_UNKNOWN, 1, 1};
 	const D3D12_RESOURCE_DESC v资源描述 = S资源描述::fc缓存(a数据大小);
 	HRESULT hr = m设备->CreateCommittedResource(&v堆属性, D3D12_HEAP_FLAG_NONE, &v资源描述, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&a));
 	if (FAILED(hr)) {
 		return hr;
 	}
-	//复制数据
-	UINT8 *vp顶点;
-	const D3D12_RANGE v范围{0, 0};
-	hr = a->Map(0, &v范围, (void**)(&vp顶点));
-	if (FAILED(hr)) {
-		return hr;
+	a->SetName(L"上传");
+	if (a数据) {
+		void *vp;
+		hr = a->Map(0, nullptr, &vp);
+		if (FAILED(hr)) {
+			return hr;
+		}
+		memcpy(vp, a数据, a数据大小);
+		a->Unmap(0, nullptr);
 	}
-	memcpy(vp顶点, a数据, a数据大小);
-	a->Unmap(0, nullptr);
 	return S_OK;
 }
 HRESULT C缓冲工厂::f创建顶点(tp顶点 &a, const void *a数据, UINT a类型大小, UINT a数据大小) {
 	tp顶点 v = std::make_shared<C顶点缓冲>();
-	HRESULT hr = f创建只读资源(v->m资源, a数据, a数据大小);
+	HRESULT hr = f创建上传资源(v->m资源, a数据, a数据大小);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -1015,7 +999,7 @@ HRESULT C缓冲工厂::f创建索引(tp索引 &a, const void *a数据, UINT a类型大小, UINT 
 	}
 	//资源
 	tp索引 v = std::make_shared<C索引缓冲>();
-	HRESULT hr = f创建只读资源(v->m资源, a数据, a数据大小);
+	HRESULT hr = f创建上传资源(v->m资源, a数据, a数据大小);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -1030,12 +1014,12 @@ HRESULT C缓冲工厂::f创建索引(tp索引 &a, const void *a数据, UINT a类型大小, UINT 
 }
 HRESULT C缓冲工厂::f创建常量(tp常量 &a, const void *a数据, UINT a类型大小, UINT a数据大小) {
 	//堆描述符
-	D3D12_DESCRIPTOR_HEAP_DESC cbvHeapDesc = {};
-	cbvHeapDesc.NumDescriptors = 1;
-	cbvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	cbvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	D3D12_DESCRIPTOR_HEAP_DESC v描述符堆参数 = {};
+	v描述符堆参数.NumDescriptors = 1;
+	v描述符堆参数.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+	v描述符堆参数.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	tp常量 v = std::make_shared<C常量缓冲>();
-	HRESULT hr = m设备->CreateDescriptorHeap(&cbvHeapDesc, IID_PPV_ARGS(&v->m描述符堆));
+	HRESULT hr = m设备->CreateDescriptorHeap(&v描述符堆参数, IID_PPV_ARGS(&v->m描述符堆));
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -1049,10 +1033,10 @@ HRESULT C缓冲工厂::f创建常量(tp常量 &a, const void *a数据, UINT a类型大小, UINT 
 	}
 	v->m资源->SetName(L"常量");
 	//视图
-	D3D12_CONSTANT_BUFFER_VIEW_DESC cbvd = {};
-	cbvd.BufferLocation = v->m资源->GetGPUVirtualAddress();
-	cbvd.SizeInBytes = v数据大小;
-	m设备->CreateConstantBufferView(&cbvd, v->m描述符堆->GetCPUDescriptorHandleForHeapStart());
+	D3D12_CONSTANT_BUFFER_VIEW_DESC v常量缓冲视图参数 = {};
+	v常量缓冲视图参数.BufferLocation = v->m资源->GetGPUVirtualAddress();
+	v常量缓冲视图参数.SizeInBytes = v数据大小;
+	m设备->CreateConstantBufferView(&v常量缓冲视图参数, v->m描述符堆->GetCPUDescriptorHandleForHeapStart());
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -1113,7 +1097,7 @@ HRESULT C纹理工厂::f从内存创建纹理资源(tp资源 &a输出, const void *a数据, DXGI_FO
 	//复制数据
 	const UINT64 v上传大小 = GetRequiredIntermediateSize(a输出.Get(), 0, 1);
 	ComPtr<ID3D12Resource> v上传资源;
-	hr = m三维->f创建上传资源(v上传资源, nullptr, v上传大小);
+	hr = m缓冲工厂->f创建上传资源(v上传资源, nullptr, v上传大小);
 	if (FAILED(hr)) {
 		return hr;
 	}

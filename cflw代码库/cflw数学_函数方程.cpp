@@ -68,7 +68,7 @@ S直线方程 S直线方程::fc点法(const S向量2 &p, const S向量2 &n) {
 	return{a, b, c};
 }
 S直线方程 S直线方程::fc点向(const S向量2 &p, const float &d) {
-	return fc点法(p, S向量2::fc方向r(1, d + (float)c半π));
+	return fc点法(p, S向量2::fc方向r(1, d + c半π<float>));
 }
 float S直线方程::fg斜率() const {
 	return a / b;
@@ -95,10 +95,10 @@ bool S直线方程::f平行(const S直线方程 &a直线方程) const {
 	else return (b / a) == (a直线方程.b / a直线方程.a);
 }
 float S直线方程::fg方向r() const {
-	return C角度计算<float>::c弧度.f取半(atan2(b, a) + (float)c半π);
+	return C角度计算<float>::c弧度.f取半(atan2(b, a) + c半π<float>);
 }
 float S直线方程::fg方向d() const {
-	return fg方向r() * (float)c弧度到度;
+	return fg方向r() * c弧度到度<float>;
 }
 S向量2 S直线方程::f交点(const S直线方程 &a直线方程) const {
 	const float y = (a直线方程.a*c - a * a直线方程.c) / (a直线方程.b*a - b * a直线方程.a);

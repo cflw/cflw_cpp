@@ -25,7 +25,7 @@ S向量2 S向量2::fc方向r(const float &a大小, const float &a方向) {
 	return {cos(a方向) * a大小, sin(a方向) * a大小};
 }
 S向量2 S向量2::fc方向d(const float &a大小, const float &a方向) {
-	const float r = a方向 / 180.f * (float)cπ;
+	const float r = a方向 / 180.f * cπ<float>;
 	return {cos(r) * a大小, sin(r) * a大小};
 }
 S向量2 S向量2::fc相同(const float &a) {
@@ -61,7 +61,7 @@ S向量2& S向量2::operator /=(const float &_) {
 	y /= _;
 	return *this;
 }
-S向量2 &S向量2::operator *= (const t复数 &_) {
+S向量2 &S向量2::operator *= (const t复数<float> &_) {
 	const float vx = x, vy = y;
 	x = vx * _._Val[0] - vy * _._Val[1];
 	y = vy * _._Val[0] + vx * _._Val[1];
@@ -80,7 +80,7 @@ S向量2 S向量2::operator *(const float &_) const {
 S向量2 S向量2::operator /(const float &_) const {
 	return S向量2(x / _, y / _);
 }
-S向量2 S向量2::operator *(const t复数 &_) const {
+S向量2 S向量2::operator *(const t复数<float> &_) const {
 	S向量2 v = *this;
 	v.x = x * _.real() - y * _.imag();
 	v.y = y * _.real() + x * _.imag();
@@ -162,7 +162,7 @@ S向量2 &S向量2::fs方向(const float &p) {
 }
 S向量2 &S向量2::fs方向d(const float &p) {
 	const float v模 = fg大小();
-	const float r = p * c度到弧度;
+	const float r = p * c度到弧度<float>;
 	x = cos(r) * v模;
 	y = sin(r) * v模;
 	return *this;
@@ -198,13 +198,13 @@ S向量2 S向量2::f旋转r(const float &a角度) const {
 	return S向量2{x * c - y * s, x * s + y * c};
 }
 S向量2 S向量2::f旋转d(const float &a角度) const {
-	return f旋转r(a角度 * (float)c度到弧度);
+	return f旋转r(a角度 * c度到弧度<float>);
 }
 S向量2 S向量2::f绕点旋转r(const S向量2 &a中心, const float &a角度) const {
 	return (*this - a中心).f旋转r(a角度) += a中心;
 }
 S向量2 S向量2::f绕点旋转d(const S向量2 &a中心, const float &a角度) const {
-	return f绕点旋转r(a中心, a角度 * (float)c度到弧度);
+	return f绕点旋转r(a中心, a角度 * c度到弧度<float>);
 }
 float S向量2::f到点距离(const S向量2 &a) const {
 	const float _x = a.x - x;
@@ -219,7 +219,7 @@ S向量2 S向量2::f到点方位r(const S向量2 &a点, const float &a方向) const {
 	return v点.f旋转r(-a方向);
 }
 S向量2 S向量2::f到点方位d(const S向量2 &a点, const float &a方向) const {
-	return f到点方位r(a点, a方向 * (float)c度到弧度);
+	return f到点方位r(a点, a方向 * c度到弧度<float>);
 }
 float S向量2::f点乘(const S向量2 &a) const {
 	return x * a.x + y * a.y;

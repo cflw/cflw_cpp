@@ -143,7 +143,7 @@ struct S相机 {
 	S矩阵4 ft矩阵4r() const;
 };
 struct S投影 {
-	static constexpr float c视角 = (float)数学::c半π;
+	static constexpr float c视角 = 数学::c半π<float>;
 	float m视角 = c视角;
 	float m宽 = 640, m高 = 480;
 	float m近裁剪面 = 1, m远裁剪面 = 100;
@@ -179,11 +179,11 @@ struct S四元数 {
 	S四元数(const float &, const float &, const float &, const float &);
 	//
 	S四元数 &operator *=(const float &);
-	S四元数 &operator *=(const t复数 &);
+	S四元数 &operator *=(const t复数<float>&);
 	S四元数 &operator *=(const S四元数 &);
 	//
 	S四元数 operator *(const float &) const;
-	S四元数 operator *(const t复数 &) const;
+	S四元数 operator *(const t复数<float>&) const;
 	S四元数 operator *(const S四元数 &) const;
 	//转换
 	S四元数 &fs物体到惯性(const S欧拉角 &);

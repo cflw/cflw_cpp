@@ -322,7 +322,7 @@ void C画图形::f绘制矩形(const 数学::S矩形 &a矩形) {
 }
 void C画图形::f绘制旋转矩形(const 数学::S旋转矩形 &a矩形) {
 	const auto v画笔 = m画笔.Get();
-	if (a矩形.m方向 == 0 || a矩形.m方向 == (float)数学::cπ) {
+	if (a矩形.m方向 == 0 || a矩形.m方向 == 数学::cπ<float>) {
 		m渲染目标->DrawRectangle(m坐标计算->f矩形_中心半径(a矩形.m坐标, a矩形.m半尺寸), v画笔, m线条宽度);
 	} else {	// 任意角度
 		数学::S向量2 v点[4] = {
@@ -545,14 +545,14 @@ void C修改路径几何::f直线(const 数学::S向量2 &a0, const 数学::S向量2 &a1) {
 	f点(a1);
 }
 void C修改路径几何::f圆弧(const 数学::S向量2 &a圆心, float a半径, float a始, float a弧度, bool a顺时针) {
-	assert(a弧度 <= (float)数学::c二π);
+	assert(a弧度 <= 数学::c二π<float>);
 	const float v方向符号 = a顺时针 ? -1 : 1;
 	const 数学::S向量2 v开始点 = a圆心 + 数学::S向量2::fc方向r(a半径, a始);
 	const 数学::S向量2 v结束点 = a圆心 + 数学::S向量2::fc方向r(a半径, a始 + v方向符号 * a弧度);
 	const D2D1_SWEEP_DIRECTION v顺时针 = a顺时针 ? D2D1_SWEEP_DIRECTION_CLOCKWISE : D2D1_SWEEP_DIRECTION_COUNTER_CLOCKWISE;
 	f点(v开始点);
 	const D2D1_SIZE_F v半径 = D2D1::SizeF(a半径, a半径);
-	if (a弧度 > (float)数学::cπ) {	//弧度大于π时分割，避免弧度接近2π出现图形错乱问题
+	if (a弧度 > 数学::cπ<float>) {	//弧度大于π时分割，避免弧度接近2π出现图形错乱问题
 		const 数学::S向量2 v中点 = a圆心 + 数学::S向量2::fc方向r(a半径, a始 + a弧度 / 2 * v方向符号);
 		m几何槽->AddArc(D2D1::ArcSegment(m坐标计算->f点(v中点), v半径, 0, v顺时针, D2D1_ARC_SIZE_SMALL));
 	}

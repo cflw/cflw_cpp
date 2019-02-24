@@ -61,7 +61,7 @@ struct S¾ØÕó2 : public S¾ØÕó<2, 2> {
 	static S¾ØÕó2 fcËõ·Å(const float &, const float &);
 	static S¾ØÕó2 fcÇĞ±ä(const float &, const float &);
 	static S¾ØÕó2 fc·­×ª(const float &, const float &);
-	static S¾ØÕó2 fc¸´Êı(const t¸´Êı &);
+	static S¾ØÕó2 fc¸´Êı(const t¸´Êı<float> &);
 };
 //ËÄ½×¾ØÕó
 struct S¾ØÕó4 : public S¾ØÕó < 4, 4 > {
