@@ -1,5 +1,8 @@
 #pragma once
 #include <vector>
+#include <algorithm>
+#undef min
+#undef max
 namespace cflw::工具::循环 {
 //==============================================================================
 // 循环基类
@@ -62,7 +65,7 @@ public:
 //==============================================================================
 template<typename t容器> class C范围 final {
 public:
-	typedef typename std::conditional<std::is_const<t容器>::value, typename t容器::const_reference, typename t容器::reference>::type t引用;
+	using t引用 = typename std::conditional<std::is_const<t容器>::value, typename t容器::const_reference, typename t容器::reference>::type;
 	class C迭代器 {
 	public:
 		C迭代器(t容器 *ap容器, int a计数) :
@@ -82,7 +85,9 @@ public:
 		t容器 *mp容器;
 	};
 	C范围(t容器 &a容器, int a开始, int a结束) :
-		m开始{std::max<int>(a开始, 0)}, m结束{std::min<int>(a结束, (int)a容器.size())}, mp容器{&a容器} {
+		m开始(std::max<int>(a开始, 0)), 
+		m结束(std::min<int>(a结束, (int)a容器.size())), 
+		mp容器(&a容器) {
 	}
 	C迭代器 begin() {
 		return C迭代器{mp容器, m开始};

@@ -1,5 +1,6 @@
 #pragma once
 #include <random>
+#include "cflw数学.h"
 #include "cflw数学_平面几何.h"
 #define 定义随机数分布计算函数 \
 template<typename t>\
@@ -32,7 +33,7 @@ template<class t> t C线性同余::f生成(const t &a小, const t &a大) {
 // 分布
 //==============================================================================
 template<typename t = double> std::uniform_real_distribution<t> f圆周分布r() {
-	return std::uniform_real_distribution<t>(0, 数学::c二π<t>);
+	return std::uniform_real_distribution<t>(0, c二π<t>);
 }
 template<typename t = double> std::uniform_real_distribution<t> f圆周分布d() {
 	return std::uniform_real_distribution<t>(0, (t)360);

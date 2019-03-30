@@ -84,6 +84,9 @@ template<typename t> std::tuple<t, t> sincos(const t &a) {
 template<typename t> t f插值(const t &a0, const t &a1, float p) {
 	return a0 + (a1 - a0) * p;
 }
+template<typename t> auto f反插值(const t &a0, const t &a1, const t &d) {
+	return (d - a0) / (a1 - a0);
+}
 //限
 template<typename t> int f限(t &a0, const t &a1) {
 	const int v倍数 = f下整除<int>(a0, a1);
@@ -104,12 +107,12 @@ template<typename t> t f立方(const t &a) {
 //
 template<typename t> t f对齐(const t &x, const t &y) {
 	const t a = x / y;
-	const t b = floor(a);
+	const t b = std::floor(a);
 	const t c = a - b;
 	if (c < 0.5) {
 		return y * b;
 	} else {
-		return y * ceil(a);
+		return y * std::ceil(a);
 	}
 }
 template<typename t> t f循环(const t &a, const t &a最小, const t &a最大) {
@@ -134,10 +137,10 @@ template<typename tk, typename tv> tv f插值2(const tk &a键0, const tv &a值0,
 	return f插值<tv>(a值0, a值1, k);
 }
 template<typename t> t f反勾股(const t &a斜边, const t &a直角边) {
-	return sqrt(a斜边*a斜边 - a直角边*a直角边);
+	return std::sqrt(a斜边*a斜边 - a直角边*a直角边);
 }
 template<typename t> t f四舍五入(const t &a数字) {
-	const float v舍 = floor(a数字);
+	const float v舍 = std::floor(a数字);
 	return (a数字 - v舍 < (t)0.5) ? v舍 : (v舍 + 1);
 }
 template<typename t> t f等腰梯形插值(const t &a小, const t &a大, float a斜宽, float x) {
@@ -153,14 +156,14 @@ template<typename...t参数> auto f算术平均(t参数 &&...a参数) {
 	return (... + a参数) / sizeof...(t参数);
 }
 template<typename...t参数> auto f几何平均(t参数 &&...a参数) {
-	return sqrt(... * a参数);
+	return std::sqrt((... * a参数));
 }
 template<typename...t参数> auto f绝对值最大值(t参数 &&...a参数) {
 	using t返回 = decltype((... + a参数));
 	t返回 v最大值 = 0;
 	t返回 v原值 = 0;
 	auto f = [&](const t返回 &a) {
-		const t返回 v绝对值 = abs(a);
+		const t返回 v绝对值 = std::abs(a);
 		if (v最大值 < v绝对值) {
 			v最大值 = v绝对值;
 			v原值 = a;

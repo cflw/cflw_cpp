@@ -257,5 +257,4 @@ public:
 	float f计算(float, const S坐标轴 &, const S坐标轴 &, int);
 	S向量2 f计算(const S向量2 &, const S坐标格式 &, const S坐标格式 &);
 };
-
 }	//namespace cflw::数学

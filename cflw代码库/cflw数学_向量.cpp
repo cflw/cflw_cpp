@@ -131,6 +131,9 @@ float S向量2::fg方向r() const {
 float S向量2::fg夹角r(const S向量2 &_) const {
 	return C角度计算<float>::c弧度.f取正(fg方向r() - _.fg方向r());
 }
+float S向量2::fg横纵比() const {
+	return x / y;
+}
 S向量2 S向量2::fg反向() const {
 	return S向量2(-x, -y);
 }

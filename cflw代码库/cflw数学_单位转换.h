@@ -1,9 +1,7 @@
 #pragma once
-#ifndef 头文件_cflw数学_单位转换
-#define 头文件_cflw数学_单位转换
+#include <cassert>
 #include <initializer_list>
-namespace cflw {
-namespace 数学 {
+namespace cflw::数学 {
 class C转换因子表 {
 public:
 	C转换因子表(const std::initializer_list<double> &p列表) :
@@ -95,5 +93,4 @@ enum class E货币 {
 	e欧元,
 	e日元
 };
-}}	//命名空间结束
-#endif
+}	//namespace cflw::数学

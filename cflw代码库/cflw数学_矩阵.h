@@ -1,4 +1,5 @@
 #pragma once
+#include <cassert>
 #include "cflw数学.h"
 namespace cflw::数学 {
 //=============================================================================

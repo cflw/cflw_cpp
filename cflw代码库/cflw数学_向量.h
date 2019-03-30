@@ -53,6 +53,7 @@ struct S向量2 {
 	float fg方向d() const;
 	float fg方向r() const;
 	float fg夹角r(const S向量2 &) const;
+	float fg横纵比() const;
 	S向量2 fg反向() const;
 	S向量2 fg归一() const;
 	S向量2 &fs(const float &);

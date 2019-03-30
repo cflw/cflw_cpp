@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <math.h>
+#include <cmath>
 #include <limits>
 #include <complex>
 #include <utility>
@@ -43,11 +43,12 @@ template<typename t> bool f限制循环(t &值, const t &最大值);
 int f10的次方(const int &x);
 template<typename t> t f绝对值(const t &);
 template<typename t> std::tuple<t, t> sincos(const t &);
-template<typename t> t f插值(const t&起始值, const t&终止值, float 中间值);
+template<typename t> t f插值(const t &起始值, const t &终止值, float 中间值);
+template<typename t> auto f反插值(const t &起始值, const t &终止值, const t &目标值);
 template<typename t> int f限(t &被限值, const t &限值);
-template<typename t> t f点乘(const t&, const t&);
-template<typename t> t f叉乘(const t&, const t&);
-template<typename t> t f负(const t&);
+template<typename t> t f点乘(const t &, const t& );
+template<typename t> t f叉乘(const t &, const t &);
+template<typename t> t f负(const t &);
 template<typename t> bool f同符号(const t &, const t &);
 template<typename t> t f平方(const t &);
 template<typename t> t f立方(const t &);
