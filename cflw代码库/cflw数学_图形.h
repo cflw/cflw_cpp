@@ -167,7 +167,7 @@ struct S欧拉角 {
 	S欧拉角();
 	S欧拉角(float 头, float 侧, float 背);
 	void fs单位();
-	void f限制();
+	void f夹取();
 	void fs物体到惯性(const S四元数 &);
 	void fs惯性到物体(const S四元数 &);
 	void fs物体到世界(const S矩阵4 &);

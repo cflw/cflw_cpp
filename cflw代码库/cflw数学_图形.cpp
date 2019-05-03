@@ -37,7 +37,7 @@ S颜色::operator unsigned long() {
 	return (unsigned long)(a * 255) * 0x1000000 + (unsigned long)(r * 255) * 0x10000 + (unsigned long)(g * 255) * 0x100 + (unsigned long)(b * 255);
 }
 S颜色 S颜色::fc彩虹(float R, float A, float l, float s) {
-	R = f循环<float>(R, 0, 7);
+	R = f环绕<float>(R, 0, 7);
 	S颜色 c(0, 0, 0, A);
 	if (R <= 2) {//红->橙->黄
 		c.r = 1;
@@ -71,7 +71,7 @@ S颜色 S颜色::fc彩虹(float R, float A, float l, float s) {
 	return c;
 }
 S颜色 S颜色::fc三基色(float R, float A, float l, float s) {
-	R = f循环<float>(R, 0, 3);
+	R = f环绕<float>(R, 0, 3);
 	S颜色 c(0, 0, 0, A);
 	if (R <= 1) {	//[0,1]
 		const float v插值 = R;
@@ -274,8 +274,8 @@ S矩阵4 S投影::ft矩阵4r() const {
 void S欧拉角::fs单位() {
 	m头 = m侧 = m背 = 0.f;
 }
-void S欧拉角::f限制() {
-	m侧 = C角度计算<float>::c弧度.f限制(m侧);
+void S欧拉角::f夹取() {
+	m侧 = C角度计算<float>::c弧度.f夹取(m侧);
 	if (m侧 < -cπ<float> / 2.f) {
 		m侧 = -cπ<float> - m侧;
 		m头 += cπ<float>;
@@ -289,9 +289,9 @@ void S欧拉角::f限制() {
 		m头 += m背;
 		m背 = 0.0f;
 	} else {
-		m背 = C角度计算<float>::c弧度.f限制(m背);
+		m背 = C角度计算<float>::c弧度.f夹取(m背);
 	}
-	m头 = C角度计算<float>::c弧度.f限制(m头);
+	m头 = C角度计算<float>::c弧度.f夹取(m头);
 }
 void S欧拉角::fs物体到惯性(const S四元数 &q) {
 	float sp = -2.0f * (q.y*q.z - q.w*q.x);

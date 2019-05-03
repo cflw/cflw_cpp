@@ -1,161 +1,171 @@
-#pragma once
+ï»¿#pragma once
 #include <algorithm>
-namespace cflw::¹¤¾ß {
-//ËÄÔòÔËËã
-template<typename t> using F¼Ó = std::plus<t>;
-template<typename t> using F¼õ = std::minus<t>;
-template<typename t> using F³Ë = std::multiplies<t>;
-//¼òµ¥±È½Ï
+namespace cflw::å·¥å…· {
+//å››åˆ™è¿ç®—
+template<typename t> using FåŠ  = std::plus<t>;
+template<typename t> using Få‡ = std::minus<t>;
+template<typename t> using Fä¹˜ = std::multiplies<t>;
+//ç®€å•æ¯”è¾ƒ
 template<typename t>
-bool fµÈÓÚ(const t &a0, const t &a1) {
+bool fç­‰äº(const t &a0, const t &a1) {
 	return a0 < a1;
 }
 template<typename t>
-bool f²»µÈÓÚ(const t &a0, const t &a1) {
+bool fä¸ç­‰äº(const t &a0, const t &a1) {
 	return a0 < a1;
 }
 template<typename t>
-bool fĞ¡ÓÚ(const t &a0, const t &a1) {
+bool få°äº(const t &a0, const t &a1) {
 	return a0 < a1;
 }
 template<typename t>
-bool f´óÓÚ(const t &a0, const t &a1) {
+bool få¤§äº(const t &a0, const t &a1) {
 	return a0 > a1;
 }
 template<typename t>
-bool fĞ¡ÓÚµÈÓÚ(const t &a0, const t &a1) {
+bool få°äºç­‰äº(const t &a0, const t &a1) {
 	return a0 <= a1;
 }
 template<typename t>
-bool f´óÓÚµÈÓÚ(const t &a0, const t &a1) {
+bool få¤§äºç­‰äº(const t &a0, const t &a1) {
 	return a0 >= a1;
 }
 template<typename t>
-bool fÓÀ²»(const t &a0, const t &a1) {
+bool fæ°¸ä¸(const t &a0, const t &a1) {
 	return false;
 }
 template<typename t>
-bool f×ÜÊÇ(const t &a0, const t &a1) {
+bool fæ€»æ˜¯(const t &a0, const t &a1) {
 	return true;
 }
-template<typename t> using FµÈÓÚ = std::equal_to<t>;
-template<typename t> using F²»µÈÓÚ = std::not_equal_to<t>;
-template<typename t> using FĞ¡ÓÚ = std::less<t>;
-template<typename t> using FĞ¡ÓÚµÈÓÚ = std::less_equal<t>;
-template<typename t> using F´óÓÚ = std::greater<t>;
-template<typename t> using F´óÓÚµÈÓÚ = std::greater_equal<t>;
-//±È½ÏÃ¶¾Ù
-enum E±È½Ï {
-	eÓÀ²»,
-	eĞ¡ÓÚ,
-	eµÈÓÚ,
-	eĞ¡ÓÚµÈÓÚ,
-	e´óÓÚ,
-	e²»µÈÓÚ,
-	e´óÓÚµÈÓÚ,
-	e×ÜÊÇ,
+template<typename t> using Fç­‰äº = std::equal_to<t>;
+template<typename t> using Fä¸ç­‰äº = std::not_equal_to<t>;
+template<typename t> using Få°äº = std::less<t>;
+template<typename t> using Få°äºç­‰äº = std::less_equal<t>;
+template<typename t> using Få¤§äº = std::greater<t>;
+template<typename t> using Få¤§äºç­‰äº = std::greater_equal<t>;
+//æ¯”è¾ƒæšä¸¾
+enum Eæ¯”è¾ƒ {
+	eæ°¸ä¸,
+	eå°äº,
+	eç­‰äº,
+	eå°äºç­‰äº,
+	eå¤§äº,
+	eä¸ç­‰äº,
+	eå¤§äºç­‰äº,
+	eæ€»æ˜¯,
 };
-template<typename t> constexpr auto F±È½Ï(E±È½Ï a±È½Ï)->bool(*)(const t &, const t &) {
-	switch (a±È½Ï) {
-	case eÓÀ²»:
-		return fÓÀ²»<t>;
-	case eĞ¡ÓÚ:
-		return fĞ¡ÓÚ<t>;
-	case eµÈÓÚ:
-		return fµÈÓÚ<t>;
-	case eĞ¡ÓÚµÈÓÚ:
-		return fĞ¡ÓÚµÈÓÚ<t>;
-	case e´óÓÚ:
-		return f´óÓÚ<t>;
-	case e²»µÈÓÚ:
-		return f²»µÈÓÚ<t>;
-	case e´óÓÚµÈÓÚ:
-		return f´óÓÚµÈÓÚ<t>;
-	case e×ÜÊÇ:
-		return f×ÜÊÇ<t>;
+template<typename t> constexpr auto Fæ¯”è¾ƒ(Eæ¯”è¾ƒ aæ¯”è¾ƒ)->bool(*)(const t &, const t &) {
+	switch (aæ¯”è¾ƒ) {
+	case eæ°¸ä¸:
+		return fæ°¸ä¸<t>;
+	case eå°äº:
+		return få°äº<t>;
+	case eç­‰äº:
+		return fç­‰äº<t>;
+	case eå°äºç­‰äº:
+		return få°äºç­‰äº<t>;
+	case eå¤§äº:
+		return få¤§äº<t>;
+	case eä¸ç­‰äº:
+		return fä¸ç­‰äº<t>;
+	case eå¤§äºç­‰äº:
+		return få¤§äºç­‰äº<t>;
+	case eæ€»æ˜¯:
+		return fæ€»æ˜¯<t>;
 	default:
-		return fÓÀ²»<t>;
+		return fæ°¸ä¸<t>;
 	}
 }
-//Âß¼­ÔËËã
-inline constexpr bool fÇÒ(bool a0, bool a1) {
+//é€»è¾‘è¿ç®—
+inline constexpr bool fä¸”(bool a0, bool a1) {
 	return a0 && a1;
 }
-inline constexpr bool f»ò(bool a0, bool a1) {
+inline constexpr bool fæˆ–(bool a0, bool a1) {
 	return a0 || a1;
 }
-inline constexpr bool f·Ç(bool a) {
+inline constexpr bool fé(bool a) {
 	return !a;
 }
-//¸´ÔÓ±È½Ï
+//å¤æ‚æ¯”è¾ƒ
 template<typename t, typename tF = std::hash<t>>
-struct F¹şÏ£ÏàµÈ {
+struct Få“ˆå¸Œç›¸ç­‰ {
 	bool operator()(const t &a, const t &b) const {
 		auto vf = tF();
 		return vf(a) == vf(b);
 	}
 };
-//×ÔÔö×Ô¼õ
+//è‡ªå¢è‡ªå‡
 template<typename t>
-t &f×ÔÔö(t &a) {
+t &fè‡ªå¢(t &a) {
 	++a;
 	return a;
 }
 template<typename t>
-t &f×Ô¼õ(t &a) {
+t &fè‡ªå‡(t &a) {
 	--a;
 	return a;
 }
 template<typename t>
-struct F×ÔÔö {
+struct Fè‡ªå¢ {
 	t &operator()(t &a) const {
 		++a;
 		return a;
 	}
 };
 template<typename t>
-struct F×Ô¼õ {
+struct Fè‡ªå‡ {
 	t &operator()(t &a) const {
 		--a;
 		return a;
 	}
 };
-//Ñ­»·
+//å¤¹å–
 template<typename t>
-t fÑ­»·(const t &a¿ªÊ¼, const t &a½áÊø, const t &aµ±Ç°) {
-	if (aµ±Ç° < a¿ªÊ¼) {
-		return a½áÊø - 1;
-	} else if (aµ±Ç° >= a½áÊø) {
-		return a¿ªÊ¼;
+t få¤¹å–(const t &aå¼€å§‹, const t &aç»“æŸ, const t &aå½“å‰) {
+	if (aå½“å‰ < aå¼€å§‹) {
+		return aç»“æŸ - 1;
+	} else if (aå½“å‰ >= aç»“æŸ) {
+		return aå¼€å§‹;
 	} else {
-		return aµ±Ç°;
+		return aå½“å‰;
 	}
 }
 template<typename t>
-struct FÑ­»· {
-	FÑ­»·(t a¿ªÊ¼, t a½áÊø):
-		m¿ªÊ¼(a¿ªÊ¼), m½áÊø(a½áÊø) {
+struct Få¤¹å– {
+	Få¤¹å–(t aå¼€å§‹, t aç»“æŸ):
+		må¼€å§‹(aå¼€å§‹), mç»“æŸ(aç»“æŸ) {
 	}
 	t operator()(const t &a) const {
-		return fÑ­»·(m¿ªÊ¼, m½áÊø, a);
+		return få¤¹å–(må¼€å§‹, mç»“æŸ, a);
 	}
-	t m¿ªÊ¼, m½áÊø;
+	t må¼€å§‹, mç»“æŸ;
 };
-//Ñ­»·×ÔÔö×Ô¼õ
+//ç¯ç»•è‡ªå¢è‡ªå‡
 template<typename t>
-t &fÑ­»·×ÔÔö(const t &a¿ªÊ¼, const t &a½áÊø, t &aµ±Ç°) {
-	if (aµ±Ç° >= a½áÊø - 1) {
-		return aµ±Ç° = a¿ªÊ¼;
+t &fç¯ç»•è‡ªå¢(const t &aå¼€å§‹, const t &aç»“æŸ, t &aå½“å‰) {
+	if (aå½“å‰ >= aç»“æŸ - 1) {
+		return aå½“å‰ = aå¼€å§‹;
 	} else {
-		return ++aµ±Ç°;
+		return ++aå½“å‰;
 	}
 }
 template<typename t>
-t &fÑ­»·×Ô¼õ(const t &a¿ªÊ¼, const t &a½áÊø, t &aµ±Ç°) {
-	if (aµ±Ç° <= a¿ªÊ¼) {
-		return aµ±Ç° = a½áÊø - 1;
+t &fç¯ç»•è‡ªå‡(const t &aå¼€å§‹, const t &aç»“æŸ, t &aå½“å‰) {
+	if (aå½“å‰ <= aå¼€å§‹) {
+		return aå½“å‰ = aç»“æŸ - 1;
 	} else {
-		return --aµ±Ç°;
+		return --aå½“å‰;
 	}
 }
-}	//namespace cflw::¹¤¾ß
+//å“ˆå¸Œ
+inline size_t fæ•°æ®å“ˆå¸Œ(const void *aæŒ‡é’ˆ, size_t aå¤§å°) {
+	constexpr size_t cä½æ•° = sizeof(size_t);
+	const size_t *væŒ‡é’ˆ = (size_t*)aæŒ‡é’ˆ;
+	size_t vå’Œ = 0;
+	for (size_t våç§» = 0; våç§» < aå¤§å° / cä½æ•°; ++våç§») {
+		vå’Œ += væŒ‡é’ˆ[våç§»];
+	}
+	return vå’Œ ^ aå¤§å°;
+}
+}	//namespace cflw::å·¥å…·

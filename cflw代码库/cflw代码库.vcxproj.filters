@@ -130,6 +130,9 @@
     <ClInclude Include="cflw图形_dx着色器.h">
       <Filter>图形</Filter>
     </ClInclude>
+    <ClInclude Include="cflw工具_函数.h">
+      <Filter>工具</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cflw数学_单位转换.cpp">

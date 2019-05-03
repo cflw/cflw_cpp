@@ -1,18 +1,20 @@
-#pragma once
-//ÒıÓÃ
+ï»¿#pragma once
+//å¼•ç”¨
 #include <vector>
 #include <string>
 #include <string_view>
 #include <d2d1_3.h>
+#include <d2d1effectauthor_1.h>
 #include <DWrite.h>
 #include <dxgi1_4.h>
 #include <wrl.h>
-#include "cflw¸¨Öú.h"
-#include "cflwÊıÑ§.h"
-#include "cflwÊıÑ§_Í¼ĞÎ.h"
-#include "cflwÊıÑ§_Æ½Ãæ¼¸ºÎ.h"
-//Á´½Ó
+#include "cflwè¾…åŠ©.h"
+#include "cflwæ•°å­¦.h"
+#include "cflwæ•°å­¦_å›¾å½¢.h"
+#include "cflwæ•°å­¦_å¹³é¢å‡ ä½•.h"
+//é“¾æ¥
 #ifdef _WINDOWS
+#pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "dwrite.lib")
 #endif
@@ -25,362 +27,369 @@ HRESULT CreateBezierSpline(
 	__in ID2D1Factory* pD2dFactory,
 	__in const std::vector<D2D1_POINT_2F>& points,
 	__out ID2D1PathGeometry** ppPathGeometry);
-//ÃüÃû¿Õ¼ä
-namespace cflw::Í¼ĞÎ::dxÎÆÀí {
-class IÎÆÀí;
+//å‘½åç©ºé—´
+namespace cflw::å›¾å½¢::dxçº¹ç† {
+class Içº¹ç†;
 }
-namespace cflw::Í¼ĞÎ::d2d {
-//Íâ²¿
+namespace cflw::å›¾å½¢::d2d {
+//å¤–éƒ¨
 using Microsoft::WRL::ComPtr;
-using tpäÖÈ¾Ä¿±ê = ComPtr<ID2D1RenderTarget>;
-using tp»­±Ê = ComPtr<ID2D1Brush>;
-using tp´¿É«»­±Ê = ComPtr<ID2D1SolidColorBrush>;
-using tpÎ»Í¼ = ComPtr<ID2D1Bitmap>;
-using tpÎ»Í¼»­±Ê = ComPtr<ID2D1BitmapBrush>;
-using tp½¥±äµã¼¯ = ComPtr<ID2D1GradientStopCollection>;
-using tpÏßĞÔ½¥±ä»­±Ê = ComPtr<ID2D1LinearGradientBrush>;
-using tp¾¶Ïò½¥±ä»­±Ê = ComPtr<ID2D1RadialGradientBrush>;
-using tpÎÄ±¾¸ñÊ½ = ComPtr<IDWriteTextFormat>;
-using tpÎÄ±¾²¼¾Ö = ComPtr<IDWriteTextLayout>;
-using tpÂ·¾¶¼¸ºÎ = ComPtr<ID2D1PathGeometry>;
-using tp¼¸ºÎ²Û = ComPtr<ID2D1GeometrySink>;
-using tp²ã = ComPtr<ID2D1Layer>;
-using tµã2f = D2D1_POINT_2F;
-using t¾ØĞÎf = D2D_RECT_F;
-using tÍÖÔ² = D2D1_ELLIPSE;
-using tÑÕÉ«f = D2D1_COLOR_F;
-using tÔ²½Ç¾ØĞÎ = D2D1_ROUNDED_RECT;
-using tÎÄ±¾·¶Î§ = DWRITE_TEXT_RANGE;
-using ta½¥±äµã = std::vector<D2D1_GRADIENT_STOP>;
-//±¾ÎÄ¼ş
-class CäÖÈ¾¿ØÖÆ;
-class C»­Í¼ĞÎ;
-class C»­ÎÄ±¾;
-class CÀàĞÍ×ª»»;
-class CĞŞ¸ÄÎÄ±¾¸ñÊ½;
-class CĞŞ¸ÄÎÄ±¾²¼¾Ö;
-class CÖĞÎÄ×ÖºÅ¸ñÊ½;
-class C×ø±ê×ª»»;
-class CĞŞ¸ÄÂ·¾¶¼¸ºÎ;
-class CÎÄ±¾¹¤³§;
-class CÎÄ±¾Ğ§¹û;
-using tp»­Í¼ĞÎ = std::shared_ptr<C»­Í¼ĞÎ>;
-using tp»­ÎÄ±¾ = std::shared_ptr<C»­ÎÄ±¾>;
-using tp×ø±ê×ª»» = std::shared_ptr<C×ø±ê×ª»»>;
-using tpÎÄ±¾Ğ§¹û = ComPtr<CÎÄ±¾Ğ§¹û>;
-//Ã¶¾Ù
-enum class EÎÄ±¾Ë®Æ½¶ÔÆë {
-	e×ó,
-	eÓÒ,
-	eÖĞ,
+using tpæ¸²æŸ“ç›®æ ‡ = ComPtr<ID2D1RenderTarget>;
+using tpç”»ç¬” = ComPtr<ID2D1Brush>;
+using tpçº¯è‰²ç”»ç¬” = ComPtr<ID2D1SolidColorBrush>;
+using tpä½å›¾ = ComPtr<ID2D1Bitmap>;
+using tpä½å›¾ç”»ç¬” = ComPtr<ID2D1BitmapBrush>;
+using tpæ¸å˜ç‚¹é›† = ComPtr<ID2D1GradientStopCollection>;
+using tpçº¿æ€§æ¸å˜ç”»ç¬” = ComPtr<ID2D1LinearGradientBrush>;
+using tpå¾„å‘æ¸å˜ç”»ç¬” = ComPtr<ID2D1RadialGradientBrush>;
+using tpæ–‡æœ¬æ ¼å¼ = ComPtr<IDWriteTextFormat>;
+using tpæ–‡æœ¬å¸ƒå±€ = ComPtr<IDWriteTextLayout>;
+using tpè·¯å¾„å‡ ä½• = ComPtr<ID2D1PathGeometry>;
+using tpå‡ ä½•æ§½ = ComPtr<ID2D1GeometrySink>;
+using tpå±‚ = ComPtr<ID2D1Layer>;
+using tpæ•ˆæœ = ComPtr<ID2D1Effect>;
+using tç‚¹2f = D2D1_POINT_2F;
+using tçŸ©å½¢f = D2D_RECT_F;
+using tæ¤­åœ† = D2D1_ELLIPSE;
+using té¢œè‰²f = D2D1_COLOR_F;
+using tåœ†è§’çŸ©å½¢ = D2D1_ROUNDED_RECT;
+using tæ–‡æœ¬èŒƒå›´ = DWRITE_TEXT_RANGE;
+using taæ¸å˜ç‚¹ = std::vector<D2D1_GRADIENT_STOP>;
+//æœ¬æ–‡ä»¶
+class Cæ¸²æŸ“æ§åˆ¶;
+class Cç”»å›¾å½¢;
+class Cç”»æ–‡æœ¬;
+class Cç±»å‹è½¬æ¢;
+class Cä¿®æ”¹æ–‡æœ¬æ ¼å¼;
+class Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€;
+class Cä¸­æ–‡å­—å·æ ¼å¼;
+class Cåæ ‡è½¬æ¢;
+class Cä¿®æ”¹è·¯å¾„å‡ ä½•;
+class Cæ–‡æœ¬å·¥å‚;
+class Cæ–‡æœ¬æ•ˆæœ;
+using tpç”»å›¾å½¢ = std::shared_ptr<Cç”»å›¾å½¢>;
+using tpç”»æ–‡æœ¬ = std::shared_ptr<Cç”»æ–‡æœ¬>;
+using tpåæ ‡è½¬æ¢ = std::shared_ptr<Cåæ ‡è½¬æ¢>;
+using tpæ–‡æœ¬æ•ˆæœ = ComPtr<Cæ–‡æœ¬æ•ˆæœ>;
+//æšä¸¾
+enum class Eæ–‡æœ¬æ°´å¹³å¯¹é½ {
+	eå·¦,
+	eå³,
+	eä¸­,
 };
-enum class EÎÄ±¾´¹Ö±¶ÔÆë {
-	eÉÏ,
-	eÏÂ,
-	eÖĞ,
+enum class Eæ–‡æœ¬å‚ç›´å¯¹é½ {
+	eä¸Š,
+	eä¸‹,
+	eä¸­,
 };
 //==============================================================================
-// ½á¹¹
+// ç»“æ„
 //==============================================================================
-struct S½¥±äµã {
-	float mÎ»ÖÃ;	//mÎ»ÖÃ¡Ê[0,1]
-	ÊıÑ§::SÑÕÉ« mÑÕÉ«;
+struct Sæ¸å˜ç‚¹ {
+	float mä½ç½®;	//mä½ç½®âˆˆ[0,1]
+	æ•°å­¦::Sé¢œè‰² mé¢œè‰²;
 };
 
 //==============================================================================
-// ¶şÎ¬ÒıÇæ
+// äºŒç»´å¼•æ“
 //==============================================================================
-class C¶şÎ¬ {
-	friend class CäÖÈ¾¿ØÖÆ;
+class CäºŒç»´ {
+	friend class Cæ¸²æŸ“æ§åˆ¶;
 public:
-	static C¶şÎ¬ *gÕâ;
-//º¯Êı
-	C¶şÎ¬();
-	HRESULT f³õÊ¼»¯(HWND, float Ëõ·Å = 0);
-	HRESULT f³õÊ¼»¯(IDXGISwapChain*, float Ëõ·Å = 0);	//·ÏÆú
-	HRESULT f³õÊ¼»¯_¹¤³§();
-	HRESULT f³õÊ¼»¯_Éè±¸(IDXGIDevice *);
-	void f³õÊ¼»¯_´°¿Ú´óĞ¡(float x, float y);
-	void f³õÊ¼»¯_äÖÈ¾Ä¿±ê(ID2D1RenderTarget*);
-	HRESULT f³õÊ¼»¯_µ¥¸öÎ»Í¼(IDXGISwapChain *, float Ëõ·Å = 0);
-	//template<std::ranges::Range t·¶Î§> HRESULT f³õÊ¼»¯_¶à¸öÎ»Í¼(const t·¶Î§ &, float Ëõ·Å = 0);
-	template<typename t·¶Î§> HRESULT f³õÊ¼»¯_¶à¸öÎ»Í¼(const t·¶Î§ &, float Ëõ·Å = 0);
-	void fsËõ·Å(float = 1);
-	//»­Í¼¶ÔÏó
-	std::shared_ptr<C»­Í¼ĞÎ> fc»­Í¼ĞÎ(const ComPtr<ID2D1Brush> & = nullptr, float ¿í¶È = 1);
-	std::shared_ptr<C»­ÎÄ±¾> fc»­ÎÄ±¾(const ComPtr<ID2D1Brush> & = nullptr);
-	ComPtr<ID2D1SolidColorBrush> fc´¿É«»­±Ê(const ÊıÑ§::SÑÕÉ« &) const;
-	ComPtr<ID2D1Bitmap> fcÎ»Í¼(const ComPtr<IWICBitmapSource> &);
-	ComPtr<ID2D1Bitmap> fcÎ»Í¼(const dxÎÆÀí::IÎÆÀí &);
-	ComPtr<ID2D1BitmapBrush> fcÎ»Í¼»­±Ê(const ComPtr<ID2D1Bitmap> &);
-	ComPtr<ID2D1GradientStopCollection> fc½¥±äµã¼¯(const std::vector<S½¥±äµã> &) const;
-	ComPtr<ID2D1LinearGradientBrush> fcÏßĞÔ½¥±ä»­±Ê(const std::vector<S½¥±äµã> &) const;
-	ComPtr<ID2D1RadialGradientBrush> fc¾¶Ïò½¥±ä»­±Ê(const std::vector<S½¥±äµã> &) const;
-	ComPtr<ID2D1PathGeometry> fcÂ·¾¶¼¸ºÎ() const;
-	ComPtr<ID2D1Layer> fc²ã() const;
-	CĞŞ¸ÄÂ·¾¶¼¸ºÎ fĞŞ¸ÄÂ·¾¶¼¸ºÎ(const ComPtr<ID2D1PathGeometry> &) const;
-	ComPtr<CÎÄ±¾Ğ§¹û> fcÎÄ±¾Ğ§¹û(const ÊıÑ§::SÑÕÉ« &Ãè±ß = ÊıÑ§::SÑÕÉ«::c°×, const ÊıÑ§::SÑÕÉ« &Ìî³ä = ÊıÑ§::SÑÕÉ«::cºÚ) const;
-	//ÆäËü¶ÔÏó
-	ComPtr<ID2D1Factory3> fg¶şÎ¬¹¤³§();
-	ComPtr<ID2D1RenderTarget> fgäÖÈ¾Ä¿±ê() const;
-	C×ø±ê×ª»» &fg×ø±ê¼ÆËã() const;
-	CÎÄ±¾¹¤³§ &fgÎÄ±¾¹¤³§();
-	ComPtr<IDWriteTextFormat> fgÄ¬ÈÏÎÄ±¾¸ñÊ½();
-	CäÖÈ¾¿ØÖÆ &fgäÖÈ¾¿ØÖÆ();
+	static CäºŒç»´ *gè¿™;
+//å‡½æ•°
+	CäºŒç»´();
+	HRESULT fåˆå§‹åŒ–(HWND, float ç¼©æ”¾ = 0);	//åºŸå¼ƒ.æ³¨æ„:æ­¤å‡½æ•°ä¸åˆ›å»ºä¸Šä¸‹æ–‡
+	HRESULT fåˆå§‹åŒ–(IDXGISwapChain*, float ç¼©æ”¾ = 0);	//åºŸå¼ƒ.æ³¨æ„:æ­¤å‡½æ•°ä¸åˆ›å»ºä¸Šä¸‹æ–‡
+	HRESULT fåˆå§‹åŒ–_å·¥å‚();
+	HRESULT fåˆå§‹åŒ–_è®¾å¤‡(IDXGIDevice *);
+	void fåˆå§‹åŒ–_çª—å£å¤§å°(float x, float y);
+	void fåˆå§‹åŒ–_æ¸²æŸ“ç›®æ ‡(ID2D1RenderTarget*);
+	HRESULT fåˆå§‹åŒ–_å•ä¸ªä½å›¾(IDXGISwapChain *, float ç¼©æ”¾ = 0);
+	//template<std::ranges::Range tèŒƒå›´> HRESULT fåˆå§‹åŒ–_å¤šä¸ªä½å›¾(const tèŒƒå›´ &, float ç¼©æ”¾ = 0);
+	template<typename tèŒƒå›´> HRESULT fåˆå§‹åŒ–_å¤šä¸ªä½å›¾(const tèŒƒå›´ &, float ç¼©æ”¾ = 0);
+	void fé”€æ¯();
+	void fsç¼©æ”¾(float = 1);
+	//ç”»å›¾å¯¹è±¡
+	std::shared_ptr<Cç”»å›¾å½¢> fcç”»å›¾å½¢(const ComPtr<ID2D1Brush> & = nullptr, float å®½åº¦ = 1);
+	std::shared_ptr<Cç”»æ–‡æœ¬> fcç”»æ–‡æœ¬(const ComPtr<ID2D1Brush> & = nullptr);
+	ComPtr<ID2D1SolidColorBrush> fcçº¯è‰²ç”»ç¬”(const æ•°å­¦::Sé¢œè‰² &) const;
+	ComPtr<ID2D1Bitmap> fcä½å›¾(const ComPtr<IWICBitmapSource> &);
+	ComPtr<ID2D1Bitmap> fcä½å›¾(const dxçº¹ç†::Içº¹ç† &);
+	ComPtr<ID2D1BitmapBrush> fcä½å›¾ç”»ç¬”(const ComPtr<ID2D1Bitmap> &);
+	ComPtr<ID2D1GradientStopCollection> fcæ¸å˜ç‚¹é›†(const std::vector<Sæ¸å˜ç‚¹> &) const;
+	ComPtr<ID2D1LinearGradientBrush> fcçº¿æ€§æ¸å˜ç”»ç¬”(const std::vector<Sæ¸å˜ç‚¹> &) const;
+	ComPtr<ID2D1RadialGradientBrush> fcå¾„å‘æ¸å˜ç”»ç¬”(const std::vector<Sæ¸å˜ç‚¹> &) const;
+	ComPtr<ID2D1PathGeometry> fcè·¯å¾„å‡ ä½•() const;
+	ComPtr<ID2D1Layer> fcå±‚() const;
+	Cä¿®æ”¹è·¯å¾„å‡ ä½• fä¿®æ”¹è·¯å¾„å‡ ä½•(const ComPtr<ID2D1PathGeometry> &) const;
+	ComPtr<Cæ–‡æœ¬æ•ˆæœ> fcæ–‡æœ¬æ•ˆæœ(const æ•°å­¦::Sé¢œè‰² &æè¾¹ = æ•°å­¦::Sé¢œè‰²::cç™½, const æ•°å­¦::Sé¢œè‰² &å¡«å…… = æ•°å­¦::Sé¢œè‰²::cé»‘) const;
+	ComPtr<ID2D1Effect> fcæ•ˆæœ(const GUID &);
+	//å…¶å®ƒå¯¹è±¡
+	ComPtr<ID2D1Factory3> fgäºŒç»´å·¥å‚();
+	ComPtr<ID2D1RenderTarget> fgæ¸²æŸ“ç›®æ ‡() const;
+	Cåæ ‡è½¬æ¢ &fgåæ ‡è®¡ç®—() const;
+	Cæ–‡æœ¬å·¥å‚ &fgæ–‡æœ¬å·¥å‚();
+	ComPtr<IDWriteTextFormat> fgé»˜è®¤æ–‡æœ¬æ ¼å¼();
+	Cæ¸²æŸ“æ§åˆ¶ &fgæ¸²æŸ“æ§åˆ¶();
 private:
-	ÊıÑ§::SÏòÁ¿2 fgÃ¿Ó¢´çµãÊı(float Ëõ·Å = 0) const;
-	ÊıÑ§::SÏòÁ¿2 m´°¿Ú´óĞ¡;
-	ComPtr<ID2D1Factory3> m¶şÎ¬¹¤³§;
-	ComPtr<ID2D1Device1> mÉè±¸;
-	ComPtr<ID2D1DeviceContext> mÉÏÏÂÎÄ;
-	std::vector<ComPtr<ID2D1Bitmap1>> maÎ»Í¼Ä¿±ê;
-	ComPtr<ID2D1RenderTarget> mäÖÈ¾Ä¿±ê;	//Ö÷ÒªÄ¿±ê
-	std::unique_ptr<C×ø±ê×ª»»> m×ø±ê¼ÆËã;
-	std::unique_ptr<CÎÄ±¾¹¤³§> mÎÄ±¾¹¤³§;
-	ComPtr<IDWriteTextFormat> mÄ¬ÈÏÎÄ±¾¸ñÊ½;
-	std::unique_ptr<CäÖÈ¾¿ØÖÆ> mäÖÈ¾¿ØÖÆ;
+	æ•°å­¦::Så‘é‡2 fgæ¯è‹±å¯¸ç‚¹æ•°(float ç¼©æ”¾ = 0) const;
+	æ•°å­¦::Så‘é‡2 mçª—å£å¤§å°;
+	ComPtr<ID2D1Factory3> mäºŒç»´å·¥å‚;
+	ComPtr<ID2D1Device1> mè®¾å¤‡;
+	ComPtr<ID2D1DeviceContext> mä¸Šä¸‹æ–‡;
+	std::vector<ComPtr<ID2D1Bitmap1>> maä½å›¾ç›®æ ‡;
+	ComPtr<ID2D1RenderTarget> mæ¸²æŸ“ç›®æ ‡;	//ä¸»è¦ç›®æ ‡
+	std::unique_ptr<Cåæ ‡è½¬æ¢> måæ ‡è®¡ç®—;
+	std::unique_ptr<Cæ–‡æœ¬å·¥å‚> mæ–‡æœ¬å·¥å‚;
+	ComPtr<IDWriteTextFormat> mé»˜è®¤æ–‡æœ¬æ ¼å¼;
+	std::unique_ptr<Cæ¸²æŸ“æ§åˆ¶> mæ¸²æŸ“æ§åˆ¶;
 };
-class CäÖÈ¾¿ØÖÆ {
+class Cæ¸²æŸ“æ§åˆ¶ {
 public:
-	void f¿ªÊ¼();
-	void f¿ªÊ¼(UINT);	//Ê¹ÓÃÎ»Í¼Ä¿±ê
-	void fÇåÆÁ();
-	void f½áÊø();
-	//ÊôĞÔ
-	void fsÇåÆÁÑÕÉ«(const ÊıÑ§::SÑÕÉ« &);
+	void få¼€å§‹();
+	void få¼€å§‹(UINT);	//ä½¿ç”¨ä½å›¾ç›®æ ‡
+	void fæ¸…å±();
+	void fç»“æŸ();
+	//ç”»
+	void fç»˜åˆ¶å›¾åƒ(ID2D1Image *);
+	void fç»˜åˆ¶å›¾åƒ(ID2D1Effect *);
+	//å±æ€§
+	void fsæ¸…å±é¢œè‰²(const æ•°å­¦::Sé¢œè‰² &);
 public:
-	C¶şÎ¬ *m¶şÎ¬;
-	D2D1_COLOR_F mÇåÆÁÑÕÉ« = D2D1::ColorF(D2D1::ColorF::Black);
-};
-//==============================================================================
-// ¸÷ÖÖ»­
-//==============================================================================
-class C»­Í¼ĞÎ {
-public:
-	~C»­Í¼ĞÎ();
-	void f³õÊ¼»¯(ID2D1RenderTarget *, const C×ø±ê×ª»» &);
-	void f³õÊ¼»¯_´¿É«»­±Ê(const ÊıÑ§::SÑÕÉ« &ÑÕÉ«);
-	//ÉèÖÃ
-	void fs»­±Ê(const ComPtr<ID2D1Brush> &);
-	void fsÏßÌõ¿í¶È(float);
-	void fsÑÕÉ«(const ÊıÑ§::SÑÕÉ« &);
-	void fsÍ¸Ã÷¶È(float);
-	//ÃèÏß
-	void f»æÖÆµã(const ÊıÑ§::SÏòÁ¿2 &);
-	void f»æÖÆÏßÌõ(const ÊıÑ§::SÏß¶Î2 &);
-	void f»æÖÆ¾ØĞÎ(const ÊıÑ§::S¾ØĞÎ &);
-	void f»æÖÆĞı×ª¾ØĞÎ(const ÊıÑ§::SĞı×ª¾ØĞÎ &);
-	void f»æÖÆÔ²ĞÎ(const ÊıÑ§::SÔ²ĞÎ &);
-	void f»æÖÆÍÖÔ²(const ÊıÑ§::SÍÖÔ² &);
-	void f»æÖÆÔ²½Ç¾ØĞÎ(const ÊıÑ§::SÔ²½Ç¾ØĞÎ &);
-	//Ìî³ä
-	void fÌî³ä¾ØĞÎ(const ÊıÑ§::S¾ØĞÎ &);
-	void fÌî³äÔ²ĞÎ(const ÊıÑ§::SÔ²ĞÎ &);
-	void fÌî³äÍÖÔ²(const ÊıÑ§::SÍÖÔ² &);
-	void fÌî³äÔ²½Ç¾ØĞÎ(const ÊıÑ§::SÔ²½Ç¾ØĞÎ &);
-public:
-	ComPtr<ID2D1RenderTarget> mäÖÈ¾Ä¿±ê;
-	ComPtr<ID2D1Brush> m»­±Ê;
-	const C×ø±ê×ª»» *m×ø±ê¼ÆËã;
-	float mÏßÌõ¿í¶È = 1;
-};
-class C»­ÎÄ±¾ {
-public:
-	void f³õÊ¼»¯(ID2D1RenderTarget *, const C×ø±ê×ª»» &);
-	void f³õÊ¼»¯_´¿É«»­±Ê(const ÊıÑ§::SÑÕÉ« &);
-	//ÉèÖÃ
-	void fs¸ñÊ½(IDWriteTextFormat *);
-	void fsÑùÊ½(CĞŞ¸ÄÎÄ±¾¸ñÊ½ &);
-	void fs»­±Ê(const ComPtr<ID2D1Brush> &);
-	void fsÑÕÉ«(const ÊıÑ§::SÑÕÉ« &);
-	void fsÍ¸Ã÷¶È(float);
-	void fsÇøÓò(const ÊıÑ§::SÏòÁ¿2 &);
-	void fsÇøÓò(const ÊıÑ§::SÏòÁ¿2 &, const ÊıÑ§::SÏòÁ¿2 &);
-	void fsÇøÓò(float, float);
-	void fsÇøÓò(float, float, float, float);
-	void fsÇøÓò(const ÊıÑ§::S¾ØĞÎ &);
-	//»­
-	void f»æÖÆÎÄ±¾(const std::wstring_view &) const;
-	void f»æÖÆÎÄ±¾²¼¾Ö(IDWriteTextLayout *) const;
-	void f»æÖÆÎÄ±¾²¼¾Ö(IDWriteTextLayout *, IDWriteTextRenderer *) const;
-	void f»æÖÆÎÄ±¾²¼¾Ö(CĞŞ¸ÄÎÄ±¾²¼¾Ö &) const;
-public:
-	ComPtr<ID2D1RenderTarget> mäÖÈ¾Ä¿±ê;
-	ComPtr<ID2D1Brush> m»­±Ê;
-	ComPtr<IDWriteTextFormat> m¸ñÊ½;
-	const C×ø±ê×ª»» *m×ø±ê¼ÆËã;
-	D2D1_RECT_F m¾ØĞÎ;
+	CäºŒç»´ *mäºŒç»´;
+	D2D1_COLOR_F mæ¸…å±é¢œè‰² = D2D1::ColorF(D2D1::ColorF::Black);
 };
 //==============================================================================
-// ¶şÎ¬½á¹¹¼ÆËã&×ª»»
+// å„ç§ç”»
 //==============================================================================
-class CÀàĞÍ×ª»» {
+class Cç”»å›¾å½¢ {
 public:
-	static D2D1_COLOR_F fÑÕÉ«(const ÊıÑ§::SÑÕÉ« &);
-	static D2D1_POINT_2F fµã(const ÊıÑ§::SÏòÁ¿2 &);
-	static std::vector<D2D1_GRADIENT_STOP> f½¥±äµã(const std::vector<S½¥±äµã> &);
+	~Cç”»å›¾å½¢();
+	void fåˆå§‹åŒ–(ID2D1RenderTarget *, const Cåæ ‡è½¬æ¢ &);
+	void fåˆå§‹åŒ–_çº¯è‰²ç”»ç¬”(const æ•°å­¦::Sé¢œè‰² &é¢œè‰²);
+	//è®¾ç½®
+	void fsç”»ç¬”(const ComPtr<ID2D1Brush> &);
+	void fsçº¿æ¡å®½åº¦(float);
+	void fsé¢œè‰²(const æ•°å­¦::Sé¢œè‰² &);
+	void fsé€æ˜åº¦(float);
+	//æçº¿
+	void fç»˜åˆ¶ç‚¹(const æ•°å­¦::Så‘é‡2 &);
+	void fç»˜åˆ¶çº¿æ¡(const æ•°å­¦::Sçº¿æ®µ2 &);
+	void fç»˜åˆ¶çŸ©å½¢(const æ•°å­¦::SçŸ©å½¢ &);
+	void fç»˜åˆ¶æ—‹è½¬çŸ©å½¢(const æ•°å­¦::Sæ—‹è½¬çŸ©å½¢ &);
+	void fç»˜åˆ¶åœ†å½¢(const æ•°å­¦::Såœ†å½¢ &);
+	void fç»˜åˆ¶æ¤­åœ†(const æ•°å­¦::Sæ¤­åœ† &);
+	void fç»˜åˆ¶åœ†è§’çŸ©å½¢(const æ•°å­¦::Såœ†è§’çŸ©å½¢ &);
+	//å¡«å……
+	void få¡«å……çŸ©å½¢(const æ•°å­¦::SçŸ©å½¢ &);
+	void få¡«å……åœ†å½¢(const æ•°å­¦::Såœ†å½¢ &);
+	void få¡«å……æ¤­åœ†(const æ•°å­¦::Sæ¤­åœ† &);
+	void få¡«å……åœ†è§’çŸ©å½¢(const æ•°å­¦::Såœ†è§’çŸ©å½¢ &);
+public:
+	ComPtr<ID2D1RenderTarget> mæ¸²æŸ“ç›®æ ‡;
+	ComPtr<ID2D1Brush> mç”»ç¬”;
+	const Cåæ ‡è½¬æ¢ *måæ ‡è®¡ç®—;
+	float mçº¿æ¡å®½åº¦ = 1;
 };
-class C×ø±ê×ª»» {
-public:	//ÊäÈëÖ±½Ç×ø±êÈ»ºó×ª»»³É´°¿Ú×ø±ê
-	void fs´óĞ¡(const ÊıÑ§::SÏòÁ¿2 &);
+class Cç”»æ–‡æœ¬ {
+public:
+	void fåˆå§‹åŒ–(ID2D1RenderTarget *, const Cåæ ‡è½¬æ¢ &);
+	void fåˆå§‹åŒ–_çº¯è‰²ç”»ç¬”(const æ•°å­¦::Sé¢œè‰² &);
+	//è®¾ç½®
+	void fsæ ¼å¼(IDWriteTextFormat *);
+	void fsæ ·å¼(Cä¿®æ”¹æ–‡æœ¬æ ¼å¼ &);
+	void fsç”»ç¬”(const ComPtr<ID2D1Brush> &);
+	void fsé¢œè‰²(const æ•°å­¦::Sé¢œè‰² &);
+	void fsé€æ˜åº¦(float);
+	void fsåŒºåŸŸ(const æ•°å­¦::Så‘é‡2 &);
+	void fsåŒºåŸŸ(const æ•°å­¦::Så‘é‡2 &, const æ•°å­¦::Så‘é‡2 &);
+	void fsåŒºåŸŸ(float, float);
+	void fsåŒºåŸŸ(float, float, float, float);
+	void fsåŒºåŸŸ(const æ•°å­¦::SçŸ©å½¢ &);
+	//ç”»
+	void fç»˜åˆ¶æ–‡æœ¬(const std::wstring_view &) const;
+	void fç»˜åˆ¶æ–‡æœ¬å¸ƒå±€(IDWriteTextLayout *) const;
+	void fç»˜åˆ¶æ–‡æœ¬å¸ƒå±€(IDWriteTextLayout *, IDWriteTextRenderer *) const;
+	void fç»˜åˆ¶æ–‡æœ¬å¸ƒå±€(Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€ &) const;
+public:
+	ComPtr<ID2D1RenderTarget> mæ¸²æŸ“ç›®æ ‡;
+	ComPtr<ID2D1Brush> mç”»ç¬”;
+	ComPtr<IDWriteTextFormat> mæ ¼å¼;
+	const Cåæ ‡è½¬æ¢ *måæ ‡è®¡ç®—;
+	D2D1_RECT_F mçŸ©å½¢;
+};
+//==============================================================================
+// äºŒç»´ç»“æ„è®¡ç®—&è½¬æ¢
+//==============================================================================
+class Cç±»å‹è½¬æ¢ {
+public:
+	static D2D1_COLOR_F fé¢œè‰²(const æ•°å­¦::Sé¢œè‰² &);
+	static D2D1_POINT_2F fç‚¹(const æ•°å­¦::Så‘é‡2 &);
+	static std::vector<D2D1_GRADIENT_STOP> fæ¸å˜ç‚¹(const std::vector<Sæ¸å˜ç‚¹> &);
+};
+class Cåæ ‡è½¬æ¢ {
+public:	//è¾“å…¥ç›´è§’åæ ‡ç„¶åè½¬æ¢æˆçª—å£åæ ‡
+	void fså¤§å°(const æ•°å­¦::Så‘é‡2 &);
 	float x(float) const;
 	float y(float) const;
-	float f°Ù·Ö±Èx(float) const;
-	float f°Ù·Ö±Èy(float) const;
-	D2D1_POINT_2F fµã(const ÊıÑ§::SÏòÁ¿2 &) const;
-	D2D_RECT_F f¾ØĞÎ(const ÊıÑ§::S¾ØĞÎ &) const;
-	D2D_RECT_F f¾ØĞÎ_´°¿Ú() const;
-	D2D_RECT_F f¾ØĞÎ_ÖĞĞÄ°ë¾¶(const ÊıÑ§::SÏòÁ¿2 &, const ÊıÑ§::SÏòÁ¿2 &) const;
-	D2D_RECT_F f¾ØĞÎ_×óÉÏÓÒÏÂ(const ÊıÑ§::SÏòÁ¿2 &, const ÊıÑ§::SÏòÁ¿2 &) const;
-	D2D_RECT_F f¾ØĞÎ_×óÉÏÓÒÏÂ(float, float, float, float) const;
-	D2D_RECT_F f¾ØĞÎ_µã(float, float) const;
-	D2D1_ELLIPSE fÔ²ĞÎ(const ÊıÑ§::SÏòÁ¿2 &, float) const;
-	D2D1_ELLIPSE fÔ²ĞÎ(const ÊıÑ§::SÔ²ĞÎ &) const;
-	D2D1_ELLIPSE fÍÖÔ²(const ÊıÑ§::SÏòÁ¿2 &, const ÊıÑ§::SÏòÁ¿2 &) const;
-	D2D1_ELLIPSE fÍÖÔ²(const ÊıÑ§::SÍÖÔ² &) const;
-	D2D1_ROUNDED_RECT fÔ²½Ç¾ØĞÎ(const ÊıÑ§::SÔ²½Ç¾ØĞÎ &) const;
-	D2D1_ROUNDED_RECT fÔ²½Ç¾ØĞÎ(const ÊıÑ§::SÏòÁ¿2 &, const ÊıÑ§::SÏòÁ¿2 &, const ÊıÑ§::SÏòÁ¿2 &) const;
+	float fç™¾åˆ†æ¯”x(float) const;
+	float fç™¾åˆ†æ¯”y(float) const;
+	D2D1_POINT_2F fç‚¹(const æ•°å­¦::Så‘é‡2 &) const;
+	D2D_RECT_F fçŸ©å½¢(const æ•°å­¦::SçŸ©å½¢ &) const;
+	D2D_RECT_F fçŸ©å½¢_çª—å£() const;
+	D2D_RECT_F fçŸ©å½¢_ä¸­å¿ƒåŠå¾„(const æ•°å­¦::Så‘é‡2 &, const æ•°å­¦::Så‘é‡2 &) const;
+	D2D_RECT_F fçŸ©å½¢_å·¦ä¸Šå³ä¸‹(const æ•°å­¦::Så‘é‡2 &, const æ•°å­¦::Så‘é‡2 &) const;
+	D2D_RECT_F fçŸ©å½¢_å·¦ä¸Šå³ä¸‹(float, float, float, float) const;
+	D2D_RECT_F fçŸ©å½¢_ç‚¹(float, float) const;
+	D2D1_ELLIPSE fåœ†å½¢(const æ•°å­¦::Så‘é‡2 &, float) const;
+	D2D1_ELLIPSE fåœ†å½¢(const æ•°å­¦::Såœ†å½¢ &) const;
+	D2D1_ELLIPSE fæ¤­åœ†(const æ•°å­¦::Så‘é‡2 &, const æ•°å­¦::Så‘é‡2 &) const;
+	D2D1_ELLIPSE fæ¤­åœ†(const æ•°å­¦::Sæ¤­åœ† &) const;
+	D2D1_ROUNDED_RECT fåœ†è§’çŸ©å½¢(const æ•°å­¦::Såœ†è§’çŸ©å½¢ &) const;
+	D2D1_ROUNDED_RECT fåœ†è§’çŸ©å½¢(const æ•°å­¦::Så‘é‡2 &, const æ•°å­¦::Så‘é‡2 &, const æ•°å­¦::Så‘é‡2 &) const;
 private:
-	ÊıÑ§::SÏòÁ¿2 m´°¿Ú´óĞ¡;
+	æ•°å­¦::Så‘é‡2 mçª—å£å¤§å°;
 };
 //==============================================================================
-// Â·¾¶
+// è·¯å¾„
 //==============================================================================
-class CĞŞ¸ÄÂ·¾¶¼¸ºÎ {
+class Cä¿®æ”¹è·¯å¾„å‡ ä½• {
 public:
-	CĞŞ¸ÄÂ·¾¶¼¸ºÎ(ID2D1PathGeometry *, const C×ø±ê×ª»» &);
-	~CĞŞ¸ÄÂ·¾¶¼¸ºÎ();
-	void fµã(const ÊıÑ§::SÏòÁ¿2 &);
-	void fÖ±Ïß(const ÊıÑ§::SÏòÁ¿2 &aµã0, const ÊıÑ§::SÏòÁ¿2 &aµã1);
-	void fÔ²»¡(const ÊıÑ§::SÏòÁ¿2 &Ô²ĞÄ, float °ë¾¶, float ¿ªÊ¼, float »¡¶È, bool Ë³Ê±Õë = true);
-	void fÁ¬ĞøÖ±Ïß(const std::vector<ÊıÑ§::SÏòÁ¿2> &);
-	void fÆ½»¬ÇúÏß(const std::vector<ÊıÑ§::SÏòÁ¿2> &);
-	void f±ÕºÏ();
-	void f¶Ï¿ª();
-	void f½áÊø();
+	Cä¿®æ”¹è·¯å¾„å‡ ä½•(ID2D1PathGeometry *, const Cåæ ‡è½¬æ¢ &);
+	~Cä¿®æ”¹è·¯å¾„å‡ ä½•();
+	void fç‚¹(const æ•°å­¦::Så‘é‡2 &);
+	void fç›´çº¿(const æ•°å­¦::Så‘é‡2 &aç‚¹0, const æ•°å­¦::Så‘é‡2 &aç‚¹1);
+	void fåœ†å¼§(const æ•°å­¦::Så‘é‡2 &åœ†å¿ƒ, float åŠå¾„, float å¼€å§‹, float å¼§åº¦, bool é¡ºæ—¶é’ˆ = true);
+	void fè¿ç»­ç›´çº¿(const std::vector<æ•°å­¦::Så‘é‡2> &);
+	void få¹³æ»‘æ›²çº¿(const std::vector<æ•°å­¦::Så‘é‡2> &);
+	void fé—­åˆ();
+	void fæ–­å¼€();
+	void fç»“æŸ();
 private:
-	ComPtr<ID2D1GeometrySink> m¼¸ºÎ²Û;
-	const C×ø±ê×ª»» *m×ø±ê¼ÆËã;
-	ÊıÑ§::SÏòÁ¿2 mµ±Ç°µã;
-	bool mw¿ªÊ¼ = false;
+	ComPtr<ID2D1GeometrySink> må‡ ä½•æ§½;
+	const Cåæ ‡è½¬æ¢ *måæ ‡è®¡ç®—;
+	æ•°å­¦::Så‘é‡2 må½“å‰ç‚¹;
+	bool mwå¼€å§‹ = false;
 };
 //==============================================================================
-// ÎÄ±¾¹¤³§
+// æ–‡æœ¬å·¥å‚
 //==============================================================================
-struct SÎÄ±¾¸ñÊ½²ÎÊı {
-	std::wstring m×ÖÌå = L"Î¢ÈíÑÅºÚ";
-	std::wstring mÓïÑÔÇøÓò = L"zh-cn";
-	float m×ÖºÅ = 36;
-	DWRITE_FONT_WEIGHT m´ÖÌå = DWRITE_FONT_WEIGHT_REGULAR;
-	DWRITE_FONT_STYLE mĞ±Ìå = DWRITE_FONT_STYLE_NORMAL;
-	DWRITE_FONT_STRETCH mÀ­Éì = DWRITE_FONT_STRETCH_NORMAL;
-	DWRITE_TEXT_ALIGNMENT mË®Æ½¶ÔÆë = DWRITE_TEXT_ALIGNMENT_LEADING;//Ä¬ÈÏ×ó¶ÔÆë
-	DWRITE_PARAGRAPH_ALIGNMENT m´¹Ö±¶ÔÆë = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
-	DWRITE_WORD_WRAPPING m×Ô¶¯»»ĞĞ = DWRITE_WORD_WRAPPING_NO_WRAP;
-	void fs×ÖÌå(const std::wstring_view &);
-	void fsÓïÑÔÇøÓò(const std::wstring_view &);
-	void fs×ÖºÅ(float);
-	void fs´ÖÌå(int);
-	void fsĞ±Ìå(int);
-	void fsÀ­Éì(int);
-	void fs×Ô¶¯»»ĞĞ(bool);
-	void fsË®Æ½¶ÔÆë(EÎÄ±¾Ë®Æ½¶ÔÆë);
-	void fs´¹Ö±¶ÔÆë(EÎÄ±¾´¹Ö±¶ÔÆë);
+struct Sæ–‡æœ¬æ ¼å¼å‚æ•° {
+	std::wstring må­—ä½“ = L"å¾®è½¯é›…é»‘";
+	std::wstring mè¯­è¨€åŒºåŸŸ = L"zh-cn";
+	float må­—å· = 36;
+	DWRITE_FONT_WEIGHT mç²—ä½“ = DWRITE_FONT_WEIGHT_REGULAR;
+	DWRITE_FONT_STYLE mæ–œä½“ = DWRITE_FONT_STYLE_NORMAL;
+	DWRITE_FONT_STRETCH mæ‹‰ä¼¸ = DWRITE_FONT_STRETCH_NORMAL;
+	DWRITE_TEXT_ALIGNMENT mæ°´å¹³å¯¹é½ = DWRITE_TEXT_ALIGNMENT_LEADING;//é»˜è®¤å·¦å¯¹é½
+	DWRITE_PARAGRAPH_ALIGNMENT må‚ç›´å¯¹é½ = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
+	DWRITE_WORD_WRAPPING mè‡ªåŠ¨æ¢è¡Œ = DWRITE_WORD_WRAPPING_NO_WRAP;
+	void fså­—ä½“(const std::wstring_view &);
+	void fsè¯­è¨€åŒºåŸŸ(const std::wstring_view &);
+	void fså­—å·(float);
+	void fsç²—ä½“(int);
+	void fsæ–œä½“(int);
+	void fsæ‹‰ä¼¸(int);
+	void fsè‡ªåŠ¨æ¢è¡Œ(bool);
+	void fsæ°´å¹³å¯¹é½(Eæ–‡æœ¬æ°´å¹³å¯¹é½);
+	void fså‚ç›´å¯¹é½(Eæ–‡æœ¬å‚ç›´å¯¹é½);
 };
-class CÎÄ±¾¹¤³§ {
+class Cæ–‡æœ¬å·¥å‚ {
 public:
-//¹¹Ôìº¯Êı
-	CÎÄ±¾¹¤³§();
-	~CÎÄ±¾¹¤³§();
-//º¯Êı
-	HRESULT f³õÊ¼»¯();
-	void fÏú»Ù();
-	tpÎÄ±¾¸ñÊ½ fcÎÄ±¾¸ñÊ½(const SÎÄ±¾¸ñÊ½²ÎÊı &) const;
-	tpÎÄ±¾²¼¾Ö fcÎÄ±¾²¼¾Ö(const std::wstring_view &ÎÄ±¾, IDWriteTextFormat *¸ñÊ½ = nullptr) const;
-	tpÎÄ±¾²¼¾Ö fcÎÄ±¾²¼¾Ö(const std::wstring_view &ÎÄ±¾, const SÎÄ±¾¸ñÊ½²ÎÊı &¸ñÊ½) const;
-	tpÎÄ±¾²¼¾Ö fcÎÄ±¾²¼¾Ö_Ğ¡Êı(double, int Ğ¡ÊıÎ»Êı, IDWriteTextFormat *¸ñÊ½);
-	CĞŞ¸ÄÎÄ±¾²¼¾Ö fĞŞ¸ÄÎÄ±¾²¼¾Ö(const tpÎÄ±¾²¼¾Ö &);
+//æ„é€ å‡½æ•°
+	Cæ–‡æœ¬å·¥å‚();
+	~Cæ–‡æœ¬å·¥å‚();
+//å‡½æ•°
+	HRESULT fåˆå§‹åŒ–();
+	void fé”€æ¯();
+	tpæ–‡æœ¬æ ¼å¼ fcæ–‡æœ¬æ ¼å¼(const Sæ–‡æœ¬æ ¼å¼å‚æ•° &) const;
+	tpæ–‡æœ¬å¸ƒå±€ fcæ–‡æœ¬å¸ƒå±€(const std::wstring_view &æ–‡æœ¬, IDWriteTextFormat *æ ¼å¼ = nullptr) const;
+	tpæ–‡æœ¬å¸ƒå±€ fcæ–‡æœ¬å¸ƒå±€(const std::wstring_view &æ–‡æœ¬, const Sæ–‡æœ¬æ ¼å¼å‚æ•° &æ ¼å¼) const;
+	tpæ–‡æœ¬å¸ƒå±€ fcæ–‡æœ¬å¸ƒå±€_å°æ•°(double, int å°æ•°ä½æ•°, IDWriteTextFormat *æ ¼å¼);
+	Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€ fä¿®æ”¹æ–‡æœ¬å¸ƒå±€(const tpæ–‡æœ¬å¸ƒå±€ &);
 public:
-	ComPtr<IDWriteFactory> mĞ´×Ö¹¤³§;
+	ComPtr<IDWriteFactory> må†™å­—å·¥å‚;
 };
-class CÎÄ±¾¸ñÊ½×ª»» {
+class Cæ–‡æœ¬æ ¼å¼è½¬æ¢ {
 public:
-	static DWRITE_FONT_WEIGHT f´ÖÌå(int);	//0~9
-	static DWRITE_FONT_STYLE fĞ±Ìå(int);	//0~2
-	static DWRITE_FONT_STRETCH fÀ­Éì(int);	//0~9
-	static DWRITE_TEXT_ALIGNMENT fË®Æ½¶ÔÆë(EÎÄ±¾Ë®Æ½¶ÔÆë);
-	static DWRITE_TEXT_ALIGNMENT fË®Æ½¶ÔÆë(int);
-	static DWRITE_PARAGRAPH_ALIGNMENT f´¹Ö±¶ÔÆë(EÎÄ±¾´¹Ö±¶ÔÆë);
-	static DWRITE_PARAGRAPH_ALIGNMENT f´¹Ö±¶ÔÆë(int);
-	static DWRITE_TRIMMING f¼ô²Ã(int);	//0~2
-	static DWRITE_WORD_WRAPPING f×Ô¶¯»»ĞĞ(bool);
-};
-//==============================================================================
-// ÖĞÎÄ×ÖºÅ
-//==============================================================================
-enum EÖĞÎÄ×ÖºÅ {
-	e´óÌØºÅ,eÌØºÅ,
-	e³õºÅ, eĞ¡³õºÅ,
-	e´óÒ»ºÅ, eÒ»ºÅ, eĞ¡Ò»ºÅ,
-	e¶şºÅ, eĞ¡¶şºÅ,
-	eÈıºÅ, eĞ¡ÈıºÅ,
-	eËÄºÅ, eĞ¡ËÄºÅ,
-	eÎåºÅ, eĞ¡ÎåºÅ,
-	eÁùºÅ, eĞ¡ÁùºÅ,
-	eÆßºÅ, eĞ¡ÆßºÅ,
-	e°ËºÅ,
-};
-constexpr float caÖĞÎÄ×ÖºÅ[] = {
-	63, 54,	//ÌØºÅ
-	42, 36,	//³õºÅ
-	31.5, 26, 24,	//Ò»ºÅ
-	22, 18,	//¶şºÅ
-	16, 15,	//ÈıºÅ
-	14, 12,	//ËÄºÅ
-	10.5, 9,	//ÎåºÅ
-	7.5, 6.5,	//ÁùºÅ
-	5.5, 5.25,	//ÆßºÅ
-	5	//°ËºÅ
+	static DWRITE_FONT_WEIGHT fç²—ä½“(int);	//0~9
+	static DWRITE_FONT_STYLE fæ–œä½“(int);	//0~2
+	static DWRITE_FONT_STRETCH fæ‹‰ä¼¸(int);	//0~9
+	static DWRITE_TEXT_ALIGNMENT fæ°´å¹³å¯¹é½(Eæ–‡æœ¬æ°´å¹³å¯¹é½);
+	static DWRITE_TEXT_ALIGNMENT fæ°´å¹³å¯¹é½(int);
+	static DWRITE_PARAGRAPH_ALIGNMENT få‚ç›´å¯¹é½(Eæ–‡æœ¬å‚ç›´å¯¹é½);
+	static DWRITE_PARAGRAPH_ALIGNMENT få‚ç›´å¯¹é½(int);
+	static DWRITE_TRIMMING få‰ªè£(int);	//0~2
+	static DWRITE_WORD_WRAPPING fè‡ªåŠ¨æ¢è¡Œ(bool);
 };
 //==============================================================================
-// ÎÄ±¾ÑùÊ½&ÎÄ±¾²¼¾Ö
+// ä¸­æ–‡å­—å·
 //==============================================================================
-class CĞŞ¸ÄÎÄ±¾¸ñÊ½ {
-public:
-	IDWriteTextFormat *m¸ñÊ½;
-	CĞŞ¸ÄÎÄ±¾¸ñÊ½(IDWriteTextFormat *);
-	~CĞŞ¸ÄÎÄ±¾¸ñÊ½();
-	CĞŞ¸ÄÎÄ±¾¸ñÊ½ &fsË®Æ½¶ÔÆë(EÎÄ±¾Ë®Æ½¶ÔÆë = EÎÄ±¾Ë®Æ½¶ÔÆë::e×ó);
-	CĞŞ¸ÄÎÄ±¾¸ñÊ½ &fs´¹Ö±¶ÔÆë(EÎÄ±¾´¹Ö±¶ÔÆë = EÎÄ±¾´¹Ö±¶ÔÆë::eÉÏ);
-	CĞŞ¸ÄÎÄ±¾¸ñÊ½ &fs¶ÔÆë(EÎÄ±¾Ë®Æ½¶ÔÆë = EÎÄ±¾Ë®Æ½¶ÔÆë::e×ó, EÎÄ±¾´¹Ö±¶ÔÆë = EÎÄ±¾´¹Ö±¶ÔÆë::eÉÏ);
-	CĞŞ¸ÄÎÄ±¾¸ñÊ½ &fs¼ô²Ã(int = 0);
+enum Eä¸­æ–‡å­—å· {
+	eå¤§ç‰¹å·,eç‰¹å·,
+	eåˆå·, eå°åˆå·,
+	eå¤§ä¸€å·, eä¸€å·, eå°ä¸€å·,
+	eäºŒå·, eå°äºŒå·,
+	eä¸‰å·, eå°ä¸‰å·,
+	eå››å·, eå°å››å·,
+	eäº”å·, eå°äº”å·,
+	eå…­å·, eå°å…­å·,
+	eä¸ƒå·, eå°ä¸ƒå·,
+	eå…«å·,
 };
-class CĞŞ¸ÄÎÄ±¾²¼¾Ö {
-public:
-	IDWriteTextLayout *m²¼¾Ö;
-	CĞŞ¸ÄÎÄ±¾²¼¾Ö(IDWriteTextLayout *);
-	~CĞŞ¸ÄÎÄ±¾²¼¾Ö();
-	CĞŞ¸ÄÎÄ±¾²¼¾Ö &fs´ÖÌå(DWRITE_FONT_WEIGHT, DWRITE_TEXT_RANGE = {0, 0});
-	CĞŞ¸ÄÎÄ±¾²¼¾Ö &fsĞ±Ìå(DWRITE_FONT_STYLE, DWRITE_TEXT_RANGE = {0, 0});
-	CĞŞ¸ÄÎÄ±¾²¼¾Ö &fsÀ­Éì(DWRITE_FONT_STRETCH, DWRITE_TEXT_RANGE = {0, 0});
+constexpr float caä¸­æ–‡å­—å·[] = {
+	63, 54,	//ç‰¹å·
+	42, 36,	//åˆå·
+	31.5, 26, 24,	//ä¸€å·
+	22, 18,	//äºŒå·
+	16, 15,	//ä¸‰å·
+	14, 12,	//å››å·
+	10.5, 9,	//äº”å·
+	7.5, 6.5,	//å…­å·
+	5.5, 5.25,	//ä¸ƒå·
+	5	//å…«å·
 };
-class FÎÄ±¾·¶Î§¼ÆËã {
+//==============================================================================
+// æ–‡æœ¬æ ·å¼&æ–‡æœ¬å¸ƒå±€
+//==============================================================================
+class Cä¿®æ”¹æ–‡æœ¬æ ¼å¼ {
 public:
-	UINT32 mÎÄ±¾³¤¶È;
-	FÎÄ±¾·¶Î§¼ÆËã(UINT32);
+	IDWriteTextFormat *mæ ¼å¼;
+	Cä¿®æ”¹æ–‡æœ¬æ ¼å¼(IDWriteTextFormat *);
+	~Cä¿®æ”¹æ–‡æœ¬æ ¼å¼();
+	Cä¿®æ”¹æ–‡æœ¬æ ¼å¼ &fsæ°´å¹³å¯¹é½(Eæ–‡æœ¬æ°´å¹³å¯¹é½ = Eæ–‡æœ¬æ°´å¹³å¯¹é½::eå·¦);
+	Cä¿®æ”¹æ–‡æœ¬æ ¼å¼ &fså‚ç›´å¯¹é½(Eæ–‡æœ¬å‚ç›´å¯¹é½ = Eæ–‡æœ¬å‚ç›´å¯¹é½::eä¸Š);
+	Cä¿®æ”¹æ–‡æœ¬æ ¼å¼ &fså¯¹é½(Eæ–‡æœ¬æ°´å¹³å¯¹é½ = Eæ–‡æœ¬æ°´å¹³å¯¹é½::eå·¦, Eæ–‡æœ¬å‚ç›´å¯¹é½ = Eæ–‡æœ¬å‚ç›´å¯¹é½::eä¸Š);
+	Cä¿®æ”¹æ–‡æœ¬æ ¼å¼ &fså‰ªè£(int = 0);
+};
+class Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€ {
+public:
+	IDWriteTextLayout *må¸ƒå±€;
+	Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€(IDWriteTextLayout *);
+	~Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€();
+	Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€ &fsç²—ä½“(DWRITE_FONT_WEIGHT, DWRITE_TEXT_RANGE = {0, 0});
+	Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€ &fsæ–œä½“(DWRITE_FONT_STYLE, DWRITE_TEXT_RANGE = {0, 0});
+	Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€ &fsæ‹‰ä¼¸(DWRITE_FONT_STRETCH, DWRITE_TEXT_RANGE = {0, 0});
+};
+class Fæ–‡æœ¬èŒƒå›´è®¡ç®— {
+public:
+	UINT32 mæ–‡æœ¬é•¿åº¦;
+	Fæ–‡æœ¬èŒƒå›´è®¡ç®—(UINT32);
 	DWRITE_TEXT_RANGE operator()(int = 0, int = 0) const;
 };
 //==============================================================================
-// »­ÎÄ±¾
+// ç”»æ–‡æœ¬
 //==============================================================================
-class CÎÄ±¾Ğ§¹û : public IDWriteTextRenderer {
-	friend C¶şÎ¬;
-	CÎÄ±¾Ğ§¹û() = default;
+class Cæ–‡æœ¬æ•ˆæœ : public IDWriteTextRenderer {
+	friend CäºŒç»´;
+	Cæ–‡æœ¬æ•ˆæœ() = default;
 public:
-	//ÖØĞ´µÄ·½·¨
+	//IUnknown
 	unsigned long __stdcall AddRef() override;
 	unsigned long __stdcall Release() override;
 	HRESULT __stdcall QueryInterface(IID const&,void**) override;
+	//IDWriteTextRenderer
 	HRESULT __stdcall IsPixelSnappingDisabled(void*, BOOL*) override;
 	HRESULT __stdcall GetCurrentTransform(void*, DWRITE_MATRIX*) override;
 	HRESULT __stdcall GetPixelsPerDip(void*, FLOAT*) override;
@@ -388,19 +397,47 @@ public:
 	HRESULT __stdcall DrawUnderline(void*, FLOAT, FLOAT, DWRITE_UNDERLINE const*, IUnknown*) override;
 	HRESULT __stdcall DrawStrikethrough(void*, FLOAT, FLOAT, DWRITE_STRIKETHROUGH const*,  IUnknown*) override;
 	HRESULT __stdcall DrawInlineObject(void*, FLOAT, FLOAT, IDWriteInlineObject*, BOOL, BOOL, IUnknown*) override;
-	//»­ÎÄ±¾
-	void fsÌî³äÑÕÉ«(const ÊıÑ§::SÑÕÉ« &);
-	void fsÂÖÀªÑÕÉ«(const ÊıÑ§::SÑÕÉ« &);
-	void fsÂÖÀª¿í¶È(float);
-	void fsÍ¸Ã÷¶È(float);
+	//ç”»æ–‡æœ¬
+	void fså¡«å……é¢œè‰²(const æ•°å­¦::Sé¢œè‰² &);
+	void fsè½®å»“é¢œè‰²(const æ•°å­¦::Sé¢œè‰² &);
+	void fsè½®å»“å®½åº¦(float);
+	void fsé€æ˜åº¦(float);
 private:
-	HRESULT f»æÖÆ¼¸ºÎ(ID2D1Geometry *, float x, float y);
-	ComPtr<ID2D1Factory> m¶şÎ¬¹¤³§;
-	ComPtr<ID2D1RenderTarget> mäÖÈ¾Ä¿±ê;
-	ComPtr<ID2D1SolidColorBrush> mÌî³ä»­±Ê;
-	ComPtr<ID2D1SolidColorBrush> mÂÖÀª»­±Ê;
-	float mÂÖÀª¿í¶È = 2;
-	unsigned long mÒıÓÃ¼ÆÊı = 1;
+	HRESULT fç»˜åˆ¶å‡ ä½•(ID2D1Geometry *, float x, float y);
+	ComPtr<ID2D1Factory> mäºŒç»´å·¥å‚;
+	ComPtr<ID2D1RenderTarget> mæ¸²æŸ“ç›®æ ‡;
+	ComPtr<ID2D1SolidColorBrush> må¡«å……ç”»ç¬”;
+	ComPtr<ID2D1SolidColorBrush> mè½®å»“ç”»ç¬”;
+	float mè½®å»“å®½åº¦ = 2;
+	unsigned long må¼•ç”¨è®¡æ•° = 1;
 };
-}	//namespace cflw::Í¼ĞÎ::d2d
-#include "cflwÍ¼ĞÎ_d2d.inl"
+//==============================================================================
+// ç€è‰²å™¨æ•ˆæœ
+//==============================================================================
+//class Cåƒç´ æ•ˆæœ : public ID2D1EffectImpl, public ID2D1DrawTransform {
+//public:
+//	static GUID fç”Ÿæˆç€è‰²å™¨æ ‡è¯†(size_t);
+//	static GUID fç”Ÿæˆç±»æ ‡è¯†(size_t);
+//	Cåƒç´ æ•ˆæœ() = default;
+//	//IUnknown
+//	unsigned long __stdcall AddRef() override;
+//	unsigned long __stdcall Release() override;
+//	HRESULT __stdcall QueryInterface(IID const &, void **) override;
+//	//ID2D1EffectImpl
+//	HRESULT __stdcall Initialize(ID2D1EffectContext *pContextInternal, ID2D1TransformGraph *pTransformGraph) override;
+//	HRESULT __stdcall PrepareForRender(D2D1_CHANGE_TYPE changeType) override;
+//	HRESULT __stdcall SetGraph(ID2D1TransformGraph *pGraph) override;
+//	//ID2D1DrawTransform
+//	HRESULT __stdcall SetDrawInfo(ID2D1DrawInfo *pRenderInfo) override;
+//	//ID2D1Transform
+//	HRESULT __stdcall MapOutputRectToInputRects( const D2D1_RECT_L *pOutputRect, D2D1_RECT_L *pInputRects, UINT32 inputRectCount) const override;
+//	HRESULT __stdcall MapInputRectsToOutputRect(const D2D1_RECT_L *pInputRects, const D2D1_RECT_L *pInputOpaqueSubRects, UINT32 inputRectCount, D2D1_RECT_L *pOutputRect, D2D1_RECT_L *pOutputOpaqueSubRect) override;
+//	HRESULT __stdcall MapInvalidRect(UINT32 inputIndex, D2D1_RECT_L invalidInputRect, D2D1_RECT_L *pInvalidOutputRect) const override;
+//	// Declare ID2D1TransformNode implementation methods.
+//	UINT32 __stdcall GetInputCount() const override;
+//private:
+//	ComPtr<ID2D1DrawInfo> mç”»ä¿¡æ¯;
+//	ComPtr<ID2D1EffectContext> mæ•ˆæœä¸Šä¸‹æ–‡;
+//};
+}	//namespace cflw::å›¾å½¢::d2d
+#include "cflwå›¾å½¢_d2d.inl"

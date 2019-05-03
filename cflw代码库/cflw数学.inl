@@ -20,7 +20,7 @@ template<typename t> std::pair<const t &, const t &> f小大(const t &a, const t
 	using r = std::pair<const t &, const t &>;
 	return a < b ? r{a, b} : r{b, a};
 }
-template<typename t> t f限制(const t &值, const t &最小值, const t &最大值) {
+template<typename t> t f夹取(const t &值, const t &最小值, const t &最大值) {
 	return (值 > 最大值) ? 最大值 : ((值 < 最小值) ? 最小值 : 值);
 }
 template<typename t> t f接近(const t &源值, const t &目标值, const t &接近差) {
@@ -32,7 +32,7 @@ template<typename t> t f倍数渐变(const t &a源值, const t &a目标值, cons
 	} else {
 		const t v差值 = a目标值 - a源值;
 		const t v渐变值 = (t)(v差值 * a差值渐变倍数);
-		const t v限制渐变值 = f限制<t>(f绝对值<t>(v渐变值), f绝对值<t>(a最小渐变), f绝对值<t>(a最大渐变)) * f取符号<t>(v差值);
+		const t v限制渐变值 = f夹取<t>(f绝对值<t>(v渐变值), f绝对值<t>(a最小渐变), f绝对值<t>(a最大渐变)) * f取符号<t>(v差值);
 		const t v接近值 = f接近<t>(a源值 + v限制渐变值, a目标值, f绝对值<t>(a最小渐变));
 		return v接近值;
 	}
@@ -65,7 +65,7 @@ template<typename t> t f上整除(const t &a被除数, const t &a除数) {
 template<typename t> t f求余(const t &a源值, const t &a除数) {
 	return a源值 - a除数 * f下整除<t>(a源值, a除数);
 }
-template<typename t> bool f限制循环(t &a值, const t &a最大值) {
+template<typename t> bool f大于等于环绕(t &a值, const t &a最大值) {
 	//达到最大值则清零并返回真
 	if (a值 >= a最大值) {
 		a值 -= a最大值;
@@ -88,7 +88,7 @@ template<typename t> auto f反插值(const t &a0, const t &a1, const t &d) {
 	return (d - a0) / (a1 - a0);
 }
 //限
-template<typename t> int f限(t &a0, const t &a1) {
+template<typename t> int f环绕取倍数(t &a0, const t &a1) {
 	const int v倍数 = f下整除<int>(a0, a1);
 	a0 -= v倍数 * a1;
 	return v倍数;
@@ -115,7 +115,7 @@ template<typename t> t f对齐(const t &x, const t &y) {
 		return y * std::ceil(a);
 	}
 }
-template<typename t> t f循环(const t &a, const t &a最小, const t &a最大) {
+template<typename t> t f环绕(const t &a, const t &a最小, const t &a最大) {
 	const t v差 = a最大 - a最小;
 	const t v基本倍 = f下整除<t>(a, v差);
 	const t v循环倍 = f上整除<t>(a最小, v差);
@@ -197,7 +197,7 @@ template<typename t> t C角度计算<t>::f平均(const t &a角1, const t &a角2)
 template<typename t> t C角度计算<t>::f取正(const t &a角) const {
 	return a角 - floor(a角 / m周角) * m周角;
 }
-template<typename t> t C角度计算<t>::f限制(const t &a角) const {
+template<typename t> t C角度计算<t>::f夹取(const t &a角) const {
 	t v角 = a角 + m平角;
 	v角 -= floor(v角 / m周角) * m周角;
 	v角 -= m平角;

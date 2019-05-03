@@ -32,20 +32,20 @@ template<> int f取符号<bool>(const bool &x);
 template<typename t> const t& f最大值(const t &a, const t &b);
 template<typename t> const t& f最小值(const t &a, const t &b);
 template<typename t> std::pair<const t &, const t &> f小大(const t &, const t &);
-template<typename t> t f限制(const t &值, const t &最小值, const t &最大值);
+template<typename t> t f夹取(const t &值, const t &最小值, const t &最大值);
 template<typename t> t f接近(const t &源值, const t &目标值, const t &接近差);
 template<typename t> t f倍数渐变(const t &源值, const t &目标值, const float &差值渐变倍数, const t &最小渐变, const t &最大渐变);
 template<typename t> t f线性渐变(const t &源值, const t &目标值, const float &渐变值);
 template<typename t> t f下整除(const t &, const t &);	//商向下取整
 template<typename t> t f上整除(const t &, const t &);	//商向上取整
 template<typename t> t f求余(const t &源值, const t &除数);
-template<typename t> bool f限制循环(t &值, const t &最大值);
+template<typename t> bool f大于等于环绕(t &值, const t &最大值);
 int f10的次方(const int &x);
 template<typename t> t f绝对值(const t &);
 template<typename t> std::tuple<t, t> sincos(const t &);
 template<typename t> t f插值(const t &起始值, const t &终止值, float 中间值);
 template<typename t> auto f反插值(const t &起始值, const t &终止值, const t &目标值);
-template<typename t> int f限(t &被限值, const t &限值);
+template<typename t> int f环绕取倍数(t &被限值, const t &限值);
 template<typename t> t f点乘(const t &, const t& );
 template<typename t> t f叉乘(const t &, const t &);
 template<typename t> t f负(const t &);
@@ -53,7 +53,7 @@ template<typename t> bool f同符号(const t &, const t &);
 template<typename t> t f平方(const t &);
 template<typename t> t f立方(const t &);
 template<typename t> t f对齐(const t &, const t &);//将x对齐到y的整数倍
-template<typename t> t f循环(const t &, const t &最小, const t &最大);
+template<typename t> t f环绕(const t &, const t &最小, const t &最大);
 template<typename t> t f差(const t &, const t &);
 template<typename tk, typename tv> tv f插值2(const std::pair<tk, tv> &, const std::pair<tk, tv> &, const tk &);
 template<typename tk, typename tv> tv f插值2(const tk &, const tv &, const tk &, const tv &, const tk &);
@@ -92,7 +92,7 @@ public:
 	C角度计算(const t &);
 	t f平均(const t &角1, const t &角2) const;
 	t f取正(const t &角) const;	//限制在[0,周角)范围内
-	t f限制(const t &角) const;	//限制在(-平角,平角]范围内
+	t f夹取(const t &角) const;	//限制在(-平角,平角]范围内
 	t f取半(const t &角) const;	//限制在[0,平角)范围内
 	t f旋转渐变(const t &源, const t &目标, const t &最大) const;
 	t f夹角(const t &角1, const t &角2) const;

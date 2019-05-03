@@ -1,700 +1,721 @@
-#include <wrl.h>
-#include "cflw¹¤¾ß.h"
-#include "cflwÍ¼ĞÎ_d2d.h"
-#include "cflwÊÓ´°.h"
-#include "cflwÍ¼ĞÎ_dxÎÆÀí.h"
-//ÉùÃ÷
+ï»¿#include <wrl.h>
+#include "cflwå·¥å…·.h"
+#include "cflwå›¾å½¢_d2d.h"
+#include "cflwè§†çª—.h"
+#include "cflwå›¾å½¢_dxçº¹ç†.h"
+//å£°æ˜
 using Microsoft::WRL::ComPtr;
-namespace cflw::Í¼ĞÎ::d2d {
+namespace cflw::å›¾å½¢::d2d {
 //==============================================================================
-// ¶şÎ¬
+// äºŒç»´
 //==============================================================================
-C¶şÎ¬ *C¶şÎ¬::gÕâ = nullptr;
-//º¯Êı
-C¶şÎ¬::C¶şÎ¬() {
-	assert(gÕâ == nullptr);	//µ¥Àı
-	gÕâ = this;
+CäºŒç»´ *CäºŒç»´::gè¿™ = nullptr;
+//å‡½æ•°
+CäºŒç»´::CäºŒç»´() {
+	assert(gè¿™ == nullptr);	//å•ä¾‹
+	gè¿™ = this;
 }
-HRESULT C¶şÎ¬::f³õÊ¼»¯(HWND a´°¿Ú, float aËõ·Å) {
-	const ÊÓ´°::S¿Í»§Çø³ß´ç v³ß´ç = ÊÓ´°::S¿Í»§Çø³ß´ç::fc´°¿Ú(a´°¿Ú);
-	f³õÊ¼»¯_´°¿Ú´óĞ¡(v³ß´ç.fg¿í() / aËõ·Å, v³ß´ç.fg¸ß() / aËõ·Å);
+HRESULT CäºŒç»´::fåˆå§‹åŒ–(HWND açª—å£, float aç¼©æ”¾) {
+	const è§†çª—::Så®¢æˆ·åŒºå°ºå¯¸ vå°ºå¯¸ = è§†çª—::Så®¢æˆ·åŒºå°ºå¯¸::fcçª—å£(açª—å£);
+	fåˆå§‹åŒ–_çª—å£å¤§å°(vå°ºå¯¸.fgå®½() / aç¼©æ”¾, vå°ºå¯¸.fgé«˜() / aç¼©æ”¾);
 	HRESULT hr;
-	hr = f³õÊ¼»¯_¹¤³§();
+	hr = fåˆå§‹åŒ–_å·¥å‚();
 	if (FAILED(hr)) {
 		return hr;
 	}
-	const ÊıÑ§::SÏòÁ¿2 dpi = fgÃ¿Ó¢´çµãÊı(aËõ·Å);
-	const D2D1_RENDER_TARGET_PROPERTIES väÖÈ¾Ä¿±êÊôĞÔ = D2D1::RenderTargetProperties(
+	const æ•°å­¦::Så‘é‡2 dpi = fgæ¯è‹±å¯¸ç‚¹æ•°(aç¼©æ”¾);
+	const D2D1_RENDER_TARGET_PROPERTIES væ¸²æŸ“ç›®æ ‡å±æ€§ = D2D1::RenderTargetProperties(
 		D2D1_RENDER_TARGET_TYPE_DEFAULT,
 		D2D1::PixelFormat(),
 		dpi.x, dpi.y
 	);
-	ComPtr<ID2D1HwndRenderTarget> v´°¿ÚäÖÈ¾Ä¿±ê;
-	hr = m¶şÎ¬¹¤³§->CreateHwndRenderTarget(
-		väÖÈ¾Ä¿±êÊôĞÔ,
+	ComPtr<ID2D1HwndRenderTarget> vçª—å£æ¸²æŸ“ç›®æ ‡;
+	hr = mäºŒç»´å·¥å‚->CreateHwndRenderTarget(
+		væ¸²æŸ“ç›®æ ‡å±æ€§,
 		D2D1::HwndRenderTargetProperties(
-			a´°¿Ú, D2D1::SizeU(v³ß´ç.fg¿í(), v³ß´ç.fg¸ß())
+			açª—å£, D2D1::SizeU(vå°ºå¯¸.fgå®½(), vå°ºå¯¸.fgé«˜())
 		),
-		&v´°¿ÚäÖÈ¾Ä¿±ê);
+		&vçª—å£æ¸²æŸ“ç›®æ ‡);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	f³õÊ¼»¯_äÖÈ¾Ä¿±ê(v´°¿ÚäÖÈ¾Ä¿±ê.Get());
+	fåˆå§‹åŒ–_æ¸²æŸ“ç›®æ ‡(vçª—å£æ¸²æŸ“ç›®æ ‡.Get());
 	return S_OK;
 }
-HRESULT C¶şÎ¬::f³õÊ¼»¯(IDXGISwapChain *a½»»»Á´, float aËõ·Å) {
-	// ×¢Òâ£º²»Ö§³Öd3d12´´½¨µÄ½»»»Á´
-	ComPtr<IDXGISurface> vºóÌ¨»º³å = nullptr;
-	HRESULT hr = a½»»»Á´->GetBuffer(0, IID_PPV_ARGS(&vºóÌ¨»º³å));
+HRESULT CäºŒç»´::fåˆå§‹åŒ–(IDXGISwapChain *aäº¤æ¢é“¾, float aç¼©æ”¾) {
+	// æ³¨æ„ï¼šä¸æ”¯æŒd3d12åˆ›å»ºçš„äº¤æ¢é“¾
+	ComPtr<IDXGISurface> våå°ç¼“å†² = nullptr;
+	HRESULT hr = aäº¤æ¢é“¾->GetBuffer(0, IID_PPV_ARGS(&våå°ç¼“å†²));
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = f³õÊ¼»¯_¹¤³§();
+	hr = fåˆå§‹åŒ–_å·¥å‚();
 	if (FAILED(hr)) {
 		return hr;
 	}
-	const ÊıÑ§::SÏòÁ¿2 dpi = fgÃ¿Ó¢´çµãÊı(aËõ·Å);
-	const D2D1_RENDER_TARGET_PROPERTIES väÖÈ¾Ä¿±êÊôĞÔ = D2D1::RenderTargetProperties(
+	const æ•°å­¦::Så‘é‡2 dpi = fgæ¯è‹±å¯¸ç‚¹æ•°(aç¼©æ”¾);
+	const D2D1_RENDER_TARGET_PROPERTIES væ¸²æŸ“ç›®æ ‡å±æ€§ = D2D1::RenderTargetProperties(
 		D2D1_RENDER_TARGET_TYPE_DEFAULT,
 		D2D1::PixelFormat(DXGI_FORMAT_R8G8B8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
 		dpi.x, dpi.y);
-	ComPtr<ID2D1RenderTarget> vºóÌ¨äÖÈ¾Ä¿±ê;
-	hr = m¶şÎ¬¹¤³§->CreateDxgiSurfaceRenderTarget(vºóÌ¨»º³å.Get(), väÖÈ¾Ä¿±êÊôĞÔ, &vºóÌ¨äÖÈ¾Ä¿±ê);
+	ComPtr<ID2D1RenderTarget> våå°æ¸²æŸ“ç›®æ ‡;
+	hr = mäºŒç»´å·¥å‚->CreateDxgiSurfaceRenderTarget(våå°ç¼“å†².Get(), væ¸²æŸ“ç›®æ ‡å±æ€§, &våå°æ¸²æŸ“ç›®æ ‡);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	const D2D1_SIZE_F v´óĞ¡ = vºóÌ¨äÖÈ¾Ä¿±ê->GetSize();
-	f³õÊ¼»¯_´°¿Ú´óĞ¡(v´óĞ¡.width, v´óĞ¡.height);
-	f³õÊ¼»¯_äÖÈ¾Ä¿±ê(vºóÌ¨äÖÈ¾Ä¿±ê.Get());
+	const D2D1_SIZE_F vå¤§å° = våå°æ¸²æŸ“ç›®æ ‡->GetSize();
+	fåˆå§‹åŒ–_çª—å£å¤§å°(vå¤§å°.width, vå¤§å°.height);
+	fåˆå§‹åŒ–_æ¸²æŸ“ç›®æ ‡(våå°æ¸²æŸ“ç›®æ ‡.Get());
 	return S_OK;
 }
-HRESULT C¶şÎ¬::f³õÊ¼»¯_¹¤³§() {
-	if (m¶şÎ¬¹¤³§ == nullptr) {
-		HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, m¶şÎ¬¹¤³§.GetAddressOf());
+HRESULT CäºŒç»´::fåˆå§‹åŒ–_å·¥å‚() {
+	if (mäºŒç»´å·¥å‚ == nullptr) {
+		HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, mäºŒç»´å·¥å‚.GetAddressOf());
 		return hr;
 	} else {
 		return S_OK;
 	}
 }
-HRESULT C¶şÎ¬::f³õÊ¼»¯_Éè±¸(IDXGIDevice *aÉè±¸) {
-	HRESULT hr = f³õÊ¼»¯_¹¤³§();
+HRESULT CäºŒç»´::fåˆå§‹åŒ–_è®¾å¤‡(IDXGIDevice *aè®¾å¤‡) {
+	HRESULT hr = fåˆå§‹åŒ–_å·¥å‚();
 	if (FAILED(hr)) {
 		return hr;
 	}
-	m¶şÎ¬¹¤³§->CreateDevice(aÉè±¸, &mÉè±¸);
+	mäºŒç»´å·¥å‚->CreateDevice(aè®¾å¤‡, &mè®¾å¤‡);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = mÉè±¸->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &mÉÏÏÂÎÄ);
+	hr = mè®¾å¤‡->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &mä¸Šä¸‹æ–‡);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	f³õÊ¼»¯_äÖÈ¾Ä¿±ê(mÉÏÏÂÎÄ.Get());
+	fåˆå§‹åŒ–_æ¸²æŸ“ç›®æ ‡(mä¸Šä¸‹æ–‡.Get());
 	return S_OK;
 }
-void C¶şÎ¬::f³õÊ¼»¯_´°¿Ú´óĞ¡(float x, float y) {
-	m´°¿Ú´óĞ¡.x = x;
-	m´°¿Ú´óĞ¡.y = y;
-	if (m×ø±ê¼ÆËã == nullptr) {
-		m×ø±ê¼ÆËã = std::make_unique<C×ø±ê×ª»»>();
+void CäºŒç»´::fåˆå§‹åŒ–_çª—å£å¤§å°(float x, float y) {
+	mçª—å£å¤§å°.x = x;
+	mçª—å£å¤§å°.y = y;
+	if (måæ ‡è®¡ç®— == nullptr) {
+		måæ ‡è®¡ç®— = std::make_unique<Cåæ ‡è½¬æ¢>();
 	}
-	m×ø±ê¼ÆËã->fs´óĞ¡(m´°¿Ú´óĞ¡);
+	måæ ‡è®¡ç®—->fså¤§å°(mçª—å£å¤§å°);
 }
-void C¶şÎ¬::f³õÊ¼»¯_äÖÈ¾Ä¿±ê(ID2D1RenderTarget *a) {
-	mäÖÈ¾Ä¿±ê = a;
-	mäÖÈ¾Ä¿±ê->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
+void CäºŒç»´::fåˆå§‹åŒ–_æ¸²æŸ“ç›®æ ‡(ID2D1RenderTarget *a) {
+	mæ¸²æŸ“ç›®æ ‡ = a;
+	mæ¸²æŸ“ç›®æ ‡->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
 }
-HRESULT C¶şÎ¬::f³õÊ¼»¯_µ¥¸öÎ»Í¼(IDXGISwapChain *a½»»»Á´, float aËõ·Å) {
-	ComPtr<IDXGISurface> vºóÌ¨»º³å = nullptr;
-	HRESULT hr = a½»»»Á´->GetBuffer(0, IID_PPV_ARGS(&vºóÌ¨»º³å));
+HRESULT CäºŒç»´::fåˆå§‹åŒ–_å•ä¸ªä½å›¾(IDXGISwapChain *aäº¤æ¢é“¾, float aç¼©æ”¾) {
+	ComPtr<IDXGISurface> våå°ç¼“å†² = nullptr;
+	HRESULT hr = aäº¤æ¢é“¾->GetBuffer(0, IID_PPV_ARGS(&våå°ç¼“å†²));
 	if (FAILED(hr)) {
 		return hr;
 	}
-	const ÊıÑ§::SÏòÁ¿2 dpi = fgÃ¿Ó¢´çµãÊı(aËõ·Å);
-	const D2D1_BITMAP_PROPERTIES1 vÎ»Í¼ÊôĞÔ = D2D1::BitmapProperties1(
+	const æ•°å­¦::Så‘é‡2 dpi = fgæ¯è‹±å¯¸ç‚¹æ•°(aç¼©æ”¾);
+	const D2D1_BITMAP_PROPERTIES1 vä½å›¾å±æ€§ = D2D1::BitmapProperties1(
 		D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
 		D2D1::PixelFormat(DXGI_FORMAT_UNKNOWN, D2D1_ALPHA_MODE_PREMULTIPLIED),
 		dpi.x, dpi.y
 	);
-	mÉÏÏÂÎÄ->SetDpi(dpi.x, dpi.y);
-	ComPtr<ID2D1Bitmap1> vÎ»Í¼Ä¿±ê;
-	hr = mÉÏÏÂÎÄ->CreateBitmapFromDxgiSurface(vºóÌ¨»º³å.Get(), &vÎ»Í¼ÊôĞÔ, &vÎ»Í¼Ä¿±ê);
+	mä¸Šä¸‹æ–‡->SetDpi(dpi.x, dpi.y);
+	ComPtr<ID2D1Bitmap1> vä½å›¾ç›®æ ‡;
+	hr = mä¸Šä¸‹æ–‡->CreateBitmapFromDxgiSurface(våå°ç¼“å†².Get(), &vä½å›¾å±æ€§, &vä½å›¾ç›®æ ‡);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	mÉÏÏÂÎÄ->SetTarget(vÎ»Í¼Ä¿±ê.Get());
-	const D2D1_SIZE_F v´óĞ¡ = vÎ»Í¼Ä¿±ê->GetSize();
-	f³õÊ¼»¯_´°¿Ú´óĞ¡(v´óĞ¡.width, v´óĞ¡.height);
+	mä¸Šä¸‹æ–‡->SetTarget(vä½å›¾ç›®æ ‡.Get());
+	const D2D1_SIZE_F vå¤§å° = vä½å›¾ç›®æ ‡->GetSize();
+	fåˆå§‹åŒ–_çª—å£å¤§å°(vå¤§å°.width, vå¤§å°.height);
 	return S_OK;
 }
-void C¶şÎ¬::fsËõ·Å(float a) {
+void CäºŒç»´::fé”€æ¯() {
+	mé»˜è®¤æ–‡æœ¬æ ¼å¼.Reset();
+	mæ¸²æŸ“ç›®æ ‡.Reset();
+	mæ–‡æœ¬å·¥å‚.reset();
+	måæ ‡è®¡ç®—.reset();
+	mæ¸²æŸ“æ§åˆ¶.reset();
+	maä½å›¾ç›®æ ‡.clear();
+	mä¸Šä¸‹æ–‡.Reset();
+	mè®¾å¤‡.Reset();
+}
+void CäºŒç»´::fsç¼©æ”¾(float a) {
 	float v = 96 * a;
-	mäÖÈ¾Ä¿±ê->SetDpi(v, v);
+	mæ¸²æŸ“ç›®æ ‡->SetDpi(v, v);
 }
-//»­Í¼
-std::shared_ptr<C»­Í¼ĞÎ> C¶şÎ¬::fc»­Í¼ĞÎ(const ComPtr<ID2D1Brush> &a»­±Ê, float a¿í¶È) {
-	std::shared_ptr<C»­Í¼ĞÎ> vĞÂ = std::make_shared<C»­Í¼ĞÎ>();
-	vĞÂ->f³õÊ¼»¯(mäÖÈ¾Ä¿±ê.Get(), fg×ø±ê¼ÆËã());
-	if (a»­±Ê) {
-		vĞÂ->fs»­±Ê(a»­±Ê);
+//ç”»å›¾
+std::shared_ptr<Cç”»å›¾å½¢> CäºŒç»´::fcç”»å›¾å½¢(const ComPtr<ID2D1Brush> &aç”»ç¬”, float aå®½åº¦) {
+	std::shared_ptr<Cç”»å›¾å½¢> væ–° = std::make_shared<Cç”»å›¾å½¢>();
+	væ–°->fåˆå§‹åŒ–(mæ¸²æŸ“ç›®æ ‡.Get(), fgåæ ‡è®¡ç®—());
+	if (aç”»ç¬”) {
+		væ–°->fsç”»ç¬”(aç”»ç¬”);
 	} else {
-		vĞÂ->f³õÊ¼»¯_´¿É«»­±Ê(ÊıÑ§::SÑÕÉ«::c°×);
+		væ–°->fåˆå§‹åŒ–_çº¯è‰²ç”»ç¬”(æ•°å­¦::Sé¢œè‰²::cç™½);
 	}
-	vĞÂ->fsÏßÌõ¿í¶È(a¿í¶È);
-	return vĞÂ;
+	væ–°->fsçº¿æ¡å®½åº¦(aå®½åº¦);
+	return væ–°;
 }
-std::shared_ptr<C»­ÎÄ±¾> C¶şÎ¬::fc»­ÎÄ±¾(const ComPtr<ID2D1Brush> &a»­±Ê) {
-	std::shared_ptr<C»­ÎÄ±¾> vĞÂ = std::make_shared<C»­ÎÄ±¾>();
-	vĞÂ->f³õÊ¼»¯(mäÖÈ¾Ä¿±ê.Get(), fg×ø±ê¼ÆËã());
-	if (a»­±Ê) {
-		vĞÂ->fs»­±Ê(a»­±Ê);
+std::shared_ptr<Cç”»æ–‡æœ¬> CäºŒç»´::fcç”»æ–‡æœ¬(const ComPtr<ID2D1Brush> &aç”»ç¬”) {
+	std::shared_ptr<Cç”»æ–‡æœ¬> væ–° = std::make_shared<Cç”»æ–‡æœ¬>();
+	væ–°->fåˆå§‹åŒ–(mæ¸²æŸ“ç›®æ ‡.Get(), fgåæ ‡è®¡ç®—());
+	if (aç”»ç¬”) {
+		væ–°->fsç”»ç¬”(aç”»ç¬”);
 	} else {
-		vĞÂ->f³õÊ¼»¯_´¿É«»­±Ê(ÊıÑ§::SÑÕÉ«::c°×);
+		væ–°->fåˆå§‹åŒ–_çº¯è‰²ç”»ç¬”(æ•°å­¦::Sé¢œè‰²::cç™½);
 	}
-	vĞÂ->m¸ñÊ½ = fgÄ¬ÈÏÎÄ±¾¸ñÊ½();
-	return vĞÂ;
+	væ–°->mæ ¼å¼ = fgé»˜è®¤æ–‡æœ¬æ ¼å¼();
+	return væ–°;
 }
-ComPtr<ID2D1SolidColorBrush> C¶şÎ¬::fc´¿É«»­±Ê(const ÊıÑ§::SÑÕÉ« &aÑÕÉ«) const {
-	ComPtr<ID2D1SolidColorBrush> v»­±Ê;
-	mäÖÈ¾Ä¿±ê->CreateSolidColorBrush(CÀàĞÍ×ª»»::fÑÕÉ«(aÑÕÉ«), &v»­±Ê);
-	return v»­±Ê;
+ComPtr<ID2D1SolidColorBrush> CäºŒç»´::fcçº¯è‰²ç”»ç¬”(const æ•°å­¦::Sé¢œè‰² &aé¢œè‰²) const {
+	ComPtr<ID2D1SolidColorBrush> vç”»ç¬”;
+	mæ¸²æŸ“ç›®æ ‡->CreateSolidColorBrush(Cç±»å‹è½¬æ¢::fé¢œè‰²(aé¢œè‰²), &vç”»ç¬”);
+	return vç”»ç¬”;
 }
-ComPtr<ID2D1Bitmap> C¶şÎ¬::fcÎ»Í¼(const dxÎÆÀí::IÎÆÀí &aÎÆÀí) {
-	const D2D1_SIZE_U v´óĞ¡ = {aÎÆÀí.fg¿í(), aÎÆÀí.fg¿í()};
-	const D2D1_BITMAP_PROPERTIES vÊôĞÔ = {{aÎÆÀí.fg¸ñÊ½(), D2D1_ALPHA_MODE_STRAIGHT}, 96, 96};
-	ComPtr<ID2D1Bitmap> vÎ»Í¼;
-	HRESULT hr = mäÖÈ¾Ä¿±ê->CreateBitmap(v´óĞ¡, aÎÆÀí.fgÊı¾İ(), aÎÆÀí.fgĞĞ¾à(), vÊôĞÔ, &vÎ»Í¼);
-	return vÎ»Í¼;
+ComPtr<ID2D1Bitmap> CäºŒç»´::fcä½å›¾(const dxçº¹ç†::Içº¹ç† &açº¹ç†) {
+	const D2D1_SIZE_U vå¤§å° = {açº¹ç†.fgå®½(), açº¹ç†.fgå®½()};
+	const D2D1_BITMAP_PROPERTIES vå±æ€§ = {{açº¹ç†.fgæ ¼å¼(), D2D1_ALPHA_MODE_STRAIGHT}, 96, 96};
+	ComPtr<ID2D1Bitmap> vä½å›¾;
+	HRESULT hr = mæ¸²æŸ“ç›®æ ‡->CreateBitmap(vå¤§å°, açº¹ç†.fgæ•°æ®(), açº¹ç†.fgè¡Œè·(), vå±æ€§, &vä½å›¾);
+	return vä½å›¾;
 }
-ComPtr<ID2D1Bitmap> C¶şÎ¬::fcÎ»Í¼(const ComPtr<IWICBitmapSource> &aÔ´) {
-	ComPtr<ID2D1Bitmap> vÎ»Í¼;
-	HRESULT hr = mäÖÈ¾Ä¿±ê->CreateBitmapFromWicBitmap(aÔ´.Get(), &vÎ»Í¼);
-	return vÎ»Í¼;
+ComPtr<ID2D1Bitmap> CäºŒç»´::fcä½å›¾(const ComPtr<IWICBitmapSource> &aæº) {
+	ComPtr<ID2D1Bitmap> vä½å›¾;
+	HRESULT hr = mæ¸²æŸ“ç›®æ ‡->CreateBitmapFromWicBitmap(aæº.Get(), &vä½å›¾);
+	return vä½å›¾;
 }
-ComPtr<ID2D1BitmapBrush> C¶şÎ¬::fcÎ»Í¼»­±Ê(const ComPtr<ID2D1Bitmap> &aÎ»Í¼) {
-	ComPtr<ID2D1BitmapBrush> v»­±Ê;
-	HRESULT hr = mäÖÈ¾Ä¿±ê->CreateBitmapBrush(aÎ»Í¼.Get(), &v»­±Ê);
-	return v»­±Ê;
+ComPtr<ID2D1BitmapBrush> CäºŒç»´::fcä½å›¾ç”»ç¬”(const ComPtr<ID2D1Bitmap> &aä½å›¾) {
+	ComPtr<ID2D1BitmapBrush> vç”»ç¬”;
+	HRESULT hr = mæ¸²æŸ“ç›®æ ‡->CreateBitmapBrush(aä½å›¾.Get(), &vç”»ç¬”);
+	return vç”»ç¬”;
 }
-ComPtr<ID2D1GradientStopCollection> C¶şÎ¬::fc½¥±äµã¼¯(const std::vector<S½¥±äµã> &a) const {
-	std::vector<D2D1_GRADIENT_STOP> va½¥±äµã = CÀàĞÍ×ª»»::f½¥±äµã(a);
-	ComPtr<ID2D1GradientStopCollection> v½¥±äµã¼¯;
-	mäÖÈ¾Ä¿±ê->CreateGradientStopCollection(va½¥±äµã.data(), va½¥±äµã.size(), &v½¥±äµã¼¯);
-	return v½¥±äµã¼¯;
+ComPtr<ID2D1GradientStopCollection> CäºŒç»´::fcæ¸å˜ç‚¹é›†(const std::vector<Sæ¸å˜ç‚¹> &a) const {
+	std::vector<D2D1_GRADIENT_STOP> vaæ¸å˜ç‚¹ = Cç±»å‹è½¬æ¢::fæ¸å˜ç‚¹(a);
+	ComPtr<ID2D1GradientStopCollection> væ¸å˜ç‚¹é›†;
+	mæ¸²æŸ“ç›®æ ‡->CreateGradientStopCollection(vaæ¸å˜ç‚¹.data(), vaæ¸å˜ç‚¹.size(), &væ¸å˜ç‚¹é›†);
+	return væ¸å˜ç‚¹é›†;
 }
-ComPtr<ID2D1LinearGradientBrush> C¶şÎ¬::fcÏßĞÔ½¥±ä»­±Ê(const std::vector<S½¥±äµã> &a) const {
-	ComPtr<ID2D1GradientStopCollection> v½¥±äµã¼¯ = fc½¥±äµã¼¯(a);
-	ComPtr<ID2D1LinearGradientBrush> v»­±Ê;
-	//Î´Íê³É
-	return v»­±Ê;
+ComPtr<ID2D1LinearGradientBrush> CäºŒç»´::fcçº¿æ€§æ¸å˜ç”»ç¬”(const std::vector<Sæ¸å˜ç‚¹> &a) const {
+	ComPtr<ID2D1GradientStopCollection> væ¸å˜ç‚¹é›† = fcæ¸å˜ç‚¹é›†(a);
+	ComPtr<ID2D1LinearGradientBrush> vç”»ç¬”;
+	//æœªå®Œæˆ
+	return vç”»ç¬”;
 }
-ComPtr<ID2D1RadialGradientBrush> C¶şÎ¬::fc¾¶Ïò½¥±ä»­±Ê(const std::vector<S½¥±äµã> &a) const {
-	ComPtr<ID2D1GradientStopCollection> v½¥±äµã¼¯ = fc½¥±äµã¼¯(a);
-	ComPtr<ID2D1RadialGradientBrush> v»­±Ê;
-	//Î´Íê³É
-	return v»­±Ê;
+ComPtr<ID2D1RadialGradientBrush> CäºŒç»´::fcå¾„å‘æ¸å˜ç”»ç¬”(const std::vector<Sæ¸å˜ç‚¹> &a) const {
+	ComPtr<ID2D1GradientStopCollection> væ¸å˜ç‚¹é›† = fcæ¸å˜ç‚¹é›†(a);
+	ComPtr<ID2D1RadialGradientBrush> vç”»ç¬”;
+	//æœªå®Œæˆ
+	return vç”»ç¬”;
 }
-ComPtr<ID2D1PathGeometry> C¶şÎ¬::fcÂ·¾¶¼¸ºÎ() const {
-	ComPtr<ID2D1PathGeometry> vÂ·¾¶¼¸ºÎ;
-	m¶şÎ¬¹¤³§->CreatePathGeometry(&vÂ·¾¶¼¸ºÎ);
-	return vÂ·¾¶¼¸ºÎ;
+ComPtr<ID2D1PathGeometry> CäºŒç»´::fcè·¯å¾„å‡ ä½•() const {
+	ComPtr<ID2D1PathGeometry> vè·¯å¾„å‡ ä½•;
+	mäºŒç»´å·¥å‚->CreatePathGeometry(&vè·¯å¾„å‡ ä½•);
+	return vè·¯å¾„å‡ ä½•;
 }
-ComPtr<ID2D1Layer> C¶şÎ¬::fc²ã() const {
-	ComPtr<ID2D1Layer> v²ã;
-	mäÖÈ¾Ä¿±ê->CreateLayer(&v²ã);
-	return v²ã;
+ComPtr<ID2D1Layer> CäºŒç»´::fcå±‚() const {
+	ComPtr<ID2D1Layer> vå±‚;
+	mæ¸²æŸ“ç›®æ ‡->CreateLayer(&vå±‚);
+	return vå±‚;
 }
-CĞŞ¸ÄÂ·¾¶¼¸ºÎ C¶şÎ¬::fĞŞ¸ÄÂ·¾¶¼¸ºÎ(const ComPtr<ID2D1PathGeometry> &a) const {
-	return CĞŞ¸ÄÂ·¾¶¼¸ºÎ(a.Get(), fg×ø±ê¼ÆËã());
+Cä¿®æ”¹è·¯å¾„å‡ ä½• CäºŒç»´::fä¿®æ”¹è·¯å¾„å‡ ä½•(const ComPtr<ID2D1PathGeometry> &a) const {
+	return Cä¿®æ”¹è·¯å¾„å‡ ä½•(a.Get(), fgåæ ‡è®¡ç®—());
 }
-ComPtr<CÎÄ±¾Ğ§¹û> C¶şÎ¬::fcÎÄ±¾Ğ§¹û(const ÊıÑ§::SÑÕÉ« &aÃè±ß, const ÊıÑ§::SÑÕÉ« &aÌî³ä) const {
-	CÎÄ±¾Ğ§¹û *v0 = new CÎÄ±¾Ğ§¹û();
-	v0->m¶şÎ¬¹¤³§ = m¶şÎ¬¹¤³§;
-	v0->mäÖÈ¾Ä¿±ê = fgäÖÈ¾Ä¿±ê();
-	mäÖÈ¾Ä¿±ê->CreateSolidColorBrush(CÀàĞÍ×ª»»::fÑÕÉ«(aÌî³ä), &v0->mÌî³ä»­±Ê);
-	mäÖÈ¾Ä¿±ê->CreateSolidColorBrush(CÀàĞÍ×ª»»::fÑÕÉ«(aÃè±ß), &v0->mÂÖÀª»­±Ê);
-	ComPtr<CÎÄ±¾Ğ§¹û> v1;
+ComPtr<Cæ–‡æœ¬æ•ˆæœ> CäºŒç»´::fcæ–‡æœ¬æ•ˆæœ(const æ•°å­¦::Sé¢œè‰² &aæè¾¹, const æ•°å­¦::Sé¢œè‰² &aå¡«å……) const {
+	Cæ–‡æœ¬æ•ˆæœ *v0 = new Cæ–‡æœ¬æ•ˆæœ();
+	v0->mäºŒç»´å·¥å‚ = mäºŒç»´å·¥å‚;
+	v0->mæ¸²æŸ“ç›®æ ‡ = fgæ¸²æŸ“ç›®æ ‡();
+	mæ¸²æŸ“ç›®æ ‡->CreateSolidColorBrush(Cç±»å‹è½¬æ¢::fé¢œè‰²(aå¡«å……), &v0->må¡«å……ç”»ç¬”);
+	mæ¸²æŸ“ç›®æ ‡->CreateSolidColorBrush(Cç±»å‹è½¬æ¢::fé¢œè‰²(aæè¾¹), &v0->mè½®å»“ç”»ç¬”);
+	ComPtr<Cæ–‡æœ¬æ•ˆæœ> v1;
 	*v1.GetAddressOf() = v0;
 	return v1;
 }
-ComPtr<ID2D1Factory3> C¶şÎ¬::fg¶şÎ¬¹¤³§() {
-	if (m¶şÎ¬¹¤³§ == nullptr) {
-		HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, m¶şÎ¬¹¤³§.GetAddressOf());
+ComPtr<ID2D1Effect> CäºŒç»´::fcæ•ˆæœ(const GUID &a) {
+	ComPtr<ID2D1Effect> v;
+	mä¸Šä¸‹æ–‡->CreateEffect(a, &v);
+	return v;
+}
+ComPtr<ID2D1Factory3> CäºŒç»´::fgäºŒç»´å·¥å‚() {
+	if (mäºŒç»´å·¥å‚ == nullptr) {
+		HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, mäºŒç»´å·¥å‚.GetAddressOf());
 	}
-	return m¶şÎ¬¹¤³§;
+	return mäºŒç»´å·¥å‚;
 }
-ComPtr<ID2D1RenderTarget> C¶şÎ¬::fgäÖÈ¾Ä¿±ê() const {
-	return mäÖÈ¾Ä¿±ê;
+ComPtr<ID2D1RenderTarget> CäºŒç»´::fgæ¸²æŸ“ç›®æ ‡() const {
+	return mæ¸²æŸ“ç›®æ ‡;
 }
-C×ø±ê×ª»» &C¶şÎ¬::fg×ø±ê¼ÆËã() const {
-	return *m×ø±ê¼ÆËã;
+Cåæ ‡è½¬æ¢ &CäºŒç»´::fgåæ ‡è®¡ç®—() const {
+	return *måæ ‡è®¡ç®—;
 }
-CÎÄ±¾¹¤³§ &C¶şÎ¬::fgÎÄ±¾¹¤³§() {
-	if (mÎÄ±¾¹¤³§ == nullptr) {
-		mÎÄ±¾¹¤³§ = std::make_unique<CÎÄ±¾¹¤³§>();
-		mÎÄ±¾¹¤³§->f³õÊ¼»¯();
+Cæ–‡æœ¬å·¥å‚ &CäºŒç»´::fgæ–‡æœ¬å·¥å‚() {
+	if (mæ–‡æœ¬å·¥å‚ == nullptr) {
+		mæ–‡æœ¬å·¥å‚ = std::make_unique<Cæ–‡æœ¬å·¥å‚>();
+		mæ–‡æœ¬å·¥å‚->fåˆå§‹åŒ–();
 	}
-	return *mÎÄ±¾¹¤³§;
+	return *mæ–‡æœ¬å·¥å‚;
 }
-CäÖÈ¾¿ØÖÆ &C¶şÎ¬::fgäÖÈ¾¿ØÖÆ() {
-	if (mäÖÈ¾¿ØÖÆ == nullptr) {
-		mäÖÈ¾¿ØÖÆ = std::make_unique<CäÖÈ¾¿ØÖÆ>();
-		mäÖÈ¾¿ØÖÆ->m¶şÎ¬ = this;
+Cæ¸²æŸ“æ§åˆ¶ &CäºŒç»´::fgæ¸²æŸ“æ§åˆ¶() {
+	if (mæ¸²æŸ“æ§åˆ¶ == nullptr) {
+		mæ¸²æŸ“æ§åˆ¶ = std::make_unique<Cæ¸²æŸ“æ§åˆ¶>();
+		mæ¸²æŸ“æ§åˆ¶->mäºŒç»´ = this;
 	}
-	return *mäÖÈ¾¿ØÖÆ;
+	return *mæ¸²æŸ“æ§åˆ¶;
 }
-ComPtr<IDWriteTextFormat> C¶şÎ¬::fgÄ¬ÈÏÎÄ±¾¸ñÊ½() {
-	if (mÄ¬ÈÏÎÄ±¾¸ñÊ½ == nullptr) {
-		CÎÄ±¾¹¤³§ &vÎÄ±¾¹¤³§ = fgÎÄ±¾¹¤³§();
-		mÄ¬ÈÏÎÄ±¾¸ñÊ½ = vÎÄ±¾¹¤³§.fcÎÄ±¾¸ñÊ½(SÎÄ±¾¸ñÊ½²ÎÊı());
+ComPtr<IDWriteTextFormat> CäºŒç»´::fgé»˜è®¤æ–‡æœ¬æ ¼å¼() {
+	if (mé»˜è®¤æ–‡æœ¬æ ¼å¼ == nullptr) {
+		Cæ–‡æœ¬å·¥å‚ &væ–‡æœ¬å·¥å‚ = fgæ–‡æœ¬å·¥å‚();
+		mé»˜è®¤æ–‡æœ¬æ ¼å¼ = væ–‡æœ¬å·¥å‚.fcæ–‡æœ¬æ ¼å¼(Sæ–‡æœ¬æ ¼å¼å‚æ•°());
 	}
-	return mÄ¬ÈÏÎÄ±¾¸ñÊ½;
+	return mé»˜è®¤æ–‡æœ¬æ ¼å¼;
 }
-ÊıÑ§::SÏòÁ¿2 C¶şÎ¬::fgÃ¿Ó¢´çµãÊı(float aËõ·Å) const {
-	ÊıÑ§::SÏòÁ¿2 dpi;
-	if (aËõ·Å) {
-		dpi = ÊıÑ§::SÏòÁ¿2::fcÏàÍ¬(96 * aËõ·Å);
+æ•°å­¦::Så‘é‡2 CäºŒç»´::fgæ¯è‹±å¯¸ç‚¹æ•°(float aç¼©æ”¾) const {
+	æ•°å­¦::Så‘é‡2 dpi;
+	if (aç¼©æ”¾) {
+		dpi = æ•°å­¦::Så‘é‡2::fcç›¸åŒ(96 * aç¼©æ”¾);
 	} else {
-		m¶şÎ¬¹¤³§->GetDesktopDpi(&dpi.x, &dpi.y);
+		mäºŒç»´å·¥å‚->GetDesktopDpi(&dpi.x, &dpi.y);
 	}
 	return dpi;
 }
 //==============================================================================
-// äÖÈ¾¿ØÖÆ
+// æ¸²æŸ“æ§åˆ¶
 //==============================================================================
-void CäÖÈ¾¿ØÖÆ::f¿ªÊ¼() {
-	m¶şÎ¬->mäÖÈ¾Ä¿±ê->BeginDraw();
+void Cæ¸²æŸ“æ§åˆ¶::få¼€å§‹() {
+	mäºŒç»´->mæ¸²æŸ“ç›®æ ‡->BeginDraw();
 }
-void CäÖÈ¾¿ØÖÆ::f¿ªÊ¼(UINT a) {
-	m¶şÎ¬->mÉÏÏÂÎÄ->SetTarget(m¶şÎ¬->maÎ»Í¼Ä¿±ê[a].Get());
-	m¶şÎ¬->mÉÏÏÂÎÄ->BeginDraw();
+void Cæ¸²æŸ“æ§åˆ¶::få¼€å§‹(UINT a) {
+	mäºŒç»´->mä¸Šä¸‹æ–‡->SetTarget(mäºŒç»´->maä½å›¾ç›®æ ‡[a].Get());
+	mäºŒç»´->mä¸Šä¸‹æ–‡->BeginDraw();
 }
-void CäÖÈ¾¿ØÖÆ::fÇåÆÁ() {
-	m¶şÎ¬->mäÖÈ¾Ä¿±ê->Clear(mÇåÆÁÑÕÉ«);
+void Cæ¸²æŸ“æ§åˆ¶::fæ¸…å±() {
+	mäºŒç»´->mæ¸²æŸ“ç›®æ ‡->Clear(mæ¸…å±é¢œè‰²);
 }
-void CäÖÈ¾¿ØÖÆ::f½áÊø() {
-	m¶şÎ¬->mäÖÈ¾Ä¿±ê->EndDraw();
+void Cæ¸²æŸ“æ§åˆ¶::fç»“æŸ() {
+	mäºŒç»´->mæ¸²æŸ“ç›®æ ‡->EndDraw();
 }
-void CäÖÈ¾¿ØÖÆ::fsÇåÆÁÑÕÉ«(const ÊıÑ§::SÑÕÉ« &aÑÕÉ«) {
-	mÇåÆÁÑÕÉ« = CÀàĞÍ×ª»»::fÑÕÉ«(aÑÕÉ«);
+void Cæ¸²æŸ“æ§åˆ¶::fç»˜åˆ¶å›¾åƒ(ID2D1Image *a) {
+	mäºŒç»´->mä¸Šä¸‹æ–‡->DrawImage(a);
+}
+void Cæ¸²æŸ“æ§åˆ¶::fç»˜åˆ¶å›¾åƒ(ID2D1Effect *a) {
+	mäºŒç»´->mä¸Šä¸‹æ–‡->DrawImage(a);
+}
+void Cæ¸²æŸ“æ§åˆ¶::fsæ¸…å±é¢œè‰²(const æ•°å­¦::Sé¢œè‰² &aé¢œè‰²) {
+	mæ¸…å±é¢œè‰² = Cç±»å‹è½¬æ¢::fé¢œè‰²(aé¢œè‰²);
 }
 //==============================================================================
-// »­Í¼ĞÎ
+// ç”»å›¾å½¢
 //==============================================================================
-C»­Í¼ĞÎ::~C»­Í¼ĞÎ() {
-	m»­±Ê.Reset();
-	mäÖÈ¾Ä¿±ê.Reset();
+Cç”»å›¾å½¢::~Cç”»å›¾å½¢() {
+	mç”»ç¬”.Reset();
+	mæ¸²æŸ“ç›®æ ‡.Reset();
 }
-void C»­Í¼ĞÎ::f³õÊ¼»¯(ID2D1RenderTarget *aäÖÈ¾Ä¿±ê, const C×ø±ê×ª»» &a×ø±ê¼ÆËã) {
-	mäÖÈ¾Ä¿±ê = aäÖÈ¾Ä¿±ê;
-	m×ø±ê¼ÆËã = &a×ø±ê¼ÆËã;
+void Cç”»å›¾å½¢::fåˆå§‹åŒ–(ID2D1RenderTarget *aæ¸²æŸ“ç›®æ ‡, const Cåæ ‡è½¬æ¢ &aåæ ‡è®¡ç®—) {
+	mæ¸²æŸ“ç›®æ ‡ = aæ¸²æŸ“ç›®æ ‡;
+	måæ ‡è®¡ç®— = &aåæ ‡è®¡ç®—;
 }
-void C»­Í¼ĞÎ::f³õÊ¼»¯_´¿É«»­±Ê(const ÊıÑ§::SÑÕÉ« &aÑÕÉ«) {
-	const auto &vÑÕÉ« = CÀàĞÍ×ª»»::fÑÕÉ«(aÑÕÉ«);
-	ComPtr<ID2D1SolidColorBrush> v»­±Ê;
-	mäÖÈ¾Ä¿±ê->CreateSolidColorBrush(vÑÕÉ«, &v»­±Ê);
-	m»­±Ê = v»­±Ê;
+void Cç”»å›¾å½¢::fåˆå§‹åŒ–_çº¯è‰²ç”»ç¬”(const æ•°å­¦::Sé¢œè‰² &aé¢œè‰²) {
+	const auto &vé¢œè‰² = Cç±»å‹è½¬æ¢::fé¢œè‰²(aé¢œè‰²);
+	ComPtr<ID2D1SolidColorBrush> vç”»ç¬”;
+	mæ¸²æŸ“ç›®æ ‡->CreateSolidColorBrush(vé¢œè‰², &vç”»ç¬”);
+	mç”»ç¬” = vç”»ç¬”;
 }
-void C»­Í¼ĞÎ::fs»­±Ê(const ComPtr<ID2D1Brush> &a) {
-	m»­±Ê = a;
+void Cç”»å›¾å½¢::fsç”»ç¬”(const ComPtr<ID2D1Brush> &a) {
+	mç”»ç¬” = a;
 }
-void C»­Í¼ĞÎ::fsÏßÌõ¿í¶È(float a) {
-	mÏßÌõ¿í¶È = a;
+void Cç”»å›¾å½¢::fsçº¿æ¡å®½åº¦(float a) {
+	mçº¿æ¡å®½åº¦ = a;
 }
-void C»­Í¼ĞÎ::fsÑÕÉ«(const ÊıÑ§::SÑÕÉ« &a) {
-	const D2D1_COLOR_F vÑÕÉ« = CÀàĞÍ×ª»»::fÑÕÉ«(a);
-	ComPtr<ID2D1SolidColorBrush> v»­±Ê;
-	m»­±Ê.As(&v»­±Ê);
-	v»­±Ê->SetColor(vÑÕÉ«);
+void Cç”»å›¾å½¢::fsé¢œè‰²(const æ•°å­¦::Sé¢œè‰² &a) {
+	const D2D1_COLOR_F vé¢œè‰² = Cç±»å‹è½¬æ¢::fé¢œè‰²(a);
+	ComPtr<ID2D1SolidColorBrush> vç”»ç¬”;
+	mç”»ç¬”.As(&vç”»ç¬”);
+	vç”»ç¬”->SetColor(vé¢œè‰²);
 }
-void C»­Í¼ĞÎ::fsÍ¸Ã÷¶È(float a) {
-	m»­±Ê->SetOpacity(a);
+void Cç”»å›¾å½¢::fsé€æ˜åº¦(float a) {
+	mç”»ç¬”->SetOpacity(a);
 }
-//»­ÏßÌõ
-void C»­Í¼ĞÎ::f»æÖÆµã(const ÊıÑ§::SÏòÁ¿2 &a) {
-	mäÖÈ¾Ä¿±ê->FillRectangle(m×ø±ê¼ÆËã->f¾ØĞÎ_ÖĞĞÄ°ë¾¶(a, {0.5f, 0.5f}), m»­±Ê.Get());
+//ç”»çº¿æ¡
+void Cç”»å›¾å½¢::fç»˜åˆ¶ç‚¹(const æ•°å­¦::Så‘é‡2 &a) {
+	mæ¸²æŸ“ç›®æ ‡->FillRectangle(måæ ‡è®¡ç®—->fçŸ©å½¢_ä¸­å¿ƒåŠå¾„(a, {0.5f, 0.5f}), mç”»ç¬”.Get());
 }
-void C»­Í¼ĞÎ::f»æÖÆÏßÌõ(const ÊıÑ§::SÏß¶Î2 &aÏß¶Î) {
-	mäÖÈ¾Ä¿±ê->DrawLine(m×ø±ê¼ÆËã->fµã(aÏß¶Î.mµã[0]), m×ø±ê¼ÆËã->fµã(aÏß¶Î.mµã[1]), m»­±Ê.Get(), mÏßÌõ¿í¶È);
+void Cç”»å›¾å½¢::fç»˜åˆ¶çº¿æ¡(const æ•°å­¦::Sçº¿æ®µ2 &açº¿æ®µ) {
+	mæ¸²æŸ“ç›®æ ‡->DrawLine(måæ ‡è®¡ç®—->fç‚¹(açº¿æ®µ.mç‚¹[0]), måæ ‡è®¡ç®—->fç‚¹(açº¿æ®µ.mç‚¹[1]), mç”»ç¬”.Get(), mçº¿æ¡å®½åº¦);
 }
-void C»­Í¼ĞÎ::f»æÖÆ¾ØĞÎ(const ÊıÑ§::S¾ØĞÎ &a¾ØĞÎ) {
-	mäÖÈ¾Ä¿±ê->DrawRectangle(m×ø±ê¼ÆËã->f¾ØĞÎ_ÖĞĞÄ°ë¾¶(a¾ØĞÎ.m×ø±ê, a¾ØĞÎ.m°ë³ß´ç), m»­±Ê.Get());
+void Cç”»å›¾å½¢::fç»˜åˆ¶çŸ©å½¢(const æ•°å­¦::SçŸ©å½¢ &açŸ©å½¢) {
+	mæ¸²æŸ“ç›®æ ‡->DrawRectangle(måæ ‡è®¡ç®—->fçŸ©å½¢_ä¸­å¿ƒåŠå¾„(açŸ©å½¢.måæ ‡, açŸ©å½¢.måŠå°ºå¯¸), mç”»ç¬”.Get());
 }
-void C»­Í¼ĞÎ::f»æÖÆĞı×ª¾ØĞÎ(const ÊıÑ§::SĞı×ª¾ØĞÎ &a¾ØĞÎ) {
-	const auto v»­±Ê = m»­±Ê.Get();
-	if (a¾ØĞÎ.m·½Ïò == 0 || a¾ØĞÎ.m·½Ïò == ÊıÑ§::c¦Ğ<float>) {
-		mäÖÈ¾Ä¿±ê->DrawRectangle(m×ø±ê¼ÆËã->f¾ØĞÎ_ÖĞĞÄ°ë¾¶(a¾ØĞÎ.m×ø±ê, a¾ØĞÎ.m°ë³ß´ç), v»­±Ê, mÏßÌõ¿í¶È);
-	} else {	// ÈÎÒâ½Ç¶È
-		ÊıÑ§::SÏòÁ¿2 vµã[4] = {
-			a¾ØĞÎ.m°ë³ß´ç,
-			{a¾ØĞÎ.m°ë³ß´ç.x, -a¾ØĞÎ.m°ë³ß´ç.y},
-			{-a¾ØĞÎ.m°ë³ß´ç.x, -a¾ØĞÎ.m°ë³ß´ç.y},
-			{-a¾ØĞÎ.m°ë³ß´ç.x, a¾ØĞÎ.m°ë³ß´ç.y}
+void Cç”»å›¾å½¢::fç»˜åˆ¶æ—‹è½¬çŸ©å½¢(const æ•°å­¦::Sæ—‹è½¬çŸ©å½¢ &açŸ©å½¢) {
+	const auto vç”»ç¬” = mç”»ç¬”.Get();
+	if (açŸ©å½¢.mæ–¹å‘ == 0 || açŸ©å½¢.mæ–¹å‘ == æ•°å­¦::cÏ€<float>) {
+		mæ¸²æŸ“ç›®æ ‡->DrawRectangle(måæ ‡è®¡ç®—->fçŸ©å½¢_ä¸­å¿ƒåŠå¾„(açŸ©å½¢.måæ ‡, açŸ©å½¢.måŠå°ºå¯¸), vç”»ç¬”, mçº¿æ¡å®½åº¦);
+	} else {	// ä»»æ„è§’åº¦
+		æ•°å­¦::Så‘é‡2 vç‚¹[4] = {
+			açŸ©å½¢.måŠå°ºå¯¸,
+			{açŸ©å½¢.måŠå°ºå¯¸.x, -açŸ©å½¢.måŠå°ºå¯¸.y},
+			{-açŸ©å½¢.måŠå°ºå¯¸.x, -açŸ©å½¢.måŠå°ºå¯¸.y},
+			{-açŸ©å½¢.måŠå°ºå¯¸.x, açŸ©å½¢.måŠå°ºå¯¸.y}
 		};
-		for (auto &v : vµã) {
-			v.fsĞı×ªr(a¾ØĞÎ.m·½Ïò);
-			v += a¾ØĞÎ.m×ø±ê;
+		for (auto &v : vç‚¹) {
+			v.fsæ—‹è½¬r(açŸ©å½¢.mæ–¹å‘);
+			v += açŸ©å½¢.måæ ‡;
 		}
-		D2D1_POINT_2F m×ª»»µã[4] = {
-			m×ø±ê¼ÆËã->fµã(vµã[0]),
-			m×ø±ê¼ÆËã->fµã(vµã[1]),
-			m×ø±ê¼ÆËã->fµã(vµã[2]),
-			m×ø±ê¼ÆËã->fµã(vµã[3])
+		D2D1_POINT_2F mè½¬æ¢ç‚¹[4] = {
+			måæ ‡è®¡ç®—->fç‚¹(vç‚¹[0]),
+			måæ ‡è®¡ç®—->fç‚¹(vç‚¹[1]),
+			måæ ‡è®¡ç®—->fç‚¹(vç‚¹[2]),
+			måæ ‡è®¡ç®—->fç‚¹(vç‚¹[3])
 		};
-		mäÖÈ¾Ä¿±ê->DrawLine(m×ª»»µã[0], m×ª»»µã[1], v»­±Ê, mÏßÌõ¿í¶È);
-		mäÖÈ¾Ä¿±ê->DrawLine(m×ª»»µã[1], m×ª»»µã[2], v»­±Ê, mÏßÌõ¿í¶È);
-		mäÖÈ¾Ä¿±ê->DrawLine(m×ª»»µã[2], m×ª»»µã[3], v»­±Ê, mÏßÌõ¿í¶È);
-		mäÖÈ¾Ä¿±ê->DrawLine(m×ª»»µã[3], m×ª»»µã[0], v»­±Ê, mÏßÌõ¿í¶È);
+		mæ¸²æŸ“ç›®æ ‡->DrawLine(mè½¬æ¢ç‚¹[0], mè½¬æ¢ç‚¹[1], vç”»ç¬”, mçº¿æ¡å®½åº¦);
+		mæ¸²æŸ“ç›®æ ‡->DrawLine(mè½¬æ¢ç‚¹[1], mè½¬æ¢ç‚¹[2], vç”»ç¬”, mçº¿æ¡å®½åº¦);
+		mæ¸²æŸ“ç›®æ ‡->DrawLine(mè½¬æ¢ç‚¹[2], mè½¬æ¢ç‚¹[3], vç”»ç¬”, mçº¿æ¡å®½åº¦);
+		mæ¸²æŸ“ç›®æ ‡->DrawLine(mè½¬æ¢ç‚¹[3], mè½¬æ¢ç‚¹[0], vç”»ç¬”, mçº¿æ¡å®½åº¦);
 	}
 }
-void C»­Í¼ĞÎ::f»æÖÆÔ²ĞÎ(const ÊıÑ§::SÔ²ĞÎ &aÔ²ĞÎ) {
-	mäÖÈ¾Ä¿±ê->DrawEllipse(m×ø±ê¼ÆËã->fÔ²ĞÎ(aÔ²ĞÎ.m×ø±ê, aÔ²ĞÎ.m°ë¾¶), m»­±Ê.Get(), mÏßÌõ¿í¶È);
+void Cç”»å›¾å½¢::fç»˜åˆ¶åœ†å½¢(const æ•°å­¦::Såœ†å½¢ &aåœ†å½¢) {
+	mæ¸²æŸ“ç›®æ ‡->DrawEllipse(måæ ‡è®¡ç®—->fåœ†å½¢(aåœ†å½¢.måæ ‡, aåœ†å½¢.måŠå¾„), mç”»ç¬”.Get(), mçº¿æ¡å®½åº¦);
 }
-void C»­Í¼ĞÎ::f»æÖÆÍÖÔ²(const ÊıÑ§::SÍÖÔ² &aÍÖÔ²) {
-	mäÖÈ¾Ä¿±ê->DrawEllipse(m×ø±ê¼ÆËã->fÍÖÔ²(aÍÖÔ².m×ø±ê, aÍÖÔ².m°ë¾¶), m»­±Ê.Get(), mÏßÌõ¿í¶È);
+void Cç”»å›¾å½¢::fç»˜åˆ¶æ¤­åœ†(const æ•°å­¦::Sæ¤­åœ† &aæ¤­åœ†) {
+	mæ¸²æŸ“ç›®æ ‡->DrawEllipse(måæ ‡è®¡ç®—->fæ¤­åœ†(aæ¤­åœ†.måæ ‡, aæ¤­åœ†.måŠå¾„), mç”»ç¬”.Get(), mçº¿æ¡å®½åº¦);
 }
-void C»­Í¼ĞÎ::f»æÖÆÔ²½Ç¾ØĞÎ(const ÊıÑ§::SÔ²½Ç¾ØĞÎ &a) {
-	mäÖÈ¾Ä¿±ê->DrawRoundedRectangle(m×ø±ê¼ÆËã->fÔ²½Ç¾ØĞÎ(a.m×ø±ê, a.m°ë³ß´ç, a.m½Ç°ë¾¶), m»­±Ê.Get(), mÏßÌõ¿í¶È);
+void Cç”»å›¾å½¢::fç»˜åˆ¶åœ†è§’çŸ©å½¢(const æ•°å­¦::Såœ†è§’çŸ©å½¢ &a) {
+	mæ¸²æŸ“ç›®æ ‡->DrawRoundedRectangle(måæ ‡è®¡ç®—->fåœ†è§’çŸ©å½¢(a.måæ ‡, a.måŠå°ºå¯¸, a.mè§’åŠå¾„), mç”»ç¬”.Get(), mçº¿æ¡å®½åº¦);
 }
-//Ìî³ä
-void C»­Í¼ĞÎ::fÌî³ä¾ØĞÎ(const ÊıÑ§::S¾ØĞÎ &a) {
-	mäÖÈ¾Ä¿±ê->FillRectangle(m×ø±ê¼ÆËã->f¾ØĞÎ_ÖĞĞÄ°ë¾¶(a.m×ø±ê, a.m°ë³ß´ç), m»­±Ê.Get());
+//å¡«å……
+void Cç”»å›¾å½¢::få¡«å……çŸ©å½¢(const æ•°å­¦::SçŸ©å½¢ &a) {
+	mæ¸²æŸ“ç›®æ ‡->FillRectangle(måæ ‡è®¡ç®—->fçŸ©å½¢_ä¸­å¿ƒåŠå¾„(a.måæ ‡, a.måŠå°ºå¯¸), mç”»ç¬”.Get());
 }
-void C»­Í¼ĞÎ::fÌî³äÔ²ĞÎ(const ÊıÑ§::SÔ²ĞÎ &a) {
-	mäÖÈ¾Ä¿±ê->FillEllipse(m×ø±ê¼ÆËã->fÔ²ĞÎ(a.m×ø±ê, a.m°ë¾¶), m»­±Ê.Get());
+void Cç”»å›¾å½¢::få¡«å……åœ†å½¢(const æ•°å­¦::Såœ†å½¢ &a) {
+	mæ¸²æŸ“ç›®æ ‡->FillEllipse(måæ ‡è®¡ç®—->fåœ†å½¢(a.måæ ‡, a.måŠå¾„), mç”»ç¬”.Get());
 }
-void C»­Í¼ĞÎ::fÌî³äÍÖÔ²(const ÊıÑ§::SÍÖÔ² &a) {
-	mäÖÈ¾Ä¿±ê->FillEllipse(m×ø±ê¼ÆËã->fÍÖÔ²(a.m×ø±ê, a.m°ë¾¶), m»­±Ê.Get());
+void Cç”»å›¾å½¢::få¡«å……æ¤­åœ†(const æ•°å­¦::Sæ¤­åœ† &a) {
+	mæ¸²æŸ“ç›®æ ‡->FillEllipse(måæ ‡è®¡ç®—->fæ¤­åœ†(a.måæ ‡, a.måŠå¾„), mç”»ç¬”.Get());
 }
-void C»­Í¼ĞÎ::fÌî³äÔ²½Ç¾ØĞÎ(const ÊıÑ§::SÔ²½Ç¾ØĞÎ &a) {
-	mäÖÈ¾Ä¿±ê->FillRoundedRectangle(m×ø±ê¼ÆËã->fÔ²½Ç¾ØĞÎ(a.m×ø±ê, a.m°ë³ß´ç, a.m½Ç°ë¾¶), m»­±Ê.Get());
-}
-//==============================================================================
-// »­ÎÄ±¾
-//==============================================================================
-void C»­ÎÄ±¾::f³õÊ¼»¯(ID2D1RenderTarget *päÖÈ¾Ä¿±ê, const C×ø±ê×ª»» &a×ø±ê¼ÆËã) {
-	mäÖÈ¾Ä¿±ê = päÖÈ¾Ä¿±ê;
-	m×ø±ê¼ÆËã = &a×ø±ê¼ÆËã;
-	fsÇøÓò(0, 0);
-}
-void C»­ÎÄ±¾::f³õÊ¼»¯_´¿É«»­±Ê(const ÊıÑ§::SÑÕÉ« &aÑÕÉ«) {
-	const auto &vÑÕÉ« = CÀàĞÍ×ª»»::fÑÕÉ«(aÑÕÉ«);
-	ComPtr<ID2D1SolidColorBrush> v»­±Ê;
-	mäÖÈ¾Ä¿±ê->CreateSolidColorBrush(vÑÕÉ«, &v»­±Ê);
-	m»­±Ê = v»­±Ê;
-}
-void C»­ÎÄ±¾::fs¸ñÊ½(IDWriteTextFormat *a) {
-	m¸ñÊ½ = a;
-}
-void C»­ÎÄ±¾::fsÑùÊ½(CĞŞ¸ÄÎÄ±¾¸ñÊ½ &a) {
-	fs¸ñÊ½(a.m¸ñÊ½);
-}
-void C»­ÎÄ±¾::fs»­±Ê(const ComPtr<ID2D1Brush> &a) {
-	m»­±Ê = a;
-}
-void C»­ÎÄ±¾::fsÑÕÉ«(const ÊıÑ§::SÑÕÉ« &a) {
-	const D2D1_COLOR_F vÑÕÉ« = CÀàĞÍ×ª»»::fÑÕÉ«(a);
-	ComPtr<ID2D1SolidColorBrush> v»­±Ê;
-	m»­±Ê.As(&v»­±Ê);
-	v»­±Ê->SetColor(vÑÕÉ«);
-}
-void C»­ÎÄ±¾::fsÍ¸Ã÷¶È(float a) {
-	m»­±Ê->SetOpacity(a);
-}
-void C»­ÎÄ±¾::fsÇøÓò(const ÊıÑ§::SÏòÁ¿2 &a) {
-	m¾ØĞÎ = m×ø±ê¼ÆËã->f¾ØĞÎ_µã(a.x, a.y);
-}
-void C»­ÎÄ±¾::fsÇøÓò(const ÊıÑ§::SÏòÁ¿2 &a×ø±ê, const ÊıÑ§::SÏòÁ¿2 &a°ë³ß´ç) {
-	m¾ØĞÎ = m×ø±ê¼ÆËã->f¾ØĞÎ_ÖĞĞÄ°ë¾¶(a×ø±ê, a°ë³ß´ç);
-}
-void C»­ÎÄ±¾::fsÇøÓò(float x, float y) {
-	m¾ØĞÎ = m×ø±ê¼ÆËã->f¾ØĞÎ_µã(x, y);
-}
-void C»­ÎÄ±¾::fsÇøÓò(float l, float t, float r, float b) {
-	m¾ØĞÎ = m×ø±ê¼ÆËã->f¾ØĞÎ_×óÉÏÓÒÏÂ(l, t, r, b);
-}
-void C»­ÎÄ±¾::fsÇøÓò(const ÊıÑ§::S¾ØĞÎ &a) {
-	m¾ØĞÎ = m×ø±ê¼ÆËã->f¾ØĞÎ_ÖĞĞÄ°ë¾¶(a.m×ø±ê, a.m°ë³ß´ç);
-}
-void C»­ÎÄ±¾::f»æÖÆÎÄ±¾(const std::wstring_view &aÎÄ±¾) const {
-	mäÖÈ¾Ä¿±ê->DrawTextW(aÎÄ±¾.data(), aÎÄ±¾.size(), m¸ñÊ½.Get(), m¾ØĞÎ, m»­±Ê.Get());
-}
-void C»­ÎÄ±¾::f»æÖÆÎÄ±¾²¼¾Ö(IDWriteTextLayout *a²¼¾Ö) const {
-	mäÖÈ¾Ä¿±ê->DrawTextLayout({m¾ØĞÎ.left, m¾ØĞÎ.top}, a²¼¾Ö, m»­±Ê.Get());
-}
-void C»­ÎÄ±¾::f»æÖÆÎÄ±¾²¼¾Ö(IDWriteTextLayout *a²¼¾Ö, IDWriteTextRenderer *aÎÄ±¾äÖÈ¾) const {
-	assert(aÎÄ±¾äÖÈ¾);
-	ComPtr<ID2D1Layer> v²ã;
-	mäÖÈ¾Ä¿±ê->CreateLayer(&v²ã);
-	mäÖÈ¾Ä¿±ê->PushLayer({D2D1::InfiniteRect(), nullptr, D2D1_ANTIALIAS_MODE_ALIASED, D2D1::IdentityMatrix(), 1, m»­±Ê.Get(), D2D1_LAYER_OPTIONS_NONE}, v²ã.Get());
-	a²¼¾Ö->Draw(nullptr, aÎÄ±¾äÖÈ¾, m¾ØĞÎ.left, m¾ØĞÎ.top);
-	mäÖÈ¾Ä¿±ê->PopLayer();
-}
-void C»­ÎÄ±¾::f»æÖÆÎÄ±¾²¼¾Ö(CĞŞ¸ÄÎÄ±¾²¼¾Ö &a²¼¾Ö) const {
-	f»æÖÆÎÄ±¾²¼¾Ö(a²¼¾Ö.m²¼¾Ö);
+void Cç”»å›¾å½¢::få¡«å……åœ†è§’çŸ©å½¢(const æ•°å­¦::Såœ†è§’çŸ©å½¢ &a) {
+	mæ¸²æŸ“ç›®æ ‡->FillRoundedRectangle(måæ ‡è®¡ç®—->fåœ†è§’çŸ©å½¢(a.måæ ‡, a.måŠå°ºå¯¸, a.mè§’åŠå¾„), mç”»ç¬”.Get());
 }
 //==============================================================================
-// ¶şÎ¬½á¹¹
+// ç”»æ–‡æœ¬
 //==============================================================================
-D2D1_POINT_2F CÀàĞÍ×ª»»::fµã(const ÊıÑ§::SÏòÁ¿2 &a) {
+void Cç”»æ–‡æœ¬::fåˆå§‹åŒ–(ID2D1RenderTarget *pæ¸²æŸ“ç›®æ ‡, const Cåæ ‡è½¬æ¢ &aåæ ‡è®¡ç®—) {
+	mæ¸²æŸ“ç›®æ ‡ = pæ¸²æŸ“ç›®æ ‡;
+	måæ ‡è®¡ç®— = &aåæ ‡è®¡ç®—;
+	fsåŒºåŸŸ(0, 0);
+}
+void Cç”»æ–‡æœ¬::fåˆå§‹åŒ–_çº¯è‰²ç”»ç¬”(const æ•°å­¦::Sé¢œè‰² &aé¢œè‰²) {
+	const auto &vé¢œè‰² = Cç±»å‹è½¬æ¢::fé¢œè‰²(aé¢œè‰²);
+	ComPtr<ID2D1SolidColorBrush> vç”»ç¬”;
+	mæ¸²æŸ“ç›®æ ‡->CreateSolidColorBrush(vé¢œè‰², &vç”»ç¬”);
+	mç”»ç¬” = vç”»ç¬”;
+}
+void Cç”»æ–‡æœ¬::fsæ ¼å¼(IDWriteTextFormat *a) {
+	mæ ¼å¼ = a;
+}
+void Cç”»æ–‡æœ¬::fsæ ·å¼(Cä¿®æ”¹æ–‡æœ¬æ ¼å¼ &a) {
+	fsæ ¼å¼(a.mæ ¼å¼);
+}
+void Cç”»æ–‡æœ¬::fsç”»ç¬”(const ComPtr<ID2D1Brush> &a) {
+	mç”»ç¬” = a;
+}
+void Cç”»æ–‡æœ¬::fsé¢œè‰²(const æ•°å­¦::Sé¢œè‰² &a) {
+	const D2D1_COLOR_F vé¢œè‰² = Cç±»å‹è½¬æ¢::fé¢œè‰²(a);
+	ComPtr<ID2D1SolidColorBrush> vç”»ç¬”;
+	mç”»ç¬”.As(&vç”»ç¬”);
+	vç”»ç¬”->SetColor(vé¢œè‰²);
+}
+void Cç”»æ–‡æœ¬::fsé€æ˜åº¦(float a) {
+	mç”»ç¬”->SetOpacity(a);
+}
+void Cç”»æ–‡æœ¬::fsåŒºåŸŸ(const æ•°å­¦::Så‘é‡2 &a) {
+	mçŸ©å½¢ = måæ ‡è®¡ç®—->fçŸ©å½¢_ç‚¹(a.x, a.y);
+}
+void Cç”»æ–‡æœ¬::fsåŒºåŸŸ(const æ•°å­¦::Så‘é‡2 &aåæ ‡, const æ•°å­¦::Så‘é‡2 &aåŠå°ºå¯¸) {
+	mçŸ©å½¢ = måæ ‡è®¡ç®—->fçŸ©å½¢_ä¸­å¿ƒåŠå¾„(aåæ ‡, aåŠå°ºå¯¸);
+}
+void Cç”»æ–‡æœ¬::fsåŒºåŸŸ(float x, float y) {
+	mçŸ©å½¢ = måæ ‡è®¡ç®—->fçŸ©å½¢_ç‚¹(x, y);
+}
+void Cç”»æ–‡æœ¬::fsåŒºåŸŸ(float l, float t, float r, float b) {
+	mçŸ©å½¢ = måæ ‡è®¡ç®—->fçŸ©å½¢_å·¦ä¸Šå³ä¸‹(l, t, r, b);
+}
+void Cç”»æ–‡æœ¬::fsåŒºåŸŸ(const æ•°å­¦::SçŸ©å½¢ &a) {
+	mçŸ©å½¢ = måæ ‡è®¡ç®—->fçŸ©å½¢_ä¸­å¿ƒåŠå¾„(a.måæ ‡, a.måŠå°ºå¯¸);
+}
+void Cç”»æ–‡æœ¬::fç»˜åˆ¶æ–‡æœ¬(const std::wstring_view &aæ–‡æœ¬) const {
+	mæ¸²æŸ“ç›®æ ‡->DrawTextW(aæ–‡æœ¬.data(), aæ–‡æœ¬.size(), mæ ¼å¼.Get(), mçŸ©å½¢, mç”»ç¬”.Get());
+}
+void Cç”»æ–‡æœ¬::fç»˜åˆ¶æ–‡æœ¬å¸ƒå±€(IDWriteTextLayout *aå¸ƒå±€) const {
+	mæ¸²æŸ“ç›®æ ‡->DrawTextLayout({mçŸ©å½¢.left, mçŸ©å½¢.top}, aå¸ƒå±€, mç”»ç¬”.Get());
+}
+void Cç”»æ–‡æœ¬::fç»˜åˆ¶æ–‡æœ¬å¸ƒå±€(IDWriteTextLayout *aå¸ƒå±€, IDWriteTextRenderer *aæ–‡æœ¬æ¸²æŸ“) const {
+	assert(aæ–‡æœ¬æ¸²æŸ“);
+	ComPtr<ID2D1Layer> vå±‚;
+	mæ¸²æŸ“ç›®æ ‡->CreateLayer(&vå±‚);
+	mæ¸²æŸ“ç›®æ ‡->PushLayer({D2D1::InfiniteRect(), nullptr, D2D1_ANTIALIAS_MODE_ALIASED, D2D1::IdentityMatrix(), 1, mç”»ç¬”.Get(), D2D1_LAYER_OPTIONS_NONE}, vå±‚.Get());
+	aå¸ƒå±€->Draw(nullptr, aæ–‡æœ¬æ¸²æŸ“, mçŸ©å½¢.left, mçŸ©å½¢.top);
+	mæ¸²æŸ“ç›®æ ‡->PopLayer();
+}
+void Cç”»æ–‡æœ¬::fç»˜åˆ¶æ–‡æœ¬å¸ƒå±€(Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€ &aå¸ƒå±€) const {
+	fç»˜åˆ¶æ–‡æœ¬å¸ƒå±€(aå¸ƒå±€.må¸ƒå±€);
+}
+//==============================================================================
+// äºŒç»´ç»“æ„
+//==============================================================================
+D2D1_POINT_2F Cç±»å‹è½¬æ¢::fç‚¹(const æ•°å­¦::Så‘é‡2 &a) {
 	return {a.x, a.y};
 }
-D2D1_COLOR_F CÀàĞÍ×ª»»::fÑÕÉ«(const ÊıÑ§::SÑÕÉ« &a) {
+D2D1_COLOR_F Cç±»å‹è½¬æ¢::fé¢œè‰²(const æ•°å­¦::Sé¢œè‰² &a) {
 	return {a.r, a.g, a.b, a.a};
 }
-std::vector<D2D1_GRADIENT_STOP> CÀàĞÍ×ª»»::f½¥±äµã(const std::vector<S½¥±äµã> &a) {
+std::vector<D2D1_GRADIENT_STOP> Cç±»å‹è½¬æ¢::fæ¸å˜ç‚¹(const std::vector<Sæ¸å˜ç‚¹> &a) {
 	const int n = a.size();
-	std::vector<D2D1_GRADIENT_STOP> vÊı×é(n);
+	std::vector<D2D1_GRADIENT_STOP> væ•°ç»„(n);
 	for (int i = 0; i != n; ++i) {
-		const S½¥±äµã &v0 = a[i];
-		D2D1_GRADIENT_STOP &v1 = vÊı×é[i];
-		v1.position = v0.mÎ»ÖÃ;
-		v1.color = CÀàĞÍ×ª»»::fÑÕÉ«(v0.mÑÕÉ«);
+		const Sæ¸å˜ç‚¹ &v0 = a[i];
+		D2D1_GRADIENT_STOP &v1 = væ•°ç»„[i];
+		v1.position = v0.mä½ç½®;
+		v1.color = Cç±»å‹è½¬æ¢::fé¢œè‰²(v0.mé¢œè‰²);
 	}
-	return vÊı×é;
+	return væ•°ç»„;
 }
-//¶şÎ¬½á¹¹×ø±ê
-void C×ø±ê×ª»»::fs´óĞ¡(const ÊıÑ§::SÏòÁ¿2 &a´°¿Ú´óĞ¡) {
-	m´°¿Ú´óĞ¡ = a´°¿Ú´óĞ¡;
+//äºŒç»´ç»“æ„åæ ‡
+void Cåæ ‡è½¬æ¢::fså¤§å°(const æ•°å­¦::Så‘é‡2 &açª—å£å¤§å°) {
+	mçª—å£å¤§å° = açª—å£å¤§å°;
 }
-float C×ø±ê×ª»»::x(float X) const {
-	return ÊıÑ§::f´°¿Ú×ø±êx(X, m´°¿Ú´óĞ¡.x);
+float Cåæ ‡è½¬æ¢::x(float X) const {
+	return æ•°å­¦::fçª—å£åæ ‡x(X, mçª—å£å¤§å°.x);
 }
-float C×ø±ê×ª»»::y(float Y) const {
-	return ÊıÑ§::f´°¿Ú×ø±êy(Y, m´°¿Ú´óĞ¡.y);
+float Cåæ ‡è½¬æ¢::y(float Y) const {
+	return æ•°å­¦::fçª—å£åæ ‡y(Y, mçª—å£å¤§å°.y);
 }
-float C×ø±ê×ª»»::f°Ù·Ö±Èx(float X) const {
-	return (X + 1) / 2 * m´°¿Ú´óĞ¡.x;
+float Cåæ ‡è½¬æ¢::fç™¾åˆ†æ¯”x(float X) const {
+	return (X + 1) / 2 * mçª—å£å¤§å°.x;
 }
-float C×ø±ê×ª»»::f°Ù·Ö±Èy(float Y) const {
-	return (1 - Y) / -2 * m´°¿Ú´óĞ¡.y;
+float Cåæ ‡è½¬æ¢::fç™¾åˆ†æ¯”y(float Y) const {
+	return (1 - Y) / -2 * mçª—å£å¤§å°.y;
 }
-D2D1_POINT_2F C×ø±ê×ª»»::fµã(const ÊıÑ§::SÏòÁ¿2 &a) const {
+D2D1_POINT_2F Cåæ ‡è½¬æ¢::fç‚¹(const æ•°å­¦::Så‘é‡2 &a) const {
 	return {x(a.x), y(a.y)};
 }
-D2D_RECT_F C×ø±ê×ª»»::f¾ØĞÎ(const ÊıÑ§::S¾ØĞÎ &a) const {
-	return f¾ØĞÎ_ÖĞĞÄ°ë¾¶(a.m×ø±ê, a.m°ë³ß´ç);
+D2D_RECT_F Cåæ ‡è½¬æ¢::fçŸ©å½¢(const æ•°å­¦::SçŸ©å½¢ &a) const {
+	return fçŸ©å½¢_ä¸­å¿ƒåŠå¾„(a.måæ ‡, a.måŠå°ºå¯¸);
 }
-D2D_RECT_F C×ø±ê×ª»»::f¾ØĞÎ_´°¿Ú() const {
-	return {0, 0, m´°¿Ú´óĞ¡.x, m´°¿Ú´óĞ¡.y};
+D2D_RECT_F Cåæ ‡è½¬æ¢::fçŸ©å½¢_çª—å£() const {
+	return {0, 0, mçª—å£å¤§å°.x, mçª—å£å¤§å°.y};
 }
-D2D_RECT_F C×ø±ê×ª»»::f¾ØĞÎ_ÖĞĞÄ°ë¾¶(const ÊıÑ§::SÏòÁ¿2 &a, const ÊıÑ§::SÏòÁ¿2 &r) const {
-	return f¾ØĞÎ_×óÉÏÓÒÏÂ(a.x-r.x, a.y+r.y, a.x+r.x, a.y-r.y);
+D2D_RECT_F Cåæ ‡è½¬æ¢::fçŸ©å½¢_ä¸­å¿ƒåŠå¾„(const æ•°å­¦::Så‘é‡2 &a, const æ•°å­¦::Så‘é‡2 &r) const {
+	return fçŸ©å½¢_å·¦ä¸Šå³ä¸‹(a.x-r.x, a.y+r.y, a.x+r.x, a.y-r.y);
 }
-D2D_RECT_F C×ø±ê×ª»»::f¾ØĞÎ_×óÉÏÓÒÏÂ(const ÊıÑ§::SÏòÁ¿2 &lt, const ÊıÑ§::SÏòÁ¿2 &rb) const {
+D2D_RECT_F Cåæ ‡è½¬æ¢::fçŸ©å½¢_å·¦ä¸Šå³ä¸‹(const æ•°å­¦::Så‘é‡2 &lt, const æ•°å­¦::Så‘é‡2 &rb) const {
 	return {x(lt.x), y(lt.y), x(rb.x), y(rb.y)};
 }
-D2D_RECT_F C×ø±ê×ª»»::f¾ØĞÎ_×óÉÏÓÒÏÂ(float l, float t, float r, float b) const {
+D2D_RECT_F Cåæ ‡è½¬æ¢::fçŸ©å½¢_å·¦ä¸Šå³ä¸‹(float l, float t, float r, float b) const {
 	return {x(l), y(t), x(r), y(b)};
 }
-D2D_RECT_F C×ø±ê×ª»»::f¾ØĞÎ_µã(float X, float Y) const {
-	return f¾ØĞÎ_×óÉÏÓÒÏÂ(X, Y, X, Y);
+D2D_RECT_F Cåæ ‡è½¬æ¢::fçŸ©å½¢_ç‚¹(float X, float Y) const {
+	return fçŸ©å½¢_å·¦ä¸Šå³ä¸‹(X, Y, X, Y);
 }
-D2D1_ELLIPSE C×ø±ê×ª»»::fÔ²ĞÎ(const ÊıÑ§::SÔ²ĞÎ &a) const {
-	return {fµã(a.m×ø±ê), a.m°ë¾¶, a.m°ë¾¶};
+D2D1_ELLIPSE Cåæ ‡è½¬æ¢::fåœ†å½¢(const æ•°å­¦::Såœ†å½¢ &a) const {
+	return {fç‚¹(a.måæ ‡), a.måŠå¾„, a.måŠå¾„};
 }
-D2D1_ELLIPSE C×ø±ê×ª»»::fÔ²ĞÎ(const ÊıÑ§::SÏòÁ¿2 &a, float r) const {
-	return {fµã(a), r, r};
+D2D1_ELLIPSE Cåæ ‡è½¬æ¢::fåœ†å½¢(const æ•°å­¦::Så‘é‡2 &a, float r) const {
+	return {fç‚¹(a), r, r};
 }
-D2D1_ELLIPSE C×ø±ê×ª»»::fÍÖÔ²(const ÊıÑ§::SÍÖÔ² &a) const {
-	return fÍÖÔ²(a.m×ø±ê, a.m°ë¾¶);
+D2D1_ELLIPSE Cåæ ‡è½¬æ¢::fæ¤­åœ†(const æ•°å­¦::Sæ¤­åœ† &a) const {
+	return fæ¤­åœ†(a.måæ ‡, a.måŠå¾„);
 }
-D2D1_ELLIPSE C×ø±ê×ª»»::fÍÖÔ²(const ÊıÑ§::SÏòÁ¿2 &a, const ÊıÑ§::SÏòÁ¿2 &r) const {
-	return {fµã(a), r.x, r.y};
+D2D1_ELLIPSE Cåæ ‡è½¬æ¢::fæ¤­åœ†(const æ•°å­¦::Så‘é‡2 &a, const æ•°å­¦::Så‘é‡2 &r) const {
+	return {fç‚¹(a), r.x, r.y};
 }
-D2D1_ROUNDED_RECT C×ø±ê×ª»»::fÔ²½Ç¾ØĞÎ(const ÊıÑ§::SÔ²½Ç¾ØĞÎ &a) const {
-	return {f¾ØĞÎ_ÖĞĞÄ°ë¾¶(a.m×ø±ê, a.m°ë³ß´ç), a.m½Ç°ë¾¶.x, a.m½Ç°ë¾¶.y};
+D2D1_ROUNDED_RECT Cåæ ‡è½¬æ¢::fåœ†è§’çŸ©å½¢(const æ•°å­¦::Såœ†è§’çŸ©å½¢ &a) const {
+	return {fçŸ©å½¢_ä¸­å¿ƒåŠå¾„(a.måæ ‡, a.måŠå°ºå¯¸), a.mè§’åŠå¾„.x, a.mè§’åŠå¾„.y};
 }
-D2D1_ROUNDED_RECT C×ø±ê×ª»»::fÔ²½Ç¾ØĞÎ(const ÊıÑ§::SÏòÁ¿2 &a, const ÊıÑ§::SÏòÁ¿2 &r, const ÊıÑ§::SÏòÁ¿2 &rr) const {
-	return {f¾ØĞÎ_ÖĞĞÄ°ë¾¶(a, r), rr.x, rr.y};
+D2D1_ROUNDED_RECT Cåæ ‡è½¬æ¢::fåœ†è§’çŸ©å½¢(const æ•°å­¦::Så‘é‡2 &a, const æ•°å­¦::Så‘é‡2 &r, const æ•°å­¦::Så‘é‡2 &rr) const {
+	return {fçŸ©å½¢_ä¸­å¿ƒåŠå¾„(a, r), rr.x, rr.y};
 }
 //==============================================================================
-// Â·¾¶
+// è·¯å¾„
 //==============================================================================
-CĞŞ¸ÄÂ·¾¶¼¸ºÎ::CĞŞ¸ÄÂ·¾¶¼¸ºÎ(ID2D1PathGeometry *aÂ·¾¶¼¸ºÎ, const C×ø±ê×ª»» &a×ø±ê¼ÆËã):
-	m×ø±ê¼ÆËã(&a×ø±ê¼ÆËã) {
-	assert(aÂ·¾¶¼¸ºÎ);
-	HRESULT hr = aÂ·¾¶¼¸ºÎ->Open(&m¼¸ºÎ²Û);
+Cä¿®æ”¹è·¯å¾„å‡ ä½•::Cä¿®æ”¹è·¯å¾„å‡ ä½•(ID2D1PathGeometry *aè·¯å¾„å‡ ä½•, const Cåæ ‡è½¬æ¢ &aåæ ‡è®¡ç®—):
+	måæ ‡è®¡ç®—(&aåæ ‡è®¡ç®—) {
+	assert(aè·¯å¾„å‡ ä½•);
+	HRESULT hr = aè·¯å¾„å‡ ä½•->Open(&må‡ ä½•æ§½);
 	assert(SUCCEEDED(hr));
 }
-CĞŞ¸ÄÂ·¾¶¼¸ºÎ::~CĞŞ¸ÄÂ·¾¶¼¸ºÎ() {
-	f½áÊø();
+Cä¿®æ”¹è·¯å¾„å‡ ä½•::~Cä¿®æ”¹è·¯å¾„å‡ ä½•() {
+	fç»“æŸ();
 }
-void CĞŞ¸ÄÂ·¾¶¼¸ºÎ::f½áÊø() {
-	if (m¼¸ºÎ²Û) {
-		if (mw¿ªÊ¼) {
-			m¼¸ºÎ²Û->EndFigure(D2D1_FIGURE_END_OPEN);
+void Cä¿®æ”¹è·¯å¾„å‡ ä½•::fç»“æŸ() {
+	if (må‡ ä½•æ§½) {
+		if (mwå¼€å§‹) {
+			må‡ ä½•æ§½->EndFigure(D2D1_FIGURE_END_OPEN);
 		}
-		m¼¸ºÎ²Û->Close();
-		m¼¸ºÎ²Û = nullptr;
+		må‡ ä½•æ§½->Close();
+		må‡ ä½•æ§½ = nullptr;
 	}
 }
-void CĞŞ¸ÄÂ·¾¶¼¸ºÎ::fµã(const ÊıÑ§::SÏòÁ¿2 &a) {
-	if (!mw¿ªÊ¼) {
-		m¼¸ºÎ²Û->BeginFigure(m×ø±ê¼ÆËã->fµã(a), D2D1_FIGURE_BEGIN_HOLLOW);
-		mµ±Ç°µã = a;
-		mw¿ªÊ¼ = true;
+void Cä¿®æ”¹è·¯å¾„å‡ ä½•::fç‚¹(const æ•°å­¦::Så‘é‡2 &a) {
+	if (!mwå¼€å§‹) {
+		må‡ ä½•æ§½->BeginFigure(måæ ‡è®¡ç®—->fç‚¹(a), D2D1_FIGURE_BEGIN_HOLLOW);
+		må½“å‰ç‚¹ = a;
+		mwå¼€å§‹ = true;
 	}
-	if (mµ±Ç°µã != a) {
-		m¼¸ºÎ²Û->AddLine(m×ø±ê¼ÆËã->fµã(a));
-		mµ±Ç°µã = a;
+	if (må½“å‰ç‚¹ != a) {
+		må‡ ä½•æ§½->AddLine(måæ ‡è®¡ç®—->fç‚¹(a));
+		må½“å‰ç‚¹ = a;
 	}
 }
-void CĞŞ¸ÄÂ·¾¶¼¸ºÎ::fÖ±Ïß(const ÊıÑ§::SÏòÁ¿2 &a0, const ÊıÑ§::SÏòÁ¿2 &a1) {
-	fµã(a0);
-	fµã(a1);
+void Cä¿®æ”¹è·¯å¾„å‡ ä½•::fç›´çº¿(const æ•°å­¦::Så‘é‡2 &a0, const æ•°å­¦::Så‘é‡2 &a1) {
+	fç‚¹(a0);
+	fç‚¹(a1);
 }
-void CĞŞ¸ÄÂ·¾¶¼¸ºÎ::fÔ²»¡(const ÊıÑ§::SÏòÁ¿2 &aÔ²ĞÄ, float a°ë¾¶, float aÊ¼, float a»¡¶È, bool aË³Ê±Õë) {
-	assert(a»¡¶È <= ÊıÑ§::c¶ş¦Ğ<float>);
-	const float v·½Ïò·ûºÅ = aË³Ê±Õë ? -1 : 1;
-	const ÊıÑ§::SÏòÁ¿2 v¿ªÊ¼µã = aÔ²ĞÄ + ÊıÑ§::SÏòÁ¿2::fc·½Ïòr(a°ë¾¶, aÊ¼);
-	const ÊıÑ§::SÏòÁ¿2 v½áÊøµã = aÔ²ĞÄ + ÊıÑ§::SÏòÁ¿2::fc·½Ïòr(a°ë¾¶, aÊ¼ + v·½Ïò·ûºÅ * a»¡¶È);
-	const D2D1_SWEEP_DIRECTION vË³Ê±Õë = aË³Ê±Õë ? D2D1_SWEEP_DIRECTION_CLOCKWISE : D2D1_SWEEP_DIRECTION_COUNTER_CLOCKWISE;
-	fµã(v¿ªÊ¼µã);
-	const D2D1_SIZE_F v°ë¾¶ = D2D1::SizeF(a°ë¾¶, a°ë¾¶);
-	if (a»¡¶È > ÊıÑ§::c¦Ğ<float>) {	//»¡¶È´óÓÚ¦ĞÊ±·Ö¸î£¬±ÜÃâ»¡¶È½Ó½ü2¦Ğ³öÏÖÍ¼ĞÎ´íÂÒÎÊÌâ
-		const ÊıÑ§::SÏòÁ¿2 vÖĞµã = aÔ²ĞÄ + ÊıÑ§::SÏòÁ¿2::fc·½Ïòr(a°ë¾¶, aÊ¼ + a»¡¶È / 2 * v·½Ïò·ûºÅ);
-		m¼¸ºÎ²Û->AddArc(D2D1::ArcSegment(m×ø±ê¼ÆËã->fµã(vÖĞµã), v°ë¾¶, 0, vË³Ê±Õë, D2D1_ARC_SIZE_SMALL));
+void Cä¿®æ”¹è·¯å¾„å‡ ä½•::fåœ†å¼§(const æ•°å­¦::Så‘é‡2 &aåœ†å¿ƒ, float aåŠå¾„, float aå§‹, float aå¼§åº¦, bool aé¡ºæ—¶é’ˆ) {
+	assert(aå¼§åº¦ <= æ•°å­¦::cäºŒÏ€<float>);
+	const float væ–¹å‘ç¬¦å· = aé¡ºæ—¶é’ˆ ? -1 : 1;
+	const æ•°å­¦::Så‘é‡2 vå¼€å§‹ç‚¹ = aåœ†å¿ƒ + æ•°å­¦::Så‘é‡2::fcæ–¹å‘r(aåŠå¾„, aå§‹);
+	const æ•°å­¦::Så‘é‡2 vç»“æŸç‚¹ = aåœ†å¿ƒ + æ•°å­¦::Så‘é‡2::fcæ–¹å‘r(aåŠå¾„, aå§‹ + væ–¹å‘ç¬¦å· * aå¼§åº¦);
+	const D2D1_SWEEP_DIRECTION vé¡ºæ—¶é’ˆ = aé¡ºæ—¶é’ˆ ? D2D1_SWEEP_DIRECTION_CLOCKWISE : D2D1_SWEEP_DIRECTION_COUNTER_CLOCKWISE;
+	fç‚¹(vå¼€å§‹ç‚¹);
+	const D2D1_SIZE_F våŠå¾„ = D2D1::SizeF(aåŠå¾„, aåŠå¾„);
+	if (aå¼§åº¦ > æ•°å­¦::cÏ€<float>) {	//å¼§åº¦å¤§äºÏ€æ—¶åˆ†å‰²ï¼Œé¿å…å¼§åº¦æ¥è¿‘2Ï€å‡ºç°å›¾å½¢é”™ä¹±é—®é¢˜
+		const æ•°å­¦::Så‘é‡2 vä¸­ç‚¹ = aåœ†å¿ƒ + æ•°å­¦::Så‘é‡2::fcæ–¹å‘r(aåŠå¾„, aå§‹ + aå¼§åº¦ / 2 * væ–¹å‘ç¬¦å·);
+		må‡ ä½•æ§½->AddArc(D2D1::ArcSegment(måæ ‡è®¡ç®—->fç‚¹(vä¸­ç‚¹), våŠå¾„, 0, vé¡ºæ—¶é’ˆ, D2D1_ARC_SIZE_SMALL));
 	}
-	m¼¸ºÎ²Û->AddArc(D2D1::ArcSegment(m×ø±ê¼ÆËã->fµã(v½áÊøµã), v°ë¾¶, 0, vË³Ê±Õë, D2D1_ARC_SIZE_SMALL));
-	mµ±Ç°µã = v½áÊøµã;
+	må‡ ä½•æ§½->AddArc(D2D1::ArcSegment(måæ ‡è®¡ç®—->fç‚¹(vç»“æŸç‚¹), våŠå¾„, 0, vé¡ºæ—¶é’ˆ, D2D1_ARC_SIZE_SMALL));
+	må½“å‰ç‚¹ = vç»“æŸç‚¹;
 }
-void CĞŞ¸ÄÂ·¾¶¼¸ºÎ::fÁ¬ĞøÖ±Ïß(const std::vector<ÊıÑ§::SÏòÁ¿2> &a) {
-	if (!mw¿ªÊ¼) {
-		m¼¸ºÎ²Û->BeginFigure(m×ø±ê¼ÆËã->fµã(a[0]), D2D1_FIGURE_BEGIN_HOLLOW);
-		mw¿ªÊ¼ = true;
+void Cä¿®æ”¹è·¯å¾„å‡ ä½•::fè¿ç»­ç›´çº¿(const std::vector<æ•°å­¦::Så‘é‡2> &a) {
+	if (!mwå¼€å§‹) {
+		må‡ ä½•æ§½->BeginFigure(måæ ‡è®¡ç®—->fç‚¹(a[0]), D2D1_FIGURE_BEGIN_HOLLOW);
+		mwå¼€å§‹ = true;
 	} else {
-		m¼¸ºÎ²Û->AddLine(m×ø±ê¼ÆËã->fµã(a[0]));
+		må‡ ä½•æ§½->AddLine(måæ ‡è®¡ç®—->fç‚¹(a[0]));
 	}
 	const int n = a.size();
 	for (int i = 1; i != n; ++i) {
-		m¼¸ºÎ²Û->AddLine(m×ø±ê¼ÆËã->fµã(a[i]));
+		må‡ ä½•æ§½->AddLine(måæ ‡è®¡ç®—->fç‚¹(a[i]));
 	}
 }
-void CĞŞ¸ÄÂ·¾¶¼¸ºÎ::fÆ½»¬ÇúÏß(const std::vector<ÊıÑ§::SÏòÁ¿2> &a) {
+void Cä¿®æ”¹è·¯å¾„å‡ ä½•::få¹³æ»‘æ›²çº¿(const std::vector<æ•°å­¦::Så‘é‡2> &a) {
 	assert(a.size() > 1);
-	std::vector<D2D1_POINT_2F> vµã;
-	vµã.reserve(a.size());
-	for (const ÊıÑ§::SÏòÁ¿2 &v : a) {
-		vµã.push_back(m×ø±ê¼ÆËã->fµã(v));
+	std::vector<D2D1_POINT_2F> vç‚¹;
+	vç‚¹.reserve(a.size());
+	for (const æ•°å­¦::Så‘é‡2 &v : a) {
+		vç‚¹.push_back(måæ ‡è®¡ç®—->fç‚¹(v));
 	}
-	const int n = vµã.size();
-	std::vector<D2D1_POINT_2F> v¿ØÖÆµã1(n - 1);
-	std::vector<D2D1_POINT_2F> v¿ØÖÆµã2(n - 1);
-	GetCurveControlPoints(vµã, v¿ØÖÆµã1, v¿ØÖÆµã2);
-	if (!mw¿ªÊ¼) {
-		m¼¸ºÎ²Û->BeginFigure(vµã[0], D2D1_FIGURE_BEGIN_HOLLOW);
-		mw¿ªÊ¼ = true;
+	const int n = vç‚¹.size();
+	std::vector<D2D1_POINT_2F> væ§åˆ¶ç‚¹1(n - 1);
+	std::vector<D2D1_POINT_2F> væ§åˆ¶ç‚¹2(n - 1);
+	GetCurveControlPoints(vç‚¹, væ§åˆ¶ç‚¹1, væ§åˆ¶ç‚¹2);
+	if (!mwå¼€å§‹) {
+		må‡ ä½•æ§½->BeginFigure(vç‚¹[0], D2D1_FIGURE_BEGIN_HOLLOW);
+		mwå¼€å§‹ = true;
 	} else {
-		m¼¸ºÎ²Û->AddLine(vµã[0]);
+		må‡ ä½•æ§½->AddLine(vç‚¹[0]);
 	}
 	for (int i = 1; i != n; ++i) {
-		m¼¸ºÎ²Û->AddBezier(D2D1::BezierSegment(v¿ØÖÆµã1[i - 1], v¿ØÖÆµã2[i - 1], vµã[i]));
+		må‡ ä½•æ§½->AddBezier(D2D1::BezierSegment(væ§åˆ¶ç‚¹1[i - 1], væ§åˆ¶ç‚¹2[i - 1], vç‚¹[i]));
 	}
 }
-void CĞŞ¸ÄÂ·¾¶¼¸ºÎ::f±ÕºÏ() {
-	assert(mw¿ªÊ¼);
-	m¼¸ºÎ²Û->EndFigure(D2D1_FIGURE_END_CLOSED);
-	mw¿ªÊ¼ = false;
+void Cä¿®æ”¹è·¯å¾„å‡ ä½•::fé—­åˆ() {
+	assert(mwå¼€å§‹);
+	må‡ ä½•æ§½->EndFigure(D2D1_FIGURE_END_CLOSED);
+	mwå¼€å§‹ = false;
 }
-void CĞŞ¸ÄÂ·¾¶¼¸ºÎ::f¶Ï¿ª() {
-	assert(mw¿ªÊ¼);
-	m¼¸ºÎ²Û->EndFigure(D2D1_FIGURE_END_OPEN);
-	mw¿ªÊ¼ = false;
+void Cä¿®æ”¹è·¯å¾„å‡ ä½•::fæ–­å¼€() {
+	assert(mwå¼€å§‹);
+	må‡ ä½•æ§½->EndFigure(D2D1_FIGURE_END_OPEN);
+	mwå¼€å§‹ = false;
 }
 
 //==============================================================================
-// ÎÄ±¾¹¤³§
+// æ–‡æœ¬å·¥å‚
 //==============================================================================
-CÎÄ±¾¹¤³§::CÎÄ±¾¹¤³§():
-	mĞ´×Ö¹¤³§(nullptr) {
-	f³õÊ¼»¯();
+Cæ–‡æœ¬å·¥å‚::Cæ–‡æœ¬å·¥å‚():
+	må†™å­—å·¥å‚(nullptr) {
+	fåˆå§‹åŒ–();
 }
-CÎÄ±¾¹¤³§::~CÎÄ±¾¹¤³§() {
-	fÏú»Ù();
+Cæ–‡æœ¬å·¥å‚::~Cæ–‡æœ¬å·¥å‚() {
+	fé”€æ¯();
 }
-HRESULT CÎÄ±¾¹¤³§::f³õÊ¼»¯() {
-	if (mĞ´×Ö¹¤³§) {
+HRESULT Cæ–‡æœ¬å·¥å‚::fåˆå§‹åŒ–() {
+	if (må†™å­—å·¥å‚) {
 		return S_OK;
 	}
-	HRESULT hr = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), &mĞ´×Ö¹¤³§);
+	HRESULT hr = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), &må†™å­—å·¥å‚);
 	assert(SUCCEEDED(hr));
 	return hr;
 }
-void CÎÄ±¾¹¤³§::fÏú»Ù() {
-	mĞ´×Ö¹¤³§.Reset();
+void Cæ–‡æœ¬å·¥å‚::fé”€æ¯() {
+	må†™å­—å·¥å‚.Reset();
 }
-tpÎÄ±¾¸ñÊ½ CÎÄ±¾¹¤³§::fcÎÄ±¾¸ñÊ½(const SÎÄ±¾¸ñÊ½²ÎÊı &a¸ñÊ½) const {
-	ComPtr<IDWriteTextFormat> v¸ñÊ½;
-	HRESULT hr = mĞ´×Ö¹¤³§->CreateTextFormat(a¸ñÊ½.m×ÖÌå.c_str(), nullptr,
-		a¸ñÊ½.m´ÖÌå, a¸ñÊ½.mĞ±Ìå, a¸ñÊ½.mÀ­Éì, a¸ñÊ½.m×ÖºÅ, a¸ñÊ½.mÓïÑÔÇøÓò.c_str(), &v¸ñÊ½);
+tpæ–‡æœ¬æ ¼å¼ Cæ–‡æœ¬å·¥å‚::fcæ–‡æœ¬æ ¼å¼(const Sæ–‡æœ¬æ ¼å¼å‚æ•° &aæ ¼å¼) const {
+	ComPtr<IDWriteTextFormat> væ ¼å¼;
+	HRESULT hr = må†™å­—å·¥å‚->CreateTextFormat(aæ ¼å¼.må­—ä½“.c_str(), nullptr,
+		aæ ¼å¼.mç²—ä½“, aæ ¼å¼.mæ–œä½“, aæ ¼å¼.mæ‹‰ä¼¸, aæ ¼å¼.må­—å·, aæ ¼å¼.mè¯­è¨€åŒºåŸŸ.c_str(), &væ ¼å¼);
 	assert(SUCCEEDED(hr));
-	v¸ñÊ½->SetTextAlignment(a¸ñÊ½.mË®Æ½¶ÔÆë);
-	v¸ñÊ½->SetParagraphAlignment(a¸ñÊ½.m´¹Ö±¶ÔÆë);
-	v¸ñÊ½->SetWordWrapping(a¸ñÊ½.m×Ô¶¯»»ĞĞ);
-	return v¸ñÊ½;
+	væ ¼å¼->SetTextAlignment(aæ ¼å¼.mæ°´å¹³å¯¹é½);
+	væ ¼å¼->SetParagraphAlignment(aæ ¼å¼.må‚ç›´å¯¹é½);
+	væ ¼å¼->SetWordWrapping(aæ ¼å¼.mè‡ªåŠ¨æ¢è¡Œ);
+	return væ ¼å¼;
 }
-tpÎÄ±¾²¼¾Ö CÎÄ±¾¹¤³§::fcÎÄ±¾²¼¾Ö(const std::wstring_view &aÎÄ±¾, IDWriteTextFormat *a¸ñÊ½) const {
-	if (a¸ñÊ½ == nullptr) {
-		a¸ñÊ½ = C¶şÎ¬::gÕâ->fgÄ¬ÈÏÎÄ±¾¸ñÊ½().Get();
+tpæ–‡æœ¬å¸ƒå±€ Cæ–‡æœ¬å·¥å‚::fcæ–‡æœ¬å¸ƒå±€(const std::wstring_view &aæ–‡æœ¬, IDWriteTextFormat *aæ ¼å¼) const {
+	if (aæ ¼å¼ == nullptr) {
+		aæ ¼å¼ = CäºŒç»´::gè¿™->fgé»˜è®¤æ–‡æœ¬æ ¼å¼().Get();
 	}
-	ComPtr<IDWriteTextLayout> v²¼¾Ö;
-	HRESULT hr = mĞ´×Ö¹¤³§->CreateTextLayout(aÎÄ±¾.data(), aÎÄ±¾.size(), a¸ñÊ½, 0, 0, &v²¼¾Ö);
-	return v²¼¾Ö;
+	ComPtr<IDWriteTextLayout> vå¸ƒå±€;
+	HRESULT hr = må†™å­—å·¥å‚->CreateTextLayout(aæ–‡æœ¬.data(), aæ–‡æœ¬.size(), aæ ¼å¼, 0, 0, &vå¸ƒå±€);
+	return vå¸ƒå±€;
 }
-tpÎÄ±¾²¼¾Ö CÎÄ±¾¹¤³§::fcÎÄ±¾²¼¾Ö(const std::wstring_view &aÎÄ±¾, const SÎÄ±¾¸ñÊ½²ÎÊı &a¸ñÊ½) const {
-	tpÎÄ±¾¸ñÊ½ v¸ñÊ½ = fcÎÄ±¾¸ñÊ½(a¸ñÊ½);
-	return fcÎÄ±¾²¼¾Ö(aÎÄ±¾, v¸ñÊ½.Get());
+tpæ–‡æœ¬å¸ƒå±€ Cæ–‡æœ¬å·¥å‚::fcæ–‡æœ¬å¸ƒå±€(const std::wstring_view &aæ–‡æœ¬, const Sæ–‡æœ¬æ ¼å¼å‚æ•° &aæ ¼å¼) const {
+	tpæ–‡æœ¬æ ¼å¼ væ ¼å¼ = fcæ–‡æœ¬æ ¼å¼(aæ ¼å¼);
+	return fcæ–‡æœ¬å¸ƒå±€(aæ–‡æœ¬, væ ¼å¼.Get());
 }
-tpÎÄ±¾²¼¾Ö CÎÄ±¾¹¤³§::fcÎÄ±¾²¼¾Ö_Ğ¡Êı(double aÊı×Ö, int aĞ¡ÊıÎ»Êı, IDWriteTextFormat *a¸ñÊ½) {
-	const float v×ÖºÅ = a¸ñÊ½->GetFontSize();
-	const float vĞ¡Êı×ÖºÅ = v×ÖºÅ * 0.6f;
-	std::wstring v×Ö·û´® = std::to_wstring(aÊı×Ö);
-	v×Ö·û´® = ¹¤¾ß::CÎÄ±¾::fĞ¡ÊıÎ»Êı(v×Ö·û´®, aĞ¡ÊıÎ»Êı);
-	tpÎÄ±¾²¼¾Ö v²¼¾Ö = fcÎÄ±¾²¼¾Ö(v×Ö·û´®, a¸ñÊ½);
-	const size_t vĞ¡ÊıµãÎ»ÖÃ = v×Ö·û´®.find(L".");
-	v²¼¾Ö->SetFontSize(vĞ¡Êı×ÖºÅ, {(UINT32)vĞ¡ÊıµãÎ»ÖÃ, (UINT32)(aĞ¡ÊıÎ»Êı + 1)});
-	return v²¼¾Ö;
+tpæ–‡æœ¬å¸ƒå±€ Cæ–‡æœ¬å·¥å‚::fcæ–‡æœ¬å¸ƒå±€_å°æ•°(double aæ•°å­—, int aå°æ•°ä½æ•°, IDWriteTextFormat *aæ ¼å¼) {
+	const float vå­—å· = aæ ¼å¼->GetFontSize();
+	const float vå°æ•°å­—å· = vå­—å· * 0.6f;
+	std::wstring vå­—ç¬¦ä¸² = std::to_wstring(aæ•°å­—);
+	vå­—ç¬¦ä¸² = å·¥å…·::Cæ–‡æœ¬::få°æ•°ä½æ•°(vå­—ç¬¦ä¸², aå°æ•°ä½æ•°);
+	tpæ–‡æœ¬å¸ƒå±€ vå¸ƒå±€ = fcæ–‡æœ¬å¸ƒå±€(vå­—ç¬¦ä¸², aæ ¼å¼);
+	const size_t vå°æ•°ç‚¹ä½ç½® = vå­—ç¬¦ä¸².find(L".");
+	vå¸ƒå±€->SetFontSize(vå°æ•°å­—å·, {(UINT32)vå°æ•°ç‚¹ä½ç½®, (UINT32)(aå°æ•°ä½æ•° + 1)});
+	return vå¸ƒå±€;
 }
-CĞŞ¸ÄÎÄ±¾²¼¾Ö CÎÄ±¾¹¤³§::fĞŞ¸ÄÎÄ±¾²¼¾Ö(const tpÎÄ±¾²¼¾Ö &a²¼¾Ö) {
-	return CĞŞ¸ÄÎÄ±¾²¼¾Ö(a²¼¾Ö.Get());
+Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€ Cæ–‡æœ¬å·¥å‚::fä¿®æ”¹æ–‡æœ¬å¸ƒå±€(const tpæ–‡æœ¬å¸ƒå±€ &aå¸ƒå±€) {
+	return Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€(aå¸ƒå±€.Get());
 }
 //==============================================================================
-// ÎÄ±¾¸ñÊ½½á¹¹
+// æ–‡æœ¬æ ¼å¼ç»“æ„
 //==============================================================================
-void SÎÄ±¾¸ñÊ½²ÎÊı::fs×ÖÌå(const std::wstring_view &a) {
-	m×ÖÌå = std::wstring(a);
+void Sæ–‡æœ¬æ ¼å¼å‚æ•°::fså­—ä½“(const std::wstring_view &a) {
+	må­—ä½“ = std::wstring(a);
 }
-void SÎÄ±¾¸ñÊ½²ÎÊı::fsÓïÑÔÇøÓò(const std::wstring_view &a) {
-	mÓïÑÔÇøÓò = std::wstring(a);
+void Sæ–‡æœ¬æ ¼å¼å‚æ•°::fsè¯­è¨€åŒºåŸŸ(const std::wstring_view &a) {
+	mè¯­è¨€åŒºåŸŸ = std::wstring(a);
 }
-void SÎÄ±¾¸ñÊ½²ÎÊı::fs×ÖºÅ(float a) {
-	m×ÖºÅ = a;
+void Sæ–‡æœ¬æ ¼å¼å‚æ•°::fså­—å·(float a) {
+	må­—å· = a;
 }
-void SÎÄ±¾¸ñÊ½²ÎÊı::fs´ÖÌå(int a) {
-	m´ÖÌå = CÎÄ±¾¸ñÊ½×ª»»::f´ÖÌå(a);
+void Sæ–‡æœ¬æ ¼å¼å‚æ•°::fsç²—ä½“(int a) {
+	mç²—ä½“ = Cæ–‡æœ¬æ ¼å¼è½¬æ¢::fç²—ä½“(a);
 }
-void SÎÄ±¾¸ñÊ½²ÎÊı::fsĞ±Ìå(int a) {
-	mĞ±Ìå = CÎÄ±¾¸ñÊ½×ª»»::fĞ±Ìå(a);
+void Sæ–‡æœ¬æ ¼å¼å‚æ•°::fsæ–œä½“(int a) {
+	mæ–œä½“ = Cæ–‡æœ¬æ ¼å¼è½¬æ¢::fæ–œä½“(a);
 }
-void SÎÄ±¾¸ñÊ½²ÎÊı::fsÀ­Éì(int a) {
-	mÀ­Éì = CÎÄ±¾¸ñÊ½×ª»»::fÀ­Éì(a);
+void Sæ–‡æœ¬æ ¼å¼å‚æ•°::fsæ‹‰ä¼¸(int a) {
+	mæ‹‰ä¼¸ = Cæ–‡æœ¬æ ¼å¼è½¬æ¢::fæ‹‰ä¼¸(a);
 }
-void SÎÄ±¾¸ñÊ½²ÎÊı::fs×Ô¶¯»»ĞĞ(bool a) {
-	m×Ô¶¯»»ĞĞ = CÎÄ±¾¸ñÊ½×ª»»::f×Ô¶¯»»ĞĞ(a);
+void Sæ–‡æœ¬æ ¼å¼å‚æ•°::fsè‡ªåŠ¨æ¢è¡Œ(bool a) {
+	mè‡ªåŠ¨æ¢è¡Œ = Cæ–‡æœ¬æ ¼å¼è½¬æ¢::fè‡ªåŠ¨æ¢è¡Œ(a);
 }
-void SÎÄ±¾¸ñÊ½²ÎÊı::fsË®Æ½¶ÔÆë(EÎÄ±¾Ë®Æ½¶ÔÆë a) {
-	mË®Æ½¶ÔÆë = CÎÄ±¾¸ñÊ½×ª»»::fË®Æ½¶ÔÆë(a);
+void Sæ–‡æœ¬æ ¼å¼å‚æ•°::fsæ°´å¹³å¯¹é½(Eæ–‡æœ¬æ°´å¹³å¯¹é½ a) {
+	mæ°´å¹³å¯¹é½ = Cæ–‡æœ¬æ ¼å¼è½¬æ¢::fæ°´å¹³å¯¹é½(a);
 }
-void SÎÄ±¾¸ñÊ½²ÎÊı::fs´¹Ö±¶ÔÆë(EÎÄ±¾´¹Ö±¶ÔÆë a) {
-	m´¹Ö±¶ÔÆë = CÎÄ±¾¸ñÊ½×ª»»::f´¹Ö±¶ÔÆë(a);
+void Sæ–‡æœ¬æ ¼å¼å‚æ•°::fså‚ç›´å¯¹é½(Eæ–‡æœ¬å‚ç›´å¯¹é½ a) {
+	må‚ç›´å¯¹é½ = Cæ–‡æœ¬æ ¼å¼è½¬æ¢::få‚ç›´å¯¹é½(a);
 }
 
 //==============================================================================
-// ÎÄ±¾¸ñÊ½
+// æ–‡æœ¬æ ¼å¼
 //==============================================================================
-DWRITE_FONT_WEIGHT CÎÄ±¾¸ñÊ½×ª»»::f´ÖÌå(int a) {
-	static const DWRITE_FONT_WEIGHT ca´ÖÌå[] = {
+DWRITE_FONT_WEIGHT Cæ–‡æœ¬æ ¼å¼è½¬æ¢::fç²—ä½“(int a) {
+	static const DWRITE_FONT_WEIGHT caç²—ä½“[] = {
 		DWRITE_FONT_WEIGHT_THIN,
 		DWRITE_FONT_WEIGHT_EXTRA_LIGHT,
 		DWRITE_FONT_WEIGHT_LIGHT,
@@ -707,27 +728,27 @@ DWRITE_FONT_WEIGHT CÎÄ±¾¸ñÊ½×ª»»::f´ÖÌå(int a) {
 		DWRITE_FONT_WEIGHT_EXTRA_BLACK
 	};
 	if (a >= 0 && a <= 9) {
-		return ca´ÖÌå[a];
+		return caç²—ä½“[a];
 	} else {
 		__debugbreak();
 		return DWRITE_FONT_WEIGHT_NORMAL;
 	}
 }
-DWRITE_FONT_STYLE CÎÄ±¾¸ñÊ½×ª»»::fĞ±Ìå(int a) {
-	static const DWRITE_FONT_STYLE caĞ±Ìå[] = {
+DWRITE_FONT_STYLE Cæ–‡æœ¬æ ¼å¼è½¬æ¢::fæ–œä½“(int a) {
+	static const DWRITE_FONT_STYLE caæ–œä½“[] = {
 		DWRITE_FONT_STYLE_NORMAL,
 		DWRITE_FONT_STYLE_OBLIQUE,
 		DWRITE_FONT_STYLE_ITALIC
 	};
 	if (a >= 0 && a <= 2) {
-		return caĞ±Ìå[a];
+		return caæ–œä½“[a];
 	} else {
 		__debugbreak();
 		return DWRITE_FONT_STYLE_NORMAL;
 	}
 }
-DWRITE_FONT_STRETCH CÎÄ±¾¸ñÊ½×ª»»::fÀ­Éì(int a) {
-	static const DWRITE_FONT_STRETCH caÀ­Éì[] = {
+DWRITE_FONT_STRETCH Cæ–‡æœ¬æ ¼å¼è½¬æ¢::fæ‹‰ä¼¸(int a) {
+	static const DWRITE_FONT_STRETCH caæ‹‰ä¼¸[] = {
 		DWRITE_FONT_STRETCH_UNDEFINED,
 		DWRITE_FONT_STRETCH_ULTRA_CONDENSED,
 		DWRITE_FONT_STRETCH_EXTRA_CONDENSED,
@@ -741,25 +762,25 @@ DWRITE_FONT_STRETCH CÎÄ±¾¸ñÊ½×ª»»::fÀ­Éì(int a) {
 		DWRITE_FONT_STRETCH_ULTRA_EXPANDED 
 	};
 	if (a >= 0 && a <= 9) {
-		return caÀ­Éì[a];
+		return caæ‹‰ä¼¸[a];
 	} else {
 		__debugbreak();
 		return DWRITE_FONT_STRETCH_NORMAL;
 	}
 }
-DWRITE_TEXT_ALIGNMENT CÎÄ±¾¸ñÊ½×ª»»::fË®Æ½¶ÔÆë(EÎÄ±¾Ë®Æ½¶ÔÆë a) {
+DWRITE_TEXT_ALIGNMENT Cæ–‡æœ¬æ ¼å¼è½¬æ¢::fæ°´å¹³å¯¹é½(Eæ–‡æœ¬æ°´å¹³å¯¹é½ a) {
 	switch (a) {
-	case EÎÄ±¾Ë®Æ½¶ÔÆë::e×ó:
+	case Eæ–‡æœ¬æ°´å¹³å¯¹é½::eå·¦:
 		return DWRITE_TEXT_ALIGNMENT_LEADING;
-	case EÎÄ±¾Ë®Æ½¶ÔÆë::eÓÒ:
+	case Eæ–‡æœ¬æ°´å¹³å¯¹é½::eå³:
 		return DWRITE_TEXT_ALIGNMENT_TRAILING;
-	case EÎÄ±¾Ë®Æ½¶ÔÆë::eÖĞ:
+	case Eæ–‡æœ¬æ°´å¹³å¯¹é½::eä¸­:
 		return DWRITE_TEXT_ALIGNMENT_CENTER;
 	default:
 		throw;
 	}
 }
-DWRITE_TEXT_ALIGNMENT CÎÄ±¾¸ñÊ½×ª»»::fË®Æ½¶ÔÆë(int a) {
+DWRITE_TEXT_ALIGNMENT Cæ–‡æœ¬æ ¼å¼è½¬æ¢::fæ°´å¹³å¯¹é½(int a) {
 	if (a < 0) {
 		return DWRITE_TEXT_ALIGNMENT_LEADING;
 	} else if (a > 0) {
@@ -768,19 +789,19 @@ DWRITE_TEXT_ALIGNMENT CÎÄ±¾¸ñÊ½×ª»»::fË®Æ½¶ÔÆë(int a) {
 		return DWRITE_TEXT_ALIGNMENT_CENTER;
 	}
 }
-DWRITE_PARAGRAPH_ALIGNMENT CÎÄ±¾¸ñÊ½×ª»»::f´¹Ö±¶ÔÆë(EÎÄ±¾´¹Ö±¶ÔÆë a) {
+DWRITE_PARAGRAPH_ALIGNMENT Cæ–‡æœ¬æ ¼å¼è½¬æ¢::få‚ç›´å¯¹é½(Eæ–‡æœ¬å‚ç›´å¯¹é½ a) {
 	switch (a) {
-	case EÎÄ±¾´¹Ö±¶ÔÆë::eÉÏ:
+	case Eæ–‡æœ¬å‚ç›´å¯¹é½::eä¸Š:
 		return DWRITE_PARAGRAPH_ALIGNMENT_NEAR;
-	case EÎÄ±¾´¹Ö±¶ÔÆë::eÏÂ:
+	case Eæ–‡æœ¬å‚ç›´å¯¹é½::eä¸‹:
 		return DWRITE_PARAGRAPH_ALIGNMENT_FAR;
-	case EÎÄ±¾´¹Ö±¶ÔÆë::eÖĞ:
+	case Eæ–‡æœ¬å‚ç›´å¯¹é½::eä¸­:
 		return DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
 	default:
 		throw;
 	}
 }
-DWRITE_PARAGRAPH_ALIGNMENT CÎÄ±¾¸ñÊ½×ª»»::f´¹Ö±¶ÔÆë(int a) {
+DWRITE_PARAGRAPH_ALIGNMENT Cæ–‡æœ¬æ ¼å¼è½¬æ¢::få‚ç›´å¯¹é½(int a) {
 	if (a < 0) {
 		return DWRITE_PARAGRAPH_ALIGNMENT_FAR;
 	} else if (a > 0) {
@@ -790,23 +811,23 @@ DWRITE_PARAGRAPH_ALIGNMENT CÎÄ±¾¸ñÊ½×ª»»::f´¹Ö±¶ÔÆë(int a) {
 	}
 
 }
-DWRITE_TRIMMING CÎÄ±¾¸ñÊ½×ª»»::f¼ô²Ã(int a) {
-	DWRITE_TRIMMING v¼ô²ÃÑ¡Ïî;
-	ZeroMemory(&v¼ô²ÃÑ¡Ïî, sizeof(v¼ô²ÃÑ¡Ïî));
+DWRITE_TRIMMING Cæ–‡æœ¬æ ¼å¼è½¬æ¢::få‰ªè£(int a) {
+	DWRITE_TRIMMING vå‰ªè£é€‰é¡¹;
+	ZeroMemory(&vå‰ªè£é€‰é¡¹, sizeof(vå‰ªè£é€‰é¡¹));
 	switch (a) {
 	case 0:
-		v¼ô²ÃÑ¡Ïî.granularity = DWRITE_TRIMMING_GRANULARITY_NONE;
+		vå‰ªè£é€‰é¡¹.granularity = DWRITE_TRIMMING_GRANULARITY_NONE;
 		break;
 	case 1:
-		v¼ô²ÃÑ¡Ïî.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER;
+		vå‰ªè£é€‰é¡¹.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER;
 		break;
 	case 2:
-		v¼ô²ÃÑ¡Ïî.granularity = DWRITE_TRIMMING_GRANULARITY_WORD;
+		vå‰ªè£é€‰é¡¹.granularity = DWRITE_TRIMMING_GRANULARITY_WORD;
 		break;
 	}
-	return v¼ô²ÃÑ¡Ïî;
+	return vå‰ªè£é€‰é¡¹;
 }
-DWRITE_WORD_WRAPPING CÎÄ±¾¸ñÊ½×ª»»::f×Ô¶¯»»ĞĞ(bool a) {
+DWRITE_WORD_WRAPPING Cæ–‡æœ¬æ ¼å¼è½¬æ¢::fè‡ªåŠ¨æ¢è¡Œ(bool a) {
 	if (a) {
 		return DWRITE_WORD_WRAPPING_WRAP;
 	} else {
@@ -814,79 +835,79 @@ DWRITE_WORD_WRAPPING CÎÄ±¾¸ñÊ½×ª»»::f×Ô¶¯»»ĞĞ(bool a) {
 	}
 }
 //==============================================================================
-// ÎÄ±¾ÑùÊ½
+// æ–‡æœ¬æ ·å¼
 //==============================================================================
-CĞŞ¸ÄÎÄ±¾¸ñÊ½::CĞŞ¸ÄÎÄ±¾¸ñÊ½(IDWriteTextFormat *a): m¸ñÊ½(a) {}
-CĞŞ¸ÄÎÄ±¾¸ñÊ½::~CĞŞ¸ÄÎÄ±¾¸ñÊ½() {
+Cä¿®æ”¹æ–‡æœ¬æ ¼å¼::Cä¿®æ”¹æ–‡æœ¬æ ¼å¼(IDWriteTextFormat *a): mæ ¼å¼(a) {}
+Cä¿®æ”¹æ–‡æœ¬æ ¼å¼::~Cä¿®æ”¹æ–‡æœ¬æ ¼å¼() {
 }
-CĞŞ¸ÄÎÄ±¾¸ñÊ½ &CĞŞ¸ÄÎÄ±¾¸ñÊ½::fsË®Æ½¶ÔÆë(EÎÄ±¾Ë®Æ½¶ÔÆë a) {
-	m¸ñÊ½->SetTextAlignment(CÎÄ±¾¸ñÊ½×ª»»::fË®Æ½¶ÔÆë(a));
+Cä¿®æ”¹æ–‡æœ¬æ ¼å¼ &Cä¿®æ”¹æ–‡æœ¬æ ¼å¼::fsæ°´å¹³å¯¹é½(Eæ–‡æœ¬æ°´å¹³å¯¹é½ a) {
+	mæ ¼å¼->SetTextAlignment(Cæ–‡æœ¬æ ¼å¼è½¬æ¢::fæ°´å¹³å¯¹é½(a));
 	return *this;
 }
-CĞŞ¸ÄÎÄ±¾¸ñÊ½ &CĞŞ¸ÄÎÄ±¾¸ñÊ½::fs´¹Ö±¶ÔÆë(EÎÄ±¾´¹Ö±¶ÔÆë a) {
-	m¸ñÊ½->SetParagraphAlignment(CÎÄ±¾¸ñÊ½×ª»»::f´¹Ö±¶ÔÆë(a));
+Cä¿®æ”¹æ–‡æœ¬æ ¼å¼ &Cä¿®æ”¹æ–‡æœ¬æ ¼å¼::fså‚ç›´å¯¹é½(Eæ–‡æœ¬å‚ç›´å¯¹é½ a) {
+	mæ ¼å¼->SetParagraphAlignment(Cæ–‡æœ¬æ ¼å¼è½¬æ¢::få‚ç›´å¯¹é½(a));
 	return *this;
 }
-CĞŞ¸ÄÎÄ±¾¸ñÊ½ &CĞŞ¸ÄÎÄ±¾¸ñÊ½::fs¶ÔÆë(EÎÄ±¾Ë®Æ½¶ÔÆë aË®Æ½, EÎÄ±¾´¹Ö±¶ÔÆë a´¹Ö±) {
-	fsË®Æ½¶ÔÆë(aË®Æ½);
-	fs´¹Ö±¶ÔÆë(a´¹Ö±);
+Cä¿®æ”¹æ–‡æœ¬æ ¼å¼ &Cä¿®æ”¹æ–‡æœ¬æ ¼å¼::fså¯¹é½(Eæ–‡æœ¬æ°´å¹³å¯¹é½ aæ°´å¹³, Eæ–‡æœ¬å‚ç›´å¯¹é½ aå‚ç›´) {
+	fsæ°´å¹³å¯¹é½(aæ°´å¹³);
+	fså‚ç›´å¯¹é½(aå‚ç›´);
 	return *this;
 }
-CĞŞ¸ÄÎÄ±¾¸ñÊ½ &CĞŞ¸ÄÎÄ±¾¸ñÊ½::fs¼ô²Ã(int a) {
-	auto m¼ô²ÃÑ¡Ïî = CÎÄ±¾¸ñÊ½×ª»»::f¼ô²Ã(a);
-	m¸ñÊ½->SetTrimming(&m¼ô²ÃÑ¡Ïî, nullptr);
+Cä¿®æ”¹æ–‡æœ¬æ ¼å¼ &Cä¿®æ”¹æ–‡æœ¬æ ¼å¼::fså‰ªè£(int a) {
+	auto må‰ªè£é€‰é¡¹ = Cæ–‡æœ¬æ ¼å¼è½¬æ¢::få‰ªè£(a);
+	mæ ¼å¼->SetTrimming(&må‰ªè£é€‰é¡¹, nullptr);
 	return *this;
-}
-//==============================================================================
-// ÎÄ±¾ÑùÊ½
-//==============================================================================
-CĞŞ¸ÄÎÄ±¾²¼¾Ö::CĞŞ¸ÄÎÄ±¾²¼¾Ö(IDWriteTextLayout *a²¼¾Ö): 
-	m²¼¾Ö(a²¼¾Ö) {
-}
-CĞŞ¸ÄÎÄ±¾²¼¾Ö::~CĞŞ¸ÄÎÄ±¾²¼¾Ö() {
-}
-CĞŞ¸ÄÎÄ±¾²¼¾Ö &CĞŞ¸ÄÎÄ±¾²¼¾Ö::fs´ÖÌå(DWRITE_FONT_WEIGHT a, DWRITE_TEXT_RANGE a·¶Î§) {
-	m²¼¾Ö->SetFontWeight(a, a·¶Î§);
-	return *this;
-}
-CĞŞ¸ÄÎÄ±¾²¼¾Ö &CĞŞ¸ÄÎÄ±¾²¼¾Ö::fsĞ±Ìå(DWRITE_FONT_STYLE a, DWRITE_TEXT_RANGE a·¶Î§) {
-	m²¼¾Ö->SetFontStyle(a, a·¶Î§);
-	return *this;
-}
-CĞŞ¸ÄÎÄ±¾²¼¾Ö &CĞŞ¸ÄÎÄ±¾²¼¾Ö::fsÀ­Éì(DWRITE_FONT_STRETCH a, DWRITE_TEXT_RANGE a·¶Î§) {
-	m²¼¾Ö->SetFontStretch(a, a·¶Î§);
-	return *this;
-}
-FÎÄ±¾·¶Î§¼ÆËã::FÎÄ±¾·¶Î§¼ÆËã(UINT32 a): mÎÄ±¾³¤¶È(a) {}
-DWRITE_TEXT_RANGE FÎÄ±¾·¶Î§¼ÆËã::operator()(int a×ó, int aÓÒ) const {
-	const int vÎÄ±¾³¤¶È = (int)mÎÄ±¾³¤¶È;
-	assert(a×ó >= -vÎÄ±¾³¤¶È);
-	assert(a×ó < vÎÄ±¾³¤¶È);
-	assert(aÓÒ > -vÎÄ±¾³¤¶È);
-	assert(aÓÒ <= vÎÄ±¾³¤¶È);
-	const int v×ó = (a×ó < 0) ? (vÎÄ±¾³¤¶È + a×ó) : a×ó;
-	const int vÓÒ = (aÓÒ <= 0) ? (vÎÄ±¾³¤¶È + aÓÒ) : aÓÒ;
-	const int v³¤¶È = vÓÒ - v×ó;
-	assert(v³¤¶È > 0);
-	return {(UINT32)v×ó, (UINT32)v³¤¶È};
 }
 //==============================================================================
-// »­ÎÄ±¾
+// æ–‡æœ¬æ ·å¼
 //==============================================================================
-unsigned long CÎÄ±¾Ğ§¹û::AddRef() {
-	++mÒıÓÃ¼ÆÊı;
-	return mÒıÓÃ¼ÆÊı;
+Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€::Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€(IDWriteTextLayout *aå¸ƒå±€): 
+	må¸ƒå±€(aå¸ƒå±€) {
 }
-unsigned long CÎÄ±¾Ğ§¹û::Release() {
-	--mÒıÓÃ¼ÆÊı;
-	if (mÒıÓÃ¼ÆÊı == 0) {
+Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€::~Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€() {
+}
+Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€ &Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€::fsç²—ä½“(DWRITE_FONT_WEIGHT a, DWRITE_TEXT_RANGE aèŒƒå›´) {
+	må¸ƒå±€->SetFontWeight(a, aèŒƒå›´);
+	return *this;
+}
+Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€ &Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€::fsæ–œä½“(DWRITE_FONT_STYLE a, DWRITE_TEXT_RANGE aèŒƒå›´) {
+	må¸ƒå±€->SetFontStyle(a, aèŒƒå›´);
+	return *this;
+}
+Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€ &Cä¿®æ”¹æ–‡æœ¬å¸ƒå±€::fsæ‹‰ä¼¸(DWRITE_FONT_STRETCH a, DWRITE_TEXT_RANGE aèŒƒå›´) {
+	må¸ƒå±€->SetFontStretch(a, aèŒƒå›´);
+	return *this;
+}
+Fæ–‡æœ¬èŒƒå›´è®¡ç®—::Fæ–‡æœ¬èŒƒå›´è®¡ç®—(UINT32 a): mæ–‡æœ¬é•¿åº¦(a) {}
+DWRITE_TEXT_RANGE Fæ–‡æœ¬èŒƒå›´è®¡ç®—::operator()(int aå·¦, int aå³) const {
+	const int væ–‡æœ¬é•¿åº¦ = (int)mæ–‡æœ¬é•¿åº¦;
+	assert(aå·¦ >= -væ–‡æœ¬é•¿åº¦);
+	assert(aå·¦ < væ–‡æœ¬é•¿åº¦);
+	assert(aå³ > -væ–‡æœ¬é•¿åº¦);
+	assert(aå³ <= væ–‡æœ¬é•¿åº¦);
+	const int vå·¦ = (aå·¦ < 0) ? (væ–‡æœ¬é•¿åº¦ + aå·¦) : aå·¦;
+	const int vå³ = (aå³ <= 0) ? (væ–‡æœ¬é•¿åº¦ + aå³) : aå³;
+	const int vé•¿åº¦ = vå³ - vå·¦;
+	assert(vé•¿åº¦ > 0);
+	return {(UINT32)vå·¦, (UINT32)vé•¿åº¦};
+}
+//==============================================================================
+// ç”»æ–‡æœ¬
+//==============================================================================
+unsigned long Cæ–‡æœ¬æ•ˆæœ::AddRef() {
+	++må¼•ç”¨è®¡æ•°;
+	return må¼•ç”¨è®¡æ•°;
+}
+unsigned long Cæ–‡æœ¬æ•ˆæœ::Release() {
+	--må¼•ç”¨è®¡æ•°;
+	if (må¼•ç”¨è®¡æ•° == 0) {
 		delete this;
 		return 0;
 	} else {
-		return mÒıÓÃ¼ÆÊı;
+		return må¼•ç”¨è®¡æ•°;
 	}
 }
-HRESULT CÎÄ±¾Ğ§¹û::QueryInterface(IID const &riid, void **a) {
+HRESULT Cæ–‡æœ¬æ•ˆæœ::QueryInterface(IID const &riid, void **a) {
 	if (__uuidof(IDWriteTextRenderer) == riid) {
 		*a = this;
 	} else if (__uuidof(IDWritePixelSnapping) == riid) {
@@ -900,79 +921,79 @@ HRESULT CÎÄ±¾Ğ§¹û::QueryInterface(IID const &riid, void **a) {
 	this->AddRef();
 	return S_OK;
 }
-HRESULT CÎÄ±¾Ğ§¹û::IsPixelSnappingDisabled(void*, BOOL*a) {
+HRESULT Cæ–‡æœ¬æ•ˆæœ::IsPixelSnappingDisabled(void*, BOOL*a) {
 	*a = FALSE;
 	return S_OK;
 }
-HRESULT CÎÄ±¾Ğ§¹û::GetCurrentTransform(void*, DWRITE_MATRIX *a¾ØÕó) {
-	mäÖÈ¾Ä¿±ê->GetTransform(reinterpret_cast<D2D1_MATRIX_3X2_F*>(a¾ØÕó));
+HRESULT Cæ–‡æœ¬æ•ˆæœ::GetCurrentTransform(void*, DWRITE_MATRIX *açŸ©é˜µ) {
+	mæ¸²æŸ“ç›®æ ‡->GetTransform(reinterpret_cast<D2D1_MATRIX_3X2_F*>(açŸ©é˜µ));
 	return S_OK;
 }
-HRESULT CÎÄ±¾Ğ§¹û::GetPixelsPerDip(void*, FLOAT *a) {
+HRESULT Cæ–‡æœ¬æ•ˆæœ::GetPixelsPerDip(void*, FLOAT *a) {
 	float x, y;
-	mäÖÈ¾Ä¿±ê->GetDpi(&x, &y);
+	mæ¸²æŸ“ç›®æ ‡->GetDpi(&x, &y);
 	*a = x / 96;
 	return S_OK;
 }
-HRESULT CÎÄ±¾Ğ§¹û::DrawGlyphRun(void* aÉÏÏÂÎÄ, FLOAT x, FLOAT y, DWRITE_MEASURING_MODE a²âÁ¿, DWRITE_GLYPH_RUN const* a×ÖĞÎ, DWRITE_GLYPH_RUN_DESCRIPTION const* a×ÖĞÎÃèÊö, IUnknown* aĞ§¹û) {
+HRESULT Cæ–‡æœ¬æ•ˆæœ::DrawGlyphRun(void* aä¸Šä¸‹æ–‡, FLOAT x, FLOAT y, DWRITE_MEASURING_MODE aæµ‹é‡, DWRITE_GLYPH_RUN const* aå­—å½¢, DWRITE_GLYPH_RUN_DESCRIPTION const* aå­—å½¢æè¿°, IUnknown* aæ•ˆæœ) {
 	HRESULT hr;
-	ComPtr<ID2D1PathGeometry> v¼¸ºÎ;
-	hr = m¶şÎ¬¹¤³§->CreatePathGeometry(&v¼¸ºÎ);
+	ComPtr<ID2D1PathGeometry> vå‡ ä½•;
+	hr = mäºŒç»´å·¥å‚->CreatePathGeometry(&vå‡ ä½•);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	ComPtr<ID2D1GeometrySink> vÂ·¾¶;
-	v¼¸ºÎ->Open(&vÂ·¾¶);
-	a×ÖĞÎ->fontFace->GetGlyphRunOutline(a×ÖĞÎ->fontEmSize, a×ÖĞÎ->glyphIndices, a×ÖĞÎ->glyphAdvances, a×ÖĞÎ->glyphOffsets, a×ÖĞÎ->glyphCount, a×ÖĞÎ->isSideways, a×ÖĞÎ->bidiLevel%2, vÂ·¾¶.Get());
-	vÂ·¾¶->Close();
-	return f»æÖÆ¼¸ºÎ(v¼¸ºÎ.Get(), x, y);
+	ComPtr<ID2D1GeometrySink> vè·¯å¾„;
+	vå‡ ä½•->Open(&vè·¯å¾„);
+	aå­—å½¢->fontFace->GetGlyphRunOutline(aå­—å½¢->fontEmSize, aå­—å½¢->glyphIndices, aå­—å½¢->glyphAdvances, aå­—å½¢->glyphOffsets, aå­—å½¢->glyphCount, aå­—å½¢->isSideways, aå­—å½¢->bidiLevel%2, vè·¯å¾„.Get());
+	vè·¯å¾„->Close();
+	return fç»˜åˆ¶å‡ ä½•(vå‡ ä½•.Get(), x, y);
 }
-HRESULT CÎÄ±¾Ğ§¹û::DrawUnderline(void* aÉÏÏÂÎÄ, FLOAT x, FLOAT y, DWRITE_UNDERLINE const* aÏÂ»®Ïß, IUnknown* aĞ§¹û) {
+HRESULT Cæ–‡æœ¬æ•ˆæœ::DrawUnderline(void* aä¸Šä¸‹æ–‡, FLOAT x, FLOAT y, DWRITE_UNDERLINE const* aä¸‹åˆ’çº¿, IUnknown* aæ•ˆæœ) {
 	HRESULT hr;
-	D2D1_RECT_F v¾ØĞÎ{0, aÏÂ»®Ïß->offset, aÏÂ»®Ïß->width, aÏÂ»®Ïß->offset + aÏÂ»®Ïß->thickness};
-	ComPtr<ID2D1RectangleGeometry> v¾ØĞÎ¼¸ºÎ;
-	hr = m¶şÎ¬¹¤³§->CreateRectangleGeometry(&v¾ØĞÎ, &v¾ØĞÎ¼¸ºÎ);
+	D2D1_RECT_F vçŸ©å½¢{0, aä¸‹åˆ’çº¿->offset, aä¸‹åˆ’çº¿->width, aä¸‹åˆ’çº¿->offset + aä¸‹åˆ’çº¿->thickness};
+	ComPtr<ID2D1RectangleGeometry> vçŸ©å½¢å‡ ä½•;
+	hr = mäºŒç»´å·¥å‚->CreateRectangleGeometry(&vçŸ©å½¢, &vçŸ©å½¢å‡ ä½•);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	return f»æÖÆ¼¸ºÎ(v¾ØĞÎ¼¸ºÎ.Get(), x, y);
+	return fç»˜åˆ¶å‡ ä½•(vçŸ©å½¢å‡ ä½•.Get(), x, y);
 }
-HRESULT CÎÄ±¾Ğ§¹û::DrawStrikethrough(void* aÉÏÏÂÎÄ, FLOAT x, FLOAT y, DWRITE_STRIKETHROUGH const* aÉ¾³ıÏß,  IUnknown* aĞ§¹û) {
+HRESULT Cæ–‡æœ¬æ•ˆæœ::DrawStrikethrough(void* aä¸Šä¸‹æ–‡, FLOAT x, FLOAT y, DWRITE_STRIKETHROUGH const* aåˆ é™¤çº¿,  IUnknown* aæ•ˆæœ) {
 	HRESULT hr;
-	D2D1_RECT_F v¾ØĞÎ{0, aÉ¾³ıÏß->offset, aÉ¾³ıÏß->width, aÉ¾³ıÏß->offset + aÉ¾³ıÏß->thickness};
-	ComPtr<ID2D1RectangleGeometry> v¾ØĞÎ¼¸ºÎ;
-	hr = m¶şÎ¬¹¤³§->CreateRectangleGeometry(&v¾ØĞÎ, &v¾ØĞÎ¼¸ºÎ);
+	D2D1_RECT_F vçŸ©å½¢{0, aåˆ é™¤çº¿->offset, aåˆ é™¤çº¿->width, aåˆ é™¤çº¿->offset + aåˆ é™¤çº¿->thickness};
+	ComPtr<ID2D1RectangleGeometry> vçŸ©å½¢å‡ ä½•;
+	hr = mäºŒç»´å·¥å‚->CreateRectangleGeometry(&vçŸ©å½¢, &vçŸ©å½¢å‡ ä½•);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	return f»æÖÆ¼¸ºÎ(v¾ØĞÎ¼¸ºÎ.Get(), x, y);
+	return fç»˜åˆ¶å‡ ä½•(vçŸ©å½¢å‡ ä½•.Get(), x, y);
 }
-HRESULT CÎÄ±¾Ğ§¹û::DrawInlineObject(void* aÉÏÏÂÎÄ, FLOAT x, FLOAT y, IDWriteInlineObject* inlineObject, BOOL aiÅÔ±ß, BOOL ai·´Ïò, IUnknown* aĞ§¹û) {
+HRESULT Cæ–‡æœ¬æ•ˆæœ::DrawInlineObject(void* aä¸Šä¸‹æ–‡, FLOAT x, FLOAT y, IDWriteInlineObject* inlineObject, BOOL aiæ—è¾¹, BOOL aiåå‘, IUnknown* aæ•ˆæœ) {
 	return E_NOTIMPL;
 }
-HRESULT CÎÄ±¾Ğ§¹û::f»æÖÆ¼¸ºÎ(ID2D1Geometry *a¼¸ºÎ, float x, float y) {
-	const D2D1_MATRIX_3X2_F v¾ØÕó{1.0f, 0.0f, 0.0f, 1.0f, x, y};
-	ComPtr<ID2D1TransformedGeometry> v±ä»»¼¸ºÎ;
-	HRESULT hr = m¶şÎ¬¹¤³§->CreateTransformedGeometry(a¼¸ºÎ, &v¾ØÕó, &v±ä»»¼¸ºÎ);
+HRESULT Cæ–‡æœ¬æ•ˆæœ::fç»˜åˆ¶å‡ ä½•(ID2D1Geometry *aå‡ ä½•, float x, float y) {
+	const D2D1_MATRIX_3X2_F vçŸ©é˜µ{1.0f, 0.0f, 0.0f, 1.0f, x, y};
+	ComPtr<ID2D1TransformedGeometry> vå˜æ¢å‡ ä½•;
+	HRESULT hr = mäºŒç»´å·¥å‚->CreateTransformedGeometry(aå‡ ä½•, &vçŸ©é˜µ, &vå˜æ¢å‡ ä½•);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	mäÖÈ¾Ä¿±ê->DrawGeometry(v±ä»»¼¸ºÎ.Get(), mÂÖÀª»­±Ê.Get(), mÂÖÀª¿í¶È);
-	mäÖÈ¾Ä¿±ê->FillGeometry(v±ä»»¼¸ºÎ.Get(), mÌî³ä»­±Ê.Get());
+	mæ¸²æŸ“ç›®æ ‡->DrawGeometry(vå˜æ¢å‡ ä½•.Get(), mè½®å»“ç”»ç¬”.Get(), mè½®å»“å®½åº¦);
+	mæ¸²æŸ“ç›®æ ‡->FillGeometry(vå˜æ¢å‡ ä½•.Get(), må¡«å……ç”»ç¬”.Get());
 	return S_OK;
 }
-void CÎÄ±¾Ğ§¹û::fsÌî³äÑÕÉ«(const ÊıÑ§::SÑÕÉ« &a) {
-	mÌî³ä»­±Ê->SetColor(CÀàĞÍ×ª»»::fÑÕÉ«(a));
+void Cæ–‡æœ¬æ•ˆæœ::fså¡«å……é¢œè‰²(const æ•°å­¦::Sé¢œè‰² &a) {
+	må¡«å……ç”»ç¬”->SetColor(Cç±»å‹è½¬æ¢::fé¢œè‰²(a));
 }
-void CÎÄ±¾Ğ§¹û::fsÂÖÀªÑÕÉ«(const ÊıÑ§::SÑÕÉ« &a) {
-	mÂÖÀª»­±Ê->SetColor(CÀàĞÍ×ª»»::fÑÕÉ«(a));
+void Cæ–‡æœ¬æ•ˆæœ::fsè½®å»“é¢œè‰²(const æ•°å­¦::Sé¢œè‰² &a) {
+	mè½®å»“ç”»ç¬”->SetColor(Cç±»å‹è½¬æ¢::fé¢œè‰²(a));
 }
-void CÎÄ±¾Ğ§¹û::fsÂÖÀª¿í¶È(float a) {
-	//ÒòÎª»­ÏßÌõÎ»ÓÚÂÖÀª¾ÓÖĞÎ»ÖÃ£¬ËùÒÔ¿í¶È³Ë2£¨°ÑÄÚÂÖÀªÒ²Ò»ÆğÏÔÊ¾³öÀ´£¨ËäÈ»»á±»ÕÚ×¡£©£©
-	mÂÖÀª¿í¶È = a * 2;
+void Cæ–‡æœ¬æ•ˆæœ::fsè½®å»“å®½åº¦(float a) {
+	//å› ä¸ºç”»çº¿æ¡ä½äºè½®å»“å±…ä¸­ä½ç½®ï¼Œæ‰€ä»¥å®½åº¦ä¹˜2ï¼ˆæŠŠå†…è½®å»“ä¹Ÿä¸€èµ·æ˜¾ç¤ºå‡ºæ¥ï¼ˆè™½ç„¶ä¼šè¢«é®ä½ï¼‰ï¼‰
+	mè½®å»“å®½åº¦ = a * 2;
 }
-void CÎÄ±¾Ğ§¹û::fsÍ¸Ã÷¶È(float a) {
-	mÌî³ä»­±Ê->SetOpacity(a);
-	mÂÖÀª»­±Ê->SetOpacity(a);
+void Cæ–‡æœ¬æ•ˆæœ::fsé€æ˜åº¦(float a) {
+	må¡«å……ç”»ç¬”->SetOpacity(a);
+	mè½®å»“ç”»ç¬”->SetOpacity(a);
 }
-}	//namespace cflw::Í¼ĞÎ::d2d
+}	//namespace cflw::å›¾å½¢::d2d

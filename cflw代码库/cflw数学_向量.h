@@ -1,138 +1,138 @@
-#pragma once
+ï»¿#pragma once
 #include <complex>
-namespace cflw::ÊıÑ§ {
+namespace cflw::æ•°å­¦ {
 //=============================================================================
-// ÉùÃ÷
+// å£°æ˜
 //=============================================================================
-//ÆäËüÎÄ¼ş
-template<typename t = double> using t¸´Êı = std::complex<t>;
-struct SÖ±Ïß·½³Ì;
-struct S¾ØÕó4;
-struct SÔ²ĞÎ;
-//±¾ÎÄ¼ş
-struct SÏòÁ¿2;
-struct SÏòÁ¿3;
-struct SÏòÁ¿4;
-template<typename t> t f²åÖµ(const t&ÆğÊ¼Öµ, const t&ÖÕÖ¹Öµ, float ÖĞ¼äÖµ);
-template<typename t> t f¾ø¶ÔÖµ(const t &);
-template<> SÏòÁ¿2 f¾ø¶ÔÖµ<SÏòÁ¿2>(const SÏòÁ¿2 &);
-template<> SÏòÁ¿3 f¾ø¶ÔÖµ<SÏòÁ¿3>(const SÏòÁ¿3 &);
+//å…¶å®ƒæ–‡ä»¶
+template<typename t = double> using tå¤æ•° = std::complex<t>;
+struct Sç›´çº¿æ–¹ç¨‹;
+struct SçŸ©é˜µ4;
+struct Såœ†å½¢;
+//æœ¬æ–‡ä»¶
+struct Så‘é‡2;
+struct Så‘é‡3;
+struct Så‘é‡4;
+template<typename t> t fæ’å€¼(const t&èµ·å§‹å€¼, const t&ç»ˆæ­¢å€¼, float ä¸­é—´å€¼);
+template<typename t> t fç»å¯¹å€¼(const t &);
+template<> Så‘é‡2 fç»å¯¹å€¼<Så‘é‡2>(const Så‘é‡2 &);
+template<> Så‘é‡3 fç»å¯¹å€¼<Så‘é‡3>(const Så‘é‡3 &);
 //=============================================================================
-//ÏòÁ¿2
-struct SÏòÁ¿2 {
-	static const SÏòÁ¿2 cÁã, cÒ»;
+//å‘é‡2
+struct Så‘é‡2 {
+	static const Så‘é‡2 cé›¶, cä¸€;
 	float x = 0, y = 0;
-	SÏòÁ¿2() = default;
-	SÏòÁ¿2(float, float);
-	static SÏòÁ¿2 fc·½Ïòr(const float &, const float &);	//´óĞ¡»¡¶È»ñµÃÏòÁ¿
-	static SÏòÁ¿2 fc·½Ïòd(const float &, const float &);	//´óĞ¡¶È»ñµÃÏòÁ¿
-	static SÏòÁ¿2 fcÏàÍ¬(const float &);	//x,y¶¼µÈÓÚ²ÎÊı
-	static SÏòÁ¿2 fc¾ØĞÎÖĞĞÄ(float, float, float, float);
-	static SÏòÁ¿2 fc¾ØĞÎ³ß´ç(float, float, float, float);
-	static SÏòÁ¿2 fc¾ØĞÎ°ë³ß´ç(float, float, float, float);
-	SÏòÁ¿2 &operator +=(const SÏòÁ¿2 &);
-	SÏòÁ¿2 &operator -=(const SÏòÁ¿2 &);
-	SÏòÁ¿2 &operator *=(const float &);
-	SÏòÁ¿2 &operator /=(const float &);
-	SÏòÁ¿2 &operator *=(const t¸´Êı<float> &);
-	SÏòÁ¿2 operator +(const SÏòÁ¿2 &) const;
-	SÏòÁ¿2 operator -(const SÏòÁ¿2 &) const;
-	SÏòÁ¿2 operator *(const float &) const;
-	SÏòÁ¿2 operator /(const float &) const;
-	SÏòÁ¿2 operator *(const t¸´Êı<float> &) const;
-	SÏòÁ¿2 operator -() const;
-	bool operator ==(const SÏòÁ¿2 &) const;
-	bool operator !=(const SÏòÁ¿2 &) const;
-	bool fÈ«Ğ¡ÓÚ(const SÏòÁ¿2 &) const;
-	bool fÈ«Ğ¡ÓÚµÈÓÚ(const SÏòÁ¿2 &) const;
-	bool fÈ«´óÓÚ(const SÏòÁ¿2 &) const;
-	bool fÈ«´óÓÚµÈÓÚ(const SÏòÁ¿2 &) const;
-	bool fiÁã() const;
-	float fg´óĞ¡() const;
-	float fgÆ½·½() const;
-	float fg·½Ïòd() const;
-	float fg·½Ïòr() const;
-	float fg¼Ğ½Çr(const SÏòÁ¿2 &) const;
-	float fgºá×İ±È() const;
-	SÏòÁ¿2 fg·´Ïò() const;
-	SÏòÁ¿2 fg¹éÒ»() const;
-	SÏòÁ¿2 &fs(const float &);
-	SÏòÁ¿2 &fs(const float &, const float &);
-	SÏòÁ¿2 &fs´óĞ¡(const float &);
-	SÏòÁ¿2 &fs·½Ïò(const float &);
-	SÏòÁ¿2 &fs·½Ïòd(const float &);
-	SÏòÁ¿2 &fsĞı×ªr(const float &);
-	SÏòÁ¿2 &fsĞı×ªd(const float &);
-	SÏòÁ¿2 f´óĞ¡(const float &) const;
-	SÏòÁ¿2 f·½Ïòr(const float &) const;
-	SÏòÁ¿2 f·½Ïòd(const float &) const;
-	float fµ½µã·½Ïòr(const SÏòÁ¿2 &) const;
-	float fµ½µã·½Ïòd(const SÏòÁ¿2 &) const;
-	SÏòÁ¿2 fĞı×ªr(const float &) const;
-	SÏòÁ¿2 fĞı×ªd(const float &) const;
-	SÏòÁ¿2 fÈÆµãĞı×ªr(const SÏòÁ¿2 &, const float &) const;
-	SÏòÁ¿2 fÈÆµãĞı×ªd(const SÏòÁ¿2 &, const float &) const;
-	float fµ½µã¾àÀë(const SÏòÁ¿2 &) const;
-	SÏòÁ¿2 fµ½µãÏòÁ¿(const SÏòÁ¿2 &) const;
-	SÏòÁ¿2 fµ½µã·½Î»r(const SÏòÁ¿2 &, const float &) const;
-	SÏòÁ¿2 fµ½µã·½Î»d(const SÏòÁ¿2 &, const float &) const;
-	float fµã³Ë(const SÏòÁ¿2 &) const;
-	SÏòÁ¿2 &fsÏßĞÔ½¥±ä(const SÏòÁ¿2 &Ä¿±ê, const float &½¥±äÖµ);
-	SÏòÁ¿2 fÏßĞÔ½¥±ä(const SÏòÁ¿2 &Ä¿±ê, const float &½¥±äÖµ) const;
-	SÏòÁ¿2 &fs±¶Êı½¥±ä(const SÏòÁ¿2 &Ä¿±ê, const float &½¥±äÖµ, const float &×îĞ¡½¥±ä = 0, const float &×î´ó½¥±ä = 999999999);
-	SÏòÁ¿2 f±¶Êı½¥±ä(const SÏòÁ¿2 &Ä¿±ê, const float &½¥±äÖµ, const float &×îĞ¡½¥±ä = 0, const float &×î´ó½¥±ä = 999999999) const;
-	SÏòÁ¿2 f·­ÕÛ(const SÖ±Ïß·½³Ì &) const;
-	SÏòÁ¿2 f·­ÕÛ(const float &) const;
-	SÏòÁ¿2 f·­ÕÛ(const SÔ²ĞÎ &) const;
-	SÏòÁ¿2 f¶ÔÆë(const float &) const;
-	SÏòÁ¿2 fÖ±½Ç×ø±ê(float, float) const;
-	SÏòÁ¿2 f´°¿Ú×ø±ê(float, float) const;
-	SÏòÁ¿2 f·ÖÁ¿³Ë(float, float) const;
-	SÏòÁ¿2 f·ÖÁ¿³Ë(const SÏòÁ¿2 &) const;
-	bool fi·ÖÁ¿ÏàµÈ() const;
-	//×ª»»
-	SÏòÁ¿3 ftÏòÁ¿3(float = 0) const;
-	SÏòÁ¿4 ftÏòÁ¿4(float = 0, float = 0) const;
+	Så‘é‡2() = default;
+	Så‘é‡2(float, float);
+	static Så‘é‡2 fcæ–¹å‘r(const float &, const float &);	//å¤§å°å¼§åº¦è·å¾—å‘é‡
+	static Så‘é‡2 fcæ–¹å‘d(const float &, const float &);	//å¤§å°åº¦è·å¾—å‘é‡
+	static Så‘é‡2 fcç›¸åŒ(const float &);	//x,yéƒ½ç­‰äºå‚æ•°
+	static Så‘é‡2 fcçŸ©å½¢ä¸­å¿ƒ(float, float, float, float);
+	static Så‘é‡2 fcçŸ©å½¢å°ºå¯¸(float, float, float, float);
+	static Så‘é‡2 fcçŸ©å½¢åŠå°ºå¯¸(float, float, float, float);
+	Så‘é‡2 &operator +=(const Så‘é‡2 &);
+	Så‘é‡2 &operator -=(const Så‘é‡2 &);
+	Så‘é‡2 &operator *=(const float &);
+	Så‘é‡2 &operator /=(const float &);
+	Så‘é‡2 &operator *=(const tå¤æ•°<float> &);
+	Så‘é‡2 operator +(const Så‘é‡2 &) const;
+	Så‘é‡2 operator -(const Så‘é‡2 &) const;
+	Så‘é‡2 operator *(const float &) const;
+	Så‘é‡2 operator /(const float &) const;
+	Så‘é‡2 operator *(const tå¤æ•°<float> &) const;
+	Så‘é‡2 operator -() const;
+	bool operator ==(const Så‘é‡2 &) const;
+	bool operator !=(const Så‘é‡2 &) const;
+	bool få…¨å°äº(const Så‘é‡2 &) const;
+	bool få…¨å°äºç­‰äº(const Så‘é‡2 &) const;
+	bool få…¨å¤§äº(const Så‘é‡2 &) const;
+	bool få…¨å¤§äºç­‰äº(const Så‘é‡2 &) const;
+	bool fié›¶() const;
+	float fgå¤§å°() const;
+	float fgå¹³æ–¹() const;
+	float fgæ–¹å‘d() const;
+	float fgæ–¹å‘r() const;
+	float fgå¤¹è§’r(const Så‘é‡2 &) const;
+	float fgæ¨ªçºµæ¯”() const;
+	Så‘é‡2 fgåå‘() const;
+	Så‘é‡2 fgå½’ä¸€() const;
+	Så‘é‡2 &fs(const float &);
+	Så‘é‡2 &fs(const float &, const float &);
+	Så‘é‡2 &fså¤§å°(const float &);
+	Så‘é‡2 &fsæ–¹å‘(const float &);
+	Så‘é‡2 &fsæ–¹å‘d(const float &);
+	Så‘é‡2 &fsæ—‹è½¬r(const float &);
+	Så‘é‡2 &fsæ—‹è½¬d(const float &);
+	Så‘é‡2 få¤§å°(const float &) const;
+	Så‘é‡2 fæ–¹å‘r(const float &) const;
+	Så‘é‡2 fæ–¹å‘d(const float &) const;
+	float fåˆ°ç‚¹æ–¹å‘r(const Så‘é‡2 &) const;
+	float fåˆ°ç‚¹æ–¹å‘d(const Så‘é‡2 &) const;
+	Så‘é‡2 fæ—‹è½¬r(const float &) const;
+	Så‘é‡2 fæ—‹è½¬d(const float &) const;
+	Så‘é‡2 fç»•ç‚¹æ—‹è½¬r(const Så‘é‡2 &, const float &) const;
+	Så‘é‡2 fç»•ç‚¹æ—‹è½¬d(const Så‘é‡2 &, const float &) const;
+	float fåˆ°ç‚¹è·ç¦»(const Så‘é‡2 &) const;
+	Så‘é‡2 fåˆ°ç‚¹å‘é‡(const Så‘é‡2 &) const;
+	Så‘é‡2 fåˆ°ç‚¹æ–¹ä½r(const Så‘é‡2 &, const float &) const;
+	Så‘é‡2 fåˆ°ç‚¹æ–¹ä½d(const Så‘é‡2 &, const float &) const;
+	float fç‚¹ä¹˜(const Så‘é‡2 &) const;
+	Så‘é‡2 &fsçº¿æ€§æ¸å˜(const Så‘é‡2 &ç›®æ ‡, const float &æ¸å˜å€¼);
+	Så‘é‡2 fçº¿æ€§æ¸å˜(const Så‘é‡2 &ç›®æ ‡, const float &æ¸å˜å€¼) const;
+	Så‘é‡2 &fså€æ•°æ¸å˜(const Så‘é‡2 &ç›®æ ‡, const float &æ¸å˜å€¼, const float &æœ€å°æ¸å˜ = 0, const float &æœ€å¤§æ¸å˜ = 999999999);
+	Så‘é‡2 få€æ•°æ¸å˜(const Så‘é‡2 &ç›®æ ‡, const float &æ¸å˜å€¼, const float &æœ€å°æ¸å˜ = 0, const float &æœ€å¤§æ¸å˜ = 999999999) const;
+	Så‘é‡2 fç¿»æŠ˜(const Sç›´çº¿æ–¹ç¨‹ &) const;
+	Så‘é‡2 fç¿»æŠ˜(const float &) const;
+	Så‘é‡2 fç¿»æŠ˜(const Såœ†å½¢ &) const;
+	Så‘é‡2 få¯¹é½(const float &) const;
+	Så‘é‡2 fç›´è§’åæ ‡(float, float) const;
+	Så‘é‡2 fçª—å£åæ ‡(float, float) const;
+	Så‘é‡2 fåˆ†é‡ä¹˜(float, float) const;
+	Så‘é‡2 fåˆ†é‡ä¹˜(const Så‘é‡2 &) const;
+	bool fiåˆ†é‡ç›¸ç­‰() const;
+	//è½¬æ¢
+	Så‘é‡3 ftå‘é‡3(float = 0) const;
+	Så‘é‡4 ftå‘é‡4(float = 0, float = 0) const;
 };
-//ÏòÁ¿3
-struct SÏòÁ¿3 {
-	static const SÏòÁ¿3 cÁã, cÒ»;
+//å‘é‡3
+struct Så‘é‡3 {
+	static const Så‘é‡3 cé›¶, cä¸€;
 	float x, y, z;
-	SÏòÁ¿3();
-	SÏòÁ¿3(const float &, const float &, const float &);
-	SÏòÁ¿3 &operator +=(const SÏòÁ¿3 &);
-	SÏòÁ¿3 &operator -=(const SÏòÁ¿3 &);
-	SÏòÁ¿3 &operator *=(const float &);
-	SÏòÁ¿3 &operator /=(const float &);
-	SÏòÁ¿3 operator +(const SÏòÁ¿3 &) const;
-	SÏòÁ¿3 operator -(const SÏòÁ¿3 &) const;
-	SÏòÁ¿3 operator *(const float &) const;
-	SÏòÁ¿3 operator /(const float &) const;
-	float fg´óĞ¡() const;
-	float fgÆ½·½() const;
-	SÏòÁ¿3 fg·´Ïò() const;
-	SÏòÁ¿3 fg¹éÒ»() const;
-	SÏòÁ¿3 &fs´óĞ¡(const float &);
-	float fµã³Ë(const SÏòÁ¿3 &) const;
-	SÏòÁ¿3 f²æ³Ë(const SÏòÁ¿3 &) const;
-	SÏòÁ¿3 &fs(const float &);
-	SÏòÁ¿3 &fs(const float &, const float &, const float &);
-	//×ª»»
-	SÏòÁ¿2 ftÏòÁ¿2() const;
-	SÏòÁ¿4 ftÏòÁ¿4(const float &) const;
+	Så‘é‡3();
+	Så‘é‡3(const float &, const float &, const float &);
+	Så‘é‡3 &operator +=(const Så‘é‡3 &);
+	Så‘é‡3 &operator -=(const Så‘é‡3 &);
+	Så‘é‡3 &operator *=(const float &);
+	Så‘é‡3 &operator /=(const float &);
+	Så‘é‡3 operator +(const Så‘é‡3 &) const;
+	Så‘é‡3 operator -(const Så‘é‡3 &) const;
+	Så‘é‡3 operator *(const float &) const;
+	Så‘é‡3 operator /(const float &) const;
+	float fgå¤§å°() const;
+	float fgå¹³æ–¹() const;
+	Så‘é‡3 fgåå‘() const;
+	Så‘é‡3 fgå½’ä¸€() const;
+	Så‘é‡3 &fså¤§å°(const float &);
+	float fç‚¹ä¹˜(const Så‘é‡3 &) const;
+	Så‘é‡3 få‰ä¹˜(const Så‘é‡3 &) const;
+	Så‘é‡3 &fs(const float &);
+	Så‘é‡3 &fs(const float &, const float &, const float &);
+	//è½¬æ¢
+	Så‘é‡2 ftå‘é‡2() const;
+	Så‘é‡4 ftå‘é‡4(const float &) const;
 };
-//ÏòÁ¿4
-struct SÏòÁ¿4 {
+//å‘é‡4
+struct Så‘é‡4 {
 	union {
 		struct {
 			float x, y, z, w;
 		};
-		float mÖµ[4];
+		float må€¼[4];
 	};
-	SÏòÁ¿4();
-	SÏòÁ¿4(const float &, const float &, const float &, const float &);
-	SÏòÁ¿4 operator *(const S¾ØÕó4 &) const;
-	SÏòÁ¿3 ftÏòÁ¿3() const;
+	Så‘é‡4();
+	Så‘é‡4(const float &, const float &, const float &, const float &);
+	Så‘é‡4 operator *(const SçŸ©é˜µ4 &) const;
+	Så‘é‡3 ftå‘é‡3() const;
 };
 
-}	//namespace cflw::ÊıÑ§
+}	//namespace cflw::æ•°å­¦

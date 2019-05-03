@@ -1,421 +1,421 @@
-#include <assert.h>
-#include "cflwÊıÑ§.h"
-#include "cflwÊıÑ§_ÏòÁ¿.h"
-#include "cflwÊıÑ§_º¯Êı·½³Ì.h"
-#include "cflwÊıÑ§_Æ½Ãæ¼¸ºÎ.h"
-#include "cflwÊıÑ§_¾ØÕó.h"
-namespace cflw::ÊıÑ§ {
-template<> SÏòÁ¿2 f¾ø¶ÔÖµ<SÏòÁ¿2>(const SÏòÁ¿2 &_) {
+ï»¿#include <assert.h>
+#include "cflwæ•°å­¦.h"
+#include "cflwæ•°å­¦_å‘é‡.h"
+#include "cflwæ•°å­¦_å‡½æ•°æ–¹ç¨‹.h"
+#include "cflwæ•°å­¦_å¹³é¢å‡ ä½•.h"
+#include "cflwæ•°å­¦_çŸ©é˜µ.h"
+namespace cflw::æ•°å­¦ {
+template<> Så‘é‡2 fç»å¯¹å€¼<Så‘é‡2>(const Så‘é‡2 &_) {
 	return {abs(_.x), abs(_.y)};
 }
-template<> SÏòÁ¿3 f¾ø¶ÔÖµ<SÏòÁ¿3>(const SÏòÁ¿3 &_) {
-	return SÏòÁ¿3(abs(_.x), abs(_.y), abs(_.z));
+template<> Så‘é‡3 fç»å¯¹å€¼<Så‘é‡3>(const Så‘é‡3 &_) {
+	return Så‘é‡3(abs(_.x), abs(_.y), abs(_.z));
 }
 //=============================================================================
-// ÏòÁ¿
+// å‘é‡
 //=============================================================================
-//³£Á¿
-const SÏòÁ¿2 SÏòÁ¿2::cÁã{0, 0};
-const SÏòÁ¿2 SÏòÁ¿2::cÒ»{1, 1};
-//¹¹Ôìº¯Êı
-SÏòÁ¿2::SÏòÁ¿2(float X, float Y):
+//å¸¸é‡
+const Så‘é‡2 Så‘é‡2::cé›¶{0, 0};
+const Så‘é‡2 Så‘é‡2::cä¸€{1, 1};
+//æ„é€ å‡½æ•°
+Så‘é‡2::Så‘é‡2(float X, float Y):
 	x(X), y(Y) {
 }
-SÏòÁ¿2 SÏòÁ¿2::fc·½Ïòr(const float &a´óĞ¡, const float &a·½Ïò) {
-	return {cos(a·½Ïò) * a´óĞ¡, sin(a·½Ïò) * a´óĞ¡};
+Så‘é‡2 Så‘é‡2::fcæ–¹å‘r(const float &aå¤§å°, const float &aæ–¹å‘) {
+	return {cos(aæ–¹å‘) * aå¤§å°, sin(aæ–¹å‘) * aå¤§å°};
 }
-SÏòÁ¿2 SÏòÁ¿2::fc·½Ïòd(const float &a´óĞ¡, const float &a·½Ïò) {
-	const float r = a·½Ïò / 180.f * c¦Ğ<float>;
-	return {cos(r) * a´óĞ¡, sin(r) * a´óĞ¡};
+Så‘é‡2 Så‘é‡2::fcæ–¹å‘d(const float &aå¤§å°, const float &aæ–¹å‘) {
+	const float r = aæ–¹å‘ / 180.f * cÏ€<float>;
+	return {cos(r) * aå¤§å°, sin(r) * aå¤§å°};
 }
-SÏòÁ¿2 SÏòÁ¿2::fcÏàÍ¬(const float &a) {
+Så‘é‡2 Så‘é‡2::fcç›¸åŒ(const float &a) {
 	return {a, a};
 }
-SÏòÁ¿2 SÏòÁ¿2::fc¾ØĞÎÖĞĞÄ(float a×ó, float aÉÏ, float aÓÒ, float aÏÂ) {
-	return {(a×ó + aÓÒ) / 2, (aÉÏ + aÏÂ) / 2};
+Så‘é‡2 Så‘é‡2::fcçŸ©å½¢ä¸­å¿ƒ(float aå·¦, float aä¸Š, float aå³, float aä¸‹) {
+	return {(aå·¦ + aå³) / 2, (aä¸Š + aä¸‹) / 2};
 }
-SÏòÁ¿2 SÏòÁ¿2::fc¾ØĞÎ³ß´ç(float a×ó, float aÉÏ, float aÓÒ, float aÏÂ) {
-	return {aÓÒ - a×ó, aÉÏ - aÏÂ};
+Så‘é‡2 Så‘é‡2::fcçŸ©å½¢å°ºå¯¸(float aå·¦, float aä¸Š, float aå³, float aä¸‹) {
+	return {aå³ - aå·¦, aä¸Š - aä¸‹};
 }
-SÏòÁ¿2 SÏòÁ¿2::fc¾ØĞÎ°ë³ß´ç(float a×ó, float aÉÏ, float aÓÒ, float aÏÂ) {
-	return {(aÓÒ - a×ó) / 2, (aÉÏ - aÏÂ) / 2};
+Så‘é‡2 Så‘é‡2::fcçŸ©å½¢åŠå°ºå¯¸(float aå·¦, float aä¸Š, float aå³, float aä¸‹) {
+	return {(aå³ - aå·¦) / 2, (aä¸Š - aä¸‹) / 2};
 }
-//¸³Öµ²Ù×÷·û
-SÏòÁ¿2& SÏòÁ¿2::operator +=(const SÏòÁ¿2 &_) {
+//èµ‹å€¼æ“ä½œç¬¦
+Så‘é‡2& Så‘é‡2::operator +=(const Så‘é‡2 &_) {
 	x += _.x;
 	y += _.y;
 	return *this;
 }
-SÏòÁ¿2& SÏòÁ¿2::operator -=(const SÏòÁ¿2 &_) {
+Så‘é‡2& Så‘é‡2::operator -=(const Så‘é‡2 &_) {
 	x -= _.x;
 	y -= _.y;
 	return *this;
 }
-SÏòÁ¿2& SÏòÁ¿2::operator *=(const float &_) {
+Så‘é‡2& Så‘é‡2::operator *=(const float &_) {
 	x *= _;
 	y *= _;
 	return *this;
 }
-SÏòÁ¿2& SÏòÁ¿2::operator /=(const float &_) {
+Så‘é‡2& Så‘é‡2::operator /=(const float &_) {
 	x /= _;
 	y /= _;
 	return *this;
 }
-SÏòÁ¿2 &SÏòÁ¿2::operator *= (const t¸´Êı<float> &_) {
+Så‘é‡2 &Så‘é‡2::operator *= (const tå¤æ•°<float> &_) {
 	const float vx = x, vy = y;
 	x = vx * _._Val[0] - vy * _._Val[1];
 	y = vy * _._Val[0] + vx * _._Val[1];
 	return *this;
 }
-//ËÄÔòÔËËã²Ù×÷·û
-SÏòÁ¿2 SÏòÁ¿2::operator +(const SÏòÁ¿2 &_) const {
-	return SÏòÁ¿2(x + _.x, y + _.y);
+//å››åˆ™è¿ç®—æ“ä½œç¬¦
+Så‘é‡2 Så‘é‡2::operator +(const Så‘é‡2 &_) const {
+	return Så‘é‡2(x + _.x, y + _.y);
 }
-SÏòÁ¿2 SÏòÁ¿2::operator -(const SÏòÁ¿2 &_) const {
-	return SÏòÁ¿2(x - _.x, y - _.y);
+Så‘é‡2 Så‘é‡2::operator -(const Så‘é‡2 &_) const {
+	return Så‘é‡2(x - _.x, y - _.y);
 }
-SÏòÁ¿2 SÏòÁ¿2::operator *(const float &_) const {
-	return SÏòÁ¿2(x * _, y * _);
+Så‘é‡2 Så‘é‡2::operator *(const float &_) const {
+	return Så‘é‡2(x * _, y * _);
 }
-SÏòÁ¿2 SÏòÁ¿2::operator /(const float &_) const {
-	return SÏòÁ¿2(x / _, y / _);
+Så‘é‡2 Så‘é‡2::operator /(const float &_) const {
+	return Så‘é‡2(x / _, y / _);
 }
-SÏòÁ¿2 SÏòÁ¿2::operator *(const t¸´Êı<float> &_) const {
-	SÏòÁ¿2 v = *this;
+Så‘é‡2 Så‘é‡2::operator *(const tå¤æ•°<float> &_) const {
+	Så‘é‡2 v = *this;
 	v.x = x * _.real() - y * _.imag();
 	v.y = y * _.real() + x * _.imag();
 	return v;
 }
 //
-SÏòÁ¿2 SÏòÁ¿2::operator -() const {
-	SÏòÁ¿2 v = *this;
+Så‘é‡2 Så‘é‡2::operator -() const {
+	Så‘é‡2 v = *this;
 	v.x = -v.x;
 	v.y = -v.y;
 	return v;
 }
-bool SÏòÁ¿2::operator ==(const SÏòÁ¿2 &a) const {
+bool Så‘é‡2::operator ==(const Så‘é‡2 &a) const {
 	return (x == a.x) && (y == a.y);
 }
-bool SÏòÁ¿2::operator !=(const SÏòÁ¿2 &a) const {
+bool Så‘é‡2::operator !=(const Så‘é‡2 &a) const {
 	return (x != a.x) || (y != a.y);
 }
-//¸´ÔÓ±È½Ï
-bool SÏòÁ¿2::fÈ«Ğ¡ÓÚ(const SÏòÁ¿2 &a) const {
+//å¤æ‚æ¯”è¾ƒ
+bool Så‘é‡2::få…¨å°äº(const Så‘é‡2 &a) const {
 	return (x < a.x) && (y < a.y);
 }
-bool SÏòÁ¿2::fÈ«Ğ¡ÓÚµÈÓÚ(const SÏòÁ¿2 &a) const {
+bool Så‘é‡2::få…¨å°äºç­‰äº(const Så‘é‡2 &a) const {
 	return (x <= a.x) && (y <= a.y);
 }
-bool SÏòÁ¿2::fÈ«´óÓÚ(const SÏòÁ¿2 &a) const {
+bool Så‘é‡2::få…¨å¤§äº(const Så‘é‡2 &a) const {
 	return (x > a.x) && (y > a.y);
 }
-bool SÏòÁ¿2::fÈ«´óÓÚµÈÓÚ(const SÏòÁ¿2 &a) const {
+bool Så‘é‡2::få…¨å¤§äºç­‰äº(const Så‘é‡2 &a) const {
 	return (x >= a.x) && (y >= a.y);
 }
-bool SÏòÁ¿2::fiÁã() const {
+bool Så‘é‡2::fié›¶() const {
 	return (x == 0) && (y == 0);
 }
-//ÆÕÍ¨º¯Êı
-float SÏòÁ¿2::fg´óĞ¡() const {
+//æ™®é€šå‡½æ•°
+float Så‘é‡2::fgå¤§å°() const {
 	return hypotf(x, y);
 }
-float SÏòÁ¿2::fgÆ½·½() const {
+float Så‘é‡2::fgå¹³æ–¹() const {
 	return x * x + y * y;
 }
-float SÏòÁ¿2::fg·½Ïòd() const {
-	return C½Ç¶È¼ÆËã<float>::c¶È.f·½Ïò(x, y);
+float Så‘é‡2::fgæ–¹å‘d() const {
+	return Cè§’åº¦è®¡ç®—<float>::cåº¦.fæ–¹å‘(x, y);
 }
-float SÏòÁ¿2::fg·½Ïòr() const {
-	return C½Ç¶È¼ÆËã<float>::c»¡¶È.f·½Ïò(x, y);
+float Så‘é‡2::fgæ–¹å‘r() const {
+	return Cè§’åº¦è®¡ç®—<float>::cå¼§åº¦.fæ–¹å‘(x, y);
 }
-float SÏòÁ¿2::fg¼Ğ½Çr(const SÏòÁ¿2 &_) const {
-	return C½Ç¶È¼ÆËã<float>::c»¡¶È.fÈ¡Õı(fg·½Ïòr() - _.fg·½Ïòr());
+float Så‘é‡2::fgå¤¹è§’r(const Så‘é‡2 &_) const {
+	return Cè§’åº¦è®¡ç®—<float>::cå¼§åº¦.få–æ­£(fgæ–¹å‘r() - _.fgæ–¹å‘r());
 }
-float SÏòÁ¿2::fgºá×İ±È() const {
+float Så‘é‡2::fgæ¨ªçºµæ¯”() const {
 	return x / y;
 }
-SÏòÁ¿2 SÏòÁ¿2::fg·´Ïò() const {
-	return SÏòÁ¿2(-x, -y);
+Så‘é‡2 Så‘é‡2::fgåå‘() const {
+	return Så‘é‡2(-x, -y);
 }
-SÏòÁ¿2 SÏòÁ¿2::fg¹éÒ»() const {
-	float vÄ£ = fg´óĞ¡();
-	return SÏòÁ¿2(x / vÄ£, y / vÄ£);
+Så‘é‡2 Så‘é‡2::fgå½’ä¸€() const {
+	float væ¨¡ = fgå¤§å°();
+	return Så‘é‡2(x / væ¨¡, y / væ¨¡);
 }
-SÏòÁ¿2 &SÏòÁ¿2::fs(const float &XY) {
+Så‘é‡2 &Så‘é‡2::fs(const float &XY) {
 	x = y = XY;
 	return *this;
 }
-SÏòÁ¿2 &SÏòÁ¿2::fs(const float &X, const float &Y) {
+Så‘é‡2 &Så‘é‡2::fs(const float &X, const float &Y) {
 	x = X;
 	y = Y;
 	return *this;
 }
-SÏòÁ¿2 &SÏòÁ¿2::fs´óĞ¡(const float &p) {
-	float vÄ£ = fg´óĞ¡();
-	assert(vÄ£ != 0);
-	x = x / vÄ£ * p;
-	y = y / vÄ£ * p;
+Så‘é‡2 &Så‘é‡2::fså¤§å°(const float &p) {
+	float væ¨¡ = fgå¤§å°();
+	assert(væ¨¡ != 0);
+	x = x / væ¨¡ * p;
+	y = y / væ¨¡ * p;
 	return *this;
 }
-SÏòÁ¿2 &SÏòÁ¿2::fs·½Ïò(const float &p) {
-	const float vÄ£ = fg´óĞ¡();
-	x = cos(p) * vÄ£;
-	y = sin(p) * vÄ£;
+Så‘é‡2 &Så‘é‡2::fsæ–¹å‘(const float &p) {
+	const float væ¨¡ = fgå¤§å°();
+	x = cos(p) * væ¨¡;
+	y = sin(p) * væ¨¡;
 	return *this;
 }
-SÏòÁ¿2 &SÏòÁ¿2::fs·½Ïòd(const float &p) {
-	const float vÄ£ = fg´óĞ¡();
-	const float r = p * c¶Èµ½»¡¶È<float>;
-	x = cos(r) * vÄ£;
-	y = sin(r) * vÄ£;
+Så‘é‡2 &Så‘é‡2::fsæ–¹å‘d(const float &p) {
+	const float væ¨¡ = fgå¤§å°();
+	const float r = p * cåº¦åˆ°å¼§åº¦<float>;
+	x = cos(r) * væ¨¡;
+	y = sin(r) * væ¨¡;
 	return *this;
 }
-SÏòÁ¿2 &SÏòÁ¿2::fsĞı×ªr(const float &p) {
-	*this = fĞı×ªr(p);
+Så‘é‡2 &Så‘é‡2::fsæ—‹è½¬r(const float &p) {
+	*this = fæ—‹è½¬r(p);
 	return *this;
 }
-SÏòÁ¿2 &SÏòÁ¿2::fsĞı×ªd(const float &p) {
-	*this = fĞı×ªd(p);
+Så‘é‡2 &Så‘é‡2::fsæ—‹è½¬d(const float &p) {
+	*this = fæ—‹è½¬d(p);
 	return *this;
 }
-SÏòÁ¿2 SÏòÁ¿2::f´óĞ¡(const float &p) const {
-	return SÏòÁ¿2(*this).fs´óĞ¡(p);
+Så‘é‡2 Så‘é‡2::få¤§å°(const float &p) const {
+	return Så‘é‡2(*this).fså¤§å°(p);
 }
-SÏòÁ¿2 SÏòÁ¿2::f·½Ïòr(const float &p) const {
-	return SÏòÁ¿2(*this).fs·½Ïò(p);
+Så‘é‡2 Så‘é‡2::fæ–¹å‘r(const float &p) const {
+	return Så‘é‡2(*this).fsæ–¹å‘(p);
 }
-SÏòÁ¿2 SÏòÁ¿2::f·½Ïòd(const float &p) const {
-	return SÏòÁ¿2(*this).fs·½Ïòd(p);
+Så‘é‡2 Så‘é‡2::fæ–¹å‘d(const float &p) const {
+	return Så‘é‡2(*this).fsæ–¹å‘d(p);
 }
-float SÏòÁ¿2::fµ½µã·½Ïòr(const SÏòÁ¿2 &_) const {
-	const SÏòÁ¿2 v = _ - *this;
-	return C½Ç¶È¼ÆËã<float>::c»¡¶È.f·½Ïò(v.x, v.y);
+float Så‘é‡2::fåˆ°ç‚¹æ–¹å‘r(const Så‘é‡2 &_) const {
+	const Så‘é‡2 v = _ - *this;
+	return Cè§’åº¦è®¡ç®—<float>::cå¼§åº¦.fæ–¹å‘(v.x, v.y);
 }
-float SÏòÁ¿2::fµ½µã·½Ïòd(const SÏòÁ¿2 &_) const {
-	const SÏòÁ¿2 v = _ - *this;
-	return C½Ç¶È¼ÆËã<float>::c¶È.f·½Ïò(v.x, v.y);
+float Så‘é‡2::fåˆ°ç‚¹æ–¹å‘d(const Så‘é‡2 &_) const {
+	const Så‘é‡2 v = _ - *this;
+	return Cè§’åº¦è®¡ç®—<float>::cåº¦.fæ–¹å‘(v.x, v.y);
 }
-SÏòÁ¿2 SÏòÁ¿2::fĞı×ªr(const float &a½Ç¶È) const {
-	const float s = sin(a½Ç¶È);
-	const float c = cos(a½Ç¶È);
-	return SÏòÁ¿2{x * c - y * s, x * s + y * c};
+Så‘é‡2 Så‘é‡2::fæ—‹è½¬r(const float &aè§’åº¦) const {
+	const float s = sin(aè§’åº¦);
+	const float c = cos(aè§’åº¦);
+	return Så‘é‡2{x * c - y * s, x * s + y * c};
 }
-SÏòÁ¿2 SÏòÁ¿2::fĞı×ªd(const float &a½Ç¶È) const {
-	return fĞı×ªr(a½Ç¶È * c¶Èµ½»¡¶È<float>);
+Så‘é‡2 Så‘é‡2::fæ—‹è½¬d(const float &aè§’åº¦) const {
+	return fæ—‹è½¬r(aè§’åº¦ * cåº¦åˆ°å¼§åº¦<float>);
 }
-SÏòÁ¿2 SÏòÁ¿2::fÈÆµãĞı×ªr(const SÏòÁ¿2 &aÖĞĞÄ, const float &a½Ç¶È) const {
-	return (*this - aÖĞĞÄ).fĞı×ªr(a½Ç¶È) += aÖĞĞÄ;
+Så‘é‡2 Så‘é‡2::fç»•ç‚¹æ—‹è½¬r(const Så‘é‡2 &aä¸­å¿ƒ, const float &aè§’åº¦) const {
+	return (*this - aä¸­å¿ƒ).fæ—‹è½¬r(aè§’åº¦) += aä¸­å¿ƒ;
 }
-SÏòÁ¿2 SÏòÁ¿2::fÈÆµãĞı×ªd(const SÏòÁ¿2 &aÖĞĞÄ, const float &a½Ç¶È) const {
-	return fÈÆµãĞı×ªr(aÖĞĞÄ, a½Ç¶È * c¶Èµ½»¡¶È<float>);
+Så‘é‡2 Så‘é‡2::fç»•ç‚¹æ—‹è½¬d(const Så‘é‡2 &aä¸­å¿ƒ, const float &aè§’åº¦) const {
+	return fç»•ç‚¹æ—‹è½¬r(aä¸­å¿ƒ, aè§’åº¦ * cåº¦åˆ°å¼§åº¦<float>);
 }
-float SÏòÁ¿2::fµ½µã¾àÀë(const SÏòÁ¿2 &a) const {
+float Så‘é‡2::fåˆ°ç‚¹è·ç¦»(const Så‘é‡2 &a) const {
 	const float _x = a.x - x;
 	const float _y = a.y - y;
 	return sqrt(_x*_x + _y * _y);
 }
-SÏòÁ¿2 SÏòÁ¿2::fµ½µãÏòÁ¿(const SÏòÁ¿2 &a) const {
-	return SÏòÁ¿2{a.x - x, a.y - y};
+Så‘é‡2 Så‘é‡2::fåˆ°ç‚¹å‘é‡(const Så‘é‡2 &a) const {
+	return Så‘é‡2{a.x - x, a.y - y};
 }
-SÏòÁ¿2 SÏòÁ¿2::fµ½µã·½Î»r(const SÏòÁ¿2 &aµã, const float &a·½Ïò) const {
-	const SÏòÁ¿2 vµã = fµ½µãÏòÁ¿(aµã);
-	return vµã.fĞı×ªr(-a·½Ïò);
+Så‘é‡2 Så‘é‡2::fåˆ°ç‚¹æ–¹ä½r(const Så‘é‡2 &aç‚¹, const float &aæ–¹å‘) const {
+	const Så‘é‡2 vç‚¹ = fåˆ°ç‚¹å‘é‡(aç‚¹);
+	return vç‚¹.fæ—‹è½¬r(-aæ–¹å‘);
 }
-SÏòÁ¿2 SÏòÁ¿2::fµ½µã·½Î»d(const SÏòÁ¿2 &aµã, const float &a·½Ïò) const {
-	return fµ½µã·½Î»r(aµã, a·½Ïò * c¶Èµ½»¡¶È<float>);
+Så‘é‡2 Så‘é‡2::fåˆ°ç‚¹æ–¹ä½d(const Så‘é‡2 &aç‚¹, const float &aæ–¹å‘) const {
+	return fåˆ°ç‚¹æ–¹ä½r(aç‚¹, aæ–¹å‘ * cåº¦åˆ°å¼§åº¦<float>);
 }
-float SÏòÁ¿2::fµã³Ë(const SÏòÁ¿2 &a) const {
+float Så‘é‡2::fç‚¹ä¹˜(const Så‘é‡2 &a) const {
 	return x * a.x + y * a.y;
 }
-SÏòÁ¿2 &SÏòÁ¿2::fsÏßĞÔ½¥±ä(const SÏòÁ¿2 &a, const float &a½¥±ä) {
-	SÏòÁ¿2 v = a - *this;
-	if (v.fg´óĞ¡() <= a½¥±ä)
+Så‘é‡2 &Så‘é‡2::fsçº¿æ€§æ¸å˜(const Så‘é‡2 &a, const float &aæ¸å˜) {
+	Så‘é‡2 v = a - *this;
+	if (v.fgå¤§å°() <= aæ¸å˜)
 		return *this = a;
-	v.fs´óĞ¡(a½¥±ä);
+	v.fså¤§å°(aæ¸å˜);
 	return *this += v;
 }
-SÏòÁ¿2 SÏòÁ¿2::fÏßĞÔ½¥±ä(const SÏòÁ¿2 &a, const float &a½¥±ä) const {
-	SÏòÁ¿2 v = a - *this;
-	if (v.fg´óĞ¡() <= a½¥±ä)
+Så‘é‡2 Så‘é‡2::fçº¿æ€§æ¸å˜(const Så‘é‡2 &a, const float &aæ¸å˜) const {
+	Så‘é‡2 v = a - *this;
+	if (v.fgå¤§å°() <= aæ¸å˜)
 		return a;
-	v.fs´óĞ¡(a½¥±ä);
+	v.fså¤§å°(aæ¸å˜);
 	return *this + v;
 }
-SÏòÁ¿2 &SÏòÁ¿2::fs±¶Êı½¥±ä(const SÏòÁ¿2 &a, const float &a½¥±ä, const float &a×îĞ¡, const float &a×î´ó) {
-	SÏòÁ¿2 v = (a - *this) * a½¥±ä;
-	const float vÄ£ = v.fg´óĞ¡();
-	if (vÄ£ == 0)
+Så‘é‡2 &Så‘é‡2::fså€æ•°æ¸å˜(const Så‘é‡2 &a, const float &aæ¸å˜, const float &aæœ€å°, const float &aæœ€å¤§) {
+	Så‘é‡2 v = (a - *this) * aæ¸å˜;
+	const float væ¨¡ = v.fgå¤§å°();
+	if (væ¨¡ == 0)
 		return *this;
-	if (vÄ£ < a×îĞ¡)
-		v.fs´óĞ¡(a×îĞ¡);
-	else if (vÄ£ > a×î´ó)
-		v.fs´óĞ¡(a×î´ó);
+	if (væ¨¡ < aæœ€å°)
+		v.fså¤§å°(aæœ€å°);
+	else if (væ¨¡ > aæœ€å¤§)
+		v.fså¤§å°(aæœ€å¤§);
 	return *this += v;
 }
-SÏòÁ¿2 SÏòÁ¿2::f±¶Êı½¥±ä(const SÏòÁ¿2 &a, const float &a½¥±ä, const float &a×îĞ¡, const float &a×î´ó) const {
-	SÏòÁ¿2 v = (a - *this) * a½¥±ä;
-	const float vÄ£ = v.fg´óĞ¡();
-	if (vÄ£ == 0)
+Så‘é‡2 Så‘é‡2::få€æ•°æ¸å˜(const Så‘é‡2 &a, const float &aæ¸å˜, const float &aæœ€å°, const float &aæœ€å¤§) const {
+	Så‘é‡2 v = (a - *this) * aæ¸å˜;
+	const float væ¨¡ = v.fgå¤§å°();
+	if (væ¨¡ == 0)
 		return *this;
-	if (vÄ£ < a×îĞ¡)
-		v.fs´óĞ¡(a×îĞ¡);
-	else if (vÄ£ > a×î´ó)
-		v.fs´óĞ¡(a×î´ó);
+	if (væ¨¡ < aæœ€å°)
+		v.fså¤§å°(aæœ€å°);
+	else if (væ¨¡ > aæœ€å¤§)
+		v.fså¤§å°(aæœ€å¤§);
 	return *this + v;
 }
-SÏòÁ¿2 SÏòÁ¿2::f·­ÕÛ(const SÖ±Ïß·½³Ì &aÖ±Ïß·½³Ì) const {
-	assert(aÖ±Ïß·½³Ì.a != 0 || aÖ±Ïß·½³Ì.b != 0);
-	SÏòÁ¿2 v = *this;
-	if (aÖ±Ïß·½³Ì.a == 0) {//Ö±ÏßÆ½ĞĞÓÚyÖá
-		const float d = -aÖ±Ïß·½³Ì.c / aÖ±Ïß·½³Ì.b;
-		v.x = ÊıÑ§::f·­ÕÛ(v.x, d);
-	} else if (aÖ±Ïß·½³Ì.b == 0) {//Ö±ÏßÆ½ĞĞÓÚxÖá
-		const float d = -aÖ±Ïß·½³Ì.c / aÖ±Ïß·½³Ì.a;
-		v.y = ÊıÑ§::f·­ÕÛ(v.y, d);
+Så‘é‡2 Så‘é‡2::fç¿»æŠ˜(const Sç›´çº¿æ–¹ç¨‹ &aç›´çº¿æ–¹ç¨‹) const {
+	assert(aç›´çº¿æ–¹ç¨‹.a != 0 || aç›´çº¿æ–¹ç¨‹.b != 0);
+	Så‘é‡2 v = *this;
+	if (aç›´çº¿æ–¹ç¨‹.a == 0) {//ç›´çº¿å¹³è¡Œäºyè½´
+		const float d = -aç›´çº¿æ–¹ç¨‹.c / aç›´çº¿æ–¹ç¨‹.b;
+		v.x = æ•°å­¦::fç¿»æŠ˜(v.x, d);
+	} else if (aç›´çº¿æ–¹ç¨‹.b == 0) {//ç›´çº¿å¹³è¡Œäºxè½´
+		const float d = -aç›´çº¿æ–¹ç¨‹.c / aç›´çº¿æ–¹ç¨‹.a;
+		v.y = æ•°å­¦::fç¿»æŠ˜(v.y, d);
 	} else {
-		const float v2d = aÖ±Ïß·½³Ì.fµ½µã¾àÀë(*this);
-		const float mĞ± = hypotf(aÖ±Ïß·½³Ì.a, aÖ±Ïß·½³Ì.b);
-		v.x = x - aÖ±Ïß·½³Ì.a / mĞ± * v2d;
-		v.y = y - aÖ±Ïß·½³Ì.b / mĞ± * v2d;
+		const float v2d = aç›´çº¿æ–¹ç¨‹.fåˆ°ç‚¹è·ç¦»(*this);
+		const float mæ–œ = hypotf(aç›´çº¿æ–¹ç¨‹.a, aç›´çº¿æ–¹ç¨‹.b);
+		v.x = x - aç›´çº¿æ–¹ç¨‹.a / mæ–œ * v2d;
+		v.y = y - aç›´çº¿æ–¹ç¨‹.b / mæ–œ * v2d;
 	}
 	return v;
 }
-SÏòÁ¿2 SÏòÁ¿2::f·­ÕÛ(const float &a) const {
-	return SÏòÁ¿2::fc·½Ïòr(fg´óĞ¡(), ÊıÑ§::f·­ÕÛ(fg·½Ïòr(), a));
+Så‘é‡2 Så‘é‡2::fç¿»æŠ˜(const float &a) const {
+	return Så‘é‡2::fcæ–¹å‘r(fgå¤§å°(), æ•°å­¦::fç¿»æŠ˜(fgæ–¹å‘r(), a));
 }
-SÏòÁ¿2 SÏòÁ¿2::f·­ÕÛ(const SÔ²ĞÎ &a) const {
-	const SÏòÁ¿2 mÏà¶Ô = *this - a.m×ø±ê;
-	const float m¾àÀë = mÏà¶Ô.fg´óĞ¡();
-	const float m·½Ïò = mÏà¶Ô.fg·½Ïòr();
-	return fc·½Ïòr(ÊıÑ§::f·­ÕÛ(m¾àÀë, a.m°ë¾¶), m·½Ïò);
+Så‘é‡2 Så‘é‡2::fç¿»æŠ˜(const Såœ†å½¢ &a) const {
+	const Så‘é‡2 mç›¸å¯¹ = *this - a.måæ ‡;
+	const float mè·ç¦» = mç›¸å¯¹.fgå¤§å°();
+	const float mæ–¹å‘ = mç›¸å¯¹.fgæ–¹å‘r();
+	return fcæ–¹å‘r(æ•°å­¦::fç¿»æŠ˜(mè·ç¦», a.måŠå¾„), mæ–¹å‘);
 }
-SÏòÁ¿2 SÏòÁ¿2::f¶ÔÆë(const float &a) const {
-	return{ÊıÑ§::f¶ÔÆë(x, a), ÊıÑ§::f¶ÔÆë(y, a)};
+Så‘é‡2 Så‘é‡2::få¯¹é½(const float &a) const {
+	return{æ•°å­¦::få¯¹é½(x, a), æ•°å­¦::få¯¹é½(y, a)};
 }
-SÏòÁ¿2 SÏòÁ¿2::fÖ±½Ç×ø±ê(float sx, float sy) const {
-	return{fÖ±½Ç×ø±êx(x, sx), fÖ±½Ç×ø±êy(y, sy)};
+Så‘é‡2 Så‘é‡2::fç›´è§’åæ ‡(float sx, float sy) const {
+	return{fç›´è§’åæ ‡x(x, sx), fç›´è§’åæ ‡y(y, sy)};
 }
-SÏòÁ¿2 SÏòÁ¿2::f´°¿Ú×ø±ê(float sx, float sy) const {
-	return{f´°¿Ú×ø±êx(x, sx), f´°¿Ú×ø±êy(y, sy)};
+Så‘é‡2 Så‘é‡2::fçª—å£åæ ‡(float sx, float sy) const {
+	return{fçª—å£åæ ‡x(x, sx), fçª—å£åæ ‡y(y, sy)};
 }
-SÏòÁ¿2 SÏòÁ¿2::f·ÖÁ¿³Ë(float a, float b) const {
+Så‘é‡2 Så‘é‡2::fåˆ†é‡ä¹˜(float a, float b) const {
 	return {x * a, y * b};
 }
-SÏòÁ¿2 SÏòÁ¿2::f·ÖÁ¿³Ë(const SÏòÁ¿2 &a) const {
+Så‘é‡2 Så‘é‡2::fåˆ†é‡ä¹˜(const Så‘é‡2 &a) const {
 	return {x * a.x, y * a.y};
 }
-bool SÏòÁ¿2::fi·ÖÁ¿ÏàµÈ() const {
+bool Så‘é‡2::fiåˆ†é‡ç›¸ç­‰() const {
 	return x == y;
 }
-//×ª»»
-SÏòÁ¿3 SÏòÁ¿2::ftÏòÁ¿3(float z)const {
-	return SÏòÁ¿3(x, y, z);
+//è½¬æ¢
+Så‘é‡3 Så‘é‡2::ftå‘é‡3(float z)const {
+	return Så‘é‡3(x, y, z);
 }
-SÏòÁ¿4 SÏòÁ¿2::ftÏòÁ¿4(float z, float w) const {
-	return SÏòÁ¿4(x, y, z, w);
+Så‘é‡4 Så‘é‡2::ftå‘é‡4(float z, float w) const {
+	return Så‘é‡4(x, y, z, w);
 }
 //=============================================================================
-// ÏòÁ¿3
+// å‘é‡3
 //=============================================================================
-const SÏòÁ¿3 SÏòÁ¿3::cÁã{0, 0, 0};
-const SÏòÁ¿3 SÏòÁ¿3::cÒ»{1, 1, 1};
-SÏòÁ¿3::SÏòÁ¿3() : x(0), y(0), z(0) {}
-SÏòÁ¿3::SÏòÁ¿3(const float &X, const float &Y, const float &Z) : x(X), y(Y), z(Z) {}
-//¸³Öµ²Ù×÷·û
-SÏòÁ¿3& SÏòÁ¿3::operator +=(const SÏòÁ¿3 &_) {
+const Så‘é‡3 Så‘é‡3::cé›¶{0, 0, 0};
+const Så‘é‡3 Så‘é‡3::cä¸€{1, 1, 1};
+Så‘é‡3::Så‘é‡3() : x(0), y(0), z(0) {}
+Så‘é‡3::Så‘é‡3(const float &X, const float &Y, const float &Z) : x(X), y(Y), z(Z) {}
+//èµ‹å€¼æ“ä½œç¬¦
+Så‘é‡3& Så‘é‡3::operator +=(const Så‘é‡3 &_) {
 	x += _.x;
 	y += _.y;
 	z += _.z;
 	return *this;
 }
-SÏòÁ¿3& SÏòÁ¿3::operator -=(const SÏòÁ¿3 &_) {
+Så‘é‡3& Så‘é‡3::operator -=(const Så‘é‡3 &_) {
 	x -= _.x;
 	y -= _.y;
 	z -= _.z;
 	return *this;
 }
-SÏòÁ¿3& SÏòÁ¿3::operator *=(const float &_) {
+Så‘é‡3& Så‘é‡3::operator *=(const float &_) {
 	x *= _;
 	y *= _;
 	z *= _;
 	return *this;
 }
-SÏòÁ¿3& SÏòÁ¿3::operator /=(const float &_) {
+Så‘é‡3& Så‘é‡3::operator /=(const float &_) {
 	x /= _;
 	y /= _;
 	z /= _;
 	return *this;
 }
-//ËÄÔòÔËËã²Ù×÷·û
-SÏòÁ¿3 SÏòÁ¿3::operator +(const SÏòÁ¿3 &_) const {
-	return SÏòÁ¿3(x + _.x, y + _.y, z + _.z);
+//å››åˆ™è¿ç®—æ“ä½œç¬¦
+Så‘é‡3 Så‘é‡3::operator +(const Så‘é‡3 &_) const {
+	return Så‘é‡3(x + _.x, y + _.y, z + _.z);
 }
-SÏòÁ¿3 SÏòÁ¿3::operator -(const SÏòÁ¿3 &_) const {
-	return SÏòÁ¿3(x - _.x, y - _.y, z - _.z);
+Så‘é‡3 Så‘é‡3::operator -(const Så‘é‡3 &_) const {
+	return Så‘é‡3(x - _.x, y - _.y, z - _.z);
 }
-SÏòÁ¿3 SÏòÁ¿3::operator *(const float &_) const {
-	return SÏòÁ¿3(x * _, y * _, z * _);
+Så‘é‡3 Så‘é‡3::operator *(const float &_) const {
+	return Så‘é‡3(x * _, y * _, z * _);
 }
-SÏòÁ¿3 SÏòÁ¿3::operator /(const float &_) const {
-	return SÏòÁ¿3(x / _, y / _, z / _);
+Så‘é‡3 Så‘é‡3::operator /(const float &_) const {
+	return Så‘é‡3(x / _, y / _, z / _);
 }
 //
-float SÏòÁ¿3::fg´óĞ¡() const {
+float Så‘é‡3::fgå¤§å°() const {
 	return sqrt(x * x + y * y + z * z);
 }
-float SÏòÁ¿3::fgÆ½·½() const {
+float Så‘é‡3::fgå¹³æ–¹() const {
 	return x * x + y * y + z * z;
 }
-SÏòÁ¿3 SÏòÁ¿3::fg·´Ïò() const {
-	return SÏòÁ¿3(-x, -y, -z);
+Så‘é‡3 Så‘é‡3::fgåå‘() const {
+	return Så‘é‡3(-x, -y, -z);
 }
-SÏòÁ¿3 SÏòÁ¿3::fg¹éÒ»() const {
-	const float vÄ£ = fg´óĞ¡();
-	return SÏòÁ¿3(x / vÄ£, y / vÄ£, z / vÄ£);
+Så‘é‡3 Så‘é‡3::fgå½’ä¸€() const {
+	const float væ¨¡ = fgå¤§å°();
+	return Så‘é‡3(x / væ¨¡, y / væ¨¡, z / væ¨¡);
 }
-SÏòÁ¿3 &SÏòÁ¿3::fs´óĞ¡(const float &a) {
-	*this = fg¹éÒ»() / a;
+Så‘é‡3 &Så‘é‡3::fså¤§å°(const float &a) {
+	*this = fgå½’ä¸€() / a;
 	return *this;
 }
-float SÏòÁ¿3::fµã³Ë(const SÏòÁ¿3 &a) const {
+float Så‘é‡3::fç‚¹ä¹˜(const Så‘é‡3 &a) const {
 	return x * a.x + y * a.y + z * a.z;
 }
-SÏòÁ¿3 SÏòÁ¿3::f²æ³Ë(const SÏòÁ¿3 &a) const {
-	return SÏòÁ¿3(
+Så‘é‡3 Så‘é‡3::få‰ä¹˜(const Så‘é‡3 &a) const {
+	return Så‘é‡3(
 		y * a.z - z * a.y,
 		z * a.x - x * a.z,
 		x * a.y - y * a.x);
 }
-SÏòÁ¿3 &SÏòÁ¿3::fs(const float &a) {
+Så‘é‡3 &Så‘é‡3::fs(const float &a) {
 	x = y = z = a;
 	return *this;
 }
-SÏòÁ¿3 &SÏòÁ¿3::fs(const float &X, const float &Y, const float &Z) {
+Så‘é‡3 &Så‘é‡3::fs(const float &X, const float &Y, const float &Z) {
 	x = X;
 	y = Y;
 	z = Z;
 	return *this;
 }
-//×ª»»
-SÏòÁ¿2 SÏòÁ¿3::ftÏòÁ¿2() const {
-	return SÏòÁ¿2(x, y);
+//è½¬æ¢
+Så‘é‡2 Så‘é‡3::ftå‘é‡2() const {
+	return Så‘é‡2(x, y);
 }
-SÏòÁ¿4 SÏòÁ¿3::ftÏòÁ¿4(const float &w) const {
-	return SÏòÁ¿4(x, y, z, w);
+Så‘é‡4 Så‘é‡3::ftå‘é‡4(const float &w) const {
+	return Så‘é‡4(x, y, z, w);
 }
 //=============================================================================
-// ÏòÁ¿4
+// å‘é‡4
 //=============================================================================
-SÏòÁ¿4::SÏòÁ¿4() :x(0), y(0), z(0), w(0) {}
-SÏòÁ¿4::SÏòÁ¿4(const float &X, const float &Y, const float &Z, const float &W) : x(X), y(Y), z(Z), w(W) {}
-SÏòÁ¿3 SÏòÁ¿4::ftÏòÁ¿3() const {
-	return SÏòÁ¿3(x, y, z);
+Så‘é‡4::Så‘é‡4() :x(0), y(0), z(0), w(0) {}
+Så‘é‡4::Så‘é‡4(const float &X, const float &Y, const float &Z, const float &W) : x(X), y(Y), z(Z), w(W) {}
+Så‘é‡3 Så‘é‡4::ftå‘é‡3() const {
+	return Så‘é‡3(x, y, z);
 }
-SÏòÁ¿4 SÏòÁ¿4::operator *(const S¾ØÕó4 &a) const {
-	SÏòÁ¿4 v;
+Så‘é‡4 Så‘é‡4::operator *(const SçŸ©é˜µ4 &a) const {
+	Så‘é‡4 v;
 	for (int i = 0; i != 4; ++i)
 		for (int j = 0; j != 4; ++j)
-			v.mÖµ[i] += a.mÖµ[i][j] * mÖµ[j];
+			v.må€¼[i] += a.må€¼[i][j] * må€¼[j];
 	return v;
 }
 
