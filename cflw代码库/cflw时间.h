@@ -1,64 +1,60 @@
-#pragma once
+ï»¿#pragma once
 #include <chrono>
 #include <deque>
-namespace cflw {
-namespace Ê±¼ä {
-//ÀàĞÍ
-typedef std::chrono::duration<double> tÊ±¼ä¶Î;
-typedef std::chrono::time_point<std::chrono::system_clock> tÊ±¼äµã;
-class C¼ÆËãÊ±¼ä {
+namespace cflw::æ—¶é—´ {
+//ç±»å‹
+using tæ—¶é—´æ®µ = std::chrono::duration<double>;
+using tæ—¶é—´ç‚¹ = std::chrono::time_point<std::chrono::system_clock>;
+tæ—¶é—´ç‚¹ fgç°åœ¨();
+tæ—¶é—´æ®µ fgé›¶();
+tæ—¶é—´æ®µ fé—´éš”(const tæ—¶é—´ç‚¹ &, const tæ—¶é—´ç‚¹ &);
+//æ—¶é—´é—´éš”
+class Cæ—¶é—´é—´éš” {
 public:
-	static tÊ±¼äµã fÏÖÔÚ();
-	static tÊ±¼ä¶Î fÁã();
-	static tÊ±¼ä¶Î f¼ä¸ô(const tÊ±¼äµã &, const tÊ±¼äµã &);
-};
-//Ê±¼ä¼ä¸ô
-class CÊ±¼ä¼ä¸ô {
-public:
-	CÊ±¼ä¼ä¸ô() = default;
-	void fÖØÖÃ();
-	void fË¢ĞÂ();
-	tÊ±¼ä¶Î f¼ÆËã();
-	tÊ±¼ä¶Î fg¼ä¸ô() const;
+	Cæ—¶é—´é—´éš”() = default;
+	void fé‡ç½®();
+	void fåˆ·æ–°();
+	tæ—¶é—´æ®µ fè®¡ç®—();
+	tæ—¶é—´æ®µ fgé—´éš”() const;
 private:
-	tÊ±¼äµã mÉÏ´ÎÊ±¼ä{C¼ÆËãÊ±¼ä::fÏÖÔÚ()};
-	tÊ±¼äµã mÕâ´ÎÊ±¼ä{C¼ÆËãÊ±¼ä::fÏÖÔÚ()};
+	tæ—¶é—´ç‚¹ mä¸Šæ¬¡æ—¶é—´{fgç°åœ¨()};
+	tæ—¶é—´ç‚¹ mè¿™æ¬¡æ—¶é—´{fgç°åœ¨()};
 };
-//¼ÆÊ±Æ÷
-class C¼ÆÊ±Æ÷ {
+//è®¡æ—¶å™¨
+class Cè®¡æ—¶å™¨ {
 public:
-	C¼ÆÊ±Æ÷() = default;
-	void fÖØÖÃ(double ¼ä¸ô = 0);
-	void fs¼ä¸ô(double ¼ä¸ô);
-	bool fµÎ´ğ();
+	Cè®¡æ—¶å™¨() = default;
+	void fé‡ç½®(double é—´éš” = 0);
+	void fsé—´éš”(double é—´éš”);
+	bool fæ»´ç­”();
 private:
-	tÊ±¼ä¶Î m³ÖĞøÊ±¼ä{0};
-	tÊ±¼ä¶Î mµÎ´ğÊ±¼ä{0};
-	tÊ±¼äµã mÉÏ´ÎÊ±¼ä{C¼ÆËãÊ±¼ä::fÏÖÔÚ()};
+	tæ—¶é—´æ®µ mæŒç»­æ—¶é—´{0};
+	tæ—¶é—´æ®µ mæ»´ç­”æ—¶é—´{0};
+	tæ—¶é—´ç‚¹ mä¸Šæ¬¡æ—¶é—´{fgç°åœ¨()};
 };
-//¼ÆÖ¡Æ÷
-class C¼ÆÖ¡Æ÷ {
+//è®¡å¸§å™¨
+class Cè®¡å¸§å™¨ {
 public:
-	static constexpr double cÈ¡Êı·¶Î§ = 2;	//µ¥Î»:Ãë
-	C¼ÆÖ¡Æ÷() = default;
-	void fÖØÖÃ();
-	double f¼ÆËã();
+	static constexpr double cå–æ•°èŒƒå›´ = 2;	//å•ä½:ç§’
+	Cè®¡å¸§å™¨();
+	void fé‡ç½®();
+	double fè®¡ç®—();
+	double fgå¸§æ•°ç‡() const;
 private:
-	std::deque<tÊ±¼äµã> mÊ±¼ä;
-	double mÖ¡ÊıÂÊ = 1;	//Æ½»¬·µ»ØÖµ
-	int mÉ¾³ı¼ÆÊı = 0;	//·ÀÖ¹¶¶¶¯Ö¡³¤Ê±¼ä´æÔÚ
+	std::deque<tæ—¶é—´ç‚¹> mæ—¶é—´;
+	double må¸§æ•°ç‡ = 1;	//å¹³æ»‘è¿”å›å€¼
+	int måˆ é™¤è®¡æ•° = 0;	//é˜²æ­¢æŠ–åŠ¨å¸§é•¿æ—¶é—´å­˜åœ¨
 };
-//Ãë±í
-class CÃë±í {
+//ç§’è¡¨
+class Cç§’è¡¨ {
 public:
-	CÃë±í() = default;
-	void fÖØÖÃ();
-	double f¿ªÊ¼µ½ÏÖÔÚ();
-	double fÉÏ´Îµ½ÏÖÔÚ();
+	Cç§’è¡¨() = default;
+	void fé‡ç½®();
+	double få¼€å§‹åˆ°ç°åœ¨();
+	double fä¸Šæ¬¡åˆ°ç°åœ¨();
 private:
-	tÊ±¼äµã m¿ªÊ¼Ê±¼ä{C¼ÆËãÊ±¼ä::fÏÖÔÚ()};
-	tÊ±¼äµã mÉÏ´ÎÊ±¼ä{C¼ÆËãÊ±¼ä::fÏÖÔÚ()};
+	tæ—¶é—´ç‚¹ må¼€å§‹æ—¶é—´{fgç°åœ¨()};
+	tæ—¶é—´ç‚¹ mä¸Šæ¬¡æ—¶é—´{fgç°åœ¨()};
 };
 //=============================================================================
-}	//namespace Ê±¼ä
-}	//namespace cflw
+}	//namespace cflw::æ—¶é—´

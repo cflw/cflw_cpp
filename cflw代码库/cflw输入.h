@@ -1,9 +1,24 @@
 ﻿#pragma once
 #include <memory>
 #include <map>
+#include <algorithm>
+#include <type_traits>
 namespace cflw::输入 {
+//声明
 using t数量 = unsigned short;
 using t索引 = unsigned short;
+class I输入设备;
+class I键盘;
+class I鼠标;
+class I手柄;
+class I触摸;
+class I触控点;
+using tp输入设备 = std::shared_ptr<I输入设备>;
+using tp键盘 = std::shared_ptr<I键盘>;
+using tp鼠标 = std::shared_ptr<I鼠标>;
+using tp手柄 = std::shared_ptr<I手柄>;
+using tp触摸 = std::shared_ptr<I触摸>;
+using tp触控点 = std::shared_ptr<I触控点>;
 //==============================================================================
 // 输出的信息
 //==============================================================================
@@ -97,19 +112,6 @@ template<typename t> concept T按键组 = requires(t a) {
 //==============================================================================
 // 输入设备接口
 //==============================================================================
-//声明
-class I输入设备;
-class I键盘;
-class I鼠标;
-class I手柄;
-class I触摸;
-class I触控点;
-using tp输入设备 = std::shared_ptr<I输入设备>;
-using tp键盘 = std::shared_ptr<I键盘>;
-using tp鼠标 = std::shared_ptr<I鼠标>;
-using tp手柄 = std::shared_ptr<I手柄>;
-using tp触摸 = std::shared_ptr<I触摸>;
-using tp触控点 = std::shared_ptr<I触控点>;
 //定义
 class I输入设备 {
 public:
@@ -180,7 +182,7 @@ public:
 };
 class C互斥键 {
 public:
-	std::tuple<bool, const S按键 &> f计算(const S按键 &, const S按键 &);
+	std::tuple<bool, S按键> f计算(const S按键 &, const S按键 &);
 private:
 	bool m键 = true;
 };
@@ -199,25 +201,43 @@ private:
 //==============================================================================
 // 按键映射模板实现
 //==============================================================================
-template<typename t按键组, typename t迭代器> void C按键映射::f更新顺序(C按键组 &a输出, const t按键组 &a输入, t迭代器 a开始, t迭代器 a结束) {
+template<typename t按键组, typename t迭代器> 
+void C按键映射::f更新顺序(C按键组 &a输出, const t按键组 &a输入, t迭代器 a开始, t迭代器 a结束) {
 	t迭代器 v迭代 = a开始;
 	for (t索引 i = 0; i != a输出.m分配数量 && v迭代 != a结束; ++i, ++v迭代) {
 		const S按键 &v按键 = a输入.f按键(*v迭代);
 		a输出.m这次[i] |= v按键.m这次;
 	}
 }
-template<typename t按键组, typename t迭代器> void C按键映射::f更新关联l(C按键组 &a输出, const t按键组 &a输入, t迭代器 a开始, t迭代器 a结束) {
+template<typename t按键组, typename t迭代器> 
+void C按键映射::f更新关联l(C按键组 &a输出, const t按键组 &a输入, t迭代器 a开始, t迭代器 a结束) {
 	for (t迭代器 v迭代 = a开始; v迭代 != a结束; ++v迭代) {
 		const auto &[v输出索引, v输入索引] = *v迭代;
 		const S按键 &v按键 = a输入.f按键(v输入索引);
 		a输出.m这次[v输出索引] |= v按键.m这次;
 	}
 }
-template<typename t按键组, typename t迭代器> void C按键映射::f更新关联r(C按键组 &a输出, const t按键组 &a输入, t迭代器 a开始, t迭代器 a结束) {
+template<typename t按键组, typename t迭代器> 
+void C按键映射::f更新关联r(C按键组 &a输出, const t按键组 &a输入, t迭代器 a开始, t迭代器 a结束) {
 	for (t迭代器 v迭代 = a开始; v迭代 != a结束; ++v迭代) {
 		const auto &[v输入索引, v输出索引] = *v迭代;
 		const S按键 &v按键 = a输入.f按键(v输入索引);
 		a输出.m这次[v输出索引] |= v按键.m这次;
 	}
+}
+template<typename ta触控点>
+//requires std::range::ForwardRange<ta触控点> && std::is_same<typename ta触控点::value_type, tp触控点>::value
+void f清除松开触控点(ta触控点 &aa触控点) {
+	static_assert(std::is_same<typename ta触控点::value_type, tp触控点>::value);
+	aa触控点.erase(
+		std::remove_if(
+			aa触控点.begin(),
+			aa触控点.end(),
+			[](const tp触控点 &a)->bool {
+				return a->f按键().f松开();
+			}
+		),
+		aa触控点.end()
+	);
 }
 }	//namespace cflw::输入

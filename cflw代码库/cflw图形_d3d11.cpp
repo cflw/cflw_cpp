@@ -1,859 +1,896 @@
-#include <array>
+ï»¿#include <array>
 #include <wrl.h>
 #include <D3Dcompiler.h>
-#include "cflwÍ¼ĞÎ_d3d11.h"
-#include "cflwÊÓ´°.h"
+#include "cflwå›¾å½¢_d3d11.h"
+#include "cflwè§†çª—.h"
 using Microsoft::WRL::ComPtr;
-namespace cflw::Í¼ĞÎ::d3d11 {
+namespace cflw::å›¾å½¢::d3d11 {
 //==============================================================================
-// Í¼ĞÎÒıÇæ
+// å›¾å½¢å¼•æ“
 //==============================================================================
-CÈıÎ¬::~CÈıÎ¬() {
-	fÏú»Ù();
+Cä¸‰ç»´::~Cä¸‰ç»´() {
+	fé”€æ¯();
 }
-void CÈıÎ¬::fÏú»Ù() {
-	//ÆÕÍ¨¶ÔÏó
-	m»º³å¹¤³§.reset();
-	mÎÆÀí¹¤³§.reset();
-	mäÖÈ¾×´Ì¬.reset();
-	mäÖÈ¾¿ØÖÆ.reset();
-	mäÖÈ¾¿ØÖÆ.reset();
-	//com¶ÔÏó
-	m½»»»Á´.Reset();
-	mäÖÈ¾Ä¿±êÊÓÍ¼.Reset();
-	mÉî¶ÈÄ£°å.Reset();
-	mÉî¶ÈÄ£°åÊÓÍ¼.Reset();
-	mÉÏÏÂÎÄ.Reset();
-	if (cµ÷ÊÔ && mÉè±¸) {
-		ComPtr<ID3D11Debug> vµ÷ÊÔ;
-		HRESULT hr = mÉè±¸->QueryInterface(IID_PPV_ARGS(&vµ÷ÊÔ));
+void Cä¸‰ç»´::fé”€æ¯() {
+	//æ™®é€šå¯¹è±¡
+	mç¼“å†²å·¥å‚.reset();
+	mçº¹ç†å·¥å‚.reset();
+	mæ¸²æŸ“çŠ¶æ€.reset();
+	mæ¸²æŸ“æ§åˆ¶.reset();
+	mæ¸²æŸ“æ§åˆ¶.reset();
+	//comå¯¹è±¡
+	mäº¤æ¢é“¾.Reset();
+	mæ¸²æŸ“ç›®æ ‡è§†å›¾.Reset();
+	mæ·±åº¦æ¨¡æ¿.Reset();
+	mæ·±åº¦æ¨¡æ¿è§†å›¾.Reset();
+	mä¸Šä¸‹æ–‡.Reset();
+	if (cè°ƒè¯• && mè®¾å¤‡) {
+		ComPtr<ID3D11Debug> vè°ƒè¯•;
+		HRESULT hr = mè®¾å¤‡->QueryInterface(IID_PPV_ARGS(&vè°ƒè¯•));
 		if (SUCCEEDED(hr)) {
-			hr = vµ÷ÊÔ->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+			hr = vè°ƒè¯•->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
 		}
 	}
-	mÉè±¸.Reset();
+	mè®¾å¤‡.Reset();
 }
-void CÈıÎ¬::f³õÊ¼»¯´°¿Ú(HWND a) {
+void Cä¸‰ç»´::fåˆå§‹åŒ–çª—å£(HWND a) {
 	assert(a);
-	m´°¿Ú = a;
-	fs´°¿Ú´óĞ¡();
+	mçª—å£ = a;
+	fsçª—å£å¤§å°();
 }
-HRESULT CÈıÎ¬::f³õÊ¼»¯Éè±¸() {
-	C´´½¨Éè±¸ &v´´½¨Éè±¸ = fg´´½¨Éè±¸();
-	//¼ì²é¼æÈİĞÔ
-	m±êÖ¾[eµ÷ÊÔ] = cµ÷ÊÔ;
-	HRESULT hr = v´´½¨Éè±¸.f¼ì²é¼æÈİĞÔ();
+HRESULT Cä¸‰ç»´::fåˆå§‹åŒ–è®¾å¤‡(HRESULT(Cåˆ›å»ºè®¾å¤‡::*afå–æ˜¾å¡)(IDXGIAdapter1 **)) {
+	Cåˆ›å»ºè®¾å¤‡ &våˆ›å»ºè®¾å¤‡ = fgåˆ›å»ºè®¾å¤‡();
+	//æ£€æŸ¥å…¼å®¹æ€§
+	mæ ‡å¿—[eè°ƒè¯•] = cè°ƒè¯•;
+	HRESULT hr = våˆ›å»ºè®¾å¤‡.fæ£€æŸ¥å…¼å®¹æ€§();
 	if (FAILED(hr)) {
 		if (hr == DXGI_ERROR_SDK_COMPONENT_MISSING) {
-			v´´½¨Éè±¸.fsµ÷ÊÔ±êÖ¾(false);
-			m±êÖ¾[eµ÷ÊÔ] = false;
+			våˆ›å»ºè®¾å¤‡.fsè°ƒè¯•æ ‡å¿—(false);
+			mæ ‡å¿—[eè°ƒè¯•] = false;
 		} else {
 			return hr;
 		}
 	}
-	//Ã¶¾ÙÊÊÅäÆ÷
-	ComPtr<IDXGIAdapter1> vÏÔ¿¨;
-	hr = v´´½¨Éè±¸.fÈ¡ÏÔ¿¨(&vÏÔ¿¨);
-	if (hr == DXGI_ERROR_UNSUPPORTED) {//0x887A0004 Ó²¼ş»òÇı¶¯²»Ö§³Ö
-		hr = v´´½¨Éè±¸.f´´½¨Èí¼şÉè±¸(&mÉè±¸, &mÉÏÏÂÎÄ);
-		if (FAILED(hr)) {
-			return hr;
-		}
-		m±êÖ¾[eÈí¼şÉè±¸] = true;
-	} else {
-		hr = v´´½¨Éè±¸.f´´½¨Éè±¸(vÏÔ¿¨.Get(), &mÉè±¸, &mÉÏÏÂÎÄ);
-		if (FAILED(hr)) {
-			return hr;
-		}
+	//æšä¸¾é€‚é…å™¨
+	ComPtr<IDXGIAdapter1> væ˜¾å¡;
+	if (afå–æ˜¾å¡ == nullptr) {
+		afå–æ˜¾å¡ = &Cåˆ›å»ºè®¾å¤‡::få–æ˜¾å¡_é¦–é€‰;
 	}
-	//¼ì²é¿¹¾â³İµÈ¼¶
-	mÉè±¸->CheckMultisampleQualityLevels(c½»»»Á´¸ñÊ½, 4, &m¿¹¾â³İµÈ¼¶);
-	if (mµ±Ç°¿¹¾â³İµÈ¼¶ > m¿¹¾â³İµÈ¼¶) {
-		mµ±Ç°¿¹¾â³İµÈ¼¶ = m¿¹¾â³İµÈ¼¶;
+	hr = (våˆ›å»ºè®¾å¤‡.*afå–æ˜¾å¡)(&væ˜¾å¡);
+	if (FAILED(hr)) {
+		return hr;
 	}
-	//·µ»Ø
+	hr = våˆ›å»ºè®¾å¤‡.fåˆ›å»ºè®¾å¤‡(væ˜¾å¡.Get(), &mè®¾å¤‡, &mä¸Šä¸‹æ–‡);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	//æ£€æŸ¥æŠ—é”¯é½¿ç­‰çº§
+	mè®¾å¤‡->CheckMultisampleQualityLevels(cäº¤æ¢é“¾æ ¼å¼, 4, &mæŠ—é”¯é½¿ç­‰çº§);
+	if (må½“å‰æŠ—é”¯é½¿ç­‰çº§ > mæŠ—é”¯é½¿ç­‰çº§) {
+		må½“å‰æŠ—é”¯é½¿ç­‰çº§ = mæŠ—é”¯é½¿ç­‰çº§;
+	}
+	//è¿”å›
 	return S_OK;
 }
-HRESULT CÈıÎ¬::f³õÊ¼»¯½»»»Á´() {
-	//½»»»Á´ÃèÊö
+HRESULT Cä¸‰ç»´::fåˆå§‹åŒ–è½¯ä»¶è®¾å¤‡() {
+	Cåˆ›å»ºè®¾å¤‡ &våˆ›å»ºè®¾å¤‡ = fgåˆ›å»ºè®¾å¤‡();
+	HRESULT hr = våˆ›å»ºè®¾å¤‡.fåˆ›å»ºè½¯ä»¶è®¾å¤‡(&mè®¾å¤‡, &mä¸Šä¸‹æ–‡);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	mæ ‡å¿—[eè½¯ä»¶è®¾å¤‡] = true;
+	//æ£€æŸ¥æŠ—é”¯é½¿ç­‰çº§
+	mè®¾å¤‡->CheckMultisampleQualityLevels(cäº¤æ¢é“¾æ ¼å¼, 4, &mæŠ—é”¯é½¿ç­‰çº§);
+	if (må½“å‰æŠ—é”¯é½¿ç­‰çº§ > mæŠ—é”¯é½¿ç­‰çº§) {
+		må½“å‰æŠ—é”¯é½¿ç­‰çº§ = mæŠ—é”¯é½¿ç­‰çº§;
+	}
+	return S_OK;
+}
+HRESULT Cä¸‰ç»´::fåˆå§‹åŒ–äº¤æ¢é“¾() {
+	//äº¤æ¢é“¾æè¿°
 	DXGI_SWAP_CHAIN_DESC sd;
-	¸¨Öú::fÇåÁã(sd);
+	è¾…åŠ©::fæ¸…é›¶(sd);
 	sd.BufferCount = 1;
-	sd.BufferDesc.Width = m´°¿Ú´óĞ¡[0];
-	sd.BufferDesc.Height = m´°¿Ú´óĞ¡[1];
-	sd.BufferDesc.Format = c½»»»Á´¸ñÊ½;
+	sd.BufferDesc.Width = mçª—å£å¤§å°[0];
+	sd.BufferDesc.Height = mçª—å£å¤§å°[1];
+	sd.BufferDesc.Format = cäº¤æ¢é“¾æ ¼å¼;
 	sd.BufferDesc.RefreshRate.Numerator = 60;
 	sd.BufferDesc.RefreshRate.Denominator = 1;
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	sd.SampleDesc.Count = 1;
 	sd.SampleDesc.Quality = 0;
-	sd.OutputWindow = m´°¿Ú;
+	sd.OutputWindow = mçª—å£;
 	sd.Windowed = TRUE;
-	//´´½¨½»»»Á´
-	ComPtr<IDXGIFactory1> v»ù´¡¹¤³§ = m´´½¨Éè±¸->fg¹¤³§();
-	HRESULT hr = hr = v»ù´¡¹¤³§->CreateSwapChain(mÉè±¸.Get(), &sd, &m½»»»Á´);
+	//åˆ›å»ºäº¤æ¢é“¾
+	ComPtr<IDXGIFactory1> våŸºç¡€å·¥å‚ = måˆ›å»ºè®¾å¤‡->fgå·¥å‚();
+	HRESULT hr = hr = våŸºç¡€å·¥å‚->CreateSwapChain(mè®¾å¤‡.Get(), &sd, &mäº¤æ¢é“¾);
 	if(FAILED(hr)) {
 		return hr;
 	}
-	//ÆäËü
-	hr = v»ù´¡¹¤³§->MakeWindowAssociation(m´°¿Ú, DXGI_MWA_NO_ALT_ENTER);
+	//å…¶å®ƒ
+	hr = våŸºç¡€å·¥å‚->MakeWindowAssociation(mçª—å£, DXGI_MWA_NO_ALT_ENTER);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	//·µ»Ø
+	//è¿”å›
 	return S_OK;
 }
-HRESULT CÈıÎ¬::f³õÊ¼»¯äÖÈ¾Ä¿±êÊÓÍ¼() {
-	ComPtr<ID3D11Texture2D> vºóÌ¨»º´æ;
-	HRESULT hr = m½»»»Á´->GetBuffer(0, IID_PPV_ARGS(&vºóÌ¨»º´æ));
+HRESULT Cä¸‰ç»´::fåˆå§‹åŒ–æ¸²æŸ“ç›®æ ‡è§†å›¾() {
+	ComPtr<ID3D11Texture2D> våå°ç¼“å­˜;
+	HRESULT hr = mäº¤æ¢é“¾->GetBuffer(0, IID_PPV_ARGS(&våå°ç¼“å­˜));
 	if(FAILED(hr)) {
 		return hr;
 	}
-	hr = mÉè±¸->CreateRenderTargetView(vºóÌ¨»º´æ.Get(), nullptr, &mäÖÈ¾Ä¿±êÊÓÍ¼);
+	hr = mè®¾å¤‡->CreateRenderTargetView(våå°ç¼“å­˜.Get(), nullptr, &mæ¸²æŸ“ç›®æ ‡è§†å›¾);
 	if (FAILED(hr)) {
 		return hr;
 	}
 	return S_OK;
 }
-HRESULT CÈıÎ¬::f³õÊ¼»¯Éî¶ÈÄ£°åÊÓÍ¼() {
-	// ´´½¨Éî¶ÈÄ£°å
-	D3D11_TEXTURE2D_DESC vÎÆÀíÃèÊö;
-	ZeroMemory(&vÎÆÀíÃèÊö, sizeof(vÎÆÀíÃèÊö));
-	vÎÆÀíÃèÊö.Width = m´°¿Ú´óĞ¡[0];
-	vÎÆÀíÃèÊö.Height = m´°¿Ú´óĞ¡[1];
-	vÎÆÀíÃèÊö.MipLevels = 1;
-	vÎÆÀíÃèÊö.ArraySize = 1;
-	vÎÆÀíÃèÊö.Format = cÉî¶ÈÄ£°å¸ñÊ½;
-	vÎÆÀíÃèÊö.SampleDesc = f¼ÆËã¿¹¾â³İ(mµ±Ç°¿¹¾â³İµÈ¼¶);
-	vÎÆÀíÃèÊö.Usage = D3D11_USAGE_DEFAULT;
-	vÎÆÀíÃèÊö.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-	vÎÆÀíÃèÊö.CPUAccessFlags = 0;
-	vÎÆÀíÃèÊö.MiscFlags = 0;
-	HRESULT hr = mÉè±¸->CreateTexture2D(&vÎÆÀíÃèÊö, nullptr, &mÉî¶ÈÄ£°å);
+HRESULT Cä¸‰ç»´::fåˆå§‹åŒ–æ·±åº¦æ¨¡æ¿è§†å›¾() {
+	// åˆ›å»ºæ·±åº¦æ¨¡æ¿
+	D3D11_TEXTURE2D_DESC vçº¹ç†æè¿°;
+	ZeroMemory(&vçº¹ç†æè¿°, sizeof(vçº¹ç†æè¿°));
+	vçº¹ç†æè¿°.Width = mçª—å£å¤§å°[0];
+	vçº¹ç†æè¿°.Height = mçª—å£å¤§å°[1];
+	vçº¹ç†æè¿°.MipLevels = 1;
+	vçº¹ç†æè¿°.ArraySize = 1;
+	vçº¹ç†æè¿°.Format = cæ·±åº¦æ¨¡æ¿æ ¼å¼;
+	vçº¹ç†æè¿°.SampleDesc = fè®¡ç®—æŠ—é”¯é½¿(må½“å‰æŠ—é”¯é½¿ç­‰çº§);
+	vçº¹ç†æè¿°.Usage = D3D11_USAGE_DEFAULT;
+	vçº¹ç†æè¿°.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	vçº¹ç†æè¿°.CPUAccessFlags = 0;
+	vçº¹ç†æè¿°.MiscFlags = 0;
+	HRESULT hr = mè®¾å¤‡->CreateTexture2D(&vçº¹ç†æè¿°, nullptr, &mæ·±åº¦æ¨¡æ¿);
 	if(FAILED(hr)) {
 		return hr;
 	}
-	// ´´½¨Éî¶ÈÄ£°åÊÓÍ¼
-	D3D11_DEPTH_STENCIL_VIEW_DESC vÉî¶ÈÄ£°åÊÓÍ¼ÃèÊö;
-	ZeroMemory(&vÉî¶ÈÄ£°åÊÓÍ¼ÃèÊö, sizeof(vÉî¶ÈÄ£°åÊÓÍ¼ÃèÊö));
-	vÉî¶ÈÄ£°åÊÓÍ¼ÃèÊö.Format = vÎÆÀíÃèÊö.Format;
-	vÉî¶ÈÄ£°åÊÓÍ¼ÃèÊö.ViewDimension = (mµ±Ç°¿¹¾â³İµÈ¼¶ > 0) ? D3D11_DSV_DIMENSION_TEXTURE2DMS :  D3D11_DSV_DIMENSION_TEXTURE2D;
-	vÉî¶ÈÄ£°åÊÓÍ¼ÃèÊö.Texture2D.MipSlice = 0;
-	hr = mÉè±¸->CreateDepthStencilView(mÉî¶ÈÄ£°å.Get(), &vÉî¶ÈÄ£°åÊÓÍ¼ÃèÊö, &mÉî¶ÈÄ£°åÊÓÍ¼);
+	// åˆ›å»ºæ·±åº¦æ¨¡æ¿è§†å›¾
+	D3D11_DEPTH_STENCIL_VIEW_DESC væ·±åº¦æ¨¡æ¿è§†å›¾æè¿°;
+	ZeroMemory(&væ·±åº¦æ¨¡æ¿è§†å›¾æè¿°, sizeof(væ·±åº¦æ¨¡æ¿è§†å›¾æè¿°));
+	væ·±åº¦æ¨¡æ¿è§†å›¾æè¿°.Format = vçº¹ç†æè¿°.Format;
+	væ·±åº¦æ¨¡æ¿è§†å›¾æè¿°.ViewDimension = (må½“å‰æŠ—é”¯é½¿ç­‰çº§ > 0) ? D3D11_DSV_DIMENSION_TEXTURE2DMS :  D3D11_DSV_DIMENSION_TEXTURE2D;
+	væ·±åº¦æ¨¡æ¿è§†å›¾æè¿°.Texture2D.MipSlice = 0;
+	hr = mè®¾å¤‡->CreateDepthStencilView(mæ·±åº¦æ¨¡æ¿.Get(), &væ·±åº¦æ¨¡æ¿è§†å›¾æè¿°, &mæ·±åº¦æ¨¡æ¿è§†å›¾);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	mÉÏÏÂÎÄ->OMSetRenderTargets(1, mäÖÈ¾Ä¿±êÊÓÍ¼.GetAddressOf(), mÉî¶ÈÄ£°åÊÓÍ¼.Get());
+	mä¸Šä¸‹æ–‡->OMSetRenderTargets(1, mæ¸²æŸ“ç›®æ ‡è§†å›¾.GetAddressOf(), mæ·±åº¦æ¨¡æ¿è§†å›¾.Get());
 	return S_OK;
 }
-HRESULT CÈıÎ¬::fÖØÖÃÆÁÄ»×ÊÔ´() {
+HRESULT Cä¸‰ç»´::fé‡ç½®å±å¹•èµ„æº() {
 	HRESULT hr;
-	const bool vÖØÖÃÉî¶ÈÄ£°å = mÉî¶ÈÄ£°åÊÓÍ¼;
-	if (m½»»»Á´) {
-		hr = fÖØÖÃ½»»»Á´();
+	const bool vé‡ç½®æ·±åº¦æ¨¡æ¿ = mæ·±åº¦æ¨¡æ¿è§†å›¾;
+	if (mäº¤æ¢é“¾) {
+		hr = fé‡ç½®äº¤æ¢é“¾();
 		if (FAILED(hr)) {
 			return hr;
 		}
-		hr = f³õÊ¼»¯äÖÈ¾Ä¿±êÊÓÍ¼();
+		hr = fåˆå§‹åŒ–æ¸²æŸ“ç›®æ ‡è§†å›¾();
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
-	if (vÖØÖÃÉî¶ÈÄ£°å) {
-		hr = f³õÊ¼»¯Éî¶ÈÄ£°åÊÓÍ¼();
+	if (vé‡ç½®æ·±åº¦æ¨¡æ¿) {
+		hr = fåˆå§‹åŒ–æ·±åº¦æ¨¡æ¿è§†å›¾();
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
 	return S_OK;
 }
-HRESULT CÈıÎ¬::fÖØÖÃ½»»»Á´() {
-	assert(m½»»»Á´);
-	mÉÏÏÂÎÄ->ClearState();
-	mäÖÈ¾Ä¿±êÊÓÍ¼ = nullptr;
-	mÉî¶ÈÄ£°åÊÓÍ¼ = nullptr;
-	mÉî¶ÈÄ£°å = nullptr;
-	HRESULT hr = m½»»»Á´->ResizeBuffers(1, m´°¿Ú´óĞ¡[0], m´°¿Ú´óĞ¡[1], c½»»»Á´¸ñÊ½, 0);
+HRESULT Cä¸‰ç»´::fé‡ç½®äº¤æ¢é“¾() {
+	assert(mäº¤æ¢é“¾);
+	mä¸Šä¸‹æ–‡->ClearState();
+	mæ¸²æŸ“ç›®æ ‡è§†å›¾ = nullptr;
+	mæ·±åº¦æ¨¡æ¿è§†å›¾ = nullptr;
+	mæ·±åº¦æ¨¡æ¿ = nullptr;
+	HRESULT hr = mäº¤æ¢é“¾->ResizeBuffers(1, mçª—å£å¤§å°[0], mçª—å£å¤§å°[1], cäº¤æ¢é“¾æ ¼å¼, 0);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	mÉÏÏÂÎÄ->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	fsÊÓ¿Ú();
+	mä¸Šä¸‹æ–‡->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	fsè§†å£();
 	return S_OK;
 }
-HRESULT CÈıÎ¬::fµ÷ÕûÄ¿±ê´óĞ¡() {
-	DXGI_MODE_DESC vÄ£Ê½ÃèÊö = {};
-	vÄ£Ê½ÃèÊö.Width = m´°¿Ú´óĞ¡[0];
-	vÄ£Ê½ÃèÊö.Height = m´°¿Ú´óĞ¡[1];
-	HRESULT hr = m½»»»Á´->ResizeTarget(&vÄ£Ê½ÃèÊö);
+HRESULT Cä¸‰ç»´::fè°ƒæ•´ç›®æ ‡å¤§å°() {
+	DXGI_MODE_DESC væ¨¡å¼æè¿° = {};
+	væ¨¡å¼æè¿°.Width = mçª—å£å¤§å°[0];
+	væ¨¡å¼æè¿°.Height = mçª—å£å¤§å°[1];
+	HRESULT hr = mäº¤æ¢é“¾->ResizeTarget(&væ¨¡å¼æè¿°);
 	return hr;
 }
-//³õÊ¼»¯
-bool CÈıÎ¬::f³õÊ¼»¯(HWND a) {
+//åˆå§‹åŒ–
+bool Cä¸‰ç»´::fåˆå§‹åŒ–(HWND a) {
 	try {
-		f³õÊ¼»¯´°¿Ú(a);
-		ÊÓ´°::fÊ§°ÜÔòÅ×³ö(f³õÊ¼»¯Éè±¸());
-		ÊÓ´°::fÊ§°ÜÔòÅ×³ö(f³õÊ¼»¯½»»»Á´());
-		ÊÓ´°::fÊ§°ÜÔòÅ×³ö(f³õÊ¼»¯äÖÈ¾Ä¿±êÊÓÍ¼());
-		ÊÓ´°::fÊ§°ÜÔòÅ×³ö(f³õÊ¼»¯Éî¶ÈÄ£°åÊÓÍ¼());
-		mÉÏÏÂÎÄ->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		fsÊÓ¿Ú();
+		fåˆå§‹åŒ–çª—å£(a);
+		è§†çª—::få¤±è´¥åˆ™æŠ›å‡º(fåˆå§‹åŒ–è®¾å¤‡());
+		è§†çª—::få¤±è´¥åˆ™æŠ›å‡º(fåˆå§‹åŒ–äº¤æ¢é“¾());
+		è§†çª—::få¤±è´¥åˆ™æŠ›å‡º(fåˆå§‹åŒ–æ¸²æŸ“ç›®æ ‡è§†å›¾());
+		è§†çª—::få¤±è´¥åˆ™æŠ›å‡º(fåˆå§‹åŒ–æ·±åº¦æ¨¡æ¿è§†å›¾());
+		mä¸Šä¸‹æ–‡->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		fsè§†å£();
 		return true;
 	} catch (HRESULT hr) {
 		return false;
 	}
 }
-HRESULT CÈıÎ¬::f´´½¨¶¥µã×ÅÉ«Æ÷(tp¶¥µã×ÅÉ«Æ÷ &a, const std::span<const std::byte> &a´úÂë) {
-	return mÉè±¸->CreateVertexShader(a´úÂë.data(), a´úÂë.size(), nullptr, &a);
+HRESULT Cä¸‰ç»´::fåˆ›å»ºé¡¶ç‚¹ç€è‰²å™¨(tpé¡¶ç‚¹ç€è‰²å™¨ &a, const std::span<const std::byte> &aä»£ç ) {
+	return mè®¾å¤‡->CreateVertexShader(aä»£ç .data(), aä»£ç .size(), nullptr, &a);
 }
-HRESULT CÈıÎ¬::f´´½¨ÏñËØ×ÅÉ«Æ÷(tpÏñËØ×ÅÉ«Æ÷ &a, const std::span<const std::byte> &a´úÂë) {
-	return mÉè±¸->CreatePixelShader(a´úÂë.data(), a´úÂë.size(), nullptr, &a);
+HRESULT Cä¸‰ç»´::fåˆ›å»ºåƒç´ ç€è‰²å™¨(tpåƒç´ ç€è‰²å™¨ &a, const std::span<const std::byte> &aä»£ç ) {
+	return mè®¾å¤‡->CreatePixelShader(aä»£ç .data(), aä»£ç .size(), nullptr, &a);
 }
-HRESULT CÈıÎ¬::f´´½¨¼¸ºÎ×ÅÉ«Æ÷(tp¼¸ºÎ×ÅÉ«Æ÷ &a, const std::span<const std::byte> &a´úÂë) {
-	return mÉè±¸->CreateGeometryShader(a´úÂë.data(), a´úÂë.size(), nullptr, &a);
+HRESULT Cä¸‰ç»´::fåˆ›å»ºå‡ ä½•ç€è‰²å™¨(tpå‡ ä½•ç€è‰²å™¨ &a, const std::span<const std::byte> &aä»£ç ) {
+	return mè®¾å¤‡->CreateGeometryShader(aä»£ç .data(), aä»£ç .size(), nullptr, &a);
 }
-HRESULT CÈıÎ¬::f´´½¨Íâ¿Ç×ÅÉ«Æ÷(tpÍâ¿Ç×ÅÉ«Æ÷ &a, const std::span<const std::byte> &a´úÂë) {
-	return mÉè±¸->CreateHullShader(a´úÂë.data(), a´úÂë.size(), nullptr, &a);
+HRESULT Cä¸‰ç»´::fåˆ›å»ºå¤–å£³ç€è‰²å™¨(tpå¤–å£³ç€è‰²å™¨ &a, const std::span<const std::byte> &aä»£ç ) {
+	return mè®¾å¤‡->CreateHullShader(aä»£ç .data(), aä»£ç .size(), nullptr, &a);
 }
-HRESULT CÈıÎ¬::f´´½¨Óò×ÅÉ«Æ÷(tpÓò×ÅÉ«Æ÷ &a, const std::span<const std::byte> &a´úÂë) {
-	return mÉè±¸->CreateDomainShader(a´úÂë.data(), a´úÂë.size(), nullptr, &a);
+HRESULT Cä¸‰ç»´::fåˆ›å»ºåŸŸç€è‰²å™¨(tpåŸŸç€è‰²å™¨ &a, const std::span<const std::byte> &aä»£ç ) {
+	return mè®¾å¤‡->CreateDomainShader(aä»£ç .data(), aä»£ç .size(), nullptr, &a);
 }
-HRESULT CÈıÎ¬::f´´½¨ÊäÈë²¼¾Ö(tpÊäÈë²¼¾Ö &a, const std::span<const std::byte> &a´úÂë, const C¶¥µã¸ñÊ½ &a¶¥µã¸ñÊ½) {
-	return mÉè±¸->CreateInputLayout(a¶¥µã¸ñÊ½.mÊı×é.data(), a¶¥µã¸ñÊ½.mÊı×é.size(), a´úÂë.data(), a´úÂë.size(), &a);
+HRESULT Cä¸‰ç»´::fåˆ›å»ºè¾“å…¥å¸ƒå±€(tpè¾“å…¥å¸ƒå±€ &a, const std::span<const std::byte> &aä»£ç , const Cé¡¶ç‚¹æ ¼å¼ &aé¡¶ç‚¹æ ¼å¼) {
+	return mè®¾å¤‡->CreateInputLayout(aé¡¶ç‚¹æ ¼å¼.mæ•°ç»„.data(), aé¡¶ç‚¹æ ¼å¼.mæ•°ç»„.size(), aä»£ç .data(), aä»£ç .size(), &a);
 }
-HRESULT CÈıÎ¬::f´´½¨Í¼ĞÎ¹ÜÏß(tpÍ¼ĞÎ¹ÜÏß &a, const SÍ¼ĞÎ¹ÜÏß²ÎÊı &a²ÎÊı) {
+HRESULT Cä¸‰ç»´::fåˆ›å»ºå›¾å½¢ç®¡çº¿(tpå›¾å½¢ç®¡çº¿ &a, const Så›¾å½¢ç®¡çº¿å‚æ•° &aå‚æ•°) {
 	HRESULT hr;
-	std::shared_ptr<CÍ¼ĞÎ¹ÜÏß> v = std::make_shared<CÍ¼ĞÎ¹ÜÏß>();
-	if (!a²ÎÊı.m¶¥µã×ÅÉ«Æ÷.empty()) {
-		hr = f´´½¨¶¥µã×ÅÉ«Æ÷(v->m¶¥µã×ÅÉ«Æ÷, a²ÎÊı.m¶¥µã×ÅÉ«Æ÷);
+	std::shared_ptr<Cå›¾å½¢ç®¡çº¿> v = std::make_shared<Cå›¾å½¢ç®¡çº¿>();
+	if (!aå‚æ•°.mé¡¶ç‚¹ç€è‰²å™¨.empty()) {
+		hr = fåˆ›å»ºé¡¶ç‚¹ç€è‰²å™¨(v->mé¡¶ç‚¹ç€è‰²å™¨, aå‚æ•°.mé¡¶ç‚¹ç€è‰²å™¨);
 		if (FAILED(hr)) {
 			return hr;
 		}
-		if (a²ÎÊı.m¶¥µã¸ñÊ½) {
-			hr = f´´½¨ÊäÈë²¼¾Ö(v->mÊäÈë²¼¾Ö, a²ÎÊı.m¶¥µã×ÅÉ«Æ÷, *a²ÎÊı.m¶¥µã¸ñÊ½);
+		if (aå‚æ•°.mé¡¶ç‚¹æ ¼å¼) {
+			hr = fåˆ›å»ºè¾“å…¥å¸ƒå±€(v->mè¾“å…¥å¸ƒå±€, aå‚æ•°.mé¡¶ç‚¹ç€è‰²å™¨, *aå‚æ•°.mé¡¶ç‚¹æ ¼å¼);
 			if (FAILED(hr)) {
 				return hr;
 			}
 		}
 	}
-	if (!a²ÎÊı.m¼¸ºÎ×ÅÉ«Æ÷.empty()) {
-		hr = f´´½¨¼¸ºÎ×ÅÉ«Æ÷(v->m¼¸ºÎ×ÅÉ«Æ÷, a²ÎÊı.m¼¸ºÎ×ÅÉ«Æ÷);
+	if (!aå‚æ•°.må‡ ä½•ç€è‰²å™¨.empty()) {
+		hr = fåˆ›å»ºå‡ ä½•ç€è‰²å™¨(v->må‡ ä½•ç€è‰²å™¨, aå‚æ•°.må‡ ä½•ç€è‰²å™¨);
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
-	if (!a²ÎÊı.mÍâ¿Ç×ÅÉ«Æ÷.empty()) {
-		hr = f´´½¨Íâ¿Ç×ÅÉ«Æ÷(v->mÍâ¿Ç×ÅÉ«Æ÷, a²ÎÊı.mÍâ¿Ç×ÅÉ«Æ÷);
+	if (!aå‚æ•°.må¤–å£³ç€è‰²å™¨.empty()) {
+		hr = fåˆ›å»ºå¤–å£³ç€è‰²å™¨(v->må¤–å£³ç€è‰²å™¨, aå‚æ•°.må¤–å£³ç€è‰²å™¨);
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
-	if (!a²ÎÊı.mÓò×ÅÉ«Æ÷.empty()) {
-		hr = f´´½¨Óò×ÅÉ«Æ÷(v->mÓò×ÅÉ«Æ÷, a²ÎÊı.mÓò×ÅÉ«Æ÷);
+	if (!aå‚æ•°.måŸŸç€è‰²å™¨.empty()) {
+		hr = fåˆ›å»ºåŸŸç€è‰²å™¨(v->måŸŸç€è‰²å™¨, aå‚æ•°.måŸŸç€è‰²å™¨);
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
-	if (!a²ÎÊı.mÏñËØ×ÅÉ«Æ÷.empty()) {
-		hr = f´´½¨ÏñËØ×ÅÉ«Æ÷(v->mÏñËØ×ÅÉ«Æ÷, a²ÎÊı.mÏñËØ×ÅÉ«Æ÷);
+	if (!aå‚æ•°.måƒç´ ç€è‰²å™¨.empty()) {
+		hr = fåˆ›å»ºåƒç´ ç€è‰²å™¨(v->måƒç´ ç€è‰²å™¨, aå‚æ•°.måƒç´ ç€è‰²å™¨);
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
-	if (std::holds_alternative<D3D11_RASTERIZER_DESC>(a²ÎÊı.m¹âÕ¤»¯)) {
-		mÉè±¸->CreateRasterizerState(&std::get<D3D11_RASTERIZER_DESC>(a²ÎÊı.m¹âÕ¤»¯), &v->m¹âÕ¤»¯);
+	if (std::holds_alternative<D3D11_RASTERIZER_DESC>(aå‚æ•°.må…‰æ …åŒ–)) {
+		mè®¾å¤‡->CreateRasterizerState(&std::get<D3D11_RASTERIZER_DESC>(aå‚æ•°.må…‰æ …åŒ–), &v->må…‰æ …åŒ–);
 	} else {
-		v->m¹âÕ¤»¯ = std::get<ID3D11RasterizerState*>(a²ÎÊı.m¹âÕ¤»¯);
+		v->må…‰æ …åŒ– = std::get<ID3D11RasterizerState*>(aå‚æ•°.må…‰æ …åŒ–);
 	}
-	if (std::holds_alternative<D3D11_BLEND_DESC>(a²ÎÊı.m»ìºÏ)) {
-		mÉè±¸->CreateBlendState(&std::get<D3D11_BLEND_DESC>(a²ÎÊı.m»ìºÏ), &v->m»ìºÏ);
+	if (std::holds_alternative<D3D11_BLEND_DESC>(aå‚æ•°.mæ··åˆ)) {
+		mè®¾å¤‡->CreateBlendState(&std::get<D3D11_BLEND_DESC>(aå‚æ•°.mæ··åˆ), &v->mæ··åˆ);
 	} else {
-		v->m»ìºÏ = std::get<ID3D11BlendState*>(a²ÎÊı.m»ìºÏ);
+		v->mæ··åˆ = std::get<ID3D11BlendState*>(aå‚æ•°.mæ··åˆ);
 	}
-	if (std::holds_alternative<D3D11_DEPTH_STENCIL_DESC>(a²ÎÊı.mÉî¶ÈÄ£°å)) {
-		mÉè±¸->CreateDepthStencilState(&std::get<D3D11_DEPTH_STENCIL_DESC>(a²ÎÊı.mÉî¶ÈÄ£°å), &v->mÉî¶ÈÄ£°å);
+	if (std::holds_alternative<D3D11_DEPTH_STENCIL_DESC>(aå‚æ•°.mæ·±åº¦æ¨¡æ¿)) {
+		mè®¾å¤‡->CreateDepthStencilState(&std::get<D3D11_DEPTH_STENCIL_DESC>(aå‚æ•°.mæ·±åº¦æ¨¡æ¿), &v->mæ·±åº¦æ¨¡æ¿);
 	} else {
-		v->mÉî¶ÈÄ£°å = std::get<ID3D11DepthStencilState*>(a²ÎÊı.mÉî¶ÈÄ£°å);
+		v->mæ·±åº¦æ¨¡æ¿ = std::get<ID3D11DepthStencilState*>(aå‚æ•°.mæ·±åº¦æ¨¡æ¿);
 	}
 	a = std::move(v);
 	return S_OK;
 }
-void CÈıÎ¬::fsÊÓ¿Ú() {
-	const D3D11_VIEWPORT &v´°¿ÚÊÓ¿Ú = fg´°¿ÚÊÓ¿Ú();
-	mÉÏÏÂÎÄ->RSSetViewports(1, &v´°¿ÚÊÓ¿Ú);
+void Cä¸‰ç»´::fsè§†å£() {
+	const D3D11_VIEWPORT &vçª—å£è§†å£ = fgçª—å£è§†å£();
+	mä¸Šä¸‹æ–‡->RSSetViewports(1, &vçª—å£è§†å£);
 }
-void CÈıÎ¬::fsÈ«ÆÁ(bool a) {
-	m½»»»Á´->SetFullscreenState(a, nullptr);
+void Cä¸‰ç»´::fså…¨å±(bool a) {
+	mäº¤æ¢é“¾->SetFullscreenState(a, nullptr);
 	if (!a) {
-		fµ÷ÕûÄ¿±ê´óĞ¡();
+		fè°ƒæ•´ç›®æ ‡å¤§å°();
 	}
 }
-bool CÈıÎ¬::fiÈ«ÆÁ() const {
+bool Cä¸‰ç»´::fiå…¨å±() const {
 	BOOL v;
-	m½»»»Á´->GetFullscreenState(&v, nullptr);
+	mäº¤æ¢é“¾->GetFullscreenState(&v, nullptr);
 	return v;
 }
-bool CÈıÎ¬::fi´°¿Ú() const {
-	return !fiÈ«ÆÁ();
+bool Cä¸‰ç»´::fiçª—å£() const {
+	return !fiå…¨å±();
 }
-void CÈıÎ¬::fs´°¿Ú´óĞ¡() {
-	ÊÓ´°::S¿Í»§Çø³ß´ç v³ß´ç = ÊÓ´°::S¿Í»§Çø³ß´ç::fc´°¿Ú(m´°¿Ú);
-	fs´°¿Ú´óĞ¡_(v³ß´ç.fg¿í(), v³ß´ç.fg¸ß());
+void Cä¸‰ç»´::fsçª—å£å¤§å°() {
+	è§†çª—::Så®¢æˆ·åŒºå°ºå¯¸ vå°ºå¯¸ = è§†çª—::Så®¢æˆ·åŒºå°ºå¯¸::fcçª—å£(mçª—å£);
+	fsçª—å£å¤§å°_(vå°ºå¯¸.fgå®½(), vå°ºå¯¸.fgé«˜());
 }
-HRESULT CÈıÎ¬::fs´°¿Ú´óĞ¡(int a¿í, int a¸ß) {
-	fs´°¿Ú´óĞ¡_(a¿í, a¸ß);
-	if (!fiÈ«ÆÁ()) {
-		HRESULT hr = fµ÷ÕûÄ¿±ê´óĞ¡();
+HRESULT Cä¸‰ç»´::fsçª—å£å¤§å°(int aå®½, int aé«˜) {
+	fsçª—å£å¤§å°_(aå®½, aé«˜);
+	if (!fiå…¨å±()) {
+		HRESULT hr = fè°ƒæ•´ç›®æ ‡å¤§å°();
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
 	return S_OK;
 }
-void CÈıÎ¬::fs´°¿Ú´óĞ¡_(int a¿í, int a¸ß) {
-	m´°¿Ú´óĞ¡[0] = a¿í;
-	m´°¿Ú´óĞ¡[1] = a¸ß;
+void Cä¸‰ç»´::fsçª—å£å¤§å°_(int aå®½, int aé«˜) {
+	mçª—å£å¤§å°[0] = aå®½;
+	mçª—å£å¤§å°[1] = aé«˜;
 }
-void CÈıÎ¬::fs¿¹¾â³İ(UINT a) {
-	assert(mÉè±¸ != nullptr);
-	assert(m¿¹¾â³İµÈ¼¶ >= a);
-	if (m¿¹¾â³İµÈ¼¶ < a) {
-		mµ±Ç°¿¹¾â³İµÈ¼¶ = m¿¹¾â³İµÈ¼¶;
+void Cä¸‰ç»´::fsæŠ—é”¯é½¿(UINT a) {
+	assert(mè®¾å¤‡ != nullptr);
+	assert(mæŠ—é”¯é½¿ç­‰çº§ >= a);
+	if (mæŠ—é”¯é½¿ç­‰çº§ < a) {
+		må½“å‰æŠ—é”¯é½¿ç­‰çº§ = mæŠ—é”¯é½¿ç­‰çº§;
 	} else {
-		mµ±Ç°¿¹¾â³İµÈ¼¶ = a;
+		må½“å‰æŠ—é”¯é½¿ç­‰çº§ = a;
 	}
 }
-DXGI_SAMPLE_DESC CÈıÎ¬::f¼ÆËã¿¹¾â³İ(UINT a) {
+DXGI_SAMPLE_DESC Cä¸‰ç»´::fè®¡ç®—æŠ—é”¯é½¿(UINT a) {
 	DXGI_SAMPLE_DESC v;
 	v.Count = (a < 1) ? 1 : 4;
 	v.Quality = (a < 1) ? 0 : (a - 1);
 	return v;
 }
-CäÖÈ¾¿ØÖÆ &CÈıÎ¬::fgäÖÈ¾¿ØÖÆ() {
-	if (mäÖÈ¾¿ØÖÆ == nullptr) {
-		mäÖÈ¾¿ØÖÆ = std::make_unique<CäÖÈ¾¿ØÖÆ>();
-		mäÖÈ¾¿ØÖÆ->mÈıÎ¬ = this;
+Cæ¸²æŸ“æ§åˆ¶ &Cä¸‰ç»´::fgæ¸²æŸ“æ§åˆ¶() {
+	if (mæ¸²æŸ“æ§åˆ¶ == nullptr) {
+		mæ¸²æŸ“æ§åˆ¶ = std::make_unique<Cæ¸²æŸ“æ§åˆ¶>();
+		mæ¸²æŸ“æ§åˆ¶->mä¸‰ç»´ = this;
 	}
-	return *mäÖÈ¾¿ØÖÆ;
+	return *mæ¸²æŸ“æ§åˆ¶;
 }
-CäÖÈ¾×´Ì¬ &CÈıÎ¬::fgäÖÈ¾×´Ì¬() {
-	if (mäÖÈ¾×´Ì¬ == nullptr) {
-		mäÖÈ¾×´Ì¬ = std::make_unique<CäÖÈ¾×´Ì¬>(mÉè±¸.Get());
+Cæ¸²æŸ“çŠ¶æ€ &Cä¸‰ç»´::fgæ¸²æŸ“çŠ¶æ€() {
+	if (mæ¸²æŸ“çŠ¶æ€ == nullptr) {
+		mæ¸²æŸ“çŠ¶æ€ = std::make_unique<Cæ¸²æŸ“çŠ¶æ€>(mè®¾å¤‡.Get());
 	}
-	return *mäÖÈ¾×´Ì¬;
+	return *mæ¸²æŸ“çŠ¶æ€;
 }
-C´´½¨Éè±¸ &CÈıÎ¬::fg´´½¨Éè±¸() {
-	if (m´´½¨Éè±¸ == nullptr) {
-		m´´½¨Éè±¸ = std::make_unique<C´´½¨Éè±¸>();
+Cåˆ›å»ºè®¾å¤‡ &Cä¸‰ç»´::fgåˆ›å»ºè®¾å¤‡() {
+	if (måˆ›å»ºè®¾å¤‡ == nullptr) {
+		måˆ›å»ºè®¾å¤‡ = std::make_unique<Cåˆ›å»ºè®¾å¤‡>();
 	}
-	return *m´´½¨Éè±¸;
+	return *måˆ›å»ºè®¾å¤‡;
 }
-ComPtr<ID3D11Device> CÈıÎ¬::fgÉè±¸() const {
-	return mÉè±¸;
+ComPtr<ID3D11Device> Cä¸‰ç»´::fgè®¾å¤‡() const {
+	return mè®¾å¤‡;
 }
-ComPtr<IDXGIDevice> CÈıÎ¬::fg»ù´¡Éè±¸() const {
-	ComPtr<IDXGIDevice> vÉè±¸;
-	mÉè±¸.As(&vÉè±¸);
-	return vÉè±¸;
+ComPtr<IDXGIDevice> Cä¸‰ç»´::fgåŸºç¡€è®¾å¤‡() const {
+	ComPtr<IDXGIDevice> vè®¾å¤‡;
+	mè®¾å¤‡.As(&vè®¾å¤‡);
+	return vè®¾å¤‡;
 }
-ComPtr<ID3D11DeviceContext> CÈıÎ¬::fgÉÏÏÂÎÄ() const {
-	return mÉÏÏÂÎÄ;
+ComPtr<ID3D11DeviceContext> Cä¸‰ç»´::fgä¸Šä¸‹æ–‡() const {
+	return mä¸Šä¸‹æ–‡;
 }
-ComPtr<IDXGISwapChain> CÈıÎ¬::fg½»»»Á´() const {
-	return m½»»»Á´;
+ComPtr<IDXGISwapChain> Cä¸‰ç»´::fgäº¤æ¢é“¾() const {
+	return mäº¤æ¢é“¾;
 }
-D3D11_VIEWPORT CÈıÎ¬::fg´°¿ÚÊÓ¿Ú() const {
+D3D11_VIEWPORT Cä¸‰ç»´::fgçª—å£è§†å£() const {
 	D3D11_VIEWPORT vp;
-	vp.Width = (FLOAT)m´°¿Ú´óĞ¡[0];
-	vp.Height = (FLOAT)m´°¿Ú´óĞ¡[1];
+	vp.Width = (FLOAT)mçª—å£å¤§å°[0];
+	vp.Height = (FLOAT)mçª—å£å¤§å°[1];
 	vp.MinDepth = 0.0f;
 	vp.MaxDepth = 1.0f;
 	vp.TopLeftX = 0;
 	vp.TopLeftY = 0;
 	return vp;
 }
-ÊıÑ§::SÏòÁ¿2 CÈıÎ¬::fg´°¿Ú´óĞ¡() const {
-	return {(float)m´°¿Ú´óĞ¡[0], (float)m´°¿Ú´óĞ¡[1]};
+æ•°å­¦::Så‘é‡2 Cä¸‰ç»´::fgçª—å£å¤§å°() const {
+	return {(float)mçª—å£å¤§å°[0], (float)mçª—å£å¤§å°[1]};
 }
-//¹¤³§
-C»º³å¹¤³§ &CÈıÎ¬::fg»º³å¹¤³§() {
-	if (m»º³å¹¤³§ == nullptr) {
-		m»º³å¹¤³§ = std::make_unique<C»º³å¹¤³§>();
-		m»º³å¹¤³§->f³õÊ¼»¯(mÉè±¸.Get());
+//å·¥å‚
+Cç¼“å†²å·¥å‚ &Cä¸‰ç»´::fgç¼“å†²å·¥å‚() {
+	if (mç¼“å†²å·¥å‚ == nullptr) {
+		mç¼“å†²å·¥å‚ = std::make_unique<Cç¼“å†²å·¥å‚>();
+		mç¼“å†²å·¥å‚->fåˆå§‹åŒ–(mè®¾å¤‡.Get());
 	}
-	return *m»º³å¹¤³§;
+	return *mç¼“å†²å·¥å‚;
 }
-CÎÆÀí¹¤³§ &CÈıÎ¬::fgÎÆÀí¹¤³§() {
-	if (mÎÆÀí¹¤³§ == nullptr) {
-		mÎÆÀí¹¤³§ = std::make_unique<CÎÆÀí¹¤³§>();
-		mÎÆÀí¹¤³§->f³õÊ¼»¯(mÉè±¸.Get());
+Cçº¹ç†å·¥å‚ &Cä¸‰ç»´::fgçº¹ç†å·¥å‚() {
+	if (mçº¹ç†å·¥å‚ == nullptr) {
+		mçº¹ç†å·¥å‚ = std::make_unique<Cçº¹ç†å·¥å‚>();
+		mçº¹ç†å·¥å‚->fåˆå§‹åŒ–(mè®¾å¤‡.Get());
 	}
-	return *mÎÆÀí¹¤³§;
+	return *mçº¹ç†å·¥å‚;
 }
 //==============================================================================
-// ´´½¨Éè±¸
+// åˆ›å»ºè®¾å¤‡
 //==============================================================================
-const D3D_FEATURE_LEVEL C´´½¨Éè±¸::c¹¦ÄÜ¼¶±ğ×é[3] = {
+const D3D_FEATURE_LEVEL Cåˆ›å»ºè®¾å¤‡::cåŠŸèƒ½çº§åˆ«ç»„[3] = {
 	D3D_FEATURE_LEVEL_11_0,
 	D3D_FEATURE_LEVEL_10_1,
 	D3D_FEATURE_LEVEL_10_0
 };
-const UINT C´´½¨Éè±¸::c´´½¨±êÖ¾ = D3D11_CREATE_DEVICE_BGRA_SUPPORT | (cµ÷ÊÔ ? D3D11_CREATE_DEVICE_DEBUG : 0);
-HRESULT C´´½¨Éè±¸::f¼ì²é¼æÈİĞÔ() {
-	HRESULT hr = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, m´´½¨±êÖ¾, c¹¦ÄÜ¼¶±ğ×é, c¹¦ÄÜ¼¶±ğÊı, D3D11_SDK_VERSION, nullptr, &m¹¦ÄÜ¼¶±ğ, nullptr);
+const UINT Cåˆ›å»ºè®¾å¤‡::cåˆ›å»ºæ ‡å¿— = D3D11_CREATE_DEVICE_BGRA_SUPPORT | (cè°ƒè¯• ? D3D11_CREATE_DEVICE_DEBUG : 0);
+HRESULT Cåˆ›å»ºè®¾å¤‡::fæ£€æŸ¥å…¼å®¹æ€§() {
+	HRESULT hr = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, måˆ›å»ºæ ‡å¿—, cåŠŸèƒ½çº§åˆ«ç»„, cåŠŸèƒ½çº§åˆ«æ•°, D3D11_SDK_VERSION, nullptr, &måŠŸèƒ½çº§åˆ«, nullptr);
 	return hr;
 }
-ComPtr<IDXGIFactory1> C´´½¨Éè±¸::fg¹¤³§() {
-	if (m¹¤³§ == nullptr) {
-		HRESULT hr = CreateDXGIFactory1(IID_PPV_ARGS(&m¹¤³§));
+ComPtr<IDXGIFactory1> Cåˆ›å»ºè®¾å¤‡::fgå·¥å‚() {
+	if (må·¥å‚ == nullptr) {
+		HRESULT hr = CreateDXGIFactory1(IID_PPV_ARGS(&må·¥å‚));
 		if (FAILED(hr)) {
 			return nullptr;
 		}
 	}
-	return m¹¤³§;
+	return må·¥å‚;
 }
-HRESULT C´´½¨Éè±¸::fÈ¡ÏÔ¿¨(IDXGIAdapter1 **aÊä³ö) {
-	fg¹¤³§();
+HRESULT Cåˆ›å»ºè®¾å¤‡::få–æ˜¾å¡_é¦–é€‰(IDXGIAdapter1 **aè¾“å‡º) {
+	fgå·¥å‚();
 	HRESULT hr = S_OK;
-	ComPtr<IDXGIAdapter1> vÊÊÅäÆ÷;
-	ComPtr<IDXGIAdapter1> vÄ¿±êÏÔ¿¨;
-	D3D_FEATURE_LEVEL vÄ¿±êµÈ¼¶ = D3D_FEATURE_LEVEL_10_0;
-	SIZE_T vÏÔ´æ = 0;
-	for (UINT i = 0; m¹¤³§->EnumAdapters1(i, &vÊÊÅäÆ÷) != DXGI_ERROR_NOT_FOUND; ++i) {
-		DXGI_ADAPTER_DESC1 vÃèÊö;
-		vÊÊÅäÆ÷->GetDesc1(&vÃèÊö);
-		D3D_FEATURE_LEVEL vÖ§³Ö¼¶±ğ;
-		hr = D3D11CreateDevice(vÊÊÅäÆ÷.Get(), D3D_DRIVER_TYPE_UNKNOWN, nullptr, m´´½¨±êÖ¾, c¹¦ÄÜ¼¶±ğ×é, c¹¦ÄÜ¼¶±ğÊı, D3D11_SDK_VERSION, nullptr, &vÖ§³Ö¼¶±ğ, nullptr);
+	ComPtr<IDXGIAdapter1> vé€‚é…å™¨;
+	ComPtr<IDXGIAdapter1> vç›®æ ‡æ˜¾å¡;
+	for (UINT i = 0; må·¥å‚->EnumAdapters1(i, &vé€‚é…å™¨) != DXGI_ERROR_NOT_FOUND; ++i) {
+		DXGI_ADAPTER_DESC1 væè¿°;
+		vé€‚é…å™¨->GetDesc1(&væè¿°);
+		if (væè¿°.Flags & DXGI_ADAPTER_FLAG_SOFTWARE) {
+			continue;
+		}
+		D3D_FEATURE_LEVEL væ”¯æŒçº§åˆ«;
+		hr = D3D11CreateDevice(vé€‚é…å™¨.Get(), D3D_DRIVER_TYPE_UNKNOWN, nullptr, måˆ›å»ºæ ‡å¿—, cåŠŸèƒ½çº§åˆ«ç»„, cåŠŸèƒ½çº§åˆ«æ•°, D3D11_SDK_VERSION, nullptr, &væ”¯æŒçº§åˆ«, nullptr);
 		if (FAILED(hr)) {
-			//0x887a002dÓ¦ÓÃ³ÌĞòÇëÇóµÄ²Ù×÷ÒÀÀµÓÚÒÑÈ±Ê§»ò²»Æ¥ÅäµÄ SDK ×é¼ş
+			//0x887a002dåº”ç”¨ç¨‹åºè¯·æ±‚çš„æ“ä½œä¾èµ–äºå·²ç¼ºå¤±æˆ–ä¸åŒ¹é…çš„ SDK ç»„ä»¶
+			__debugbreak();
+			continue;
+		} else {
+			vç›®æ ‡æ˜¾å¡ = vé€‚é…å™¨;
+			break;
+		}
+	}
+	*aè¾“å‡º = vç›®æ ‡æ˜¾å¡.Detach();
+	return hr;
+}
+HRESULT Cåˆ›å»ºè®¾å¤‡::få–æ˜¾å¡_æ€§èƒ½(IDXGIAdapter1 **aè¾“å‡º) {
+	fgå·¥å‚();
+	HRESULT hr = S_OK;
+	ComPtr<IDXGIAdapter1> vé€‚é…å™¨;
+	ComPtr<IDXGIAdapter1> vç›®æ ‡æ˜¾å¡;
+	D3D_FEATURE_LEVEL vç›®æ ‡ç­‰çº§ = cæœ€ä½åŠŸèƒ½çº§åˆ«;
+	SIZE_T væ˜¾å­˜ = 0;
+	for (UINT i = 0; må·¥å‚->EnumAdapters1(i, &vé€‚é…å™¨) != DXGI_ERROR_NOT_FOUND; ++i) {
+		DXGI_ADAPTER_DESC1 væè¿°;
+		vé€‚é…å™¨->GetDesc1(&væè¿°);
+		if (væè¿°.Flags & DXGI_ADAPTER_FLAG_SOFTWARE) {
+			continue;
+		}
+		D3D_FEATURE_LEVEL væ”¯æŒçº§åˆ«;
+		hr = D3D11CreateDevice(vé€‚é…å™¨.Get(), D3D_DRIVER_TYPE_UNKNOWN, nullptr, måˆ›å»ºæ ‡å¿—, cåŠŸèƒ½çº§åˆ«ç»„, cåŠŸèƒ½çº§åˆ«æ•°, D3D11_SDK_VERSION, nullptr, &væ”¯æŒçº§åˆ«, nullptr);
+		if (FAILED(hr)) {
+			//0x887a002dåº”ç”¨ç¨‹åºè¯·æ±‚çš„æ“ä½œä¾èµ–äºå·²ç¼ºå¤±æˆ–ä¸åŒ¹é…çš„ SDK ç»„ä»¶
 			__debugbreak();
 			continue;
 		}
-		if (vÃèÊö.Flags & DXGI_ADAPTER_FLAG_SOFTWARE) {
-			continue;
-		}
-		bool v¸üºÃ = false;
-		if (vÖ§³Ö¼¶±ğ > vÄ¿±êµÈ¼¶) {
-			if (vÃèÊö.DedicatedVideoMemory > 0) {
-				v¸üºÃ = true;
+		bool væ›´å¥½ = false;
+		if (væ”¯æŒçº§åˆ« > vç›®æ ‡ç­‰çº§) {
+			if (væè¿°.DedicatedVideoMemory > 0) {
+				væ›´å¥½ = true;
 			}
-		} else if (vÖ§³Ö¼¶±ğ == vÄ¿±êµÈ¼¶) {
-			if (vÃèÊö.DedicatedVideoMemory > vÏÔ´æ) {
-				v¸üºÃ = true;
+		} else if (væ”¯æŒçº§åˆ« == vç›®æ ‡ç­‰çº§) {
+			if (væè¿°.DedicatedVideoMemory > væ˜¾å­˜) {
+				væ›´å¥½ = true;
 			}
 		}
-		if (v¸üºÃ) {
-			vÄ¿±êÏÔ¿¨ = vÊÊÅäÆ÷;
-			vÄ¿±êµÈ¼¶ = vÖ§³Ö¼¶±ğ;
-			vÏÔ´æ = vÃèÊö.DedicatedVideoMemory;
+		if (væ›´å¥½) {
+			vç›®æ ‡æ˜¾å¡ = vé€‚é…å™¨;
+			vç›®æ ‡ç­‰çº§ = væ”¯æŒçº§åˆ«;
+			væ˜¾å­˜ = væè¿°.DedicatedVideoMemory;
 		}
 	}
-	*aÊä³ö = vÄ¿±êÏÔ¿¨.Detach();
+	*aè¾“å‡º = vç›®æ ‡æ˜¾å¡.Detach();
 	return hr;
 }
-void C´´½¨Éè±¸::fsµ÷ÊÔ±êÖ¾(bool a) {
-	m´´½¨±êÖ¾ = ¸¨Öú::fÎ»¸³Öµ<UINT>(m´´½¨±êÖ¾, D3D11_CREATE_DEVICE_DEBUG, a);
+void Cåˆ›å»ºè®¾å¤‡::fsè°ƒè¯•æ ‡å¿—(bool a) {
+	måˆ›å»ºæ ‡å¿— = è¾…åŠ©::fä½èµ‹å€¼<UINT>(måˆ›å»ºæ ‡å¿—, D3D11_CREATE_DEVICE_DEBUG, a);
 }
-HRESULT C´´½¨Éè±¸::f´´½¨Éè±¸(IDXGIAdapter1 *pÏÔ¿¨, ID3D11Device **aÉè±¸, ID3D11DeviceContext **pÉÏÏÂÎÄ) {
-	HRESULT hr = D3D11CreateDevice(pÏÔ¿¨, D3D_DRIVER_TYPE_UNKNOWN, nullptr, m´´½¨±êÖ¾, c¹¦ÄÜ¼¶±ğ×é, c¹¦ÄÜ¼¶±ğÊı, D3D11_SDK_VERSION, aÉè±¸, &m¹¦ÄÜ¼¶±ğ, pÉÏÏÂÎÄ);
+HRESULT Cåˆ›å»ºè®¾å¤‡::fåˆ›å»ºè®¾å¤‡(IDXGIAdapter1 *pæ˜¾å¡, ID3D11Device **aè®¾å¤‡, ID3D11DeviceContext **pä¸Šä¸‹æ–‡) {
+	HRESULT hr = D3D11CreateDevice(pæ˜¾å¡, D3D_DRIVER_TYPE_UNKNOWN, nullptr, måˆ›å»ºæ ‡å¿—, cåŠŸèƒ½çº§åˆ«ç»„, cåŠŸèƒ½çº§åˆ«æ•°, D3D11_SDK_VERSION, aè®¾å¤‡, &måŠŸèƒ½çº§åˆ«, pä¸Šä¸‹æ–‡);
 	return hr;
 }
-HRESULT C´´½¨Éè±¸::f´´½¨Èí¼şÉè±¸(ID3D11Device **aÉè±¸, ID3D11DeviceContext **pÉÏÏÂÎÄ) {
-	HRESULT hr = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_WARP, nullptr, m´´½¨±êÖ¾, c¹¦ÄÜ¼¶±ğ×é, c¹¦ÄÜ¼¶±ğÊı, D3D11_SDK_VERSION, aÉè±¸, &m¹¦ÄÜ¼¶±ğ, pÉÏÏÂÎÄ);
+HRESULT Cåˆ›å»ºè®¾å¤‡::fåˆ›å»ºè½¯ä»¶è®¾å¤‡(ID3D11Device **aè®¾å¤‡, ID3D11DeviceContext **pä¸Šä¸‹æ–‡) {
+	HRESULT hr = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_WARP, nullptr, måˆ›å»ºæ ‡å¿—, cåŠŸèƒ½çº§åˆ«ç»„, cåŠŸèƒ½çº§åˆ«æ•°, D3D11_SDK_VERSION, aè®¾å¤‡, &måŠŸèƒ½çº§åˆ«, pä¸Šä¸‹æ–‡);
 	return hr;
 }
 //==============================================================================
-// äÖÈ¾¿ØÖÆ
+// æ¸²æŸ“æ§åˆ¶
 //==============================================================================
-//ÇåÆÁ
-CäÖÈ¾¿ØÖÆ::CäÖÈ¾¿ØÖÆ() {
+//æ¸…å±
+Cæ¸²æŸ“æ§åˆ¶::Cæ¸²æŸ“æ§åˆ¶() {
 }
-void CäÖÈ¾¿ØÖÆ::fÇåÆÁ() {
-	mÈıÎ¬->mÉÏÏÂÎÄ->ClearRenderTargetView(mÈıÎ¬->mäÖÈ¾Ä¿±êÊÓÍ¼.Get(), mÇåÆÁÑÕÉ«.mÖµ);
-	if (mÈıÎ¬->mÉî¶ÈÄ£°åÊÓÍ¼) {
-		mÈıÎ¬->mÉÏÏÂÎÄ->ClearDepthStencilView(mÈıÎ¬->mÉî¶ÈÄ£°åÊÓÍ¼.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, mÇåÆÁÉî¶È, mÇåÆÁÄ£°å);
+void Cæ¸²æŸ“æ§åˆ¶::fæ¸…å±() {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->ClearRenderTargetView(mä¸‰ç»´->mæ¸²æŸ“ç›®æ ‡è§†å›¾.Get(), mæ¸…å±é¢œè‰².må€¼);
+	if (mä¸‰ç»´->mæ·±åº¦æ¨¡æ¿è§†å›¾) {
+		mä¸‰ç»´->mä¸Šä¸‹æ–‡->ClearDepthStencilView(mä¸‰ç»´->mæ·±åº¦æ¨¡æ¿è§†å›¾.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, mæ¸…å±æ·±åº¦, mæ¸…å±æ¨¡æ¿);
 	}
 }
-//ÏÔÊ¾
-void CäÖÈ¾¿ØÖÆ::fÏÔÊ¾() {
-	mÈıÎ¬->m½»»»Á´->Present(0, 0);
+//æ˜¾ç¤º
+void Cæ¸²æŸ“æ§åˆ¶::fæ˜¾ç¤º() {
+	mä¸‰ç»´->mäº¤æ¢é“¾->Present(0, 0);
 }
-//»æÖÆ
-void CäÖÈ¾¿ØÖÆ::f»æÖÆ(unsigned int a¶¥µãÊı, unsigned int a¿ªÊ¼) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->Draw(a¶¥µãÊı, a¿ªÊ¼);
+//ç»˜åˆ¶
+void Cæ¸²æŸ“æ§åˆ¶::fç»˜åˆ¶(unsigned int aé¡¶ç‚¹æ•°, unsigned int aå¼€å§‹) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->Draw(aé¡¶ç‚¹æ•°, aå¼€å§‹);
 }
-void CäÖÈ¾¿ØÖÆ::f»æÖÆË÷Òı(unsigned int aË÷ÒıÊı, unsigned int a¿ªÊ¼, int a¿ªÊ¼¶¥µã) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->DrawIndexed(aË÷ÒıÊı, a¿ªÊ¼, a¿ªÊ¼¶¥µã);
+void Cæ¸²æŸ“æ§åˆ¶::fç»˜åˆ¶ç´¢å¼•(unsigned int aç´¢å¼•æ•°, unsigned int aå¼€å§‹, int aå¼€å§‹é¡¶ç‚¹) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->DrawIndexed(aç´¢å¼•æ•°, aå¼€å§‹, aå¼€å§‹é¡¶ç‚¹);
 }
-void CäÖÈ¾¿ØÖÆ::fsÇåÆÁÑÕÉ«(const ÊıÑ§::SÑÕÉ« &a) {
-	mÇåÆÁÑÕÉ« = a;
+void Cæ¸²æŸ“æ§åˆ¶::fsæ¸…å±é¢œè‰²(const æ•°å­¦::Sé¢œè‰² &a) {
+	mæ¸…å±é¢œè‰² = a;
 }
-void CäÖÈ¾¿ØÖÆ::fsÇåÆÁÉî¶È(float a) {
-	mÇåÆÁÉî¶È = a;
+void Cæ¸²æŸ“æ§åˆ¶::fsæ¸…å±æ·±åº¦(float a) {
+	mæ¸…å±æ·±åº¦ = a;
 }
-void CäÖÈ¾¿ØÖÆ::fsÇåÆÁÄ£°å(UINT8 a) {
-	mÇåÆÁÄ£°å = a;
+void Cæ¸²æŸ“æ§åˆ¶::fsæ¸…å±æ¨¡æ¿(UINT8 a) {
+	mæ¸…å±æ¨¡æ¿ = a;
 }
-void CäÖÈ¾¿ØÖÆ::fsÍ¼ĞÎ¹ÜÏß(const CÍ¼ĞÎ¹ÜÏß &a) {
-	fs¶¥µã×ÅÉ«Æ÷(a.m¶¥µã×ÅÉ«Æ÷.Get());
-	fsÍâ¿Ç×ÅÉ«Æ÷(a.mÍâ¿Ç×ÅÉ«Æ÷.Get());
-	fsÓò×ÅÉ«Æ÷(a.mÓò×ÅÉ«Æ÷.Get());
-	fs¼¸ºÎ×ÅÉ«Æ÷(a.m¼¸ºÎ×ÅÉ«Æ÷.Get());
-	fsÏñËØ×ÅÉ«Æ÷(a.mÏñËØ×ÅÉ«Æ÷.Get());
-	fsÊäÈë²¼¾Ö(a.mÊäÈë²¼¾Ö.Get());
-	fs»ìºÏ(a.m»ìºÏ.Get());
-	fsÉî¶ÈÄ£°å(a.mÉî¶ÈÄ£°å.Get());
-	fs¹âÕ¤»¯(a.m¹âÕ¤»¯.Get());
+void Cæ¸²æŸ“æ§åˆ¶::fså›¾å½¢ç®¡çº¿(const Cå›¾å½¢ç®¡çº¿ &a) {
+	fsé¡¶ç‚¹ç€è‰²å™¨(a.mé¡¶ç‚¹ç€è‰²å™¨.Get());
+	fså¤–å£³ç€è‰²å™¨(a.må¤–å£³ç€è‰²å™¨.Get());
+	fsåŸŸç€è‰²å™¨(a.måŸŸç€è‰²å™¨.Get());
+	fså‡ ä½•ç€è‰²å™¨(a.må‡ ä½•ç€è‰²å™¨.Get());
+	fsåƒç´ ç€è‰²å™¨(a.måƒç´ ç€è‰²å™¨.Get());
+	fsè¾“å…¥å¸ƒå±€(a.mè¾“å…¥å¸ƒå±€.Get());
+	fsæ··åˆ(a.mæ··åˆ.Get());
+	fsæ·±åº¦æ¨¡æ¿(a.mæ·±åº¦æ¨¡æ¿.Get());
+	fså…‰æ …åŒ–(a.må…‰æ …åŒ–.Get());
 }
-//ÉèÖÃ×ÅÉ«Æ÷
-void CäÖÈ¾¿ØÖÆ::fÖØÖÃ×ÅÉ«Æ÷() {
-	mÈıÎ¬->mÉÏÏÂÎÄ->VSSetShader(nullptr, nullptr, 0);
-	mÈıÎ¬->mÉÏÏÂÎÄ->HSSetShader(nullptr, nullptr, 0);
-	mÈıÎ¬->mÉÏÏÂÎÄ->DSSetShader(nullptr, nullptr, 0);
-	mÈıÎ¬->mÉÏÏÂÎÄ->GSSetShader(nullptr, nullptr, 0);
-	mÈıÎ¬->mÉÏÏÂÎÄ->PSSetShader(nullptr, nullptr, 0);
-	mÈıÎ¬->mÉÏÏÂÎÄ->CSSetShader(nullptr, nullptr, 0);
+//è®¾ç½®ç€è‰²å™¨
+void Cæ¸²æŸ“æ§åˆ¶::fé‡ç½®ç€è‰²å™¨() {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->VSSetShader(nullptr, nullptr, 0);
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->HSSetShader(nullptr, nullptr, 0);
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->DSSetShader(nullptr, nullptr, 0);
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->GSSetShader(nullptr, nullptr, 0);
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->PSSetShader(nullptr, nullptr, 0);
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->CSSetShader(nullptr, nullptr, 0);
 }
-void CäÖÈ¾¿ØÖÆ::fs¶¥µã×ÅÉ«Æ÷(ID3D11VertexShader *a) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->VSSetShader(a, nullptr, 0);
+void Cæ¸²æŸ“æ§åˆ¶::fsé¡¶ç‚¹ç€è‰²å™¨(ID3D11VertexShader *a) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->VSSetShader(a, nullptr, 0);
 }
-void CäÖÈ¾¿ØÖÆ::fsÏñËØ×ÅÉ«Æ÷(ID3D11PixelShader *a) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->PSSetShader(a, nullptr, 0);
+void Cæ¸²æŸ“æ§åˆ¶::fsåƒç´ ç€è‰²å™¨(ID3D11PixelShader *a) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->PSSetShader(a, nullptr, 0);
 }
-void CäÖÈ¾¿ØÖÆ::fs¼¸ºÎ×ÅÉ«Æ÷(ID3D11GeometryShader *a) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->GSSetShader(a, nullptr, 0);
+void Cæ¸²æŸ“æ§åˆ¶::fså‡ ä½•ç€è‰²å™¨(ID3D11GeometryShader *a) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->GSSetShader(a, nullptr, 0);
 }
-void CäÖÈ¾¿ØÖÆ::fsÍâ¿Ç×ÅÉ«Æ÷(ID3D11HullShader *a) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->HSSetShader(a, nullptr, 0);
+void Cæ¸²æŸ“æ§åˆ¶::fså¤–å£³ç€è‰²å™¨(ID3D11HullShader *a) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->HSSetShader(a, nullptr, 0);
 }
-void CäÖÈ¾¿ØÖÆ::fsÓò×ÅÉ«Æ÷(ID3D11DomainShader *a) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->DSSetShader(a, nullptr, 0);
+void Cæ¸²æŸ“æ§åˆ¶::fsåŸŸç€è‰²å™¨(ID3D11DomainShader *a) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->DSSetShader(a, nullptr, 0);
 }
-//×´Ì¬
-void CäÖÈ¾¿ØÖÆ::fs»ìºÏ(ID3D11BlendState *a»ìºÏ, const ÊıÑ§::SÑÕÉ« &aÑÕÉ«, UINT aÑÚÂë) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->OMSetBlendState(a»ìºÏ, (float*)&aÑÕÉ«, aÑÚÂë);
+//çŠ¶æ€
+void Cæ¸²æŸ“æ§åˆ¶::fsæ··åˆ(ID3D11BlendState *aæ··åˆ, const æ•°å­¦::Sé¢œè‰² &aé¢œè‰², UINT aæ©ç ) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->OMSetBlendState(aæ··åˆ, (float*)&aé¢œè‰², aæ©ç );
 }
-void CäÖÈ¾¿ØÖÆ::fsÉî¶ÈÄ£°å(ID3D11DepthStencilState *aÉî¶ÈÄ£°å, UINT a²Î¿¼) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->OMSetDepthStencilState(aÉî¶ÈÄ£°å, a²Î¿¼);
+void Cæ¸²æŸ“æ§åˆ¶::fsæ·±åº¦æ¨¡æ¿(ID3D11DepthStencilState *aæ·±åº¦æ¨¡æ¿, UINT aå‚è€ƒ) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->OMSetDepthStencilState(aæ·±åº¦æ¨¡æ¿, aå‚è€ƒ);
 }
-void CäÖÈ¾¿ØÖÆ::fsÄ£°å²Î¿¼Öµ(UINT a²Î¿¼) {
-	ComPtr<ID3D11DepthStencilState> vÉî¶ÈÄ£°å;
-	UINT v²Î¿¼;
-	mÈıÎ¬->mÉÏÏÂÎÄ->OMGetDepthStencilState(&vÉî¶ÈÄ£°å, &v²Î¿¼);
-	v²Î¿¼ = a²Î¿¼;
-	mÈıÎ¬->mÉÏÏÂÎÄ->OMSetDepthStencilState(vÉî¶ÈÄ£°å.Get(), v²Î¿¼);
+void Cæ¸²æŸ“æ§åˆ¶::fsæ¨¡æ¿å‚è€ƒå€¼(UINT aå‚è€ƒ) {
+	ComPtr<ID3D11DepthStencilState> væ·±åº¦æ¨¡æ¿;
+	UINT vå‚è€ƒ;
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->OMGetDepthStencilState(&væ·±åº¦æ¨¡æ¿, &vå‚è€ƒ);
+	vå‚è€ƒ = aå‚è€ƒ;
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->OMSetDepthStencilState(væ·±åº¦æ¨¡æ¿.Get(), vå‚è€ƒ);
 }
-void CäÖÈ¾¿ØÖÆ::fs¹âÕ¤»¯(ID3D11RasterizerState *a¹âÕ¤»¯) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->RSSetState(a¹âÕ¤»¯);
+void Cæ¸²æŸ“æ§åˆ¶::fså…‰æ …åŒ–(ID3D11RasterizerState *aå…‰æ …åŒ–) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->RSSetState(aå…‰æ …åŒ–);
 }
-void CäÖÈ¾¿ØÖÆ::fs¶¥µã»º³å(ID3D11Buffer *a, UINT aµ¥Î»´óĞ¡) {
-	UINT vÆ«ÒÆ = 0;
-	mÈıÎ¬->mÉÏÏÂÎÄ->IASetVertexBuffers(0, 1, &a, &aµ¥Î»´óĞ¡, &vÆ«ÒÆ);
+void Cæ¸²æŸ“æ§åˆ¶::fsé¡¶ç‚¹ç¼“å†²(ID3D11Buffer *a, UINT aå•ä½å¤§å°) {
+	UINT våç§» = 0;
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->IASetVertexBuffers(0, 1, &a, &aå•ä½å¤§å°, &våç§»);
 }
-void CäÖÈ¾¿ØÖÆ::fsË÷Òı»º³å(ID3D11Buffer *a) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->IASetIndexBuffer(a, DXGI_FORMAT_R16_UINT, 0);
+void Cæ¸²æŸ“æ§åˆ¶::fsç´¢å¼•ç¼“å†²(ID3D11Buffer *a) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->IASetIndexBuffer(a, DXGI_FORMAT_R16_UINT, 0);
 }
-void CäÖÈ¾¿ØÖÆ::fs³£Á¿»º³å(UINT aÎ»ÖÃ, ID3D11Buffer *a»º³å) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->VSSetConstantBuffers(aÎ»ÖÃ, 1, &a»º³å);
-	mÈıÎ¬->mÉÏÏÂÎÄ->PSSetConstantBuffers(aÎ»ÖÃ, 1, &a»º³å);
-	mÈıÎ¬->mÉÏÏÂÎÄ->HSSetConstantBuffers(aÎ»ÖÃ, 1, &a»º³å);
-	mÈıÎ¬->mÉÏÏÂÎÄ->DSSetConstantBuffers(aÎ»ÖÃ, 1, &a»º³å);
-	mÈıÎ¬->mÉÏÏÂÎÄ->GSSetConstantBuffers(aÎ»ÖÃ, 1, &a»º³å);
+void Cæ¸²æŸ“æ§åˆ¶::fså¸¸é‡ç¼“å†²(UINT aä½ç½®, ID3D11Buffer *aç¼“å†²) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->VSSetConstantBuffers(aä½ç½®, 1, &aç¼“å†²);
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->PSSetConstantBuffers(aä½ç½®, 1, &aç¼“å†²);
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->HSSetConstantBuffers(aä½ç½®, 1, &aç¼“å†²);
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->DSSetConstantBuffers(aä½ç½®, 1, &aç¼“å†²);
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->GSSetConstantBuffers(aä½ç½®, 1, &aç¼“å†²);
 }
-void CäÖÈ¾¿ØÖÆ::fs³£Á¿»º³åv(UINT aÎ»ÖÃ, ID3D11Buffer *a»º³å) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->VSSetConstantBuffers(aÎ»ÖÃ, 1, &a»º³å);
+void Cæ¸²æŸ“æ§åˆ¶::fså¸¸é‡ç¼“å†²v(UINT aä½ç½®, ID3D11Buffer *aç¼“å†²) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->VSSetConstantBuffers(aä½ç½®, 1, &aç¼“å†²);
 }
-void CäÖÈ¾¿ØÖÆ::fs³£Á¿»º³åp(UINT aÎ»ÖÃ, ID3D11Buffer *a»º³å) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->PSSetConstantBuffers(aÎ»ÖÃ, 1, &a»º³å);
+void Cæ¸²æŸ“æ§åˆ¶::fså¸¸é‡ç¼“å†²p(UINT aä½ç½®, ID3D11Buffer *aç¼“å†²) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->PSSetConstantBuffers(aä½ç½®, 1, &aç¼“å†²);
 }
-void CäÖÈ¾¿ØÖÆ::fs³£Á¿»º³åg(UINT aÎ»ÖÃ, ID3D11Buffer *a»º³å) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->GSSetConstantBuffers(aÎ»ÖÃ, 1, &a»º³å);
+void Cæ¸²æŸ“æ§åˆ¶::fså¸¸é‡ç¼“å†²g(UINT aä½ç½®, ID3D11Buffer *aç¼“å†²) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->GSSetConstantBuffers(aä½ç½®, 1, &aç¼“å†²);
 }
-void CäÖÈ¾¿ØÖÆ::fs³£Á¿»º³åh(UINT aÎ»ÖÃ, ID3D11Buffer *a»º³å) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->HSSetConstantBuffers(aÎ»ÖÃ, 1, &a»º³å);
+void Cæ¸²æŸ“æ§åˆ¶::fså¸¸é‡ç¼“å†²h(UINT aä½ç½®, ID3D11Buffer *aç¼“å†²) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->HSSetConstantBuffers(aä½ç½®, 1, &aç¼“å†²);
 }
-void CäÖÈ¾¿ØÖÆ::fs³£Á¿»º³åd(UINT aÎ»ÖÃ, ID3D11Buffer *a»º³å) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->DSSetConstantBuffers(aÎ»ÖÃ, 1, &a»º³å);
+void Cæ¸²æŸ“æ§åˆ¶::fså¸¸é‡ç¼“å†²d(UINT aä½ç½®, ID3D11Buffer *aç¼“å†²) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->DSSetConstantBuffers(aä½ç½®, 1, &aç¼“å†²);
 }
-void CäÖÈ¾¿ØÖÆ::fsÎÆÀí(UINT aÎ»ÖÃ, ID3D11ShaderResourceView *aÎÆÀí) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->PSSetShaderResources(aÎ»ÖÃ, 1, &aÎÆÀí);
+void Cæ¸²æŸ“æ§åˆ¶::fsçº¹ç†(UINT aä½ç½®, ID3D11ShaderResourceView *açº¹ç†) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->PSSetShaderResources(aä½ç½®, 1, &açº¹ç†);
 }
-void CäÖÈ¾¿ØÖÆ::fs²ÉÑùÆ÷(UINT aÎ»ÖÃ, ID3D11SamplerState *a²ÉÑùÆ÷) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->PSSetSamplers(aÎ»ÖÃ, 1, &a²ÉÑùÆ÷);
+void Cæ¸²æŸ“æ§åˆ¶::fsé‡‡æ ·å™¨(UINT aä½ç½®, ID3D11SamplerState *aé‡‡æ ·å™¨) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->PSSetSamplers(aä½ç½®, 1, &aé‡‡æ ·å™¨);
 }
-void CäÖÈ¾¿ØÖÆ::fsÊäÈë²¼¾Ö(ID3D11InputLayout *a²¼¾Ö) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->IASetInputLayout(a²¼¾Ö);
+void Cæ¸²æŸ“æ§åˆ¶::fsè¾“å…¥å¸ƒå±€(ID3D11InputLayout *aå¸ƒå±€) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->IASetInputLayout(aå¸ƒå±€);
 }
-void CäÖÈ¾¿ØÖÆ::fsÍ¼ÔªÍØÆË(EÍ¼ÔªÍØÆË aÍØÆË) {
-	mÈıÎ¬->mÉÏÏÂÎÄ->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)aÍØÆË);
+void Cæ¸²æŸ“æ§åˆ¶::fså›¾å…ƒæ‹“æ‰‘(Eå›¾å…ƒæ‹“æ‰‘ aæ‹“æ‰‘) {
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)aæ‹“æ‰‘);
 }
-void CäÖÈ¾¿ØÖÆ::f¸üĞÂ×ÊÔ´(ID3D11Buffer *a»º³å, const void *a×ÊÔ´) {
-	assert(a»º³å);
-	mÈıÎ¬->mÉÏÏÂÎÄ->UpdateSubresource(a»º³å, 0, nullptr, a×ÊÔ´, 0, 0);
+void Cæ¸²æŸ“æ§åˆ¶::fæ›´æ–°èµ„æº(ID3D11Buffer *aç¼“å†², const void *aèµ„æº) {
+	assert(aç¼“å†²);
+	mä¸‰ç»´->mä¸Šä¸‹æ–‡->UpdateSubresource(aç¼“å†², 0, nullptr, aèµ„æº, 0, 0);
 }
 
 //==============================================================================
-// Í¼ĞÎ¹ÜÏß
+// å›¾å½¢ç®¡çº¿
 //==============================================================================
-C×Ô¶¯»º³å::C×Ô¶¯»º³å(CÈıÎ¬ &aÈıÎ¬) : 
-	mÉÏÏÂÎÄ(aÈıÎ¬.fgÉÏÏÂÎÄ().Get()),
-	m»º³å¹¤³§(&aÈıÎ¬.fg»º³å¹¤³§()),
-	m¶¥µã»º³å(*mÉÏÏÂÎÄ, *m»º³å¹¤³§, E»º³å::e¶¥µã),
-	mË÷Òı»º³å(*mÉÏÏÂÎÄ, *m»º³å¹¤³§, E»º³å::eË÷Òı) {
+Cè‡ªåŠ¨ç¼“å†²::Cè‡ªåŠ¨ç¼“å†²(Cä¸‰ç»´ &aä¸‰ç»´) : 
+	mä¸Šä¸‹æ–‡(aä¸‰ç»´.fgä¸Šä¸‹æ–‡().Get()),
+	mç¼“å†²å·¥å‚(&aä¸‰ç»´.fgç¼“å†²å·¥å‚()),
+	mé¡¶ç‚¹ç¼“å†²(*mä¸Šä¸‹æ–‡, *mç¼“å†²å·¥å‚, Eç¼“å†²::eé¡¶ç‚¹),
+	mç´¢å¼•ç¼“å†²(*mä¸Šä¸‹æ–‡, *mç¼“å†²å·¥å‚, Eç¼“å†²::eç´¢å¼•) {
 }
-bool C×Ô¶¯»º³å::fË¢ĞÂ() {
-	if (m¶¥µã»º³å.mĞŞ¸Ä == 0 && mË÷Òı»º³å.mĞŞ¸Ä == 0) {
+bool Cè‡ªåŠ¨ç¼“å†²::fåˆ·æ–°() {
+	if (mé¡¶ç‚¹ç¼“å†².mä¿®æ”¹ == 0 && mç´¢å¼•ç¼“å†².mä¿®æ”¹ == 0) {
 		return false;
 	}
-	const bool vÈ¡ÏûÓ³Éä¶¥µã = m¶¥µã»º³å.fÈ¡ÏûÓ³Éä();
-	const bool vÈ¡ÏûÓ³ÉäË÷Òı = mË÷Òı»º³å.fÈ¡ÏûÓ³Éä();
-	const bool vË¢ĞÂ = vÈ¡ÏûÓ³Éä¶¥µã || vÈ¡ÏûÓ³ÉäË÷Òı;
-	if (vË¢ĞÂ) {
-		if (mfË¢ĞÂ»Øµ÷) {
-			mfË¢ĞÂ»Øµ÷();
+	const bool vå–æ¶ˆæ˜ å°„é¡¶ç‚¹ = mé¡¶ç‚¹ç¼“å†².få–æ¶ˆæ˜ å°„();
+	const bool vå–æ¶ˆæ˜ å°„ç´¢å¼• = mç´¢å¼•ç¼“å†².få–æ¶ˆæ˜ å°„();
+	const bool våˆ·æ–° = vå–æ¶ˆæ˜ å°„é¡¶ç‚¹ || vå–æ¶ˆæ˜ å°„ç´¢å¼•;
+	if (våˆ·æ–°) {
+		if (mfåˆ·æ–°å›è°ƒ) {
+			mfåˆ·æ–°å›è°ƒ();
 		}
-		UINT v¶¥µãÆ«ÒÆ = 0;
-		mÉÏÏÂÎÄ->IASetVertexBuffers(0, 1, m¶¥µã»º³å.m»º³å.GetAddressOf(), &m¶¥µã»º³å.mµ¥Î»´óĞ¡, &v¶¥µãÆ«ÒÆ);
-		mÉÏÏÂÎÄ->IASetIndexBuffer(mË÷Òı»º³å.m»º³å.Get(), DXGI_FORMAT_R16_UINT, 0);
-		//¡ıÈç¹û³öÏÖEXECUTION WARNING #355: DEVICE_DRAW_VERTEX_BUFFER_STRIDE_TOO_SMALL£¬¼ì²é³õÊ¼»¯Ê±ÉèÖÃµÄ¶¥µã»º³åµ¥Î»´óĞ¡
-		mÉÏÏÂÎÄ->DrawIndexed(mË÷Òı»º³å.mĞŞ¸Ä / mË÷Òı»º³å.mµ¥Î»´óĞ¡, 0, 0);
-		m¶¥µã»º³å.mĞŞ¸Ä = 0;
-		mË÷Òı»º³å.mĞŞ¸Ä = 0;
+		UINT vé¡¶ç‚¹åç§» = 0;
+		mä¸Šä¸‹æ–‡->IASetVertexBuffers(0, 1, mé¡¶ç‚¹ç¼“å†².mç¼“å†².GetAddressOf(), &mé¡¶ç‚¹ç¼“å†².må•ä½å¤§å°, &vé¡¶ç‚¹åç§»);
+		mä¸Šä¸‹æ–‡->IASetIndexBuffer(mç´¢å¼•ç¼“å†².mç¼“å†².Get(), DXGI_FORMAT_R16_UINT, 0);
+		//â†“å¦‚æœå‡ºç°EXECUTION WARNING #355: DEVICE_DRAW_VERTEX_BUFFER_STRIDE_TOO_SMALLï¼Œæ£€æŸ¥åˆå§‹åŒ–æ—¶è®¾ç½®çš„é¡¶ç‚¹ç¼“å†²å•ä½å¤§å°
+		mä¸Šä¸‹æ–‡->DrawIndexed(mç´¢å¼•ç¼“å†².mä¿®æ”¹ / mç´¢å¼•ç¼“å†².må•ä½å¤§å°, 0, 0);
+		mé¡¶ç‚¹ç¼“å†².mä¿®æ”¹ = 0;
+		mç´¢å¼•ç¼“å†².mä¿®æ”¹ = 0;
 	}
-	return vË¢ĞÂ;
+	return våˆ·æ–°;
 }
-void C×Ô¶¯»º³å::f¸´ÖÆ(const void *a¶¥µã, size_t a¶¥µã´óĞ¡, const void *aË÷Òı, size_t aË÷Òı´óĞ¡) {
-	const unsigned int v¶¥µãÄ¿±ê = m¶¥µã»º³å.mĞŞ¸Ä + a¶¥µã´óĞ¡;
-	const unsigned int vË÷ÒıÄ¿±ê = mË÷Òı»º³å.mĞŞ¸Ä + aË÷Òı´óĞ¡;
-	if ((v¶¥µãÄ¿±ê > m¶¥µã»º³å.m»º³å´óĞ¡) || (vË÷ÒıÄ¿±ê > mË÷Òı»º³å.m»º³å´óĞ¡)) {
-		fË¢ĞÂ();
+void Cè‡ªåŠ¨ç¼“å†²::få¤åˆ¶(const void *aé¡¶ç‚¹, size_t aé¡¶ç‚¹å¤§å°, const void *aç´¢å¼•, size_t aç´¢å¼•å¤§å°) {
+	const unsigned int vé¡¶ç‚¹ç›®æ ‡ = mé¡¶ç‚¹ç¼“å†².mä¿®æ”¹ + aé¡¶ç‚¹å¤§å°;
+	const unsigned int vç´¢å¼•ç›®æ ‡ = mç´¢å¼•ç¼“å†².mä¿®æ”¹ + aç´¢å¼•å¤§å°;
+	if ((vé¡¶ç‚¹ç›®æ ‡ > mé¡¶ç‚¹ç¼“å†².mç¼“å†²å¤§å°) || (vç´¢å¼•ç›®æ ‡ > mç´¢å¼•ç¼“å†².mç¼“å†²å¤§å°)) {
+		fåˆ·æ–°();
 	} else {
-		const unsigned int v¶¥µãÊıÁ¿ = m¶¥µã»º³å.fgÊıÁ¿();
-		if (v¶¥µãÊıÁ¿ != 0) {
-			const unsigned int vË÷ÒıÊıÁ¿ = aË÷Òı´óĞ¡ / sizeof(tË÷Òı);
-			std::vector<tË÷Òı> vaË÷Òı(vË÷ÒıÊıÁ¿);
-			const tË÷Òı *vpË÷Òı = (tË÷Òı*)aË÷Òı;
-			for (unsigned int i = 0; i != vË÷ÒıÊıÁ¿; ++i) {
-				vaË÷Òı[i] = vpË÷Òı[i] + (tË÷Òı)v¶¥µãÊıÁ¿;
+		const unsigned int vé¡¶ç‚¹æ•°é‡ = mé¡¶ç‚¹ç¼“å†².fgæ•°é‡();
+		if (vé¡¶ç‚¹æ•°é‡ != 0) {
+			const unsigned int vç´¢å¼•æ•°é‡ = aç´¢å¼•å¤§å° / sizeof(tç´¢å¼•);
+			std::vector<tç´¢å¼•> vaç´¢å¼•(vç´¢å¼•æ•°é‡);
+			const tç´¢å¼• *vpç´¢å¼• = (tç´¢å¼•*)aç´¢å¼•;
+			for (unsigned int i = 0; i != vç´¢å¼•æ•°é‡; ++i) {
+				vaç´¢å¼•[i] = vpç´¢å¼•[i] + (tç´¢å¼•)vé¡¶ç‚¹æ•°é‡;
 			}
-			m¶¥µã»º³å.f¸´ÖÆ(a¶¥µã, a¶¥µã´óĞ¡);
-			mË÷Òı»º³å.f¸´ÖÆ(vaË÷Òı.data(), aË÷Òı´óĞ¡);
+			mé¡¶ç‚¹ç¼“å†².få¤åˆ¶(aé¡¶ç‚¹, aé¡¶ç‚¹å¤§å°);
+			mç´¢å¼•ç¼“å†².få¤åˆ¶(vaç´¢å¼•.data(), aç´¢å¼•å¤§å°);
 			return;
 		}
 	}
-	m¶¥µã»º³å.f¸´ÖÆ(a¶¥µã, a¶¥µã´óĞ¡);
-	mË÷Òı»º³å.f¸´ÖÆ(aË÷Òı, aË÷Òı´óĞ¡);
+	mé¡¶ç‚¹ç¼“å†².få¤åˆ¶(aé¡¶ç‚¹, aé¡¶ç‚¹å¤§å°);
+	mç´¢å¼•ç¼“å†².få¤åˆ¶(aç´¢å¼•, aç´¢å¼•å¤§å°);
 }
-bool C×Ô¶¯»º³å::fiĞŞ¸Ä() const {
-	return m¶¥µã»º³å.mĞŞ¸Ä != 0 || mË÷Òı»º³å.mĞŞ¸Ä != 0;
+bool Cè‡ªåŠ¨ç¼“å†²::fiä¿®æ”¹() const {
+	return mé¡¶ç‚¹ç¼“å†².mä¿®æ”¹ != 0 || mç´¢å¼•ç¼“å†².mä¿®æ”¹ != 0;
 }
-//»º´æ
-C×Ô¶¯»º³å::C»º³å::C»º³å(ID3D11DeviceContext &aÉÏÏÂÎÄ, C»º³å¹¤³§ &a»º³å¹¤³§, E»º³å a±êÖ¾) :
-	mÉÏÏÂÎÄ(&aÉÏÏÂÎÄ), m»º³å¹¤³§(&a»º³å¹¤³§), m±êÖ¾(a±êÖ¾) {
+//ç¼“å­˜
+Cè‡ªåŠ¨ç¼“å†²::Cç¼“å†²::Cç¼“å†²(ID3D11DeviceContext &aä¸Šä¸‹æ–‡, Cç¼“å†²å·¥å‚ &aç¼“å†²å·¥å‚, Eç¼“å†² aæ ‡å¿—) :
+	mä¸Šä¸‹æ–‡(&aä¸Šä¸‹æ–‡), mç¼“å†²å·¥å‚(&aç¼“å†²å·¥å‚), mæ ‡å¿—(aæ ‡å¿—) {
 }
-void C×Ô¶¯»º³å::C»º³å::f³õÊ¼»¯(size_t aµ¥Î»´óĞ¡, size_t aÊıÁ¿) {
-	mµ¥Î»´óĞ¡ = aµ¥Î»´óĞ¡;
-	m»º³å´óĞ¡ = mµ¥Î»´óĞ¡ * aÊıÁ¿;
-	m»º³å¹¤³§->f´´½¨»º³å(m»º³å, nullptr, m»º³å´óĞ¡, m±êÖ¾, e¶¯Ì¬);
-	mĞŞ¸Ä = 0;
+void Cè‡ªåŠ¨ç¼“å†²::Cç¼“å†²::fåˆå§‹åŒ–(size_t aå•ä½å¤§å°, size_t aæ•°é‡) {
+	må•ä½å¤§å° = aå•ä½å¤§å°;
+	mç¼“å†²å¤§å° = må•ä½å¤§å° * aæ•°é‡;
+	mç¼“å†²å·¥å‚->fåˆ›å»ºç¼“å†²(mç¼“å†², nullptr, mç¼“å†²å¤§å°, mæ ‡å¿—, eåŠ¨æ€);
+	mä¿®æ”¹ = 0;
 }
-bool C×Ô¶¯»º³å::C»º³å::fÓ³Éä() {
-	assert(m»º³å != nullptr);
-	if (mÓ³Éä != nullptr) {
+bool Cè‡ªåŠ¨ç¼“å†²::Cç¼“å†²::fæ˜ å°„() {
+	assert(mç¼“å†² != nullptr);
+	if (mæ˜ å°„ != nullptr) {
 		return false;
 	}
-	D3D11_MAPPED_SUBRESOURCE vÓ³Éä×ÊÔ´;
-	mÉÏÏÂÎÄ->Map(m»º³å.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &vÓ³Éä×ÊÔ´);
-	mÓ³Éä = (std::byte*)vÓ³Éä×ÊÔ´.pData;
+	D3D11_MAPPED_SUBRESOURCE væ˜ å°„èµ„æº;
+	mä¸Šä¸‹æ–‡->Map(mç¼“å†².Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &væ˜ å°„èµ„æº);
+	mæ˜ å°„ = (std::byte*)væ˜ å°„èµ„æº.pData;
 	return true;
 }
-bool C×Ô¶¯»º³å::C»º³å::fÈ¡ÏûÓ³Éä() {
-	if (mÓ³Éä == nullptr) {
+bool Cè‡ªåŠ¨ç¼“å†²::Cç¼“å†²::få–æ¶ˆæ˜ å°„() {
+	if (mæ˜ å°„ == nullptr) {
 		return false;
 	}
-	mÉÏÏÂÎÄ->Unmap(m»º³å.Get(), 0);
-	mÓ³Éä = nullptr;
+	mä¸Šä¸‹æ–‡->Unmap(mç¼“å†².Get(), 0);
+	mæ˜ å°„ = nullptr;
 	return true;
 }
-bool C×Ô¶¯»º³å::C»º³å::f¸´ÖÆ(const void *pÖ¸Õë, size_t a´óĞ¡) {
-	if (mÓ³Éä == nullptr) {
-		fÓ³Éä();
+bool Cè‡ªåŠ¨ç¼“å†²::Cç¼“å†²::få¤åˆ¶(const void *pæŒ‡é’ˆ, size_t aå¤§å°) {
+	if (mæ˜ å°„ == nullptr) {
+		fæ˜ å°„();
 	}
-	const unsigned int vÄ¿±ê = mĞŞ¸Ä + a´óĞ¡;
-	const bool v¿ÉÓÃ = vÄ¿±ê <= m»º³å´óĞ¡;
-	assert(v¿ÉÓÃ);
-	if (v¿ÉÓÃ) {
-		memcpy(mÓ³Éä + mĞŞ¸Ä, pÖ¸Õë, a´óĞ¡);
-		mĞŞ¸Ä = vÄ¿±ê;
+	const unsigned int vç›®æ ‡ = mä¿®æ”¹ + aå¤§å°;
+	const bool vå¯ç”¨ = vç›®æ ‡ <= mç¼“å†²å¤§å°;
+	assert(vå¯ç”¨);
+	if (vå¯ç”¨) {
+		memcpy(mæ˜ å°„ + mä¿®æ”¹, pæŒ‡é’ˆ, aå¤§å°);
+		mä¿®æ”¹ = vç›®æ ‡;
 	}
-	return v¿ÉÓÃ;
+	return vå¯ç”¨;
 }
-UINT C×Ô¶¯»º³å::C»º³å::fgÊıÁ¿() {
-	return mĞŞ¸Ä / mµ¥Î»´óĞ¡;
+UINT Cè‡ªåŠ¨ç¼“å†²::Cç¼“å†²::fgæ•°é‡() {
+	return mä¿®æ”¹ / må•ä½å¤§å°;
 }
 //==============================================================================
-// äÖÈ¾×´Ì¬
+// æ¸²æŸ“çŠ¶æ€
 //==============================================================================
-CäÖÈ¾×´Ì¬::~CäÖÈ¾×´Ì¬() {
+Cæ¸²æŸ“çŠ¶æ€::~Cæ¸²æŸ“çŠ¶æ€() {
 }
-CäÖÈ¾×´Ì¬::CäÖÈ¾×´Ì¬(ID3D11Device *aÉè±¸) {
+Cæ¸²æŸ“çŠ¶æ€::Cæ¸²æŸ“çŠ¶æ€(ID3D11Device *aè®¾å¤‡) {
 	HRESULT hr;
-	//¹âÕ¤»¯	================================================================
-	//ÎŞ¹âÕ¤»¯
-	m¹âÕ¤»¯²ÎÊı.mÄ¬ÈÏ = cÄ¬ÈÏ¹âÕ¤»¯;
-	m¹âÕ¤»¯.mÄ¬ÈÏ = nullptr;
-	//Ïß¿òäÖÈ¾
-	m¹âÕ¤»¯²ÎÊı.mÏß¿òäÖÈ¾ = cÄ¬ÈÏ¹âÕ¤»¯;
-	m¹âÕ¤»¯²ÎÊı.mÏß¿òäÖÈ¾.CullMode = D3D11_CULL_BACK;
-	m¹âÕ¤»¯²ÎÊı.mÏß¿òäÖÈ¾.FillMode = D3D11_FILL_WIREFRAME;
-	hr = aÉè±¸->CreateRasterizerState(&m¹âÕ¤»¯²ÎÊı.mÏß¿òäÖÈ¾, &m¹âÕ¤»¯.mÏß¿òäÖÈ¾);
+	//å…‰æ …åŒ–	================================================================
+	//æ— å…‰æ …åŒ–
+	må…‰æ …åŒ–å‚æ•°.mé»˜è®¤ = cé»˜è®¤å…‰æ …åŒ–;
+	må…‰æ …åŒ–.mé»˜è®¤ = nullptr;
+	//çº¿æ¡†æ¸²æŸ“
+	må…‰æ …åŒ–å‚æ•°.mçº¿æ¡†æ¸²æŸ“ = cé»˜è®¤å…‰æ …åŒ–;
+	må…‰æ …åŒ–å‚æ•°.mçº¿æ¡†æ¸²æŸ“.CullMode = D3D11_CULL_BACK;
+	må…‰æ …åŒ–å‚æ•°.mçº¿æ¡†æ¸²æŸ“.FillMode = D3D11_FILL_WIREFRAME;
+	hr = aè®¾å¤‡->CreateRasterizerState(&må…‰æ …åŒ–å‚æ•°.mçº¿æ¡†æ¸²æŸ“, &må…‰æ …åŒ–.mçº¿æ¡†æ¸²æŸ“);
 	if(FAILED(hr)) {
 		return;
 	}
-	//È¡ÏûÒş²ØÃæÏû³ı
-	m¹âÕ¤»¯²ÎÊı.mÏÔÊ¾Òş²ØÃæ = cÄ¬ÈÏ¹âÕ¤»¯;
-	m¹âÕ¤»¯²ÎÊı.mÏÔÊ¾Òş²ØÃæ.CullMode = D3D11_CULL_NONE;
-	m¹âÕ¤»¯²ÎÊı.mÏÔÊ¾Òş²ØÃæ.FillMode = D3D11_FILL_SOLID;
-	hr = aÉè±¸->CreateRasterizerState(&m¹âÕ¤»¯²ÎÊı.mÏÔÊ¾Òş²ØÃæ, &m¹âÕ¤»¯.mÏÔÊ¾Òş²ØÃæ);
+	//å–æ¶ˆéšè—é¢æ¶ˆé™¤
+	må…‰æ …åŒ–å‚æ•°.mæ˜¾ç¤ºéšè—é¢ = cé»˜è®¤å…‰æ …åŒ–;
+	må…‰æ …åŒ–å‚æ•°.mæ˜¾ç¤ºéšè—é¢.CullMode = D3D11_CULL_NONE;
+	må…‰æ …åŒ–å‚æ•°.mæ˜¾ç¤ºéšè—é¢.FillMode = D3D11_FILL_SOLID;
+	hr = aè®¾å¤‡->CreateRasterizerState(&må…‰æ …åŒ–å‚æ•°.mæ˜¾ç¤ºéšè—é¢, &må…‰æ …åŒ–.mæ˜¾ç¤ºéšè—é¢);
 	if(FAILED(hr)) {
 		return;
 	}
-	//ÉèÖÃÄæÊ±ÕëÎªÕıÃæ
-	m¹âÕ¤»¯²ÎÊı.m·´ÃæäÖÈ¾ = cÄ¬ÈÏ¹âÕ¤»¯;
-	m¹âÕ¤»¯²ÎÊı.m·´ÃæäÖÈ¾.FrontCounterClockwise = true;
-	hr = aÉè±¸->CreateRasterizerState(&m¹âÕ¤»¯²ÎÊı.m·´ÃæäÖÈ¾, &m¹âÕ¤»¯.m·´ÃæäÖÈ¾);
-	if(FAILED(hr)) {
-		return;
-	}
-
-	//»ìºÏ	====================================================================
-	//ÎŞ»ìºÏ
-	m»ìºÏ²ÎÊı.mÄ¬ÈÏ = cÄ¬ÈÏ»ìºÏ;
-	m»ìºÏ.mÄ¬ÈÏ = nullptr;
-	//¿ªÆôÍ¸Ã÷
-	m»ìºÏ²ÎÊı.m¿ªÆôÍ¸Ã÷ = cÄ¬ÈÏ»ìºÏ;
-	m»ìºÏ²ÎÊı.m¿ªÆôÍ¸Ã÷.RenderTarget[0].BlendEnable = true;
-	m»ìºÏ²ÎÊı.m¿ªÆôÍ¸Ã÷.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	m»ìºÏ²ÎÊı.m¿ªÆôÍ¸Ã÷.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-	m»ìºÏ²ÎÊı.m¿ªÆôÍ¸Ã÷.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	m»ìºÏ²ÎÊı.m¿ªÆôÍ¸Ã÷.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
-	m»ìºÏ²ÎÊı.m¿ªÆôÍ¸Ã÷.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_DEST_ALPHA;
-	m»ìºÏ²ÎÊı.m¿ªÆôÍ¸Ã÷.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_MAX;
-	m»ìºÏ²ÎÊı.m¿ªÆôÍ¸Ã÷.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-	hr = aÉè±¸->CreateBlendState(&m»ìºÏ²ÎÊı.m¿ªÆôÍ¸Ã÷, &m»ìºÏ.m¿ªÆôÍ¸Ã÷);
-	if(FAILED(hr)) {
-		return;
-	}
-	//ÑÕÉ«µş¼Ó
-	m»ìºÏ²ÎÊı.mÑÕÉ«µş¼Ó = m»ìºÏ²ÎÊı.m¿ªÆôÍ¸Ã÷;
-	m»ìºÏ²ÎÊı.mÑÕÉ«µş¼Ó.RenderTarget[0].DestBlend = D3D11_BLEND_DEST_ALPHA;
-	m»ìºÏ²ÎÊı.mÑÕÉ«µş¼Ó.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
-	m»ìºÏ²ÎÊı.mÑÕÉ«µş¼Ó.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_DEST_ALPHA;
-	hr = aÉè±¸->CreateBlendState(&m»ìºÏ²ÎÊı.mÑÕÉ«µş¼Ó, &m»ìºÏ.mÑÕÉ«µş¼Ó);
-	if(FAILED(hr)) {
-		return;
-	}
-	//½ûÖ¹Ğ´ÑÕÉ«
-	m»ìºÏ²ÎÊı.m½ûÖ¹Ğ´ÑÕÉ« = cÄ¬ÈÏ»ìºÏ;
-	m»ìºÏ²ÎÊı.m½ûÖ¹Ğ´ÑÕÉ«.RenderTarget[0].BlendEnable = false;
-	m»ìºÏ²ÎÊı.m½ûÖ¹Ğ´ÑÕÉ«.RenderTarget[0].RenderTargetWriteMask = 0;
-	hr = aÉè±¸->CreateBlendState(&m»ìºÏ²ÎÊı.m½ûÖ¹Ğ´ÑÕÉ«, &m»ìºÏ.m½ûÖ¹Ğ´ÑÕÉ«);
+	//è®¾ç½®é€†æ—¶é’ˆä¸ºæ­£é¢
+	må…‰æ …åŒ–å‚æ•°.måé¢æ¸²æŸ“ = cé»˜è®¤å…‰æ …åŒ–;
+	må…‰æ …åŒ–å‚æ•°.måé¢æ¸²æŸ“.FrontCounterClockwise = true;
+	hr = aè®¾å¤‡->CreateRasterizerState(&må…‰æ …åŒ–å‚æ•°.måé¢æ¸²æŸ“, &må…‰æ …åŒ–.måé¢æ¸²æŸ“);
 	if(FAILED(hr)) {
 		return;
 	}
 
-	//Éî¶ÈÄ£°å	================================================================
-	//ÎŞÉî¶ÈÄ£°å
-	mÉî¶ÈÄ£°å²ÎÊı.mÄ¬ÈÏ = cÄ¬ÈÏÉî¶ÈÄ£°å;
-	mÉî¶ÈÄ£°å.mÄ¬ÈÏ = nullptr;
-	//Õı³£Éî¶È
-	mÉî¶ÈÄ£°å²ÎÊı.mÕı³£Éî¶Èl = cÄ¬ÈÏÉî¶ÈÄ£°å;
-	mÉî¶ÈÄ£°å²ÎÊı.mÕı³£Éî¶Èl.DepthEnable = true;
-	mÉî¶ÈÄ£°å²ÎÊı.mÕı³£Éî¶Èl.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	mÉî¶ÈÄ£°å²ÎÊı.mÕı³£Éî¶Èl.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
-	mÉî¶ÈÄ£°å²ÎÊı.mÕı³£Éî¶Èl.StencilEnable = false;
-	hr = aÉè±¸->CreateDepthStencilState(&mÉî¶ÈÄ£°å²ÎÊı.mÕı³£Éî¶Èl, &mÉî¶ÈÄ£°å.mÕı³£Éî¶Èl);
+	//æ··åˆ	====================================================================
+	//æ— æ··åˆ
+	mæ··åˆå‚æ•°.mé»˜è®¤ = cé»˜è®¤æ··åˆ;
+	mæ··åˆ.mé»˜è®¤ = nullptr;
+	//å¼€å¯é€æ˜
+	mæ··åˆå‚æ•°.må¼€å¯é€æ˜ = cé»˜è®¤æ··åˆ;
+	mæ··åˆå‚æ•°.må¼€å¯é€æ˜.RenderTarget[0].BlendEnable = true;
+	mæ··åˆå‚æ•°.må¼€å¯é€æ˜.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	mæ··åˆå‚æ•°.må¼€å¯é€æ˜.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	mæ··åˆå‚æ•°.må¼€å¯é€æ˜.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	mæ··åˆå‚æ•°.må¼€å¯é€æ˜.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+	mæ··åˆå‚æ•°.må¼€å¯é€æ˜.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_DEST_ALPHA;
+	mæ··åˆå‚æ•°.må¼€å¯é€æ˜.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_MAX;
+	mæ··åˆå‚æ•°.må¼€å¯é€æ˜.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	hr = aè®¾å¤‡->CreateBlendState(&mæ··åˆå‚æ•°.må¼€å¯é€æ˜, &mæ··åˆ.må¼€å¯é€æ˜);
 	if(FAILED(hr)) {
 		return;
 	}
-	mÉî¶ÈÄ£°å²ÎÊı.mÕı³£Éî¶Èr = mÉî¶ÈÄ£°å²ÎÊı.mÕı³£Éî¶Èl;
-	mÉî¶ÈÄ£°å²ÎÊı.mÕı³£Éî¶Èr.DepthFunc = D3D11_COMPARISON_GREATER_EQUAL;
-	hr = aÉè±¸->CreateDepthStencilState(&mÉî¶ÈÄ£°å²ÎÊı.mÕı³£Éî¶Èr, &mÉî¶ÈÄ£°å.mÕı³£Éî¶Èr);
-	if (FAILED(hr)) {
+	//é¢œè‰²å åŠ 
+	mæ··åˆå‚æ•°.mé¢œè‰²å åŠ  = mæ··åˆå‚æ•°.må¼€å¯é€æ˜;
+	mæ··åˆå‚æ•°.mé¢œè‰²å åŠ .RenderTarget[0].DestBlend = D3D11_BLEND_DEST_ALPHA;
+	mæ··åˆå‚æ•°.mé¢œè‰²å åŠ .RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+	mæ··åˆå‚æ•°.mé¢œè‰²å åŠ .RenderTarget[0].DestBlendAlpha = D3D11_BLEND_DEST_ALPHA;
+	hr = aè®¾å¤‡->CreateBlendState(&mæ··åˆå‚æ•°.mé¢œè‰²å åŠ , &mæ··åˆ.mé¢œè‰²å åŠ );
+	if(FAILED(hr)) {
 		return;
 	}
-	mÉî¶ÈÄ£°å²ÎÊı.m×ÜÊÇ¸²¸Ç = mÉî¶ÈÄ£°å²ÎÊı.mÕı³£Éî¶Èl;
-	mÉî¶ÈÄ£°å²ÎÊı.m×ÜÊÇ¸²¸Ç.DepthFunc = D3D11_COMPARISON_ALWAYS;
-	hr = aÉè±¸->CreateDepthStencilState(&mÉî¶ÈÄ£°å²ÎÊı.m×ÜÊÇ¸²¸Ç, &mÉî¶ÈÄ£°å.m×ÜÊÇ¸²¸Ç);
-	if (FAILED(hr)) {
+	//ç¦æ­¢å†™é¢œè‰²
+	mæ··åˆå‚æ•°.mç¦æ­¢å†™é¢œè‰² = cé»˜è®¤æ··åˆ;
+	mæ··åˆå‚æ•°.mç¦æ­¢å†™é¢œè‰².RenderTarget[0].BlendEnable = false;
+	mæ··åˆå‚æ•°.mç¦æ­¢å†™é¢œè‰².RenderTarget[0].RenderTargetWriteMask = 0;
+	hr = aè®¾å¤‡->CreateBlendState(&mæ··åˆå‚æ•°.mç¦æ­¢å†™é¢œè‰², &mæ··åˆ.mç¦æ­¢å†™é¢œè‰²);
+	if(FAILED(hr)) {
 		return;
 	}
-	//Ä£°å±ê¼Ç
-	mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±ê¼Ç = cÄ¬ÈÏÉî¶ÈÄ£°å;
-	mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±ê¼Ç.DepthEnable = false;
-	mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±ê¼Ç.StencilEnable = true;
-	mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±ê¼Ç.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
-	mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±ê¼Ç.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
-	mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±ê¼Ç.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
-	mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±ê¼Ç.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
-	mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±ê¼Ç.BackFace = mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±ê¼Ç.FrontFace;
-	hr = aÉè±¸->CreateDepthStencilState(&mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±ê¼Ç, &mÉî¶ÈÄ£°å.mÄ£°å±ê¼Ç);
-	if (FAILED(hr)) {
-		return;
-	}
-	//Ä£°å±È½Ï
-	mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±È½Ï = cÄ¬ÈÏÉî¶ÈÄ£°å;
-	mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±È½Ï.StencilEnable = true;
-	mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±È½Ï.FrontFace.StencilFunc = D3D11_COMPARISON_EQUAL;
-	mÉî¶ÈÄ£°å²ÎÊı.mÄ£°å±È½Ï.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
 
-	//²ÉÑùÆ÷	================================================================
-	//ÎÆÀí
-	m²ÉÑùÆ÷²ÎÊı.mÎÆÀí.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	m²ÉÑùÆ÷²ÎÊı.mÎÆÀí.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	m²ÉÑùÆ÷²ÎÊı.mÎÆÀí.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	m²ÉÑùÆ÷²ÎÊı.mÎÆÀí.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	m²ÉÑùÆ÷²ÎÊı.mÎÆÀí.ComparisonFunc = D3D11_COMPARISON_NEVER;
-	m²ÉÑùÆ÷²ÎÊı.mÎÆÀí.BorderColor[0] = 0;
-	m²ÉÑùÆ÷²ÎÊı.mÎÆÀí.BorderColor[1] = 0;
-	m²ÉÑùÆ÷²ÎÊı.mÎÆÀí.BorderColor[2] = 0;
-	m²ÉÑùÆ÷²ÎÊı.mÎÆÀí.BorderColor[3] = 0;
-	m²ÉÑùÆ÷²ÎÊı.mÎÆÀí.MinLOD = 0;
-	m²ÉÑùÆ÷²ÎÊı.mÎÆÀí.MaxLOD = D3D11_FLOAT32_MAX;
-	m²ÉÑùÆ÷²ÎÊı.mÎÆÀí.MipLODBias = 0;
-	m²ÉÑùÆ÷²ÎÊı.mÎÆÀí.MaxAnisotropy = 16;
-	hr = aÉè±¸->CreateSamplerState(&m²ÉÑùÆ÷²ÎÊı.mÎÆÀí, &m²ÉÑùÆ÷.mÎÆÀí);
+	//æ·±åº¦æ¨¡æ¿	================================================================
+	//æ— æ·±åº¦æ¨¡æ¿
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mé»˜è®¤ = cé»˜è®¤æ·±åº¦æ¨¡æ¿;
+	mæ·±åº¦æ¨¡æ¿.mé»˜è®¤ = nullptr;
+	//æ­£å¸¸æ·±åº¦
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ­£å¸¸æ·±åº¦l = cé»˜è®¤æ·±åº¦æ¨¡æ¿;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ­£å¸¸æ·±åº¦l.DepthEnable = true;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ­£å¸¸æ·±åº¦l.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ­£å¸¸æ·±åº¦l.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ­£å¸¸æ·±åº¦l.StencilEnable = false;
+	hr = aè®¾å¤‡->CreateDepthStencilState(&mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ­£å¸¸æ·±åº¦l, &mæ·±åº¦æ¨¡æ¿.mæ­£å¸¸æ·±åº¦l);
 	if(FAILED(hr)) {
 		return;
 	}
-	//Í¼°¸
-	m²ÉÑùÆ÷²ÎÊı.mÍ¼°¸ = m²ÉÑùÆ÷²ÎÊı.mÎÆÀí;
-	m²ÉÑùÆ÷²ÎÊı.mÍ¼°¸.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-	m²ÉÑùÆ÷²ÎÊı.mÍ¼°¸.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-	m²ÉÑùÆ÷²ÎÊı.mÍ¼°¸.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-	hr = aÉè±¸->CreateSamplerState(&m²ÉÑùÆ÷²ÎÊı.mÍ¼°¸, &m²ÉÑùÆ÷.mÍ¼°¸);
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ­£å¸¸æ·±åº¦r = mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ­£å¸¸æ·±åº¦l;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ­£å¸¸æ·±åº¦r.DepthFunc = D3D11_COMPARISON_GREATER_EQUAL;
+	hr = aè®¾å¤‡->CreateDepthStencilState(&mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ­£å¸¸æ·±åº¦r, &mæ·±åº¦æ¨¡æ¿.mæ­£å¸¸æ·±åº¦r);
+	if (FAILED(hr)) {
+		return;
+	}
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ€»æ˜¯è¦†ç›– = mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ­£å¸¸æ·±åº¦l;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ€»æ˜¯è¦†ç›–.DepthFunc = D3D11_COMPARISON_ALWAYS;
+	hr = aè®¾å¤‡->CreateDepthStencilState(&mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ€»æ˜¯è¦†ç›–, &mæ·±åº¦æ¨¡æ¿.mæ€»æ˜¯è¦†ç›–);
+	if (FAILED(hr)) {
+		return;
+	}
+	//æ¨¡æ¿æ ‡è®°
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ ‡è®° = cé»˜è®¤æ·±åº¦æ¨¡æ¿;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ ‡è®°.DepthEnable = false;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ ‡è®°.StencilEnable = true;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ ‡è®°.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ ‡è®°.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ ‡è®°.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ ‡è®°.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ ‡è®°.BackFace = mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ ‡è®°.FrontFace;
+	hr = aè®¾å¤‡->CreateDepthStencilState(&mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ ‡è®°, &mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ ‡è®°);
+	if (FAILED(hr)) {
+		return;
+	}
+	//æ¨¡æ¿æ¯”è¾ƒ
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ¯”è¾ƒ = cé»˜è®¤æ·±åº¦æ¨¡æ¿;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ¯”è¾ƒ.StencilEnable = true;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ¯”è¾ƒ.FrontFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+	mæ·±åº¦æ¨¡æ¿å‚æ•°.mæ¨¡æ¿æ¯”è¾ƒ.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+
+	//é‡‡æ ·å™¨	================================================================
+	//çº¹ç†
+	mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†.BorderColor[0] = 0;
+	mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†.BorderColor[1] = 0;
+	mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†.BorderColor[2] = 0;
+	mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†.BorderColor[3] = 0;
+	mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†.MinLOD = 0;
+	mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†.MaxLOD = D3D11_FLOAT32_MAX;
+	mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†.MipLODBias = 0;
+	mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†.MaxAnisotropy = 16;
+	hr = aè®¾å¤‡->CreateSamplerState(&mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†, &mé‡‡æ ·å™¨.mçº¹ç†);
 	if(FAILED(hr)) {
 		return;
 	}
-	//¸÷ÏòÒìĞÔ¹ıÂË
-	m²ÉÑùÆ÷²ÎÊı.m¸÷ÏòÒìĞÔ¹ıÂË = m²ÉÑùÆ÷²ÎÊı.mÎÆÀí;
-	m²ÉÑùÆ÷²ÎÊı.m¸÷ÏòÒìĞÔ¹ıÂË.Filter = D3D11_FILTER_ANISOTROPIC;
-	hr = aÉè±¸->CreateSamplerState(&m²ÉÑùÆ÷²ÎÊı.m¸÷ÏòÒìĞÔ¹ıÂË, &m²ÉÑùÆ÷.m¸÷ÏòÒìĞÔ¹ıÂË);
+	//å›¾æ¡ˆ
+	mé‡‡æ ·å™¨å‚æ•°.må›¾æ¡ˆ = mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†;
+	mé‡‡æ ·å™¨å‚æ•°.må›¾æ¡ˆ.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	mé‡‡æ ·å™¨å‚æ•°.må›¾æ¡ˆ.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	mé‡‡æ ·å™¨å‚æ•°.må›¾æ¡ˆ.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	hr = aè®¾å¤‡->CreateSamplerState(&mé‡‡æ ·å™¨å‚æ•°.må›¾æ¡ˆ, &mé‡‡æ ·å™¨.må›¾æ¡ˆ);
+	if(FAILED(hr)) {
+		return;
+	}
+	//å„å‘å¼‚æ€§è¿‡æ»¤
+	mé‡‡æ ·å™¨å‚æ•°.må„å‘å¼‚æ€§è¿‡æ»¤ = mé‡‡æ ·å™¨å‚æ•°.mçº¹ç†;
+	mé‡‡æ ·å™¨å‚æ•°.må„å‘å¼‚æ€§è¿‡æ»¤.Filter = D3D11_FILTER_ANISOTROPIC;
+	hr = aè®¾å¤‡->CreateSamplerState(&mé‡‡æ ·å™¨å‚æ•°.må„å‘å¼‚æ€§è¿‡æ»¤, &mé‡‡æ ·å™¨.må„å‘å¼‚æ€§è¿‡æ»¤);
 	if (FAILED(hr)) {
 		return;
 	}
 }
 //==============================================================================
-// ¶¥µã¸ñÊ½
+// é¡¶ç‚¹æ ¼å¼
 //==============================================================================
-void C¶¥µã¸ñÊ½::fÇå¿Õ() {
-	mÊı×é.clear();
-	mÀàĞÍÀÛ¼Æ.clear();
-	m×Ö½ÚÀÛ¼Æ = 0;
+void Cé¡¶ç‚¹æ ¼å¼::fæ¸…ç©º() {
+	mæ•°ç»„.clear();
+	mç±»å‹ç´¯è®¡.clear();
+	må­—èŠ‚ç´¯è®¡ = 0;
 }
-void C¶¥µã¸ñÊ½::fÌí¼Ó(EÀàĞÍ aÀàĞÍ, int a´óĞ¡) {
-	static const char *const caÓïÒå[] = {
+void Cé¡¶ç‚¹æ ¼å¼::fæ·»åŠ (Eç±»å‹ aç±»å‹, int aå¤§å°) {
+	static const char *const caè¯­ä¹‰[] = {
 		"POSITION",
 		"NORMAL",
 		"BINORMAL",
@@ -863,166 +900,166 @@ void C¶¥µã¸ñÊ½::fÌí¼Ó(EÀàĞÍ aÀàĞÍ, int a´óĞ¡) {
 		"TANGENT",
 		"ALPHA"
 	};
-	fÌí¼Ó(caÓïÒå[aÀàĞÍ], a´óĞ¡);
+	fæ·»åŠ (caè¯­ä¹‰[aç±»å‹], aå¤§å°);
 }
-void C¶¥µã¸ñÊ½::fÌí¼Ó(const char *aÓïÒå, int a´óĞ¡) {
-	static const DXGI_FORMAT v¸ñÊ½[] = {
+void Cé¡¶ç‚¹æ ¼å¼::fæ·»åŠ (const char *aè¯­ä¹‰, int aå¤§å°) {
+	static const DXGI_FORMAT væ ¼å¼[] = {
 		DXGI_FORMAT_R32_FLOAT,
 		DXGI_FORMAT_R32G32_FLOAT,
 		DXGI_FORMAT_R32G32B32_FLOAT,
 		DXGI_FORMAT_R32G32B32A32_FLOAT
 	};
 	D3D11_INPUT_ELEMENT_DESC v;
-	v.AlignedByteOffset = m×Ö½ÚÀÛ¼Æ;
-	v.Format = v¸ñÊ½[a´óĞ¡-1];
-	m×Ö½ÚÀÛ¼Æ += a´óĞ¡ * 4;
-	v.SemanticName = aÓïÒå;
-	auto &vÓïÒåË÷Òı = mÀàĞÍÀÛ¼Æ[aÓïÒå];
-	v.SemanticIndex = vÓïÒåË÷Òı;
-	vÓïÒåË÷Òı += 1;
+	v.AlignedByteOffset = må­—èŠ‚ç´¯è®¡;
+	v.Format = væ ¼å¼[aå¤§å°-1];
+	må­—èŠ‚ç´¯è®¡ += aå¤§å° * 4;
+	v.SemanticName = aè¯­ä¹‰;
+	auto &vè¯­ä¹‰ç´¢å¼• = mç±»å‹ç´¯è®¡[aè¯­ä¹‰];
+	v.SemanticIndex = vè¯­ä¹‰ç´¢å¼•;
+	vè¯­ä¹‰ç´¢å¼• += 1;
 	v.InputSlot = 0;
 	v.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	v.InstanceDataStepRate = 0;
-	mÊı×é.push_back(v);
+	mæ•°ç»„.push_back(v);
 }
 //==============================================================================
-// »º³å¹¤³§
+// ç¼“å†²å·¥å‚
 //==============================================================================
-void C»º³å¹¤³§::f³õÊ¼»¯(ID3D11Device *aÉè±¸) {
-	mÉè±¸ = aÉè±¸;
+void Cç¼“å†²å·¥å‚::fåˆå§‹åŒ–(ID3D11Device *aè®¾å¤‡) {
+	mè®¾å¤‡ = aè®¾å¤‡;
 }
-HRESULT C»º³å¹¤³§::f´´½¨»º³å(tp»º³å &aÊä³ö, const void *aÊı¾İ, UINT a´óĞ¡, E»º³å a±êÖ¾, E×ÊÔ´ÓÃ·¨ aÓÃ·¨) {
-	D3D11_BUFFER_DESC vÃèÊö = {};
-	vÃèÊö.Usage = (D3D11_USAGE)aÓÃ·¨;
-	switch (aÓÃ·¨) {
-	case eÔİ´æ:
-		vÃèÊö.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
-	case e¶¯Ì¬:
-		vÃèÊö.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+HRESULT Cç¼“å†²å·¥å‚::fåˆ›å»ºç¼“å†²(tpç¼“å†² &aè¾“å‡º, const void *aæ•°æ®, UINT aå¤§å°, Eç¼“å†² aæ ‡å¿—, Eèµ„æºç”¨æ³• aç”¨æ³•) {
+	D3D11_BUFFER_DESC væè¿° = {};
+	væè¿°.Usage = (D3D11_USAGE)aç”¨æ³•;
+	switch (aç”¨æ³•) {
+	case eæš‚å­˜:
+		væè¿°.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+	case eåŠ¨æ€:
+		væè¿°.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		break;
 	}
-	//assert(a´óĞ¡ % 16 == 0);
-	vÃèÊö.ByteWidth = (a´óĞ¡ % 16 != 0) ? ((a´óĞ¡ / 16 + 1) * 16) : a´óĞ¡;	//±ØĞèÊÇ16µÄ±¶Êı
-	vÃèÊö.BindFlags = a±êÖ¾;
+	//assert(aå¤§å° % 16 == 0);
+	væè¿°.ByteWidth = (aå¤§å° % 16 != 0) ? ((aå¤§å° / 16 + 1) * 16) : aå¤§å°;	//å¿…éœ€æ˜¯16çš„å€æ•°
+	væè¿°.BindFlags = aæ ‡å¿—;
 	HRESULT hr;
-	if (aÊı¾İ) {
-		D3D11_SUBRESOURCE_DATA vÊı¾İ = {};
-		vÊı¾İ.pSysMem = aÊı¾İ;
-		hr = mÉè±¸->CreateBuffer(&vÃèÊö, &vÊı¾İ, &aÊä³ö);
+	if (aæ•°æ®) {
+		D3D11_SUBRESOURCE_DATA væ•°æ® = {};
+		væ•°æ®.pSysMem = aæ•°æ®;
+		hr = mè®¾å¤‡->CreateBuffer(&væè¿°, &væ•°æ®, &aè¾“å‡º);
 	} else {
-		hr = mÉè±¸->CreateBuffer(&vÃèÊö, nullptr, &aÊä³ö);
+		hr = mè®¾å¤‡->CreateBuffer(&væè¿°, nullptr, &aè¾“å‡º);
 	}
 	return hr;
 }
 //==============================================================================
-// ÎÆÀí¼ÓÔØÆ÷
+// çº¹ç†åŠ è½½å™¨
 //==============================================================================
-CÎÆÀí¹¤³§::~CÎÆÀí¹¤³§() {
-	m¹¤³§.reset();
+Cçº¹ç†å·¥å‚::~Cçº¹ç†å·¥å‚() {
+	må·¥å‚.reset();
 }
-HRESULT CÎÆÀí¹¤³§::f³õÊ¼»¯(ID3D11Device *aÉè±¸) {
-	if (m¹¤³§) {
+HRESULT Cçº¹ç†å·¥å‚::fåˆå§‹åŒ–(ID3D11Device *aè®¾å¤‡) {
+	if (må·¥å‚) {
 		return S_OK;
 	}
-	mÉè±¸ = aÉè±¸;
-	m¹¤³§ = std::make_unique<ÎÆÀí::CÍ¼Ïñ¹¤³§>();
-	return m¹¤³§->f³õÊ¼»¯();
+	mè®¾å¤‡ = aè®¾å¤‡;
+	må·¥å‚ = std::make_unique<çº¹ç†::Cå›¾åƒå·¥å‚>();
+	return må·¥å‚->fåˆå§‹åŒ–();
 }
-//´´½¨ÎÆÀí
-HRESULT CÎÆÀí¹¤³§::f´ÓÎÄ¼ş´´½¨ÎÆÀí(tpÎÆÀí &aÊä³ö, const wchar_t *aÎÄ¼ş) {
-	std::unique_ptr<ÎÆÀí::CÖ»¶ÁÎÆÀí> vÎÆÀí = m¹¤³§->fÒ»¼ü¶ÁÈ¡(aÎÄ¼ş);
-	if (vÎÆÀí == nullptr) {
+//åˆ›å»ºçº¹ç†
+HRESULT Cçº¹ç†å·¥å‚::fä»æ–‡ä»¶åˆ›å»ºçº¹ç†(tpçº¹ç† &aè¾“å‡º, const wchar_t *aæ–‡ä»¶) {
+	std::unique_ptr<çº¹ç†::Cåªè¯»çº¹ç†> vçº¹ç† = må·¥å‚->fä¸€é”®è¯»å–(aæ–‡ä»¶);
+	if (vçº¹ç† == nullptr) {
 		return E_FAIL;
 	}
-	tpÎÆÀí2 vÎÆÀí2;
-	HRESULT hr = f´ÓÎÆÀí¶ÔÏó´´½¨ÎÆÀí2(vÎÆÀí2, *vÎÆÀí);
+	tpçº¹ç†2 vçº¹ç†2;
+	HRESULT hr = fä»çº¹ç†å¯¹è±¡åˆ›å»ºçº¹ç†2(vçº¹ç†2, *vçº¹ç†);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = f´´½¨ÎÆÀí×ÊÔ´ÊÓÍ¼(aÊä³ö, vÎÆÀí2.Get(), vÎÆÀí->fg¸ñÊ½());
+	hr = fåˆ›å»ºçº¹ç†èµ„æºè§†å›¾(aè¾“å‡º, vçº¹ç†2.Get(), vçº¹ç†->fgæ ¼å¼());
 	return hr;
 }
-HRESULT CÎÆÀí¹¤³§::f´ÓÄÚ´æ´´½¨ÎÆÀí2(tpÎÆÀí2 &aÊä³ö, const void *aÊı¾İ, DXGI_FORMAT a¸ñÊ½, UINT a¿í, UINT a¸ß, UINT aĞĞ¾à, UINT a´óĞ¡) {
-	mÎÆÀíÃèÊö.Width = a¿í;
-	mÎÆÀíÃèÊö.Height = a¸ß;
-	mÎÆÀíÃèÊö.MipLevels = 1;
-	mÎÆÀíÃèÊö.ArraySize = 1;
-	mÎÆÀíÃèÊö.Format = a¸ñÊ½;
-	mÎÆÀíÃèÊö.SampleDesc.Count = 1;
-	mÎÆÀíÃèÊö.SampleDesc.Quality = 0;
-	mÎÆÀíÃèÊö.Usage = D3D11_USAGE_DEFAULT;
-	mÎÆÀíÃèÊö.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-	mÎÆÀíÃèÊö.CPUAccessFlags = 0;
-	mÎÆÀíÃèÊö.MiscFlags = 0;
-	D3D11_SUBRESOURCE_DATA v×ÊÔ´ÃèÊö;
-	v×ÊÔ´ÃèÊö.pSysMem = aÊı¾İ;
-	v×ÊÔ´ÃèÊö.SysMemPitch = aĞĞ¾à;
-	v×ÊÔ´ÃèÊö.SysMemSlicePitch = a´óĞ¡;
-	HRESULT hr = mÉè±¸->CreateTexture2D(&mÎÆÀíÃèÊö, &v×ÊÔ´ÃèÊö, &aÊä³ö);
+HRESULT Cçº¹ç†å·¥å‚::fä»å†…å­˜åˆ›å»ºçº¹ç†2(tpçº¹ç†2 &aè¾“å‡º, const void *aæ•°æ®, DXGI_FORMAT aæ ¼å¼, UINT aå®½, UINT aé«˜, UINT aè¡Œè·, UINT aå¤§å°) {
+	mçº¹ç†æè¿°.Width = aå®½;
+	mçº¹ç†æè¿°.Height = aé«˜;
+	mçº¹ç†æè¿°.MipLevels = 1;
+	mçº¹ç†æè¿°.ArraySize = 1;
+	mçº¹ç†æè¿°.Format = aæ ¼å¼;
+	mçº¹ç†æè¿°.SampleDesc.Count = 1;
+	mçº¹ç†æè¿°.SampleDesc.Quality = 0;
+	mçº¹ç†æè¿°.Usage = D3D11_USAGE_DEFAULT;
+	mçº¹ç†æè¿°.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	mçº¹ç†æè¿°.CPUAccessFlags = 0;
+	mçº¹ç†æè¿°.MiscFlags = 0;
+	D3D11_SUBRESOURCE_DATA vèµ„æºæè¿°;
+	vèµ„æºæè¿°.pSysMem = aæ•°æ®;
+	vèµ„æºæè¿°.SysMemPitch = aè¡Œè·;
+	vèµ„æºæè¿°.SysMemSlicePitch = aå¤§å°;
+	HRESULT hr = mè®¾å¤‡->CreateTexture2D(&mçº¹ç†æè¿°, &vèµ„æºæè¿°, &aè¾“å‡º);
 	return hr;
 }
-HRESULT CÎÆÀí¹¤³§::f´ÓÎÆÀí¶ÔÏó´´½¨ÎÆÀí2(tpÎÆÀí2 &aÊä³ö, const ÎÆÀí::IÎÆÀí &aÎÆÀí) {
-	return f´ÓÄÚ´æ´´½¨ÎÆÀí2(aÊä³ö, aÎÆÀí.fgÊı¾İ(), aÎÆÀí.fg¸ñÊ½(), aÎÆÀí.fg¿í(), aÎÆÀí.fg¸ß(), aÎÆÀí.fgĞĞ¾à(), aÎÆÀí.fgÍ¼Ïñ´óĞ¡());
+HRESULT Cçº¹ç†å·¥å‚::fä»çº¹ç†å¯¹è±¡åˆ›å»ºçº¹ç†2(tpçº¹ç†2 &aè¾“å‡º, const çº¹ç†::Içº¹ç† &açº¹ç†) {
+	return fä»å†…å­˜åˆ›å»ºçº¹ç†2(aè¾“å‡º, açº¹ç†.fgæ•°æ®(), açº¹ç†.fgæ ¼å¼(), açº¹ç†.fgå®½(), açº¹ç†.fgé«˜(), açº¹ç†.fgè¡Œè·(), açº¹ç†.fgå›¾åƒå¤§å°());
 }
-HRESULT CÎÆÀí¹¤³§::f´´½¨ÎÆÀí×ÊÔ´ÊÓÍ¼(tpÎÆÀí &aÊä³ö, tpÎÆÀí2 aÎÆÀí, DXGI_FORMAT a¸ñÊ½) {
-	D3D11_SHADER_RESOURCE_VIEW_DESC vÃèÊö = {};
-	vÃèÊö.Format = a¸ñÊ½;
-	vÃèÊö.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	vÃèÊö.Texture2D.MipLevels = 1;
-	HRESULT hr = mÉè±¸->CreateShaderResourceView(aÎÆÀí.Get(), &vÃèÊö, &aÊä³ö);
+HRESULT Cçº¹ç†å·¥å‚::fåˆ›å»ºçº¹ç†èµ„æºè§†å›¾(tpçº¹ç† &aè¾“å‡º, tpçº¹ç†2 açº¹ç†, DXGI_FORMAT aæ ¼å¼) {
+	D3D11_SHADER_RESOURCE_VIEW_DESC væè¿° = {};
+	væè¿°.Format = aæ ¼å¼;
+	væè¿°.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	væè¿°.Texture2D.MipLevels = 1;
+	HRESULT hr = mè®¾å¤‡->CreateShaderResourceView(açº¹ç†.Get(), &væè¿°, &aè¾“å‡º);
 	return hr;
 }
-const D3D11_TEXTURE2D_DESC &CÎÆÀí¹¤³§::fg×î½üÎÆÀíÃèÊö() const {
-	return mÎÆÀíÃèÊö;
+const D3D11_TEXTURE2D_DESC &Cçº¹ç†å·¥å‚::fgæœ€è¿‘çº¹ç†æè¿°() const {
+	return mçº¹ç†æè¿°;
 }
 //==============================================================================
-// ½á¹¹
+// ç»“æ„
 //==============================================================================
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÊäÈë²¼¾Ö(const C¶¥µã¸ñÊ½ &a) {
-	m¶¥µã¸ñÊ½ = &a;
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsè¾“å…¥å¸ƒå±€(const Cé¡¶ç‚¹æ ¼å¼ &a) {
+	mé¡¶ç‚¹æ ¼å¼ = &a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¶¥µã×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
-	m¶¥µã×ÅÉ«Æ÷ = a;
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsé¡¶ç‚¹ç€è‰²å™¨(const std::span<const std::byte> &a) {
+	mé¡¶ç‚¹ç€è‰²å™¨ = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÏñËØ×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
-	mÏñËØ×ÅÉ«Æ÷ = a;
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsåƒç´ ç€è‰²å™¨(const std::span<const std::byte> &a) {
+	måƒç´ ç€è‰²å™¨ = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¼¸ºÎ×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
-	m¼¸ºÎ×ÅÉ«Æ÷ = a;
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fså‡ ä½•ç€è‰²å™¨(const std::span<const std::byte> &a) {
+	må‡ ä½•ç€è‰²å™¨ = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÍâ¿Ç×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
-	mÍâ¿Ç×ÅÉ«Æ÷ = a;
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fså¤–å£³ç€è‰²å™¨(const std::span<const std::byte> &a) {
+	må¤–å£³ç€è‰²å™¨ = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÓò×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
-	mÓò×ÅÉ«Æ÷ = a;
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsåŸŸç€è‰²å™¨(const std::span<const std::byte> &a) {
+	måŸŸç€è‰²å™¨ = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¹âÕ¤»¯(const D3D11_RASTERIZER_DESC &a) {
-	m¹âÕ¤»¯ = a;
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fså…‰æ …åŒ–(const D3D11_RASTERIZER_DESC &a) {
+	må…‰æ …åŒ– = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs»ìºÏ(const D3D11_BLEND_DESC &a) {
-	m»ìºÏ = a;
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsæ··åˆ(const D3D11_BLEND_DESC &a) {
+	mæ··åˆ = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÉî¶ÈÄ£°å(const D3D11_DEPTH_STENCIL_DESC &a) {
-	mÉî¶ÈÄ£°å = a;
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsæ·±åº¦æ¨¡æ¿(const D3D11_DEPTH_STENCIL_DESC &a) {
+	mæ·±åº¦æ¨¡æ¿ = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¹âÕ¤»¯(ID3D11RasterizerState *a) {
-	m¹âÕ¤»¯ = a;
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fså…‰æ …åŒ–(ID3D11RasterizerState *a) {
+	må…‰æ …åŒ– = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs»ìºÏ(ID3D11BlendState *a) {
-	m»ìºÏ = a;
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsæ··åˆ(ID3D11BlendState *a) {
+	mæ··åˆ = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÉî¶ÈÄ£°å(ID3D11DepthStencilState *a) {
-	mÉî¶ÈÄ£°å = a;
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsæ·±åº¦æ¨¡æ¿(ID3D11DepthStencilState *a) {
+	mæ·±åº¦æ¨¡æ¿ = a;
 }
-SÉî¶ÈÄ£°å²ÎÊı::SÉî¶ÈÄ£°å²ÎÊı():
-	D3D11_DEPTH_STENCIL_DESC(cÄ¬ÈÏÉî¶ÈÄ£°å) {
+Sæ·±åº¦æ¨¡æ¿å‚æ•°::Sæ·±åº¦æ¨¡æ¿å‚æ•°():
+	D3D11_DEPTH_STENCIL_DESC(cé»˜è®¤æ·±åº¦æ¨¡æ¿) {
 }
-void SÉî¶ÈÄ£°å²ÎÊı::fsÉî¶È²¿·Ö(const D3D11_DEPTH_STENCIL_DESC &a) {
+void Sæ·±åº¦æ¨¡æ¿å‚æ•°::fsæ·±åº¦éƒ¨åˆ†(const D3D11_DEPTH_STENCIL_DESC &a) {
 	DepthEnable = a.DepthEnable;
 	DepthWriteMask = a.DepthWriteMask;
 	DepthFunc = a.DepthFunc;
 }
-void SÉî¶ÈÄ£°å²ÎÊı::fsÄ£°å²¿·Ö(const D3D11_DEPTH_STENCIL_DESC &a) {
+void Sæ·±åº¦æ¨¡æ¿å‚æ•°::fsæ¨¡æ¿éƒ¨åˆ†(const D3D11_DEPTH_STENCIL_DESC &a) {
 	StencilEnable = a.StencilEnable;
 	StencilReadMask = a.StencilReadMask;
 	StencilWriteMask = a.StencilWriteMask;
@@ -1030,4 +1067,4 @@ void SÉî¶ÈÄ£°å²ÎÊı::fsÄ£°å²¿·Ö(const D3D11_DEPTH_STENCIL_DESC &a) {
 	BackFace = a.BackFace;
 }
 
-}	//namespace cflw::Í¼ĞÎ::d3d11
+}	//namespace cflw::å›¾å½¢::d3d11

@@ -99,6 +99,7 @@ public:
 	static C二维 *g这;
 //函数
 	C二维();
+	~C二维();
 	HRESULT f初始化(HWND, float 缩放 = 0);	//废弃.注意:此函数不创建上下文
 	HRESULT f初始化(IDXGISwapChain*, float 缩放 = 0);	//废弃.注意:此函数不创建上下文
 	HRESULT f初始化_工厂();
@@ -111,7 +112,7 @@ public:
 	void f销毁();
 	void fs缩放(float = 1);
 	//画图对象
-	std::shared_ptr<C画图形> fc画图形(const ComPtr<ID2D1Brush> & = nullptr, float 宽度 = 1);
+	std::shared_ptr<C画图形> fc画图形(const ComPtr<ID2D1Brush> & = nullptr, float 宽度 = 1) const;
 	std::shared_ptr<C画文本> fc画文本(const ComPtr<ID2D1Brush> & = nullptr);
 	ComPtr<ID2D1SolidColorBrush> fc纯色画笔(const 数学::S颜色 &) const;
 	ComPtr<ID2D1Bitmap> fc位图(const ComPtr<IWICBitmapSource> &);
@@ -132,6 +133,7 @@ public:
 	C文本工厂 &fg文本工厂();
 	ComPtr<IDWriteTextFormat> fg默认文本格式();
 	C渲染控制 &fg渲染控制();
+	ComPtr<ID2D1DeviceContext> fg上下文() const;
 private:
 	数学::S向量2 fg每英寸点数(float 缩放 = 0) const;
 	数学::S向量2 m窗口大小;
@@ -157,7 +159,7 @@ public:
 	//属性
 	void fs清屏颜色(const 数学::S颜色 &);
 public:
-	C二维 *m二维;
+	C二维 *m二维 = nullptr;
 	D2D1_COLOR_F m清屏颜色 = D2D1::ColorF(D2D1::ColorF::Black);
 };
 //==============================================================================

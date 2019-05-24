@@ -133,6 +133,7 @@ constexpr D3D11_COMPARISON_FUNC ft比较(工具::E比较 a比较) {
 		return D3D11_COMPARISON_NEVER;
 	}
 }
+constexpr D3D_FEATURE_LEVEL c最低功能级别 = D3D_FEATURE_LEVEL_10_0;
 constexpr DXGI_FORMAT c索引格式 = DXGI_FORMAT_R16_UINT;
 constexpr DXGI_FORMAT c交换链格式 = DXGI_FORMAT_R8G8B8A8_UNORM;
 constexpr DXGI_FORMAT c深度模板格式 = DXGI_FORMAT_D32_FLOAT_S8X24_UINT;
@@ -184,7 +185,8 @@ public:
 	~C三维();
 	//手动初始化
 	void f初始化窗口(HWND p);
-	HRESULT f初始化设备();
+	HRESULT f初始化设备(HRESULT(C创建设备::*取显卡)(IDXGIAdapter1 **) = nullptr);
+	HRESULT f初始化软件设备();
 	HRESULT f初始化交换链();
 	HRESULT f初始化渲染目标视图();
 	HRESULT f初始化深度模板视图();
@@ -238,7 +240,7 @@ private:	//窗口
 	ComPtr<ID3D11Texture2D> m深度模板;
 	ComPtr<ID3D11DepthStencilView> m深度模板视图;
 	//图形状态
-	D3D_FEATURE_LEVEL m功能级别;
+	D3D_FEATURE_LEVEL m功能级别 = c最低功能级别;
 	UINT m抗锯齿等级 = 0;
 	UINT m当前抗锯齿等级 = 0;
 	UINT m纹理最大尺寸 = 0;
@@ -254,17 +256,19 @@ public:
 	static const UINT c功能级别数 = 3;
 	static const UINT c创建标志;
 public:
+	using tf取显卡 = HRESULT(C创建设备::*)(IDXGIAdapter1 **);
 	C创建设备() = default;
 	ComPtr<IDXGIFactory1> fg工厂();
 	HRESULT f检查兼容性();
-	HRESULT f取显卡(IDXGIAdapter1**);
+	HRESULT f取显卡_首选(IDXGIAdapter1 **);	//选择第1个可用的显卡
+	HRESULT f取显卡_性能(IDXGIAdapter1 **);	//选择性能最高的显卡(按显存选)
 	void fs调试标志(bool);
-	HRESULT f创建设备(IDXGIAdapter1*, ID3D11Device**, ID3D11DeviceContext**);
-	HRESULT f创建软件设备(ID3D11Device**, ID3D11DeviceContext**);
+	HRESULT f创建设备(IDXGIAdapter1*, ID3D11Device **, ID3D11DeviceContext **);
+	HRESULT f创建软件设备(ID3D11Device **, ID3D11DeviceContext **);
 public:
 	ComPtr<IDXGIFactory1> m工厂 = nullptr;
 	UINT m创建标志 = c创建标志;
-	D3D_FEATURE_LEVEL m功能级别 = D3D_FEATURE_LEVEL_10_0;
+	D3D_FEATURE_LEVEL m功能级别 = c最低功能级别;
 };
 //==============================================================================
 // 渲染控制

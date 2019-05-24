@@ -1,327 +1,336 @@
-#include <algorithm>
+ï»¿#include <algorithm>
 #include <memory>
-#include "cflwÊäÈë_win.h"
-#include "cflwÊÓ´°.h"
-namespace cflw::ÊäÈë::win {
+#include "cflwè¾“å…¥_win.h"
+#include "cflwè§†çª—.h"
+namespace cflw::è¾“å…¥::win {
 //==============================================================================
-// Àà¶¨Òå
+// ç±»å®šä¹‰
 //==============================================================================
-//¼üÅÌ
-class C¼üÅÌ : public I¼üÅÌ {
-	friend class CÊäÈë;
+//é”®ç›˜
+class Cé”®ç›˜ : public Ié”®ç›˜ {
+	friend class Cè¾“å…¥;
 public:
-	S°´¼ü f°´¼ü(tË÷Òı i) const override;
-	void f¸üĞÂ() override;
+	SæŒ‰é”® fæŒ‰é”®(tç´¢å¼• i) const override;
+	void fæ›´æ–°() override;
 private:
-	C°´¼ü×é m°´¼ü{c°´¼üÊıÁ¿};
-	C»º³å°´¼ü×é m»º³å{c°´¼üÊıÁ¿};
+	CæŒ‰é”®ç»„ mæŒ‰é”®{cæŒ‰é”®æ•°é‡};
+	Cç¼“å†²æŒ‰é”®ç»„ mç¼“å†²{cæŒ‰é”®æ•°é‡};
 };
-//Êó±ê
-class CÊó±ê : public IÊó±ê {
-	friend class CÊäÈë;
+//é¼ æ ‡
+class Cé¼ æ ‡ : public Ié¼ æ ‡ {
+	friend class Cè¾“å…¥;
 public:
-	CÊó±ê(HWND, float);
-	S°´¼ü f°´¼ü(tË÷Òı i) const override;
-	S·½Ïò f×ø±ê() const override;
-	S·½Ïò fÒÆ¶¯() const override;
-	S·½Ïò f¹öÂÖ() const override;
-	void f¸üĞÂ() override;
+	Cé¼ æ ‡(HWND, float);
+	SæŒ‰é”® fæŒ‰é”®(tç´¢å¼• i) const override;
+	Sæ–¹å‘ fåæ ‡() const override;
+	Sæ–¹å‘ fç§»åŠ¨() const override;
+	Sæ–¹å‘ fæ»šè½®() const override;
+	void fæ›´æ–°() override;
 private:
-	HWND m´°¿Ú;
-	float mËõ·Å = 1;
-	C»º³å°´¼ü×é m»º³å{c°´¼üÊıÁ¿};
-	C°´¼ü×é m°´¼ü{c°´¼üÊıÁ¿};
-	C»º³å·½Ïò2 m×ø±ê, m¹öÂÖ;
+	HWND mçª—å£;
+	float mç¼©æ”¾ = 1;
+	Cç¼“å†²æŒ‰é”®ç»„ mç¼“å†²{cæŒ‰é”®æ•°é‡};
+	CæŒ‰é”®ç»„ mæŒ‰é”®{cæŒ‰é”®æ•°é‡};
+	Cç¼“å†²æ–¹å‘2 måæ ‡, mæ»šè½®;
 };
-//´¥Ãş
-class C´¥Ãş : public I´¥Ãş {
-	friend class CÊäÈë;
+//è§¦æ‘¸
+class Cè§¦æ‘¸ : public Iè§¦æ‘¸ {
+	friend class Cè¾“å…¥;
 public:
-	C´¥Ãş(HWND, float);
-	void f¸üĞÂ() override;
-	tÊıÁ¿ f´¥¿ØµãÊı() const override;
-	tp´¥¿Øµã fg´¥¿Øµã(tË÷Òı) const override;
-	tp´¥¿Øµã fgĞÂ´¥¿Øµã() override;
-	void f½ÓÊÕÊäÈë(const TOUCHINPUT *, size_t);
+	Cè§¦æ‘¸(HWND, float);
+	void fæ›´æ–°() override;
+	tæ•°é‡ fè§¦æ§ç‚¹æ•°() const override;
+	tpè§¦æ§ç‚¹ fgè§¦æ§ç‚¹(tç´¢å¼•) const override;
+	tpè§¦æ§ç‚¹ fgæ–°è§¦æ§ç‚¹() override;
+	void fæ¥æ”¶è¾“å…¥(const TOUCHINPUT *, size_t);
 public:
-	std::vector<std::shared_ptr<C´¥¿Øµã>> ma´¥¿Øµã;
-	HWND m´°¿Ú;
-	float mËõ·Å = 1;
-	tË÷Òı mĞÂ´¥¿ØµãË÷Òı = 0;
-	tÊıÁ¿ mĞÂ´¥¿ØµãÊı = 0;
+	std::vector<std::shared_ptr<Cè§¦æ§ç‚¹>> maè§¦æ§ç‚¹;
+	HWND mçª—å£;
+	float mç¼©æ”¾ = 1;
+	tç´¢å¼• mæ–°è§¦æ§ç‚¹ç´¢å¼• = 0;
+	tæ•°é‡ mæ–°è§¦æ§ç‚¹æ•° = 0;
 };
-class C´¥¿Øµã : public I´¥¿Øµã {
-	friend class CÊäÈë;
+class Cè§¦æ§ç‚¹ : public Iè§¦æ§ç‚¹ {
+	friend class Cè¾“å…¥;
 public:
-	C´¥¿Øµã(const C´¥Ãş &, const TOUCHINPUT &);
-	S°´¼ü f°´¼ü() const override;
-	S·½Ïò f×ø±ê() const override;
-	S·½Ïò fÒÆ¶¯() const override;
-	void f½ÓÊÕÊäÈë(const TOUCHINPUT &);
+	Cè§¦æ§ç‚¹(const Cè§¦æ‘¸ &, const TOUCHINPUT &);
+	SæŒ‰é”® fæŒ‰é”®() const override;
+	Sæ–¹å‘ fåæ ‡() const override;
+	Sæ–¹å‘ fç§»åŠ¨() const override;
+	void fæ¥æ”¶è¾“å…¥(const TOUCHINPUT &);
 public:
-	const C´¥Ãş *m´¥Ãş = nullptr;
-	C»º³å°´¼ü m»º³å;
-	S°´¼ü m°´¼ü;
-	C»º³å·½Ïò2 m×ø±ê;
-	LONG mµãx = 0, mµãy = 0;
-	DWORD m±êÊ¶;
-};
-//==============================================================================
-// È«¾Ö±äÁ¿&º¯Êı
-//==============================================================================
-const std::tuple<int, int, int> ca¶ÔÓ¦×óÓÒ¼ü[] = {
-	std::tuple<int, int, int>((int)E¼üÅÌ°´¼ü::eÉÏµµ, (int)E¼üÅÌ°´¼ü::e×óÉÏµµ, (int)E¼üÅÌ°´¼ü::eÓÒÉÏµµ),
-	std::tuple<int, int, int>((int)E¼üÅÌ°´¼ü::e¿ØÖÆ, (int)E¼üÅÌ°´¼ü::e×ó¿ØÖÆ, (int)E¼üÅÌ°´¼ü::eÓÒ¿ØÖÆ),
-	std::tuple<int, int, int>((int)E¼üÅÌ°´¼ü::e½»Ìæ, (int)E¼üÅÌ°´¼ü::e×ó½»Ìæ, (int)E¼üÅÌ°´¼ü::eÓÒ½»Ìæ),
+	const Cè§¦æ‘¸ *mè§¦æ‘¸ = nullptr;
+	Cç¼“å†²æŒ‰é”® mç¼“å†²;
+	SæŒ‰é”® mæŒ‰é”®;
+	Cç¼“å†²æ–¹å‘2 måæ ‡;
+	LONG mç‚¹x = 0, mç‚¹y = 0;
+	DWORD mæ ‡è¯†;
 };
 //==============================================================================
-// ÊäÈëÒıÇæ
+// å…¨å±€å˜é‡&å‡½æ•°
 //==============================================================================
-CÊäÈë::~CÊäÈë() {
-	fÏú»Ù();
+const std::tuple<int, int, int> caå¯¹åº”å·¦å³é”®[] = {
+	std::tuple<int, int, int>((int)Eé”®ç›˜æŒ‰é”®::eä¸Šæ¡£, (int)Eé”®ç›˜æŒ‰é”®::eå·¦ä¸Šæ¡£, (int)Eé”®ç›˜æŒ‰é”®::eå³ä¸Šæ¡£),
+	std::tuple<int, int, int>((int)Eé”®ç›˜æŒ‰é”®::eæ§åˆ¶, (int)Eé”®ç›˜æŒ‰é”®::eå·¦æ§åˆ¶, (int)Eé”®ç›˜æŒ‰é”®::eå³æ§åˆ¶),
+	std::tuple<int, int, int>((int)Eé”®ç›˜æŒ‰é”®::eäº¤æ›¿, (int)Eé”®ç›˜æŒ‰é”®::eå·¦äº¤æ›¿, (int)Eé”®ç›˜æŒ‰é”®::eå³äº¤æ›¿),
+};
+//==============================================================================
+// è¾“å…¥å¼•æ“
+//==============================================================================
+Cè¾“å…¥::~Cè¾“å…¥() {
+	fé”€æ¯();
 }
-void CÊäÈë::f³õÊ¼»¯(HWND a´°¿Ú, float aËõ·Å) {
-	m´°¿Ú = a´°¿Ú;
-	if (aËõ·Å <= 0) {
-		mËõ·Å = ÊÓ´°::C»·¾³::fgËõ·Å();
+void Cè¾“å…¥::fåˆå§‹åŒ–(HWND açª—å£, float aç¼©æ”¾) {
+	mçª—å£ = açª—å£;
+	if (aç¼©æ”¾ <= 0) {
+		mç¼©æ”¾ = è§†çª—::Cç¯å¢ƒ::fgç¼©æ”¾();
 	} else {
-		mËõ·Å = aËõ·Å;
+		mç¼©æ”¾ = aç¼©æ”¾;
 	}
 }
-void CÊäÈë::fÏú»Ù() {
-	UnregisterTouchWindow(m´°¿Ú);
-	m¼üÅÌ.reset();
-	mÊó±ê.reset();
-	m´¥Ãş.reset();
-	m´°¿Ú = nullptr;
+void Cè¾“å…¥::fé”€æ¯() {
+	UnregisterTouchWindow(mçª—å£);
+	mé”®ç›˜.reset();
+	mé¼ æ ‡.reset();
+	mè§¦æ‘¸.reset();
+	mçª—å£ = nullptr;
 }
-void CÊäÈë::f´°¿ÚÏûÏ¢(UINT aÏûÏ¢, WPARAM w, LPARAM l) {
-	if (m¼üÅÌ) {
-		switch (aÏûÏ¢) {
+void Cè¾“å…¥::fçª—å£æ¶ˆæ¯(UINT aæ¶ˆæ¯, WPARAM w, LPARAM l) {
+	if (mé”®ç›˜) {
+		switch (aæ¶ˆæ¯) {
 		case WM_KEYDOWN:
 		case WM_SYSKEYDOWN:
-			m¼üÅÌ->m»º³å.f°´ÏÂ(w);
-			//Çø·Ö×óÓÒ¼ü
-			for (const auto &v : ca¶ÔÓ¦×óÓÒ¼ü) {
+			mé”®ç›˜->mç¼“å†².fæŒ‰ä¸‹(w);
+			//åŒºåˆ†å·¦å³é”®
+			for (const auto &v : caå¯¹åº”å·¦å³é”®) {
 				if (std::get<0>(v) == w) {
-					const int &v×ó = std::get<1>(v);
-					const int &vÓÒ = std::get<2>(v);
-					if (GetKeyState(v×ó) & 0x8000) {
-						m¼üÅÌ->m»º³å.f°´ÏÂ(v×ó);
+					const int &vå·¦ = std::get<1>(v);
+					const int &vå³ = std::get<2>(v);
+					if (GetKeyState(vå·¦) & 0x8000) {
+						mé”®ç›˜->mç¼“å†².fæŒ‰ä¸‹(vå·¦);
 					} 
-					if (GetKeyState(vÓÒ) & 0x8000) {
-						m¼üÅÌ->m»º³å.f°´ÏÂ(vÓÒ);
+					if (GetKeyState(vå³) & 0x8000) {
+						mé”®ç›˜->mç¼“å†².fæŒ‰ä¸‹(vå³);
 					}
 				}
 			}
 			break;
 		case WM_KEYUP:
 		case WM_SYSKEYUP:
-			m¼üÅÌ->m»º³å.fËÉ¿ª(w);
-			//Çø·Ö×óÓÒ¼ü
-			for (const auto &v : ca¶ÔÓ¦×óÓÒ¼ü) {
+			mé”®ç›˜->mç¼“å†².fæ¾å¼€(w);
+			//åŒºåˆ†å·¦å³é”®
+			for (const auto &v : caå¯¹åº”å·¦å³é”®) {
 				if (std::get<0>(v) == w) {
-					const int &v×ó = std::get<1>(v);
-					const int &vÓÒ = std::get<2>(v);
-					if (!(GetKeyState(v×ó) & 0x8000)) {
-						m¼üÅÌ->m»º³å.fËÉ¿ª(v×ó);
+					const int &vå·¦ = std::get<1>(v);
+					const int &vå³ = std::get<2>(v);
+					if (!(GetKeyState(vå·¦) & 0x8000)) {
+						mé”®ç›˜->mç¼“å†².fæ¾å¼€(vå·¦);
 					}
-					if (!(GetKeyState(vÓÒ) & 0x8000)) {
-						m¼üÅÌ->m»º³å.fËÉ¿ª(vÓÒ);
+					if (!(GetKeyState(vå³) & 0x8000)) {
+						mé”®ç›˜->mç¼“å†².fæ¾å¼€(vå³);
 					}
 				}
 			}
 			break;
 		case WM_ACTIVATE:
 			if (w == WA_INACTIVE) {
-				m¼üÅÌ->m»º³å.fÇå¿Õ();
+				mé”®ç›˜->mç¼“å†².fæ¸…ç©º();
 			}
 		}
 	}
-	if (mÊó±ê) {
-		switch (aÏûÏ¢) {
+	if (mé¼ æ ‡) {
+		switch (aæ¶ˆæ¯) {
 		case WM_LBUTTONDOWN:
-			mÊó±ê->m»º³å.f°´ÏÂ((int)EÊó±ê°´¼ü::e×ó¼ü);
+			mé¼ æ ‡->mç¼“å†².fæŒ‰ä¸‹((int)Eé¼ æ ‡æŒ‰é”®::eå·¦é”®);
 			break;
 		case WM_RBUTTONDOWN:
-			mÊó±ê->m»º³å.f°´ÏÂ((int)EÊó±ê°´¼ü::eÓÒ¼ü);
+			mé¼ æ ‡->mç¼“å†².fæŒ‰ä¸‹((int)Eé¼ æ ‡æŒ‰é”®::eå³é”®);
 			break;
 		case WM_MBUTTONDOWN:
-			mÊó±ê->m»º³å.f°´ÏÂ((int)EÊó±ê°´¼ü::eÖĞ¼ü);
+			mé¼ æ ‡->mç¼“å†².fæŒ‰ä¸‹((int)Eé¼ æ ‡æŒ‰é”®::eä¸­é”®);
 			break;
 		case WM_LBUTTONUP:
-			mÊó±ê->m»º³å.fËÉ¿ª((int)EÊó±ê°´¼ü::e×ó¼ü);
+			mé¼ æ ‡->mç¼“å†².fæ¾å¼€((int)Eé¼ æ ‡æŒ‰é”®::eå·¦é”®);
 			break;
 		case WM_RBUTTONUP:
-			mÊó±ê->m»º³å.fËÉ¿ª((int)EÊó±ê°´¼ü::eÓÒ¼ü);
+			mé¼ æ ‡->mç¼“å†².fæ¾å¼€((int)Eé¼ æ ‡æŒ‰é”®::eå³é”®);
 			break;
 		case WM_MBUTTONUP:
-			mÊó±ê->m»º³å.fËÉ¿ª((int)EÊó±ê°´¼ü::eÖĞ¼ü);
+			mé¼ æ ‡->mç¼“å†².fæ¾å¼€((int)Eé¼ æ ‡æŒ‰é”®::eä¸­é”®);
 			break;
 		case WM_MOUSEWHEEL:
-			mÊó±ê->m¹öÂÖ.mÕâ´Î[0] = GET_WHEEL_DELTA_WPARAM(w) / 120.f;
+			mé¼ æ ‡->mæ»šè½®.mè¿™æ¬¡[0] = GET_WHEEL_DELTA_WPARAM(w) / 120.f;
 			break;
 		case WM_MOUSEHWHEEL:
-			mÊó±ê->m¹öÂÖ.mÕâ´Î[1] = GET_WHEEL_DELTA_WPARAM(w) / 120.f;
+			mé¼ æ ‡->mæ»šè½®.mè¿™æ¬¡[1] = GET_WHEEL_DELTA_WPARAM(w) / 120.f;
 			break;
 		}
 	}
-	if (m´¥Ãş) {
-		if (aÏûÏ¢ == WM_TOUCH) {
-			UINT vÊıÁ¿ = LOWORD(w);
-			HTOUCHINPUT v´¥Ãş = (HTOUCHINPUT)l;
-			std::unique_ptr<TOUCHINPUT[]> va´¥Ãş = std::make_unique<TOUCHINPUT[]>(vÊıÁ¿);
-			if (GetTouchInputInfo(v´¥Ãş, vÊıÁ¿, va´¥Ãş.get(), sizeof(TOUCHINPUT))) {
-				m´¥Ãş->f½ÓÊÕÊäÈë(va´¥Ãş.get(), vÊıÁ¿);
+	if (mè§¦æ‘¸) {
+		if (aæ¶ˆæ¯ == WM_TOUCH) {
+			UINT væ•°é‡ = LOWORD(w);
+			HTOUCHINPUT vè§¦æ‘¸ = (HTOUCHINPUT)l;
+			std::unique_ptr<TOUCHINPUT[]> vaè§¦æ‘¸ = std::make_unique<TOUCHINPUT[]>(væ•°é‡);
+			if (GetTouchInputInfo(vè§¦æ‘¸, væ•°é‡, vaè§¦æ‘¸.get(), sizeof(TOUCHINPUT))) {
+				mè§¦æ‘¸->fæ¥æ”¶è¾“å…¥(vaè§¦æ‘¸.get(), væ•°é‡);
 			}
-			if (!CloseTouchInputHandle(v´¥Ãş)) {
+			if (!CloseTouchInputHandle(vè§¦æ‘¸)) {
 				__debugbreak();
 			}
 		}
 	}
 }
-void CÊäÈë::f¸üĞÂ() {
-	if (m¼üÅÌ) {
-		m¼üÅÌ->f¸üĞÂ();
+void Cè¾“å…¥::fæ›´æ–°() {
+	if (mé”®ç›˜) {
+		mé”®ç›˜->fæ›´æ–°();
 	}
-	if (mÊó±ê) {
-		mÊó±ê->f¸üĞÂ();
+	if (mé¼ æ ‡) {
+		mé¼ æ ‡->fæ›´æ–°();
 	}
-	if (m´¥Ãş) {
-		m´¥Ãş->f¸üĞÂ();
+	if (mè§¦æ‘¸) {
+		mè§¦æ‘¸->fæ›´æ–°();
 	}
 }
-void CÊäÈë::f´´½¨¼üÅÌ(tp¼üÅÌ &a) {
-	if (m¼üÅÌ == nullptr) {
-		m¼üÅÌ = std::make_shared<C¼üÅÌ>();
+void Cè¾“å…¥::fsç¼©æ”¾(float a) {
+	mç¼©æ”¾ = a;
+	if (mé¼ æ ‡) {
+		mé¼ æ ‡->mç¼©æ”¾ = a;
 	}
-	a = m¼üÅÌ;
+	if (mè§¦æ‘¸) {
+		mè§¦æ‘¸->mç¼©æ”¾ = a;
+	}
 }
-void CÊäÈë::f´´½¨Êó±ê(tpÊó±ê &a) {
-	if (mÊó±ê == nullptr) {
-		mÊó±ê = std::make_shared<CÊó±ê>(m´°¿Ú, mËõ·Å);
+void Cè¾“å…¥::fåˆ›å»ºé”®ç›˜(tpé”®ç›˜ &a) {
+	if (mé”®ç›˜ == nullptr) {
+		mé”®ç›˜ = std::make_shared<Cé”®ç›˜>();
 	}
-	a = mÊó±ê;
+	a = mé”®ç›˜;
 }
-void CÊäÈë::f´´½¨´¥Ãş(tp´¥Ãş &a) {
-	if (m´¥Ãş == nullptr) {
-		m´¥Ãş = std::make_shared<C´¥Ãş>(m´°¿Ú, mËõ·Å);
-		RegisterTouchWindow(m´°¿Ú, 0);
+void Cè¾“å…¥::fåˆ›å»ºé¼ æ ‡(tpé¼ æ ‡ &a) {
+	if (mé¼ æ ‡ == nullptr) {
+		mé¼ æ ‡ = std::make_shared<Cé¼ æ ‡>(mçª—å£, mç¼©æ”¾);
 	}
-	a = m´¥Ãş;
+	a = mé¼ æ ‡;
+}
+void Cè¾“å…¥::fåˆ›å»ºè§¦æ‘¸(tpè§¦æ‘¸ &a) {
+	if (mè§¦æ‘¸ == nullptr) {
+		mè§¦æ‘¸ = std::make_shared<Cè§¦æ‘¸>(mçª—å£, mç¼©æ”¾);
+		RegisterTouchWindow(mçª—å£, 0);
+	}
+	a = mè§¦æ‘¸;
 }
 //==============================================================================
-// ¼üÅÌ
+// é”®ç›˜
 //==============================================================================
-S°´¼ü C¼üÅÌ::f°´¼ü(tË÷Òı i) const {
-	return m°´¼ü.f°´¼ü(i);
+SæŒ‰é”® Cé”®ç›˜::fæŒ‰é”®(tç´¢å¼• i) const {
+	return mæŒ‰é”®.fæŒ‰é”®(i);
 }
-void C¼üÅÌ::f¸üĞÂ() {
-	m°´¼ü.f¸²¸ÇÉÏ´Î();
-	m»º³å.f¸´ÖÆµ½°´¼ü(m°´¼ü);
-}
-//==============================================================================
-// Êó±ê
-//==============================================================================
-CÊó±ê::CÊó±ê(HWND a´°¿Ú, float aËõ·Å):
-	m´°¿Ú(a´°¿Ú), mËõ·Å(aËõ·Å) {
-}
-S°´¼ü CÊó±ê::f°´¼ü(tË÷Òı i) const {
-	return m°´¼ü.f°´¼ü(i);
-}
-S·½Ïò CÊó±ê::f×ø±ê() const {
-	return m×ø±ê.fÕâ´Î·½Ïò();
-}
-S·½Ïò CÊó±ê::fÒÆ¶¯() const {
-	return m×ø±ê.f·½Ïò²î();
-}
-S·½Ïò CÊó±ê::f¹öÂÖ() const {
-	return m¹öÂÖ.fÉÏ´Î·½Ïò();
-}
-void CÊó±ê::f¸üĞÂ() {
-	//°´¼ü
-	m°´¼ü.f¸²¸ÇÉÏ´Î();
-	m»º³å.f¸´ÖÆµ½°´¼ü(m°´¼ü);
-	//×ø±ê&ÒÆ¶¯
-	m×ø±ê.f¸²¸ÇÉÏ´Î();
-	POINT vµã;
-	GetCursorPos(&vµã);
-	ÊÓ´°::CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã v¼ÆËã(m´°¿Ú);
-	m×ø±ê.mÕâ´Î[0] = v¼ÆËã.fÖ±½Ç×ø±êxf(vµã.x) / mËõ·Å;
-	m×ø±ê.mÕâ´Î[1] = v¼ÆËã.fÖ±½Ç×ø±êyf(vµã.y) / mËõ·Å;
-	//¹öÂÖ
-	m¹öÂÖ.f¸²¸ÇÉÏ´Î();
-	m¹öÂÖ.fÇå¿ÕÕâ´Î();
+void Cé”®ç›˜::fæ›´æ–°() {
+	mæŒ‰é”®.fè¦†ç›–ä¸Šæ¬¡();
+	mç¼“å†².få¤åˆ¶åˆ°æŒ‰é”®(mæŒ‰é”®);
 }
 //==============================================================================
-// ´¥Ãş
+// é¼ æ ‡
 //==============================================================================
-C´¥Ãş::C´¥Ãş(HWND a´°¿Ú, float aËõ·Å):
-	m´°¿Ú(a´°¿Ú), mËõ·Å(aËõ·Å) {
+Cé¼ æ ‡::Cé¼ æ ‡(HWND açª—å£, float aç¼©æ”¾):
+	mçª—å£(açª—å£), mç¼©æ”¾(aç¼©æ”¾) {
 }
-void C´¥Ãş::f¸üĞÂ() {
-	ÊÓ´°::CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã v¼ÆËã(m´°¿Ú);
-	for (const std::shared_ptr<C´¥¿Øµã> &v : ma´¥¿Øµã) {
-		//°´¼ü
-		v->m°´¼ü.f¸²¸ÇÉÏ´Î();
-		v->m»º³å.f¸´ÖÆµ½°´¼ü(v->m°´¼ü);
-		//×ø±ê
-		v->m×ø±ê.f¸²¸ÇÉÏ´Î();
-		float *vÕâ´Î = v->m×ø±ê.mÕâ´Î;
-		vÕâ´Î[0] = v¼ÆËã.fÖ±½Ç×ø±êxf(v->mµãx / 100.f) / mËõ·Å;
-		vÕâ´Î[1] = v¼ÆËã.fÖ±½Ç×ø±êyf(v->mµãy / 100.f) / mËõ·Å;
+SæŒ‰é”® Cé¼ æ ‡::fæŒ‰é”®(tç´¢å¼• i) const {
+	return mæŒ‰é”®.fæŒ‰é”®(i);
+}
+Sæ–¹å‘ Cé¼ æ ‡::fåæ ‡() const {
+	return måæ ‡.fè¿™æ¬¡æ–¹å‘();
+}
+Sæ–¹å‘ Cé¼ æ ‡::fç§»åŠ¨() const {
+	return måæ ‡.fæ–¹å‘å·®();
+}
+Sæ–¹å‘ Cé¼ æ ‡::fæ»šè½®() const {
+	return mæ»šè½®.fä¸Šæ¬¡æ–¹å‘();
+}
+void Cé¼ æ ‡::fæ›´æ–°() {
+	//æŒ‰é”®
+	mæŒ‰é”®.fè¦†ç›–ä¸Šæ¬¡();
+	mç¼“å†².få¤åˆ¶åˆ°æŒ‰é”®(mæŒ‰é”®);
+	//åæ ‡&ç§»åŠ¨
+	måæ ‡.fè¦†ç›–ä¸Šæ¬¡();
+	POINT vç‚¹;
+	GetCursorPos(&vç‚¹);
+	è§†çª—::Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®— vè®¡ç®—(mçª—å£);
+	måæ ‡.mè¿™æ¬¡[0] = vè®¡ç®—.fç›´è§’åæ ‡xf(vç‚¹.x) / mç¼©æ”¾;
+	måæ ‡.mè¿™æ¬¡[1] = vè®¡ç®—.fç›´è§’åæ ‡yf(vç‚¹.y) / mç¼©æ”¾;
+	//æ»šè½®
+	mæ»šè½®.fè¦†ç›–ä¸Šæ¬¡();
+	mæ»šè½®.fæ¸…ç©ºè¿™æ¬¡();
+}
+//==============================================================================
+// è§¦æ‘¸
+//==============================================================================
+Cè§¦æ‘¸::Cè§¦æ‘¸(HWND açª—å£, float aç¼©æ”¾):
+	mçª—å£(açª—å£), mç¼©æ”¾(aç¼©æ”¾) {
+}
+void Cè§¦æ‘¸::fæ›´æ–°() {
+	è§†çª—::Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®— vè®¡ç®—(mçª—å£);
+	for (const std::shared_ptr<Cè§¦æ§ç‚¹> &v : maè§¦æ§ç‚¹) {
+		//æŒ‰é”®
+		v->mæŒ‰é”®.fè¦†ç›–ä¸Šæ¬¡();
+		v->mç¼“å†².få¤åˆ¶åˆ°æŒ‰é”®(v->mæŒ‰é”®);
+		//åæ ‡
+		v->måæ ‡.fè¦†ç›–ä¸Šæ¬¡();
+		float *vè¿™æ¬¡ = v->måæ ‡.mè¿™æ¬¡;
+		vè¿™æ¬¡[0] = vè®¡ç®—.fç›´è§’åæ ‡xf(v->mç‚¹x / 100.f) / mç¼©æ”¾;
+		vè¿™æ¬¡[1] = vè®¡ç®—.fç›´è§’åæ ‡yf(v->mç‚¹y / 100.f) / mç¼©æ”¾;
 	}
-	//ÇåÀíÊ§Ğ§´¥¿Øµã
-	ma´¥¿Øµã.erase(std::remove_if(ma´¥¿Øµã.begin(), ma´¥¿Øµã.end(), [](const std::shared_ptr<C´¥¿Øµã> &a)->bool {return a->m°´¼ü.fËÉ¿ª();}), ma´¥¿Øµã.end());
-	mĞÂ´¥¿ØµãË÷Òı = f´¥¿ØµãÊı() - mĞÂ´¥¿ØµãÊı;
-	mĞÂ´¥¿ØµãÊı = 0;
+	//æ¸…ç†å¤±æ•ˆè§¦æ§ç‚¹
+	maè§¦æ§ç‚¹.erase(std::remove_if(maè§¦æ§ç‚¹.begin(), maè§¦æ§ç‚¹.end(), [](const std::shared_ptr<Cè§¦æ§ç‚¹> &a)->bool {return a->mæŒ‰é”®.fæ¾å¼€();}), maè§¦æ§ç‚¹.end());
+	mæ–°è§¦æ§ç‚¹ç´¢å¼• = fè§¦æ§ç‚¹æ•°() - mæ–°è§¦æ§ç‚¹æ•°;
+	mæ–°è§¦æ§ç‚¹æ•° = 0;
 }
-tÊıÁ¿ C´¥Ãş::f´¥¿ØµãÊı() const {
-	return (tÊıÁ¿)ma´¥¿Øµã.size();
+tæ•°é‡ Cè§¦æ‘¸::fè§¦æ§ç‚¹æ•°() const {
+	return (tæ•°é‡)maè§¦æ§ç‚¹.size();
 }
-tp´¥¿Øµã C´¥Ãş::fg´¥¿Øµã(tË÷Òı i) const {
-	return ma´¥¿Øµã[i];
+tpè§¦æ§ç‚¹ Cè§¦æ‘¸::fgè§¦æ§ç‚¹(tç´¢å¼• i) const {
+	return maè§¦æ§ç‚¹[i];
 }
-tp´¥¿Øµã C´¥Ãş::fgĞÂ´¥¿Øµã() {
-	if (mĞÂ´¥¿ØµãË÷Òı < f´¥¿ØµãÊı()) {
-		return fg´¥¿Øµã(mĞÂ´¥¿ØµãË÷Òı++);
+tpè§¦æ§ç‚¹ Cè§¦æ‘¸::fgæ–°è§¦æ§ç‚¹() {
+	if (mæ–°è§¦æ§ç‚¹ç´¢å¼• < fè§¦æ§ç‚¹æ•°()) {
+		return fgè§¦æ§ç‚¹(mæ–°è§¦æ§ç‚¹ç´¢å¼•++);
 	}
 	return nullptr;
 }
-void C´¥Ãş::f½ÓÊÕÊäÈë(const TOUCHINPUT *aÊäÈë, size_t aÊıÁ¿) {
-	for (size_t i = 0; i != aÊıÁ¿; ++i) {
-		const TOUCHINPUT &vÊäÈë = aÊäÈë[i];
-		if (auto vµã = std::find_if(ma´¥¿Øµã.begin(), ma´¥¿Øµã.end(), [&](const std::shared_ptr<C´¥¿Øµã> &a)->bool {return a->m±êÊ¶ == vÊäÈë.dwID; }); vµã != ma´¥¿Øµã.end()) {
-			(*vµã)->f½ÓÊÕÊäÈë(vÊäÈë);
+void Cè§¦æ‘¸::fæ¥æ”¶è¾“å…¥(const TOUCHINPUT *aè¾“å…¥, size_t aæ•°é‡) {
+	for (size_t i = 0; i != aæ•°é‡; ++i) {
+		const TOUCHINPUT &vè¾“å…¥ = aè¾“å…¥[i];
+		if (auto vç‚¹ = std::find_if(maè§¦æ§ç‚¹.begin(), maè§¦æ§ç‚¹.end(), [&](const std::shared_ptr<Cè§¦æ§ç‚¹> &a)->bool {return a->mæ ‡è¯† == vè¾“å…¥.dwID; }); vç‚¹ != maè§¦æ§ç‚¹.end()) {
+			(*vç‚¹)->fæ¥æ”¶è¾“å…¥(vè¾“å…¥);
 		} else {
-			ma´¥¿Øµã.push_back(std::make_shared<C´¥¿Øµã>(*this, vÊäÈë));
-			++mĞÂ´¥¿ØµãÊı;
+			maè§¦æ§ç‚¹.push_back(std::make_shared<Cè§¦æ§ç‚¹>(*this, vè¾“å…¥));
+			++mæ–°è§¦æ§ç‚¹æ•°;
 		}
 	}
 }
-//´¥¿Øµã
-C´¥¿Øµã::C´¥¿Øµã(const C´¥Ãş &a´¥Ãş, const TOUCHINPUT &aÊäÈë):
-	m´¥Ãş(&a´¥Ãş), m±êÊ¶(aÊäÈë.dwID) {
-	f½ÓÊÕÊäÈë(aÊäÈë);
+//è§¦æ§ç‚¹
+Cè§¦æ§ç‚¹::Cè§¦æ§ç‚¹(const Cè§¦æ‘¸ &aè§¦æ‘¸, const TOUCHINPUT &aè¾“å…¥):
+	mè§¦æ‘¸(&aè§¦æ‘¸), mæ ‡è¯†(aè¾“å…¥.dwID) {
+	fæ¥æ”¶è¾“å…¥(aè¾“å…¥);
 }
-S°´¼ü C´¥¿Øµã::f°´¼ü() const {
-	return m°´¼ü;
+SæŒ‰é”® Cè§¦æ§ç‚¹::fæŒ‰é”®() const {
+	return mæŒ‰é”®;
 }
-S·½Ïò C´¥¿Øµã::f×ø±ê() const {
-	return m×ø±ê.fÕâ´Î·½Ïò();
+Sæ–¹å‘ Cè§¦æ§ç‚¹::fåæ ‡() const {
+	return måæ ‡.fè¿™æ¬¡æ–¹å‘();
 }
-S·½Ïò C´¥¿Øµã::fÒÆ¶¯() const {
-	return m×ø±ê.f·½Ïò²î();
+Sæ–¹å‘ Cè§¦æ§ç‚¹::fç§»åŠ¨() const {
+	return måæ ‡.fæ–¹å‘å·®();
 }
-void C´¥¿Øµã::f½ÓÊÕÊäÈë(const TOUCHINPUT &aÊäÈë) {
-	mµãx = aÊäÈë.x;
-	mµãy = aÊäÈë.y;
-	if (aÊäÈë.dwFlags & TOUCHEVENTF_MOVE) {
-		m»º³å.f°´ÏÂ();
-	} else if (aÊäÈë.dwFlags & TOUCHEVENTF_UP) {
-		m»º³å.fËÉ¿ª();
-	} else if (aÊäÈë.dwFlags & TOUCHEVENTF_DOWN) {
-		m»º³å.f°´ÏÂ();
+void Cè§¦æ§ç‚¹::fæ¥æ”¶è¾“å…¥(const TOUCHINPUT &aè¾“å…¥) {
+	mç‚¹x = aè¾“å…¥.x;
+	mç‚¹y = aè¾“å…¥.y;
+	if (aè¾“å…¥.dwFlags & TOUCHEVENTF_MOVE) {
+		mç¼“å†².fæŒ‰ä¸‹();
+	} else if (aè¾“å…¥.dwFlags & TOUCHEVENTF_UP) {
+		mç¼“å†².fæ¾å¼€();
+	} else if (aè¾“å…¥.dwFlags & TOUCHEVENTF_DOWN) {
+		mç¼“å†².fæŒ‰ä¸‹();
 	}
 }
-}	//namespace cflw::ÊäÈë::win
+}	//namespace cflw::è¾“å…¥::win

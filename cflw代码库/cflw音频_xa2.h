@@ -1,92 +1,98 @@
-#pragma once
+ï»¿#pragma once
 #include <map>
 #include <chrono>
 #include <memory>
+#include <string_view>
 #include <Windows.h>
 #include <wrl.h>
 #include <xaudio2.h>
-#include "cflw¶àÃ½Ìå.h"
-//Á´½Ó
+#include "cflwå¤šåª’ä½“.h"
+//é“¾æ¥
 #pragma comment(lib, "xaudio2.lib")
-//ÃüÃû¿Õ¼ä
-namespace cflw::ÒôÆµ::xa2 {
+//å‘½åç©ºé—´
+namespace cflw::éŸ³é¢‘::xa2 {
 using Microsoft::WRL::ComPtr;
-using tÊ±¼äµã = std::chrono::time_point<std::chrono::system_clock>;
-using tp×Ó»ìÉùÒô = std::shared_ptr<IXAudio2SubmixVoice>;
-using tpÔ´ÉùÒô = std::shared_ptr<IXAudio2SourceVoice>;
-class CÉùÒô;
-class C»ìºÏ;
-using tpÉùÒô = std::shared_ptr<CÉùÒô>;
-using tp»ìºÏ = std::shared_ptr<C»ìºÏ>;
-using tp²¥·Å = size_t;	//¾ä±ú
+using tæ—¶é—´ç‚¹ = std::chrono::time_point<std::chrono::system_clock>;
+using tpå­æ··å£°éŸ³ = std::shared_ptr<IXAudio2SubmixVoice>;
+using tpæºå£°éŸ³ = std::shared_ptr<IXAudio2SourceVoice>;
+using tå­æ··å£°éŸ³ = IXAudio2SubmixVoice;
+using tæºå£°éŸ³ = IXAudio2SourceVoice;
+class Cå£°éŸ³;
+class Cæ··åˆ;
+using tå£°éŸ³ = Cå£°éŸ³;
+using tæ··åˆ = Cæ··åˆ;
+using tpå£°éŸ³ = std::shared_ptr<Cå£°éŸ³>;
+using tpæ··åˆ = std::shared_ptr<Cæ··åˆ>;
+using tpæ’­æ”¾ = size_t;	//å¥æŸ„
 //==============================================================================
-// ÒôÆµÒıÇæ
+// éŸ³é¢‘å¼•æ“
 //==============================================================================
-class CÒôÆµ {
+class CéŸ³é¢‘ {
 public:
-	CÒôÆµ();
-	~CÒôÆµ();
-	HRESULT f³õÊ¼»¯();
-	void fÏú»Ù();
-	HRESULT f´´½¨ÉùÒô(tpÉùÒô &, const wchar_t *ÎÄ¼şÃû);
-	HRESULT f´´½¨Ô´ÉùÒô(tpÔ´ÉùÒô &, const CÉùÒô &, const C»ìºÏ &);
-	HRESULT f´´½¨»ìºÏ(tp»ìºÏ &);
+	CéŸ³é¢‘();
+	~CéŸ³é¢‘();
+	HRESULT fåˆå§‹åŒ–();
+	void fé”€æ¯();
+	HRESULT fåˆ›å»ºå£°éŸ³(tpå£°éŸ³ &, const std::wstring_view &æ–‡ä»¶å);
+	HRESULT fåˆ›å»ºæºå£°éŸ³(tpæºå£°éŸ³ &, const Cå£°éŸ³ &, const Cæ··åˆ &);
+	HRESULT fåˆ›å»ºæ··åˆ(tpæ··åˆ &);
 private:
-	ComPtr<IXAudio2> mÒôÆµ;
-	IXAudio2MasteringVoice *mÉùÒô¿ØÖÆ = nullptr;
+	ComPtr<IXAudio2> méŸ³é¢‘;
+	IXAudio2MasteringVoice *må£°éŸ³æ§åˆ¶ = nullptr;
 };
 //==============================================================================
-// ¿ØÖÆ
+// æ§åˆ¶
 //==============================================================================
-class C²¥·Å¿ØÖÆ {
+class Cæ’­æ”¾æ§åˆ¶ {
 public:
-	C²¥·Å¿ØÖÆ(CÒôÆµ &);
-	void fË¢ĞÂ();
-	tp²¥·Å f²¥·Å(const CÉùÒô &, const C»ìºÏ &);
-	void fÔİÍ£(tp²¥·Å);
-	void f»Ö¸´(tp²¥·Å);
-	void fÍ£Ö¹(tp²¥·Å);
-	void fÍ£Ö¹È«²¿();
-	bool fi²¥·Å(tp²¥·Å);
-	void fsÖØ¸´²¥·Å¼ä¸ô(float = 0);
+	Cæ’­æ”¾æ§åˆ¶();
+	void fåˆå§‹åŒ–(CéŸ³é¢‘ &);
+	void fåˆ·æ–°();
+	tpæ’­æ”¾ fæ’­æ”¾(const Cå£°éŸ³ &, const Cæ··åˆ &);
+	void fæš‚åœ(tpæ’­æ”¾);
+	void fæ¢å¤(tpæ’­æ”¾);
+	void fåœæ­¢(tpæ’­æ”¾);
+	void fåœæ­¢å…¨éƒ¨();
+	bool fiæ’­æ”¾(tpæ’­æ”¾);
+	void fsé‡å¤æ’­æ”¾é—´éš”(float = 0);
 private:
-	CÒôÆµ *mÒôÆµ;
-	std::map<tp²¥·Å, tpÔ´ÉùÒô> ma²¥·Å;
-	std::map<const CÉùÒô *, tÊ±¼äµã> mÉùÒôÈ¥ÖØ;	//·ÀÖ¹¶ÌÒ»Ê±¼äÄÚ²¥·Å´óÁ¿Í¬Ò»¸öÉùÒô
-	float mÉùÒô¼ä¸ô = 0;	//¶àÉÙÊ±¼äºó¿ÉÒÔ²¥·ÅÍ¬Ò»¸öÉùÒô
-	tÊ±¼äµã mµ±Ç°Ê±¼ä;
-	tp²¥·Å mĞòºÅ = 1;
+	CéŸ³é¢‘ *méŸ³é¢‘ = nullptr;
+	std::map<tpæ’­æ”¾, tpæºå£°éŸ³> maæ’­æ”¾;
+	std::map<const Cå£°éŸ³ *, tæ—¶é—´ç‚¹> må£°éŸ³å»é‡;	//é˜²æ­¢çŸ­ä¸€æ—¶é—´å†…æ’­æ”¾å¤§é‡åŒä¸€ä¸ªå£°éŸ³
+	float må£°éŸ³é—´éš” = 0;	//å¤šå°‘æ—¶é—´åå¯ä»¥æ’­æ”¾åŒä¸€ä¸ªå£°éŸ³
+	tæ—¶é—´ç‚¹ må½“å‰æ—¶é—´;
+	tpæ’­æ”¾ måºå· = 1;
 };
 //==============================================================================
-// ÉùÒôÀà
+// å£°éŸ³ç±»
 //==============================================================================
-class CÉùÒô {
+class Cå£°éŸ³ {
 public:
-	WAVEFORMATEXTENSIBLE m¸ñÊ½;
-	XAUDIO2_BUFFER m»º³å;
-	std::unique_ptr<std::byte> mÊı¾İ;
-	size_t m´óĞ¡;
+	WAVEFORMATEXTENSIBLE mæ ¼å¼;
+	XAUDIO2_BUFFER mç¼“å†²;
+	std::unique_ptr<std::byte> mæ•°æ®;
+	size_t må¤§å°;
 };
-class C»ìºÏ {
+class Cæ··åˆ {
 public:
-	~C»ìºÏ();
-	void fÏú»Ù();
-	void fsÒôÁ¿(float);
-	float fgÒôÁ¿() const;
-	IXAudio2SubmixVoice *mÉùÒô = nullptr;
-	XAUDIO2_SEND_DESCRIPTOR m·¢ËÍ;
-	XAUDIO2_VOICE_SENDS mÁĞ±í;
+	~Cæ··åˆ();
+	void fé”€æ¯();
+	void fséŸ³é‡(float);
+	float fgéŸ³é‡() const;
+	IXAudio2SubmixVoice *må£°éŸ³ = nullptr;
+	XAUDIO2_SEND_DESCRIPTOR må‘é€;
+	XAUDIO2_VOICE_SENDS måˆ—è¡¨;
 };
 //==============================================================================
-// ÉùÒôÎÄ¼ş
+// å£°éŸ³æ–‡ä»¶
 //==============================================================================
-class C²¨ĞÎÎÄ¼ş {
+class Cæ³¢å½¢æ–‡ä»¶ {
 public:
-	HRESULT f´ò¿ª(const wchar_t *);
-	bool f¼ì²éÀàĞÍ() const;
-	WAVEFORMATEXTENSIBLE f¶ÁÈ¡¸ñÊ½() const;
-	std::pair<std::byte*, size_t> f¶ÁÈ¡Êı¾İ() const;
-	bool f¹Ø±Õ();
-	HANDLE mÎÄ¼ş;
+	HRESULT fæ‰“å¼€(const std::wstring_view &);
+	bool fæ£€æŸ¥ç±»å‹() const;
+	WAVEFORMATEXTENSIBLE fè¯»å–æ ¼å¼() const;
+	std::pair<std::byte*, size_t> fè¯»å–æ•°æ®() const;
+	bool få…³é—­();
+	HANDLE mæ–‡ä»¶;
 };
-}	//namespace cflw::ÒôÆµ::xa2
+}	//namespace cflw::éŸ³é¢‘::xa2

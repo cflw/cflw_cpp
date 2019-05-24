@@ -1,216 +1,218 @@
-#include <cassert>
+ï»¿#include <cassert>
 #include <algorithm>
-#include "cflwÒôÆµ_xa2.h"
-namespace cflw::ÒôÆµ::xa2 {
-using ¶àÃ½Ìå::FindChunk;
-using ¶àÃ½Ìå::ReadChunkData;
+#include "cflwéŸ³é¢‘_xa2.h"
+namespace cflw::éŸ³é¢‘::xa2 {
+using å¤šåª’ä½“::FindChunk;
+using å¤šåª’ä½“::ReadChunkData;
 //==============================================================================
-// ¸¨Öúº¯Êı
+// è¾…åŠ©å‡½æ•°
 //==============================================================================
-void fÏú»ÙÉùÒô(IXAudio2Voice *a) {
+void fé”€æ¯å£°éŸ³(IXAudio2Voice *a) {
 	a->DestroyVoice();
 }
 //==============================================================================
-// ÒôÆµÒıÇæ
+// éŸ³é¢‘å¼•æ“
 //==============================================================================
-CÒôÆµ::CÒôÆµ() {
+CéŸ³é¢‘::CéŸ³é¢‘() {
 };
-CÒôÆµ::~CÒôÆµ() {
-	if (mÒôÆµ) {
-		fÏú»Ù();
+CéŸ³é¢‘::~CéŸ³é¢‘() {
+	if (méŸ³é¢‘) {
+		fé”€æ¯();
 	}
 };
-HRESULT CÒôÆµ::f³õÊ¼»¯() {
+HRESULT CéŸ³é¢‘::fåˆå§‹åŒ–() {
 	HRESULT hr;
 	hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = XAudio2Create(&mÒôÆµ, 0, XAUDIO2_DEFAULT_PROCESSOR);
+	hr = XAudio2Create(&méŸ³é¢‘, 0, XAUDIO2_DEFAULT_PROCESSOR);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = mÒôÆµ->CreateMasteringVoice(&mÉùÒô¿ØÖÆ);
+	hr = méŸ³é¢‘->CreateMasteringVoice(&må£°éŸ³æ§åˆ¶);
 	if (FAILED(hr)) {
 		return hr;
 	}
 	return S_OK;
 };
-void CÒôÆµ::fÏú»Ù() {
-	fÏú»ÙÉùÒô(mÉùÒô¿ØÖÆ);
-	mÉùÒô¿ØÖÆ = nullptr;
-	mÒôÆµ.Reset();
+void CéŸ³é¢‘::fé”€æ¯() {
+	fé”€æ¯å£°éŸ³(må£°éŸ³æ§åˆ¶);
+	må£°éŸ³æ§åˆ¶ = nullptr;
+	méŸ³é¢‘.Reset();
 	CoUninitialize();
 };
-HRESULT CÒôÆµ::f´´½¨ÉùÒô(tpÉùÒô &aÉùÒô, const wchar_t *aÎÄ¼ş) {
+HRESULT CéŸ³é¢‘::fåˆ›å»ºå£°éŸ³(tpå£°éŸ³ &aå£°éŸ³, const std::wstring_view &aæ–‡ä»¶) {
 	HRESULT hr;
-	C²¨ĞÎÎÄ¼ş vÎÄ¼ş;
-	hr = vÎÄ¼ş.f´ò¿ª(aÎÄ¼ş);
+	Cæ³¢å½¢æ–‡ä»¶ væ–‡ä»¶;
+	hr = væ–‡ä»¶.fæ‰“å¼€(aæ–‡ä»¶);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	if (!vÎÄ¼ş.f¼ì²éÀàĞÍ()) {
-		return E_FAIL;	//²»ÊÇ²¨ĞÎ¸ñÊ½
+	if (!væ–‡ä»¶.fæ£€æŸ¥ç±»å‹()) {
+		return E_FAIL;	//ä¸æ˜¯æ³¢å½¢æ ¼å¼
 	}
-	tpÉùÒô vÉùÒô = std::make_shared<CÉùÒô>();
-	vÉùÒô->m¸ñÊ½ = vÎÄ¼ş.f¶ÁÈ¡¸ñÊ½();
-	const auto &[vÊı¾İ, vÊı¾İ´óĞ¡] = vÎÄ¼ş.f¶ÁÈ¡Êı¾İ();
-	vÉùÒô->mÊı¾İ = std::unique_ptr<std::byte>(vÊı¾İ);
-	vÉùÒô->m´óĞ¡ = vÊı¾İ´óĞ¡;
-	//Ìî³ä»º³å
-	vÉùÒô->m»º³å.AudioBytes = vÊı¾İ´óĞ¡;
-	vÉùÒô->m»º³å.pAudioData = (BYTE*)vÊı¾İ;
-	vÉùÒô->m»º³å.Flags = XAUDIO2_END_OF_STREAM;
-	vÉùÒô->m»º³å.LoopBegin = XAUDIO2_NO_LOOP_REGION;
-	vÉùÒô->m»º³å.LoopLength = 0;
-	vÉùÒô->m»º³å.LoopCount = 0;
-	//½áÊø
-	aÉùÒô = std::move(vÉùÒô);
+	tpå£°éŸ³ vå£°éŸ³ = std::make_shared<Cå£°éŸ³>();
+	vå£°éŸ³->mæ ¼å¼ = væ–‡ä»¶.fè¯»å–æ ¼å¼();
+	const auto &[væ•°æ®, væ•°æ®å¤§å°] = væ–‡ä»¶.fè¯»å–æ•°æ®();
+	vå£°éŸ³->mæ•°æ® = std::unique_ptr<std::byte>(væ•°æ®);
+	vå£°éŸ³->må¤§å° = væ•°æ®å¤§å°;
+	//å¡«å……ç¼“å†²
+	vå£°éŸ³->mç¼“å†².AudioBytes = væ•°æ®å¤§å°;
+	vå£°éŸ³->mç¼“å†².pAudioData = (BYTE*)væ•°æ®;
+	vå£°éŸ³->mç¼“å†².Flags = XAUDIO2_END_OF_STREAM;
+	vå£°éŸ³->mç¼“å†².LoopBegin = XAUDIO2_NO_LOOP_REGION;
+	vå£°éŸ³->mç¼“å†².LoopLength = 0;
+	vå£°éŸ³->mç¼“å†².LoopCount = 0;
+	//ç»“æŸ
+	aå£°éŸ³ = std::move(vå£°éŸ³);
 	return S_OK;
 };
-HRESULT CÒôÆµ::f´´½¨Ô´ÉùÒô(tpÔ´ÉùÒô &aÔ´ÉùÒô, const CÉùÒô &aÉùÒô, const C»ìºÏ &a»ìºÏ) {
-	IXAudio2SourceVoice *vÔ´ÉùÒô;
-	HRESULT hr = mÒôÆµ->CreateSourceVoice(&vÔ´ÉùÒô, (WAVEFORMATEX*)&aÉùÒô.m¸ñÊ½, 0, 2, nullptr, &a»ìºÏ.mÁĞ±í);
+HRESULT CéŸ³é¢‘::fåˆ›å»ºæºå£°éŸ³(tpæºå£°éŸ³ &aæºå£°éŸ³, const Cå£°éŸ³ &aå£°éŸ³, const Cæ··åˆ &aæ··åˆ) {
+	IXAudio2SourceVoice *væºå£°éŸ³;
+	HRESULT hr = méŸ³é¢‘->CreateSourceVoice(&væºå£°éŸ³, (WAVEFORMATEX*)&aå£°éŸ³.mæ ¼å¼, 0, 2, nullptr, &aæ··åˆ.måˆ—è¡¨);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	aÔ´ÉùÒô = std::shared_ptr<IXAudio2SourceVoice>(vÔ´ÉùÒô, &fÏú»ÙÉùÒô);
+	aæºå£°éŸ³ = std::shared_ptr<IXAudio2SourceVoice>(væºå£°éŸ³, &fé”€æ¯å£°éŸ³);
 	return S_OK;
 }
-HRESULT CÒôÆµ::f´´½¨»ìºÏ(tp»ìºÏ &a»ìºÏ) {
-	tp»ìºÏ v»ìºÏ = std::make_shared<C»ìºÏ>();
-	HRESULT hr = mÒôÆµ->CreateSubmixVoice(&v»ìºÏ->mÉùÒô, 1, 44100);
+HRESULT CéŸ³é¢‘::fåˆ›å»ºæ··åˆ(tpæ··åˆ &aæ··åˆ) {
+	tpæ··åˆ væ··åˆ = std::make_shared<Cæ··åˆ>();
+	HRESULT hr = méŸ³é¢‘->CreateSubmixVoice(&væ··åˆ->må£°éŸ³, 1, 44100);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	v»ìºÏ->m·¢ËÍ.Flags = 0;
-	v»ìºÏ->m·¢ËÍ.pOutputVoice = v»ìºÏ->mÉùÒô;
-	v»ìºÏ->mÁĞ±í.pSends = &v»ìºÏ->m·¢ËÍ;
-	v»ìºÏ->mÁĞ±í.SendCount = 1;
-	a»ìºÏ = std::move(v»ìºÏ);
+	væ··åˆ->må‘é€.Flags = 0;
+	væ··åˆ->må‘é€.pOutputVoice = væ··åˆ->må£°éŸ³;
+	væ··åˆ->måˆ—è¡¨.pSends = &væ··åˆ->må‘é€;
+	væ··åˆ->måˆ—è¡¨.SendCount = 1;
+	aæ··åˆ = std::move(væ··åˆ);
 	return S_OK;
 }
 //==============================================================================
-// ²¥·Å¿ØÖÆ
+// æ’­æ”¾æ§åˆ¶
 //==============================================================================
-C²¥·Å¿ØÖÆ::C²¥·Å¿ØÖÆ(CÒôÆµ &a):
-	mÒôÆµ(&a) {
-	mµ±Ç°Ê±¼ä = std::chrono::system_clock::now();
+Cæ’­æ”¾æ§åˆ¶::Cæ’­æ”¾æ§åˆ¶() {
 }
-void C²¥·Å¿ØÖÆ::fË¢ĞÂ() {
-	for (auto vµü´ú = ma²¥·Å.begin(); vµü´ú != ma²¥·Å.end();) {
-		const auto &[v²¥·Å, vÔ´ÉùÒô] = *vµü´ú;
-		++vµü´ú;
-		XAUDIO2_VOICE_STATE v×´Ì¬;
-		vÔ´ÉùÒô->GetState(&v×´Ì¬);
-		if (v×´Ì¬.BuffersQueued <= 0) {
-			ma²¥·Å.erase(v²¥·Å);
+void Cæ’­æ”¾æ§åˆ¶::fåˆå§‹åŒ–(CéŸ³é¢‘ &a) {
+	méŸ³é¢‘ = &a;
+	må½“å‰æ—¶é—´ = std::chrono::system_clock::now();
+}
+void Cæ’­æ”¾æ§åˆ¶::fåˆ·æ–°() {
+	for (auto vè¿­ä»£ = maæ’­æ”¾.begin(); vè¿­ä»£ != maæ’­æ”¾.end();) {
+		const auto &[væ’­æ”¾, væºå£°éŸ³] = *vè¿­ä»£;
+		++vè¿­ä»£;
+		XAUDIO2_VOICE_STATE vçŠ¶æ€;
+		væºå£°éŸ³->GetState(&vçŠ¶æ€);
+		if (vçŠ¶æ€.BuffersQueued <= 0) {
+			maæ’­æ”¾.erase(væ’­æ”¾);
 		}
 	}
-	mµ±Ç°Ê±¼ä = std::chrono::system_clock::now();
+	må½“å‰æ—¶é—´ = std::chrono::system_clock::now();
 }
-tp²¥·Å C²¥·Å¿ØÖÆ::f²¥·Å(const CÉùÒô &aÉùÒô, const C»ìºÏ &a»ìºÏ) {
-	//È¥ÖØ
-	if (const auto &vÕÒÉùÒô = mÉùÒôÈ¥ÖØ.find(&aÉùÒô); vÕÒÉùÒô != mÉùÒôÈ¥ÖØ.end()) {
-		if (const float vÊ±¼ä²î = std::chrono::duration<float>(mµ±Ç°Ê±¼ä - vÕÒÉùÒô->second).count(); vÊ±¼ä²î <= mÉùÒô¼ä¸ô) {
-			return 0;	//ÖØ¸´,²»²¥·Å
+tpæ’­æ”¾ Cæ’­æ”¾æ§åˆ¶::fæ’­æ”¾(const Cå£°éŸ³ &aå£°éŸ³, const Cæ··åˆ &aæ··åˆ) {
+	//å»é‡
+	if (const auto &væ‰¾å£°éŸ³ = må£°éŸ³å»é‡.find(&aå£°éŸ³); væ‰¾å£°éŸ³ != må£°éŸ³å»é‡.end()) {
+		if (const float væ—¶é—´å·® = std::chrono::duration<float>(må½“å‰æ—¶é—´ - væ‰¾å£°éŸ³->second).count(); væ—¶é—´å·® <= må£°éŸ³é—´éš”) {
+			return 0;	//é‡å¤,ä¸æ’­æ”¾
 		}
 	}
-	//²¥·Å
-	tp²¥·Å v²¥·Å = (++mĞòºÅ);
-	tpÔ´ÉùÒô vÔ´ÉùÒô;
-	mÒôÆµ->f´´½¨Ô´ÉùÒô(vÔ´ÉùÒô, aÉùÒô, a»ìºÏ);
-	vÔ´ÉùÒô->SubmitSourceBuffer(&aÉùÒô.m»º³å);
-	vÔ´ÉùÒô->Start();
-	mÉùÒôÈ¥ÖØ[&aÉùÒô] = mµ±Ç°Ê±¼ä;
-	ma²¥·Å[v²¥·Å] = vÔ´ÉùÒô;
-	return v²¥·Å;
+	//æ’­æ”¾
+	tpæ’­æ”¾ væ’­æ”¾ = (++måºå·);
+	tpæºå£°éŸ³ væºå£°éŸ³;
+	méŸ³é¢‘->fåˆ›å»ºæºå£°éŸ³(væºå£°éŸ³, aå£°éŸ³, aæ··åˆ);
+	væºå£°éŸ³->SubmitSourceBuffer(&aå£°éŸ³.mç¼“å†²);
+	væºå£°éŸ³->Start();
+	må£°éŸ³å»é‡[&aå£°éŸ³] = må½“å‰æ—¶é—´;
+	maæ’­æ”¾[væ’­æ”¾] = væºå£°éŸ³;
+	return væ’­æ”¾;
 }
-void C²¥·Å¿ØÖÆ::fÔİÍ£(tp²¥·Å a) {
-	if (const auto &vÕÒ²¥·Å = ma²¥·Å.find(a); vÕÒ²¥·Å != ma²¥·Å.end()) {
-		vÕÒ²¥·Å->second->Stop();
+void Cæ’­æ”¾æ§åˆ¶::fæš‚åœ(tpæ’­æ”¾ a) {
+	if (const auto &væ‰¾æ’­æ”¾ = maæ’­æ”¾.find(a); væ‰¾æ’­æ”¾ != maæ’­æ”¾.end()) {
+		væ‰¾æ’­æ”¾->second->Stop();
 	}
 }
-void C²¥·Å¿ØÖÆ::f»Ö¸´(tp²¥·Å a) {
-	if (const auto &vÕÒ²¥·Å = ma²¥·Å.find(a); vÕÒ²¥·Å != ma²¥·Å.end()) {
-		vÕÒ²¥·Å->second->Start();
+void Cæ’­æ”¾æ§åˆ¶::fæ¢å¤(tpæ’­æ”¾ a) {
+	if (const auto &væ‰¾æ’­æ”¾ = maæ’­æ”¾.find(a); væ‰¾æ’­æ”¾ != maæ’­æ”¾.end()) {
+		væ‰¾æ’­æ”¾->second->Start();
 	}
 }
-void C²¥·Å¿ØÖÆ::fÍ£Ö¹(tp²¥·Å a) {
-	if (const auto &vÕÒ²¥·Å = ma²¥·Å.find(a); vÕÒ²¥·Å != ma²¥·Å.end()) {
-		vÕÒ²¥·Å->second->Stop();
-		ma²¥·Å.erase(a);
+void Cæ’­æ”¾æ§åˆ¶::fåœæ­¢(tpæ’­æ”¾ a) {
+	if (const auto &væ‰¾æ’­æ”¾ = maæ’­æ”¾.find(a); væ‰¾æ’­æ”¾ != maæ’­æ”¾.end()) {
+		væ‰¾æ’­æ”¾->second->Stop();
+		maæ’­æ”¾.erase(a);
 	}
 }
-void C²¥·Å¿ØÖÆ::fÍ£Ö¹È«²¿() {
-	for (const auto &[v²¥·Å, vÔ´ÉùÒô] : ma²¥·Å) {
-		vÔ´ÉùÒô->Stop();
+void Cæ’­æ”¾æ§åˆ¶::fåœæ­¢å…¨éƒ¨() {
+	for (const auto &[væ’­æ”¾, væºå£°éŸ³] : maæ’­æ”¾) {
+		væºå£°éŸ³->Stop();
 	}
-	ma²¥·Å.clear();
+	maæ’­æ”¾.clear();
 }
-bool C²¥·Å¿ØÖÆ::fi²¥·Å(tp²¥·Å a) {
-	const auto &vÕÒ²¥·Å = ma²¥·Å.find(a);
-	return vÕÒ²¥·Å != ma²¥·Å.end();
+bool Cæ’­æ”¾æ§åˆ¶::fiæ’­æ”¾(tpæ’­æ”¾ a) {
+	const auto &væ‰¾æ’­æ”¾ = maæ’­æ”¾.find(a);
+	return væ‰¾æ’­æ”¾ != maæ’­æ”¾.end();
 }
-void C²¥·Å¿ØÖÆ::fsÖØ¸´²¥·Å¼ä¸ô(float a) {
-	mÉùÒô¼ä¸ô = a;
+void Cæ’­æ”¾æ§åˆ¶::fsé‡å¤æ’­æ”¾é—´éš”(float a) {
+	må£°éŸ³é—´éš” = a;
 }
 //==============================================================================
-// ÉùÒô
+// å£°éŸ³
 //==============================================================================
-C»ìºÏ::~C»ìºÏ() {
-	if (mÉùÒô) {
-		fÏú»ÙÉùÒô(mÉùÒô);
+Cæ··åˆ::~Cæ··åˆ() {
+	if (må£°éŸ³) {
+		fé”€æ¯å£°éŸ³(må£°éŸ³);
 	}
 }
-void C»ìºÏ::fÏú»Ù() {
-	fÏú»ÙÉùÒô(mÉùÒô);
-	mÉùÒô = nullptr;
+void Cæ··åˆ::fé”€æ¯() {
+	fé”€æ¯å£°éŸ³(må£°éŸ³);
+	må£°éŸ³ = nullptr;
 }
-void C»ìºÏ::fsÒôÁ¿(float a) {
-	mÉùÒô->SetVolume(a);
+void Cæ··åˆ::fséŸ³é‡(float a) {
+	må£°éŸ³->SetVolume(a);
 }
-float C»ìºÏ::fgÒôÁ¿() const {
+float Cæ··åˆ::fgéŸ³é‡() const {
 	float v;
-	mÉùÒô->GetVolume(&v);
+	må£°éŸ³->GetVolume(&v);
 	return v;
 }
 //==============================================================================
-// ²¨ĞÎÎÄ¼ş
+// æ³¢å½¢æ–‡ä»¶
 //==============================================================================
-HRESULT C²¨ĞÎÎÄ¼ş::f´ò¿ª(const wchar_t *aÎÄ¼şÃû) {
-	mÎÄ¼ş = CreateFileW(aÎÄ¼şÃû, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr);
-	if (INVALID_HANDLE_VALUE == mÎÄ¼ş)
+HRESULT Cæ³¢å½¢æ–‡ä»¶::fæ‰“å¼€(const std::wstring_view &aæ–‡ä»¶å) {
+	mæ–‡ä»¶ = CreateFileW(aæ–‡ä»¶å.data(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, 0, nullptr);
+	if (INVALID_HANDLE_VALUE == mæ–‡ä»¶)
 		return HRESULT_FROM_WIN32(GetLastError());
-	if (INVALID_SET_FILE_POINTER == SetFilePointer(mÎÄ¼ş, 0, nullptr, FILE_BEGIN))
+	if (INVALID_SET_FILE_POINTER == SetFilePointer(mæ–‡ä»¶, 0, nullptr, FILE_BEGIN))
 		return HRESULT_FROM_WIN32(GetLastError());
 	return S_OK;
 };
-bool C²¨ĞÎÎÄ¼ş::f¼ì²éÀàĞÍ() const {
-	DWORD v¿é´óĞ¡;
-	DWORD v¿éÎ»ÖÃ;
-	DWORD vÎÄ¼şÀàĞÍ;
-	FindChunk(mÎÄ¼ş, ¶àÃ½Ìå::c¿éRIFF, v¿é´óĞ¡, v¿éÎ»ÖÃ);
-	ReadChunkData(mÎÄ¼ş, &vÎÄ¼şÀàĞÍ, sizeof(DWORD), v¿éÎ»ÖÃ);
-	return vÎÄ¼şÀàĞÍ == ¶àÃ½Ìå::c¿éWAVE;
+bool Cæ³¢å½¢æ–‡ä»¶::fæ£€æŸ¥ç±»å‹() const {
+	DWORD vå—å¤§å°;
+	DWORD vå—ä½ç½®;
+	DWORD væ–‡ä»¶ç±»å‹;
+	FindChunk(mæ–‡ä»¶, å¤šåª’ä½“::cå—RIFF, vå—å¤§å°, vå—ä½ç½®);
+	ReadChunkData(mæ–‡ä»¶, &væ–‡ä»¶ç±»å‹, sizeof(DWORD), vå—ä½ç½®);
+	return væ–‡ä»¶ç±»å‹ == å¤šåª’ä½“::cå—WAVE;
 };
-WAVEFORMATEXTENSIBLE C²¨ĞÎÎÄ¼ş::f¶ÁÈ¡¸ñÊ½() const {
-	DWORD v¿é´óĞ¡;
-	DWORD v¿éÎ»ÖÃ;
-	WAVEFORMATEXTENSIBLE v¸ñÊ½;
-	FindChunk(mÎÄ¼ş, ¶àÃ½Ìå::c¿éfmt, v¿é´óĞ¡, v¿éÎ»ÖÃ);
-	ReadChunkData(mÎÄ¼ş, &v¸ñÊ½, v¿é´óĞ¡, v¿éÎ»ÖÃ);
-	return v¸ñÊ½;
+WAVEFORMATEXTENSIBLE Cæ³¢å½¢æ–‡ä»¶::fè¯»å–æ ¼å¼() const {
+	DWORD vå—å¤§å°;
+	DWORD vå—ä½ç½®;
+	WAVEFORMATEXTENSIBLE væ ¼å¼;
+	FindChunk(mæ–‡ä»¶, å¤šåª’ä½“::cå—fmt, vå—å¤§å°, vå—ä½ç½®);
+	ReadChunkData(mæ–‡ä»¶, &væ ¼å¼, vå—å¤§å°, vå—ä½ç½®);
+	return væ ¼å¼;
 };
-std::pair<std::byte*, size_t> C²¨ĞÎÎÄ¼ş::f¶ÁÈ¡Êı¾İ() const {
-	DWORD v¿é´óĞ¡;
-	DWORD v¿éÎ»ÖÃ;
-	FindChunk(mÎÄ¼ş, ¶àÃ½Ìå::c¿édata, v¿é´óĞ¡, v¿éÎ»ÖÃ);
-	std::byte *vÊı¾İ = new std::byte[v¿é´óĞ¡];
-	ReadChunkData(mÎÄ¼ş, vÊı¾İ, v¿é´óĞ¡, v¿éÎ»ÖÃ);
-	return {vÊı¾İ, v¿é´óĞ¡};
+std::pair<std::byte*, size_t> Cæ³¢å½¢æ–‡ä»¶::fè¯»å–æ•°æ®() const {
+	DWORD vå—å¤§å°;
+	DWORD vå—ä½ç½®;
+	FindChunk(mæ–‡ä»¶, å¤šåª’ä½“::cå—data, vå—å¤§å°, vå—ä½ç½®);
+	std::byte *væ•°æ® = new std::byte[vå—å¤§å°];
+	ReadChunkData(mæ–‡ä»¶, væ•°æ®, vå—å¤§å°, vå—ä½ç½®);
+	return {væ•°æ®, vå—å¤§å°};
 };
-bool C²¨ĞÎÎÄ¼ş::f¹Ø±Õ() {
-	return CloseHandle(mÎÄ¼ş);
+bool Cæ³¢å½¢æ–‡ä»¶::få…³é—­() {
+	return CloseHandle(mæ–‡ä»¶);
 }
-}	//namespace cflw::ÒôÆµ::xa2
+}	//namespace cflw::éŸ³é¢‘::xa2

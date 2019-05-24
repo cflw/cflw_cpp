@@ -155,6 +155,7 @@ constexpr D3D12_COMPARISON_FUNC ft比较(工具::E比较 a比较) {
 		return D3D12_COMPARISON_FUNC_NEVER;
 	}
 }
+constexpr D3D_FEATURE_LEVEL c最低功能级别 = D3D_FEATURE_LEVEL_11_0;
 constexpr DXGI_FORMAT c交换链格式 = DXGI_FORMAT_R16G16B16A16_FLOAT;
 constexpr DXGI_FORMAT c深度模板格式 = DXGI_FORMAT_D32_FLOAT_S8X24_UINT;
 constexpr float c清屏深度l = 1;
@@ -226,7 +227,8 @@ public:
 	~C三维();
 	//手动初始化
 	void f初始化窗口(HWND);
-	HRESULT f初始化设备();
+	HRESULT f初始化设备(HRESULT(C创建设备::*取显卡)(IDXGIAdapter3 **) = nullptr);
+	HRESULT f初始化软件设备();
 	HRESULT f初始化命令队列();
 	HRESULT f初始化交换链();
 	HRESULT f初始化渲染目标视图();
@@ -279,21 +281,23 @@ private:
 	std::unique_ptr<C纹理工厂> m纹理工厂;
 	std::unique_ptr<C渲染目标管理> m渲染目标管理;
 	std::unique_ptr<C深度模板管理> m深度模板管理;
-	D3D12_VIEWPORT m默认视口;
-	D3D12_RECT m默认裁剪矩形;
+	D3D12_VIEWPORT m默认视口 = {};
+	D3D12_RECT m默认裁剪矩形 = {};
 	UINT m交换链标志 = 0;
 };
 class C创建设备 {
 public:
+	using tf取显卡 = HRESULT(C创建设备:: *)(IDXGIAdapter3 **);
 	ComPtr<IDXGIFactory5> fg工厂();
 	bool f开启调试层();
 	bool f检查撕裂();
-	HRESULT f取显卡(IDXGIAdapter3**);
-	HRESULT f取软件适配器(IDXGIAdapter3**);
-	HRESULT f创建设备(IDXGIAdapter3*, ID3D12Device**);
+	HRESULT f取显卡_首选(IDXGIAdapter3 **);	//选择第1个可用的显卡
+	HRESULT f取显卡_性能(IDXGIAdapter3 **);	//选择性能最高的显卡(按显存选)
+	HRESULT f取软件适配器(IDXGIAdapter3 **);
+	HRESULT f创建设备(IDXGIAdapter3 *, ID3D12Device **);
 public:
 	ComPtr<IDXGIFactory5> m工厂 = nullptr;
-	D3D_FEATURE_LEVEL m功能级别 = D3D_FEATURE_LEVEL_11_0;
+	D3D_FEATURE_LEVEL m功能级别 = c最低功能级别;
 };
 //==============================================================================
 // 渲染控制
@@ -342,9 +346,9 @@ public:
 	ComPtr<ID3D12PipelineState> m图形管线;
 	std::vector<ComPtr<ID3D12Resource>> ma更新资源;
 	UINT m帧索引 = 0;
-	HANDLE m围栏事件;
+	HANDLE m围栏事件 = nullptr;
 	ComPtr<ID3D12Fence> m围栏;
-	UINT64 m围栏值;
+	UINT64 m围栏值 = 0;
 	数学::S颜色 m清屏颜色 = 数学::S颜色::c黑;
 	FLOAT m清屏深度 = c清屏深度r;
 	UINT8 m清屏模板 = 0;

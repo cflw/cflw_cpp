@@ -1,28 +1,28 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include <Windows.h>
-#include "cflwÊäÈë.h"
-namespace cflw::ÊäÈë::win {
-using namespace ÊäÈë;
+#include "cflwè¾“å…¥.h"
+namespace cflw::è¾“å…¥::win {
+using namespace è¾“å…¥;
 //==============================================================================
-// Windows¼üÅÌ°´¼üÃ¶¾Ù(Î»ÓÚwinuser.h)
+// Windowsé”®ç›˜æŒ‰é”®æšä¸¾(ä½äºwinuser.h)
 //==============================================================================
-enum class E¼üÅÌ°´¼ü {
+enum class Eé”®ç›˜æŒ‰é”® {
 	eLBUTTON = 0x01,
 	eRBUTTON = 0x02,
 	eCANCEL = 0x03,
 	eMBUTTON = 0x04, /* NOT contiguous with L & RBUTTON */
 	eXBUTTON1 = 0x05, /* NOT contiguous with L & RBUTTON */
 	eXBUTTON2 = 0x06, /* NOT contiguous with L & RBUTTON */
-	eÍË¸ñ = 0x08,	//backspace
-	eÖÆ±í = 0x09,	//tab
-	eÇå³ı = 0x0C,	//clear
-	e»Ø³µ = 0x0D,	//enter
-	eÉÏµµ = 0x10,	//²»·Ö×óÓÒµÄshift
-	e¿ØÖÆ = 0x11,	//²»·Ö×óÓÒµÄctrl
-	e½»Ìæ = 0x12,	//²»·Ö×óÓÒµÄalt,Õâ¸ö¼üÓÖ½Ğmenu
-	eÔİÍ£ = 0x13,	//pause
-	e´óĞ´Ëø = 0x14,	//capital
+	eé€€æ ¼ = 0x08,	//backspace
+	eåˆ¶è¡¨ = 0x09,	//tab
+	eæ¸…é™¤ = 0x0C,	//clear
+	eå›è½¦ = 0x0D,	//enter
+	eä¸Šæ¡£ = 0x10,	//ä¸åˆ†å·¦å³çš„shift
+	eæ§åˆ¶ = 0x11,	//ä¸åˆ†å·¦å³çš„ctrl
+	eäº¤æ›¿ = 0x12,	//ä¸åˆ†å·¦å³çš„alt,è¿™ä¸ªé”®åˆå«menu
+	eæš‚åœ = 0x13,	//pause
+	eå¤§å†™é” = 0x14,	//capital
 	eKANA = 0x15,
 	eHANGEUL = 0x15, /* old name - should be here for compatibility */
 	eHANGUL = 0x15,
@@ -30,27 +30,27 @@ enum class E¼üÅÌ°´¼ü {
 	eFINAL = 0x18,
 	eHANJA = 0x19,
 	eKANJI = 0x19,
-	eÌÓÍÑ = 0x1B,	//escape
+	eé€ƒè„± = 0x1B,	//escape
 	eCONVERT = 0x1C,
 	eNONCONVERT = 0x1D,
 	eACCEPT = 0x1E,	//accept
 	eMODECHANGE = 0x1F,	//modechange
-	e¿Õ¸ñ = 0x20,
+	eç©ºæ ¼ = 0x20,
 	ePRIOR = 0x21,
 	eNEXT = 0x22,
 	eEND = 0x23,
 	eHOME = 0x24,
-	e×ó = 0x25,
-	eÉÏ = 0x26,
-	eÓÒ = 0x27,
-	eÏÂ = 0x28,
-	eÑ¡Ôñ = 0x29,	//select
-	e´òÓ¡ = 0x2A,	//print
-	eÖ´ĞĞ = 0x2B,	//execute
+	eå·¦ = 0x25,
+	eä¸Š = 0x26,
+	eå³ = 0x27,
+	eä¸‹ = 0x28,
+	eé€‰æ‹© = 0x29,	//select
+	eæ‰“å° = 0x2A,	//print
+	eæ‰§è¡Œ = 0x2B,	//execute
 	eSNAPSHOT = 0x2C,	//snapshot
-	e²åÈë = 0x2D,	//insert
-	eÉ¾³ı = 0x2E,	//delete
-	e°ïÖú = 0x2F,	//help
+	eæ’å…¥ = 0x2D,	//insert
+	eåˆ é™¤ = 0x2E,	//delete
+	eå¸®åŠ© = 0x2F,	//help
 	e0 = '0',
 	e1 = '1',
 	e2 = '2',
@@ -87,64 +87,64 @@ enum class E¼üÅÌ°´¼ü {
 	x = 'X',
 	y = 'Y',
 	z = 'Z',
-	e×óÊÓ´° = 0x5B,
-	eÓÒÊÓ´° = 0x5C,
+	eå·¦è§†çª— = 0x5B,
+	eå³è§†çª— = 0x5C,
 	eAPPS = 0x5D,
 	eSLEEP = 0x5F,
-	eÊı×Ö0 = 0x60,
-	eÊı×Ö1 = 0x61,
-	eÊı×Ö2 = 0x62,
-	eÊı×Ö3 = 0x63,
-	eÊı×Ö4 = 0x64,
-	eÊı×Ö5 = 0x65,
-	eÊı×Ö6 = 0x66,
-	eÊı×Ö7 = 0x67,
-	eÊı×Ö8 = 0x68,
-	eÊı×Ö9 = 0x69,
+	eæ•°å­—0 = 0x60,
+	eæ•°å­—1 = 0x61,
+	eæ•°å­—2 = 0x62,
+	eæ•°å­—3 = 0x63,
+	eæ•°å­—4 = 0x64,
+	eæ•°å­—5 = 0x65,
+	eæ•°å­—6 = 0x66,
+	eæ•°å­—7 = 0x67,
+	eæ•°å­—8 = 0x68,
+	eæ•°å­—9 = 0x69,
 	eMULTIPLY = 0x6A,
 	eADD = 0x6B,
 	eSEPARATOR = 0x6C,
 	eSUBTRACT = 0x6D,
 	eDECIMAL = 0x6E,
 	eDIVIDE = 0x6F,
-	e¹¦ÄÜ1 = 0x70,
-	e¹¦ÄÜ2 = 0x71,
-	e¹¦ÄÜ3 = 0x72,
-	e¹¦ÄÜ4 = 0x73,
-	e¹¦ÄÜ5 = 0x74,
-	e¹¦ÄÜ6 = 0x75,
-	e¹¦ÄÜ7 = 0x76,
-	e¹¦ÄÜ8 = 0x77,
-	e¹¦ÄÜ9 = 0x78,
-	e¹¦ÄÜ10 = 0x79,
-	e¹¦ÄÜ11 = 0x7A,
-	e¹¦ÄÜ12 = 0x7B,
-	e¹¦ÄÜ13 = 0x7C,
-	e¹¦ÄÜ14 = 0x7D,
-	e¹¦ÄÜ15 = 0x7E,
-	e¹¦ÄÜ16 = 0x7F,
-	e¹¦ÄÜ17 = 0x80,
-	e¹¦ÄÜ18 = 0x81,
-	e¹¦ÄÜ19 = 0x82,
-	e¹¦ÄÜ20 = 0x83,
-	e¹¦ÄÜ21 = 0x84,
-	e¹¦ÄÜ22 = 0x85,
-	e¹¦ÄÜ23 = 0x86,
-	e¹¦ÄÜ24 = 0x87,
-	eÊı×ÖËø = 0x90,
-	e¹ö¶¯Ëø = 0x91,
+	eåŠŸèƒ½1 = 0x70,
+	eåŠŸèƒ½2 = 0x71,
+	eåŠŸèƒ½3 = 0x72,
+	eåŠŸèƒ½4 = 0x73,
+	eåŠŸèƒ½5 = 0x74,
+	eåŠŸèƒ½6 = 0x75,
+	eåŠŸèƒ½7 = 0x76,
+	eåŠŸèƒ½8 = 0x77,
+	eåŠŸèƒ½9 = 0x78,
+	eåŠŸèƒ½10 = 0x79,
+	eåŠŸèƒ½11 = 0x7A,
+	eåŠŸèƒ½12 = 0x7B,
+	eåŠŸèƒ½13 = 0x7C,
+	eåŠŸèƒ½14 = 0x7D,
+	eåŠŸèƒ½15 = 0x7E,
+	eåŠŸèƒ½16 = 0x7F,
+	eåŠŸèƒ½17 = 0x80,
+	eåŠŸèƒ½18 = 0x81,
+	eåŠŸèƒ½19 = 0x82,
+	eåŠŸèƒ½20 = 0x83,
+	eåŠŸèƒ½21 = 0x84,
+	eåŠŸèƒ½22 = 0x85,
+	eåŠŸèƒ½23 = 0x86,
+	eåŠŸèƒ½24 = 0x87,
+	eæ•°å­—é” = 0x90,
+	eæ»šåŠ¨é” = 0x91,
 	eOEM_NEC_EQUAL = 0x92,// '=' key on numpad,
 	eOEM_FJ_JISHO = 0x92, // 'Dictionary' key,
 	eOEM_FJ_MASSHOU = 0x93, // 'Unregister word' key,
 	eOEM_FJ_TOUROKU = 0x94, // 'Register word' key,
 	eOEM_FJ_LOYA = 0x95, // 'Left OYAYUBI' key,
 	eOEM_FJ_ROYA = 0x96, // 'Right OYAYUBI' key,
-	e×óÉÏµµ = 0xA0,
-	eÓÒÉÏµµ = 0xA1,
-	e×ó¿ØÖÆ = 0xA2,
-	eÓÒ¿ØÖÆ = 0xA3,
-	e×ó½»Ìæ = 0xA4,
-	eÓÒ½»Ìæ = 0xA5,
+	eå·¦ä¸Šæ¡£ = 0xA0,
+	eå³ä¸Šæ¡£ = 0xA1,
+	eå·¦æ§åˆ¶ = 0xA2,
+	eå³æ§åˆ¶ = 0xA3,
+	eå·¦äº¤æ›¿ = 0xA4,
+	eå³äº¤æ›¿ = 0xA5,
 	eBROWSER_BACK = 0xA6,
 	eBROWSER_FORWARD = 0xA7,
 	eBROWSER_REFRESH = 0xA8,
@@ -205,39 +205,40 @@ enum class E¼üÅÌ°´¼ü {
 	ePA1 = 0xFD,
 	eOEM_CLEAR = 0xFE,
 };
-enum class EÊó±ê°´¼ü {
-	e×ó¼ü,
-	eÓÒ¼ü,
-	eÖĞ¼ü,
-	eÇ°½ø,
-	eºóÍË,
+enum class Eé¼ æ ‡æŒ‰é”® {
+	eå·¦é”®,
+	eå³é”®,
+	eä¸­é”®,
+	eå‰è¿›,
+	eåé€€,
 };
 //==============================================================================
-// Éè±¸
+// è®¾å¤‡
 //==============================================================================
-class CÊäÈë;
-class C¼üÅÌ;
-class CÊó±ê;
-class C´¥Ãş;
-class C´¥¿Øµã;
-//ÊäÈë
-class CÊäÈë {
+class Cè¾“å…¥;
+class Cé”®ç›˜;
+class Cé¼ æ ‡;
+class Cè§¦æ‘¸;
+class Cè§¦æ§ç‚¹;
+//è¾“å…¥
+class Cè¾“å…¥ {
 public:
-	~CÊäÈë();
-	//ÒıÇæ¿ØÖÆ
-	void f³õÊ¼»¯(HWND, float Ëõ·Å = 0);
-	void fÏú»Ù();
-	void f´°¿ÚÏûÏ¢(UINT ÏûÏ¢, WPARAM, LPARAM);
-	void f¸üĞÂ();
-	//Éè±¸¿ØÖÆ
-	void f´´½¨¼üÅÌ(tp¼üÅÌ &);
-	void f´´½¨Êó±ê(tpÊó±ê &);
-	void f´´½¨´¥Ãş(tp´¥Ãş &);
+	~Cè¾“å…¥();
+	//å¼•æ“æ§åˆ¶
+	void fåˆå§‹åŒ–(HWND, float ç¼©æ”¾ = 0);
+	void fé”€æ¯();
+	void fçª—å£æ¶ˆæ¯(UINT æ¶ˆæ¯, WPARAM, LPARAM);
+	void fæ›´æ–°();
+	void fsç¼©æ”¾(float);
+	//è®¾å¤‡æ§åˆ¶
+	void fåˆ›å»ºé”®ç›˜(tpé”®ç›˜ &);
+	void fåˆ›å»ºé¼ æ ‡(tpé¼ æ ‡ &);
+	void fåˆ›å»ºè§¦æ‘¸(tpè§¦æ‘¸ &);
 public:
-	HWND m´°¿Ú;
-	float mËõ·Å = 1;
-	std::shared_ptr<C¼üÅÌ> m¼üÅÌ;
-	std::shared_ptr<CÊó±ê> mÊó±ê;
-	std::shared_ptr<C´¥Ãş> m´¥Ãş;
+	HWND mçª—å£;
+	float mç¼©æ”¾ = 1;
+	std::shared_ptr<Cé”®ç›˜> mé”®ç›˜;
+	std::shared_ptr<Cé¼ æ ‡> mé¼ æ ‡;
+	std::shared_ptr<Cè§¦æ‘¸> mè§¦æ‘¸;
 };
-}	//namespace cflw::ÊäÈë::win
+}	//namespace cflw::è¾“å…¥::win

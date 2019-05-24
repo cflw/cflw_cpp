@@ -15,6 +15,9 @@ C二维::C二维() {
 	assert(g这 == nullptr);	//单例
 	g这 = this;
 }
+C二维::~C二维() {
+	g这 = nullptr;
+}
 HRESULT C二维::f初始化(HWND a窗口, float a缩放) {
 	const 视窗::S客户区尺寸 v尺寸 = 视窗::S客户区尺寸::fc窗口(a窗口);
 	f初始化_窗口大小(v尺寸.fg宽() / a缩放, v尺寸.fg高() / a缩放);
@@ -129,10 +132,10 @@ HRESULT C二维::f初始化_单个位图(IDXGISwapChain *a交换链, float a缩�
 }
 void C二维::f销毁() {
 	m默认文本格式.Reset();
-	m渲染目标.Reset();
 	m文本工厂.reset();
 	m坐标计算.reset();
 	m渲染控制.reset();
+	m渲染目标.Reset();
 	ma位图目标.clear();
 	m上下文.Reset();
 	m设备.Reset();
@@ -142,7 +145,7 @@ void C二维::fs缩放(float a) {
 	m渲染目标->SetDpi(v, v);
 }
 //画图
-std::shared_ptr<C画图形> C二维::fc画图形(const ComPtr<ID2D1Brush> &a画笔, float a宽度) {
+std::shared_ptr<C画图形> C二维::fc画图形(const ComPtr<ID2D1Brush> &a画笔, float a宽度) const {
 	std::shared_ptr<C画图形> v新 = std::make_shared<C画图形>();
 	v新->f初始化(m渲染目标.Get(), fg坐标计算());
 	if (a画笔) {
@@ -257,6 +260,9 @@ C渲染控制 &C二维::fg渲染控制() {
 		m渲染控制->m二维 = this;
 	}
 	return *m渲染控制;
+}
+ComPtr<ID2D1DeviceContext> C二维::fg上下文() const {
+	return m上下文;
 }
 ComPtr<IDWriteTextFormat> C二维::fg默认文本格式() {
 	if (m默认文本格式 == nullptr) {
@@ -926,7 +932,7 @@ HRESULT C文本效果::IsPixelSnappingDisabled(void*, BOOL*a) {
 	return S_OK;
 }
 HRESULT C文本效果::GetCurrentTransform(void*, DWRITE_MATRIX *a矩阵) {
-	m渲染目标->GetTransform(reinterpret_cast<D2D1_MATRIX_3X2_F*>(a矩阵));
+	m渲染目标->GetTransform(reinterpret_cast<D2D1_MATRIX_3X2_F *>(a矩阵));
 	return S_OK;
 }
 HRESULT C文本效果::GetPixelsPerDip(void*, FLOAT *a) {

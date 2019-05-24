@@ -1,265 +1,268 @@
-#include <D3Dcompiler.h>
-#include "cflwÍ¼ĞÎ_d3d12.h"
+ï»¿#include <D3Dcompiler.h>
+#include "cflwå›¾å½¢_d3d12.h"
 #include "d3dx12.h"
-#include "cflwÊÓ´°.h"
-#include "cflw¸¨Öú.h"
-namespace cflw::Í¼ĞÎ::d3d12 {
+#include "cflwè§†çª—.h"
+#include "cflwè¾…åŠ©.h"
+namespace cflw::å›¾å½¢::d3d12 {
 //==============================================================================
-// ÈıÎ¬
+// ä¸‰ç»´
 //==============================================================================
-CÈıÎ¬::~CÈıÎ¬() {
-	fÏú»Ù();
+Cä¸‰ç»´::~Cä¸‰ç»´() {
+	fé”€æ¯();
 }
-void CÈıÎ¬::fÏú»Ù() {
-	if (mÉè±¸ == nullptr) {
+void Cä¸‰ç»´::fé”€æ¯() {
+	if (mè®¾å¤‡ == nullptr) {
 		return;
 	}
-	mäÖÈ¾¿ØÖÆ->fµÈ´ıÍê³ÉÖ¡();
+	mæ¸²æŸ“æ§åˆ¶->fç­‰å¾…å®Œæˆå¸§();
 
-	m»º³å¹¤³§.reset();
-	m´´½¨Éè±¸.reset();
-	mäÖÈ¾×´Ì¬.reset();
-	mäÖÈ¾Ä¿±ê¹ÜÀí.reset();
-	mäÖÈ¾¿ØÖÆ.reset();
+	mç¼“å†²å·¥å‚.reset();
+	måˆ›å»ºè®¾å¤‡.reset();
+	mæ¸²æŸ“çŠ¶æ€.reset();
+	mæ¸²æŸ“ç›®æ ‡ç®¡ç†.reset();
+	mæ¸²æŸ“æ§åˆ¶.reset();
 
-	mÄ¬ÈÏ¸ùÇ©Ãû.Reset();
-	mÃüÁî·ÖÅäÆ÷.Reset();
-	m½»»»Á´.Reset();
-	mÃüÁî¶ÓÁĞ.Reset();
-	mÉè±¸.Reset();
+	mé»˜è®¤æ ¹ç­¾å.Reset();
+	må‘½ä»¤åˆ†é…å™¨.Reset();
+	mäº¤æ¢é“¾.Reset();
+	må‘½ä»¤é˜Ÿåˆ—.Reset();
+	mè®¾å¤‡.Reset();
 }
-void CÈıÎ¬::f³õÊ¼»¯´°¿Ú(HWND a) {
-	m´°¿Ú = a;
-	fs´°¿Ú´óĞ¡();
+void Cä¸‰ç»´::fåˆå§‹åŒ–çª—å£(HWND a) {
+	mçª—å£ = a;
+	fsçª—å£å¤§å°();
 }
-HRESULT CÈıÎ¬::f³õÊ¼»¯Éè±¸() {
-	C´´½¨Éè±¸ &v´´½¨Éè±¸ = fg´´½¨Éè±¸();
-	if constexpr (cµ÷ÊÔ) {
-		m±êÖ¾[eµ÷ÊÔ] = v´´½¨Éè±¸.f¿ªÆôµ÷ÊÔ²ã();
+HRESULT Cä¸‰ç»´::fåˆå§‹åŒ–è®¾å¤‡(HRESULT(Cåˆ›å»ºè®¾å¤‡::*afå–æ˜¾å¡)(IDXGIAdapter3 **)) {
+	Cåˆ›å»ºè®¾å¤‡ &våˆ›å»ºè®¾å¤‡ = fgåˆ›å»ºè®¾å¤‡();
+	if constexpr (cè°ƒè¯•) {
+		mæ ‡å¿—[eè°ƒè¯•] = våˆ›å»ºè®¾å¤‡.få¼€å¯è°ƒè¯•å±‚();
 	}
 	HRESULT hr = S_OK;
-	ComPtr<IDXGIAdapter3> vÏÔ¿¨;
-	hr = v´´½¨Éè±¸.fÈ¡ÏÔ¿¨(&vÏÔ¿¨);
-	if (hr == DXGI_ERROR_UNSUPPORTED) {//0x887A0004 Ó²¼ş»òÇı¶¯²»Ö§³Ö
-		hr = v´´½¨Éè±¸.fÈ¡Èí¼şÊÊÅäÆ÷(&vÏÔ¿¨);
-		m±êÖ¾[eÈí¼şÉè±¸] = true;
+	ComPtr<IDXGIAdapter3> væ˜¾å¡;
+	if (afå–æ˜¾å¡ == nullptr) {
+		afå–æ˜¾å¡ = &Cåˆ›å»ºè®¾å¤‡::få–æ˜¾å¡_é¦–é€‰;
 	}
+	hr = (våˆ›å»ºè®¾å¤‡.*afå–æ˜¾å¡)(&væ˜¾å¡);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = v´´½¨Éè±¸.f´´½¨Éè±¸(vÏÔ¿¨.Get(), &mÉè±¸);
+	hr = våˆ›å»ºè®¾å¤‡.fåˆ›å»ºè®¾å¤‡(væ˜¾å¡.Get(), &mè®¾å¤‡);
 	if (FAILED(hr)) {
 		return hr;
 	}
+	mæ ‡å¿—[eè½¯ä»¶è®¾å¤‡] = afå–æ˜¾å¡ == &Cåˆ›å»ºè®¾å¤‡::få–è½¯ä»¶é€‚é…å™¨;
 	return S_OK;
 }
-HRESULT CÈıÎ¬::f³õÊ¼»¯ÃüÁî¶ÓÁĞ() {
-	assert(mÉè±¸);
+HRESULT Cä¸‰ç»´::fåˆå§‹åŒ–è½¯ä»¶è®¾å¤‡() {
+	return fåˆå§‹åŒ–è®¾å¤‡(&Cåˆ›å»ºè®¾å¤‡::få–è½¯ä»¶é€‚é…å™¨);
+}
+HRESULT Cä¸‰ç»´::fåˆå§‹åŒ–å‘½ä»¤é˜Ÿåˆ—() {
+	assert(mè®¾å¤‡);
 	D3D12_COMMAND_QUEUE_DESC qd = {};
 	qd.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
 	qd.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
-	HRESULT hr = mÉè±¸->CreateCommandQueue(&qd, IID_PPV_ARGS(&mÃüÁî¶ÓÁĞ));
+	HRESULT hr = mè®¾å¤‡->CreateCommandQueue(&qd, IID_PPV_ARGS(&må‘½ä»¤é˜Ÿåˆ—));
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = mÉè±¸->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&mÃüÁî·ÖÅäÆ÷));
+	hr = mè®¾å¤‡->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&må‘½ä»¤åˆ†é…å™¨));
 	if (FAILED(hr)) {
 		return hr;
 	}
 	return S_OK;
 }
-HRESULT CÈıÎ¬::f³õÊ¼»¯½»»»Á´() {
-	assert(mÉè±¸);
-	C´´½¨Éè±¸ &v´´½¨Éè±¸ = fg´´½¨Éè±¸();
-	m±êÖ¾[eËºÁÑ] = v´´½¨Éè±¸.f¼ì²éËºÁÑ();
-	const UINT vËºÁÑ = m±êÖ¾[eËºÁÑ] ? DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING : 0;
-	m½»»»Á´±êÖ¾ = vËºÁÑ;
-	//½»»»Á´ÃèÊö
+HRESULT Cä¸‰ç»´::fåˆå§‹åŒ–äº¤æ¢é“¾() {
+	assert(mè®¾å¤‡);
+	Cåˆ›å»ºè®¾å¤‡ &våˆ›å»ºè®¾å¤‡ = fgåˆ›å»ºè®¾å¤‡();
+	mæ ‡å¿—[eæ’•è£‚] = våˆ›å»ºè®¾å¤‡.fæ£€æŸ¥æ’•è£‚();
+	const UINT væ’•è£‚ = mæ ‡å¿—[eæ’•è£‚] ? DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING : 0;
+	mäº¤æ¢é“¾æ ‡å¿— = væ’•è£‚;
+	//äº¤æ¢é“¾æè¿°
 	DXGI_SWAP_CHAIN_DESC1 sd = {};
-	sd.BufferCount = cÖ¡Êı;
-	sd.Width = m´°¿Ú´óĞ¡[0];
-	sd.Height = m´°¿Ú´óĞ¡[1];
-	sd.Format = c½»»»Á´¸ñÊ½;
+	sd.BufferCount = cå¸§æ•°;
+	sd.Width = mçª—å£å¤§å°[0];
+	sd.Height = mçª—å£å¤§å°[1];
+	sd.Format = cäº¤æ¢é“¾æ ¼å¼;
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
 	sd.SampleDesc.Count = 1;
 	sd.SampleDesc.Quality = 0;
 	sd.Stereo = false;
-	sd.Flags = m½»»»Á´±êÖ¾;
+	sd.Flags = mäº¤æ¢é“¾æ ‡å¿—;
 	sd.AlphaMode = DXGI_ALPHA_MODE_UNSPECIFIED;
 	sd.Scaling = DXGI_SCALING_STRETCH;
-	//´´½¨½»»»Á´
-	ComPtr<IDXGIFactory5> v¹¤³§ = v´´½¨Éè±¸.fg¹¤³§();
-	ComPtr<IDXGISwapChain1> v½»»»Á´;
-	HRESULT hr = v¹¤³§->CreateSwapChainForHwnd(mÃüÁî¶ÓÁĞ.Get(), m´°¿Ú, &sd, nullptr, nullptr, &v½»»»Á´);
+	//åˆ›å»ºäº¤æ¢é“¾
+	ComPtr<IDXGIFactory5> vå·¥å‚ = våˆ›å»ºè®¾å¤‡.fgå·¥å‚();
+	ComPtr<IDXGISwapChain1> väº¤æ¢é“¾;
+	HRESULT hr = vå·¥å‚->CreateSwapChainForHwnd(må‘½ä»¤é˜Ÿåˆ—.Get(), mçª—å£, &sd, nullptr, nullptr, &väº¤æ¢é“¾);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	//ÆäËü
-	hr = v¹¤³§->MakeWindowAssociation(m´°¿Ú, DXGI_MWA_NO_ALT_ENTER);
+	//å…¶å®ƒ
+	hr = vå·¥å‚->MakeWindowAssociation(mçª—å£, DXGI_MWA_NO_ALT_ENTER);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	//·µ»Ø
-	v½»»»Á´.As(&m½»»»Á´);
+	//è¿”å›
+	väº¤æ¢é“¾.As(&mäº¤æ¢é“¾);
 	return S_OK;
 }
-HRESULT CÈıÎ¬::f³õÊ¼»¯äÖÈ¾Ä¿±êÊÓÍ¼() {
-	assert(mÉè±¸);
-	mäÖÈ¾Ä¿±ê¹ÜÀí = std::make_unique<CäÖÈ¾Ä¿±ê¹ÜÀí>();
-	//¶Ñ
-	D3D12_DESCRIPTOR_HEAP_DESC vÃèÊö = {};
-	vÃèÊö.NumDescriptors = cÖ¡Êı;
-	vÃèÊö.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-	vÃèÊö.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-	mÉè±¸->CreateDescriptorHeap(&vÃèÊö, IID_PPV_ARGS(&mäÖÈ¾Ä¿±ê¹ÜÀí->mäÖÈ¾Ä¿±ê¶Ñ));
-	mäÖÈ¾Ä¿±ê¹ÜÀí->mäÖÈ¾Ä¿±êÊÓÍ¼´óĞ¡ = mÉè±¸->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-	//Ñ­»·
-	D3D12_CPU_DESCRIPTOR_HANDLE väÖÈ¾Ä¿±êÊÓÍ¼¾ä±ú = mäÖÈ¾Ä¿±ê¹ÜÀí->mäÖÈ¾Ä¿±ê¶Ñ->GetCPUDescriptorHandleForHeapStart();
-	for (UINT i = 0; i < cÖ¡Êı; ++i) {
-		auto &väÖÈ¾Ä¿±ê = mäÖÈ¾Ä¿±ê¹ÜÀí->mäÖÈ¾Ä¿±ê[i];
-		//×ÊÔ´
-		m½»»»Á´->GetBuffer(i, IID_PPV_ARGS(&väÖÈ¾Ä¿±ê));
-		//ÊÓÍ¼
-		mÉè±¸->CreateRenderTargetView(väÖÈ¾Ä¿±ê.Get(), nullptr, väÖÈ¾Ä¿±êÊÓÍ¼¾ä±ú);
-		väÖÈ¾Ä¿±êÊÓÍ¼¾ä±ú.ptr += mäÖÈ¾Ä¿±ê¹ÜÀí->mäÖÈ¾Ä¿±êÊÓÍ¼´óĞ¡;
-		//Ãû³Æ
-		if constexpr (cµ÷ÊÔ) {
-			const std::wstring vÃû³Æ = std::wstring(L"äÖÈ¾Ä¿±ê") + std::to_wstring(i);
-			väÖÈ¾Ä¿±ê->SetName(vÃû³Æ.c_str());
+HRESULT Cä¸‰ç»´::fåˆå§‹åŒ–æ¸²æŸ“ç›®æ ‡è§†å›¾() {
+	assert(mè®¾å¤‡);
+	mæ¸²æŸ“ç›®æ ‡ç®¡ç† = std::make_unique<Cæ¸²æŸ“ç›®æ ‡ç®¡ç†>();
+	//å †
+	D3D12_DESCRIPTOR_HEAP_DESC væè¿° = {};
+	væè¿°.NumDescriptors = cå¸§æ•°;
+	væè¿°.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+	væè¿°.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+	mè®¾å¤‡->CreateDescriptorHeap(&væè¿°, IID_PPV_ARGS(&mæ¸²æŸ“ç›®æ ‡ç®¡ç†->mæ¸²æŸ“ç›®æ ‡å †));
+	mæ¸²æŸ“ç›®æ ‡ç®¡ç†->mæ¸²æŸ“ç›®æ ‡è§†å›¾å¤§å° = mè®¾å¤‡->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	//å¾ªç¯
+	D3D12_CPU_DESCRIPTOR_HANDLE væ¸²æŸ“ç›®æ ‡è§†å›¾å¥æŸ„ = mæ¸²æŸ“ç›®æ ‡ç®¡ç†->mæ¸²æŸ“ç›®æ ‡å †->GetCPUDescriptorHandleForHeapStart();
+	for (UINT i = 0; i < cå¸§æ•°; ++i) {
+		auto &væ¸²æŸ“ç›®æ ‡ = mæ¸²æŸ“ç›®æ ‡ç®¡ç†->mæ¸²æŸ“ç›®æ ‡[i];
+		//èµ„æº
+		mäº¤æ¢é“¾->GetBuffer(i, IID_PPV_ARGS(&væ¸²æŸ“ç›®æ ‡));
+		//è§†å›¾
+		mè®¾å¤‡->CreateRenderTargetView(væ¸²æŸ“ç›®æ ‡.Get(), nullptr, væ¸²æŸ“ç›®æ ‡è§†å›¾å¥æŸ„);
+		væ¸²æŸ“ç›®æ ‡è§†å›¾å¥æŸ„.ptr += mæ¸²æŸ“ç›®æ ‡ç®¡ç†->mæ¸²æŸ“ç›®æ ‡è§†å›¾å¤§å°;
+		//åç§°
+		if constexpr (cè°ƒè¯•) {
+			const std::wstring våç§° = std::wstring(L"æ¸²æŸ“ç›®æ ‡") + std::to_wstring(i);
+			væ¸²æŸ“ç›®æ ‡->SetName(våç§°.c_str());
 		}
 	}
-	//½áÊø
-	if (mäÖÈ¾¿ØÖÆ) {
-		mäÖÈ¾Ä¿±ê¹ÜÀí->mÖ¡Ë÷Òı = &mäÖÈ¾¿ØÖÆ->mÖ¡Ë÷Òı;
+	//ç»“æŸ
+	if (mæ¸²æŸ“æ§åˆ¶) {
+		mæ¸²æŸ“ç›®æ ‡ç®¡ç†->må¸§ç´¢å¼• = &mæ¸²æŸ“æ§åˆ¶->må¸§ç´¢å¼•;
 	}
 	return S_OK;
 }
-HRESULT CÈıÎ¬::f³õÊ¼»¯Éî¶ÈÄ£°åÊÓÍ¼() {
-	mÉî¶ÈÄ£°å¹ÜÀí = std::make_unique<CÉî¶ÈÄ£°å¹ÜÀí>();
-	//¶Ñ
-	D3D12_DESCRIPTOR_HEAP_DESC v¶ÑÃèÊö = {};
-	v¶ÑÃèÊö.NumDescriptors = 1;
-	v¶ÑÃèÊö.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
-	v¶ÑÃèÊö.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-	HRESULT hr = mÉè±¸->CreateDescriptorHeap(&v¶ÑÃèÊö, IID_PPV_ARGS(&mÉî¶ÈÄ£°å¹ÜÀí->mÉî¶ÈÄ£°å¶Ñ));
+HRESULT Cä¸‰ç»´::fåˆå§‹åŒ–æ·±åº¦æ¨¡æ¿è§†å›¾() {
+	mæ·±åº¦æ¨¡æ¿ç®¡ç† = std::make_unique<Cæ·±åº¦æ¨¡æ¿ç®¡ç†>();
+	//å †
+	D3D12_DESCRIPTOR_HEAP_DESC vå †æè¿° = {};
+	vå †æè¿°.NumDescriptors = 1;
+	vå †æè¿°.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
+	vå †æè¿°.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+	HRESULT hr = mè®¾å¤‡->CreateDescriptorHeap(&vå †æè¿°, IID_PPV_ARGS(&mæ·±åº¦æ¨¡æ¿ç®¡ç†->mæ·±åº¦æ¨¡æ¿å †));
 	if (FAILED(hr)) {
 		return hr;
 	}
-	//×ÊÔ´×¼±¸
-	const D3D12_RESOURCE_DESC v×ÊÔ´ÃèÊö = S×ÊÔ´ÃèÊö::fcÎÆÀí2(m´°¿Ú´óĞ¡[0], m´°¿Ú´óĞ¡[1], cÉî¶ÈÄ£°å¸ñÊ½, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
-	const D3D12_HEAP_PROPERTIES v¶ÑÊôĞÔ = S¶ÑÊôĞÔ::fcÀàĞÍ(D3D12_HEAP_TYPE_DEFAULT);
-	const D3D12_CLEAR_VALUE vÇå³ıÖµ = SÇå³ıÖµ::fcÉî¶ÈÄ£°å(cÉî¶ÈÄ£°å¸ñÊ½, cÇåÆÁÉî¶Èr, 0);
-	//ÊÓÍ¼×¼±¸
-	D3D12_DEPTH_STENCIL_VIEW_DESC vÊÓÍ¼ÃèÊö = {};
-	vÊÓÍ¼ÃèÊö.Format = cÉî¶ÈÄ£°å¸ñÊ½;
-	vÊÓÍ¼ÃèÊö.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
-	vÊÓÍ¼ÃèÊö.Texture2D.MipSlice = 0;
-	//Ñ­»·
-	D3D12_CPU_DESCRIPTOR_HANDLE vÉî¶ÈÄ£°åÊÓÍ¼¾ä±ú = mÉî¶ÈÄ£°å¹ÜÀí->mÉî¶ÈÄ£°å¶Ñ->GetCPUDescriptorHandleForHeapStart();
-	for (UINT i = 0; i != cÖ¡Êı; ++i) {
-		auto &vÉî¶ÈÄ£°å = mÉî¶ÈÄ£°å¹ÜÀí->mÉî¶ÈÄ£°å[i];
-		//×ÊÔ´
-		hr = mÉè±¸->CreateCommittedResource(&v¶ÑÊôĞÔ, D3D12_HEAP_FLAG_NONE, &v×ÊÔ´ÃèÊö, D3D12_RESOURCE_STATE_DEPTH_WRITE, &vÇå³ıÖµ, IID_PPV_ARGS(&vÉî¶ÈÄ£°å));
+	//èµ„æºå‡†å¤‡
+	const D3D12_RESOURCE_DESC vèµ„æºæè¿° = Sèµ„æºæè¿°::fcçº¹ç†2(mçª—å£å¤§å°[0], mçª—å£å¤§å°[1], cæ·±åº¦æ¨¡æ¿æ ¼å¼, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
+	const D3D12_HEAP_PROPERTIES vå †å±æ€§ = Så †å±æ€§::fcç±»å‹(D3D12_HEAP_TYPE_DEFAULT);
+	const D3D12_CLEAR_VALUE væ¸…é™¤å€¼ = Sæ¸…é™¤å€¼::fcæ·±åº¦æ¨¡æ¿(cæ·±åº¦æ¨¡æ¿æ ¼å¼, cæ¸…å±æ·±åº¦r, 0);
+	//è§†å›¾å‡†å¤‡
+	D3D12_DEPTH_STENCIL_VIEW_DESC vè§†å›¾æè¿° = {};
+	vè§†å›¾æè¿°.Format = cæ·±åº¦æ¨¡æ¿æ ¼å¼;
+	vè§†å›¾æè¿°.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+	vè§†å›¾æè¿°.Texture2D.MipSlice = 0;
+	//å¾ªç¯
+	D3D12_CPU_DESCRIPTOR_HANDLE væ·±åº¦æ¨¡æ¿è§†å›¾å¥æŸ„ = mæ·±åº¦æ¨¡æ¿ç®¡ç†->mæ·±åº¦æ¨¡æ¿å †->GetCPUDescriptorHandleForHeapStart();
+	for (UINT i = 0; i != cå¸§æ•°; ++i) {
+		auto &væ·±åº¦æ¨¡æ¿ = mæ·±åº¦æ¨¡æ¿ç®¡ç†->mæ·±åº¦æ¨¡æ¿[i];
+		//èµ„æº
+		hr = mè®¾å¤‡->CreateCommittedResource(&vå †å±æ€§, D3D12_HEAP_FLAG_NONE, &vèµ„æºæè¿°, D3D12_RESOURCE_STATE_DEPTH_WRITE, &væ¸…é™¤å€¼, IID_PPV_ARGS(&væ·±åº¦æ¨¡æ¿));
 		if (FAILED(hr)) {
 			return hr;
 		}
-		//ÊÓÍ¼
-		mÉè±¸->CreateDepthStencilView(vÉî¶ÈÄ£°å.Get(), &vÊÓÍ¼ÃèÊö, vÉî¶ÈÄ£°åÊÓÍ¼¾ä±ú);
-		vÉî¶ÈÄ£°åÊÓÍ¼¾ä±ú.ptr += mÉî¶ÈÄ£°å¹ÜÀí->mÉî¶ÈÄ£°åÊÓÍ¼´óĞ¡;
-		//Ãû³Æ
-		if constexpr (cµ÷ÊÔ) {
-			const std::wstring vÃû³Æ = std::wstring(L"Éî¶ÈÄ£°å") + std::to_wstring(i);
-			vÉî¶ÈÄ£°å->SetName(vÃû³Æ.c_str());
+		//è§†å›¾
+		mè®¾å¤‡->CreateDepthStencilView(væ·±åº¦æ¨¡æ¿.Get(), &vè§†å›¾æè¿°, væ·±åº¦æ¨¡æ¿è§†å›¾å¥æŸ„);
+		væ·±åº¦æ¨¡æ¿è§†å›¾å¥æŸ„.ptr += mæ·±åº¦æ¨¡æ¿ç®¡ç†->mæ·±åº¦æ¨¡æ¿è§†å›¾å¤§å°;
+		//åç§°
+		if constexpr (cè°ƒè¯•) {
+			const std::wstring våç§° = std::wstring(L"æ·±åº¦æ¨¡æ¿") + std::to_wstring(i);
+			væ·±åº¦æ¨¡æ¿->SetName(våç§°.c_str());
 		}
 	}
-	//½áÊø
-	if (mäÖÈ¾¿ØÖÆ) {
-		mÉî¶ÈÄ£°å¹ÜÀí->mÖ¡Ë÷Òı = &mäÖÈ¾¿ØÖÆ->mÖ¡Ë÷Òı;
+	//ç»“æŸ
+	if (mæ¸²æŸ“æ§åˆ¶) {
+		mæ·±åº¦æ¨¡æ¿ç®¡ç†->må¸§ç´¢å¼• = &mæ¸²æŸ“æ§åˆ¶->må¸§ç´¢å¼•;
 	}
 	return S_OK;
 }
-HRESULT CÈıÎ¬::f³õÊ¼»¯¸ùÇ©Ãû() {
-	D3D12_ROOT_SIGNATURE_DESC vÃèÊö = {};
-	vÃèÊö.NumParameters = 0;
-	vÃèÊö.pParameters = nullptr;
-	vÃèÊö.NumStaticSamplers = 0;
-	vÃèÊö.pStaticSamplers = nullptr;
-	vÃèÊö.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-	return f´´½¨¸ùÇ©Ãû(mÄ¬ÈÏ¸ùÇ©Ãû, vÃèÊö);
+HRESULT Cä¸‰ç»´::fåˆå§‹åŒ–æ ¹ç­¾å() {
+	D3D12_ROOT_SIGNATURE_DESC væè¿° = {};
+	væè¿°.NumParameters = 0;
+	væè¿°.pParameters = nullptr;
+	væè¿°.NumStaticSamplers = 0;
+	væè¿°.pStaticSamplers = nullptr;
+	væè¿°.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	return fåˆ›å»ºæ ¹ç­¾å(mé»˜è®¤æ ¹ç­¾å, væè¿°);
 }
-bool CÈıÎ¬::f³õÊ¼»¯(const HWND &a) {
+bool Cä¸‰ç»´::fåˆå§‹åŒ–(const HWND &a) {
 	try {
-		f³õÊ¼»¯´°¿Ú(a);
-		ÊÓ´°::fÊ§°ÜÔòÅ×³ö(f³õÊ¼»¯Éè±¸());
-		ÊÓ´°::fÊ§°ÜÔòÅ×³ö(f³õÊ¼»¯ÃüÁî¶ÓÁĞ());
-		ÊÓ´°::fÊ§°ÜÔòÅ×³ö(f³õÊ¼»¯½»»»Á´());
-		ÊÓ´°::fÊ§°ÜÔòÅ×³ö(f³õÊ¼»¯äÖÈ¾Ä¿±êÊÓÍ¼());
-		ÊÓ´°::fÊ§°ÜÔòÅ×³ö(f³õÊ¼»¯Éî¶ÈÄ£°åÊÓÍ¼());
-		ÊÓ´°::fÊ§°ÜÔòÅ×³ö(f³õÊ¼»¯¸ùÇ©Ãû());
+		fåˆå§‹åŒ–çª—å£(a);
+		è§†çª—::få¤±è´¥åˆ™æŠ›å‡º(fåˆå§‹åŒ–è®¾å¤‡());
+		è§†çª—::få¤±è´¥åˆ™æŠ›å‡º(fåˆå§‹åŒ–å‘½ä»¤é˜Ÿåˆ—());
+		è§†çª—::få¤±è´¥åˆ™æŠ›å‡º(fåˆå§‹åŒ–äº¤æ¢é“¾());
+		è§†çª—::få¤±è´¥åˆ™æŠ›å‡º(fåˆå§‹åŒ–æ¸²æŸ“ç›®æ ‡è§†å›¾());
+		è§†çª—::få¤±è´¥åˆ™æŠ›å‡º(fåˆå§‹åŒ–æ·±åº¦æ¨¡æ¿è§†å›¾());
+		è§†çª—::få¤±è´¥åˆ™æŠ›å‡º(fåˆå§‹åŒ–æ ¹ç­¾å());
 		return true;
 	} catch (HRESULT hr) {
 		return false;
 	}
 }
-HRESULT CÈıÎ¬::fÖØÖÃÆÁÄ»×ÊÔ´() {
+HRESULT Cä¸‰ç»´::fé‡ç½®å±å¹•èµ„æº() {
 	HRESULT hr;
-	const bool vÖØÖÃÉî¶ÈÄ£°å = mÉî¶ÈÄ£°å¹ÜÀí.operator bool();
-	if (m½»»»Á´) {
-		hr = fÖØÖÃ½»»»Á´();
+	const bool vé‡ç½®æ·±åº¦æ¨¡æ¿ = mæ·±åº¦æ¨¡æ¿ç®¡ç†.operator bool();
+	if (mäº¤æ¢é“¾) {
+		hr = fé‡ç½®äº¤æ¢é“¾();
 		if (FAILED(hr)) {
 			return hr;
 		}
-		hr = f³õÊ¼»¯äÖÈ¾Ä¿±êÊÓÍ¼();
+		hr = fåˆå§‹åŒ–æ¸²æŸ“ç›®æ ‡è§†å›¾();
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
-	if (vÖØÖÃÉî¶ÈÄ£°å) {
-		hr = f³õÊ¼»¯Éî¶ÈÄ£°åÊÓÍ¼();
+	if (vé‡ç½®æ·±åº¦æ¨¡æ¿) {
+		hr = fåˆå§‹åŒ–æ·±åº¦æ¨¡æ¿è§†å›¾();
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
 	return S_OK;
 }
-HRESULT CÈıÎ¬::fÖØÖÃ½»»»Á´() {
-	assert(m½»»»Á´);
-	//mäÖÈ¾¿ØÖÆ->fÖØÖÃÃüÁî();
-	mäÖÈ¾¿ØÖÆ->mÃüÁîÁĞ±í->Close();
-	mäÖÈ¾Ä¿±ê¹ÜÀí = nullptr;
-	mÉî¶ÈÄ£°å¹ÜÀí = nullptr;
-	HRESULT hr = m½»»»Á´->ResizeBuffers(cÖ¡Êı, m´°¿Ú´óĞ¡[0], m´°¿Ú´óĞ¡[1], c½»»»Á´¸ñÊ½, m½»»»Á´±êÖ¾);
+HRESULT Cä¸‰ç»´::fé‡ç½®äº¤æ¢é“¾() {
+	assert(mäº¤æ¢é“¾);
+	//mæ¸²æŸ“æ§åˆ¶->fé‡ç½®å‘½ä»¤();
+	mæ¸²æŸ“æ§åˆ¶->må‘½ä»¤åˆ—è¡¨->Close();
+	mæ¸²æŸ“ç›®æ ‡ç®¡ç† = nullptr;
+	mæ·±åº¦æ¨¡æ¿ç®¡ç† = nullptr;
+	HRESULT hr = mäº¤æ¢é“¾->ResizeBuffers(cå¸§æ•°, mçª—å£å¤§å°[0], mçª—å£å¤§å°[1], cäº¤æ¢é“¾æ ¼å¼, mäº¤æ¢é“¾æ ‡å¿—);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	mäÖÈ¾¿ØÖÆ->mÖ¡Ë÷Òı = m½»»»Á´->GetCurrentBackBufferIndex();
+	mæ¸²æŸ“æ§åˆ¶->må¸§ç´¢å¼• = mäº¤æ¢é“¾->GetCurrentBackBufferIndex();
 	return S_OK;
 }
-HRESULT CÈıÎ¬::fµ÷ÕûÄ¿±ê´óĞ¡() {
-	DXGI_MODE_DESC vÄ£Ê½ÃèÊö = {};
-	vÄ£Ê½ÃèÊö.Width = m´°¿Ú´óĞ¡[0];
-	vÄ£Ê½ÃèÊö.Height = m´°¿Ú´óĞ¡[1];
-	HRESULT hr = m½»»»Á´->ResizeTarget(&vÄ£Ê½ÃèÊö);
+HRESULT Cä¸‰ç»´::fè°ƒæ•´ç›®æ ‡å¤§å°() {
+	DXGI_MODE_DESC væ¨¡å¼æè¿° = {};
+	væ¨¡å¼æè¿°.Width = mçª—å£å¤§å°[0];
+	væ¨¡å¼æè¿°.Height = mçª—å£å¤§å°[1];
+	HRESULT hr = mäº¤æ¢é“¾->ResizeTarget(&væ¨¡å¼æè¿°);
 	return hr;
 }
-HRESULT CÈıÎ¬::f´´½¨Í¼ĞÎ¹ÜÏß(tpÍ¼ĞÎ¹ÜÏß &a, const D3D12_GRAPHICS_PIPELINE_STATE_DESC &aÃèÊö) {
-	assert(mÉè±¸);
-	//¼ì²é²ÎÊı
-	if (aÃèÊö.VS.pShaderBytecode) {
-		assert(aÃèÊö.InputLayout.pInputElementDescs && aÃèÊö.InputLayout.NumElements);
+HRESULT Cä¸‰ç»´::fåˆ›å»ºå›¾å½¢ç®¡çº¿(tpå›¾å½¢ç®¡çº¿ &a, const D3D12_GRAPHICS_PIPELINE_STATE_DESC &aæè¿°) {
+	assert(mè®¾å¤‡);
+	//æ£€æŸ¥å‚æ•°
+	if (aæè¿°.VS.pShaderBytecode) {
+		assert(aæè¿°.InputLayout.pInputElementDescs && aæè¿°.InputLayout.NumElements);
 	}
-	assert(aÃèÊö.PrimitiveTopologyType != D3D12_PRIMITIVE_TOPOLOGY_TYPE_UNDEFINED);
-	//´´½¨
-	HRESULT hr = mÉè±¸->CreateGraphicsPipelineState(&aÃèÊö, IID_PPV_ARGS(&a));
+	assert(aæè¿°.PrimitiveTopologyType != D3D12_PRIMITIVE_TOPOLOGY_TYPE_UNDEFINED);
+	//åˆ›å»º
+	HRESULT hr = mè®¾å¤‡->CreateGraphicsPipelineState(&aæè¿°, IID_PPV_ARGS(&a));
 	if (FAILED(hr)) {
 		return hr;
 	}
 	return S_OK;
 }
-HRESULT CÈıÎ¬::f´´½¨ÃüÁîÁĞ±í(tpÃüÁîÁĞ±í &a, ID3D12PipelineState *aÍ¼ĞÎ¹ÜÏß) {
-	assert(mÉè±¸);
-	HRESULT hr = mÉè±¸->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, mÃüÁî·ÖÅäÆ÷.Get(), aÍ¼ĞÎ¹ÜÏß, IID_PPV_ARGS(&a));
+HRESULT Cä¸‰ç»´::fåˆ›å»ºå‘½ä»¤åˆ—è¡¨(tpå‘½ä»¤åˆ—è¡¨ &a, ID3D12PipelineState *aå›¾å½¢ç®¡çº¿) {
+	assert(mè®¾å¤‡);
+	HRESULT hr = mè®¾å¤‡->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, må‘½ä»¤åˆ†é…å™¨.Get(), aå›¾å½¢ç®¡çº¿, IID_PPV_ARGS(&a));
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -269,498 +272,526 @@ HRESULT CÈıÎ¬::f´´½¨ÃüÁîÁĞ±í(tpÃüÁîÁĞ±í &a, ID3D12PipelineState *aÍ¼ĞÎ¹ÜÏß) {
 	}
 	return S_OK;
 }
-HRESULT CÈıÎ¬::f´´½¨¸ùÇ©Ãû(tp¸ùÇ©Ãû &a, const C¸ùÇ©Ãû²ÎÊı &a²ÎÊı) {
-	D3D12_ROOT_SIGNATURE_DESC vÃèÊö;
-	vÃèÊö.NumStaticSamplers = a²ÎÊı.ma²ÉÑùÆ÷.size();
-	vÃèÊö.pStaticSamplers = a²ÎÊı.ma²ÉÑùÆ÷.data();
-	vÃèÊö.Flags = a²ÎÊı.m±êÖ¾;
-	std::vector<D3D12_ROOT_PARAMETER> va²ÎÊı;
-	for (const auto &v0 : a²ÎÊı.maË÷Òı) {
-		switch (v0.mÀàĞÍ) {
-		case C¸ùÇ©Ãû²ÎÊı::E¸ù²ÎÊıÀàĞÍ::eÃèÊö·û±í:{
-			const auto &v1 = a²ÎÊı.maÃèÊö·û±í[v0.mÎ»ÖÃ];
-			D3D12_ROOT_PARAMETER v²ÎÊı;
-			v²ÎÊı.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-			v²ÎÊı.DescriptorTable.NumDescriptorRanges = v1.mÊıÁ¿;
-			v²ÎÊı.DescriptorTable.pDescriptorRanges = &a²ÎÊı.maÃèÊö·¶Î§[v1.m¿ªÊ¼Î»ÖÃ];
-			v²ÎÊı.ShaderVisibility = v1.m¿É¼ûĞÔ;
-			va²ÎÊı.push_back(v²ÎÊı);
+HRESULT Cä¸‰ç»´::fåˆ›å»ºæ ¹ç­¾å(tpæ ¹ç­¾å &a, const Cæ ¹ç­¾åå‚æ•° &aå‚æ•°) {
+	D3D12_ROOT_SIGNATURE_DESC væè¿°;
+	væè¿°.NumStaticSamplers = aå‚æ•°.maé‡‡æ ·å™¨.size();
+	væè¿°.pStaticSamplers = aå‚æ•°.maé‡‡æ ·å™¨.data();
+	væè¿°.Flags = aå‚æ•°.mæ ‡å¿—;
+	std::vector<D3D12_ROOT_PARAMETER> vaå‚æ•°;
+	for (const auto &v0 : aå‚æ•°.maç´¢å¼•) {
+		switch (v0.mç±»å‹) {
+		case Cæ ¹ç­¾åå‚æ•°::Eæ ¹å‚æ•°ç±»å‹::eæè¿°ç¬¦è¡¨:{
+			const auto &v1 = aå‚æ•°.maæè¿°ç¬¦è¡¨[v0.mä½ç½®];
+			D3D12_ROOT_PARAMETER vå‚æ•°;
+			vå‚æ•°.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+			vå‚æ•°.DescriptorTable.NumDescriptorRanges = v1.mæ•°é‡;
+			vå‚æ•°.DescriptorTable.pDescriptorRanges = &aå‚æ•°.maæè¿°èŒƒå›´[v1.må¼€å§‹ä½ç½®];
+			vå‚æ•°.ShaderVisibility = v1.må¯è§æ€§;
+			vaå‚æ•°.push_back(vå‚æ•°);
 			break;
 		}
-		case C¸ùÇ©Ãû²ÎÊı::E¸ù²ÎÊıÀàĞÍ::e³£Á¿:
-		case C¸ùÇ©Ãû²ÎÊı::E¸ù²ÎÊıÀàĞÍ::eÃèÊö·û:
-			va²ÎÊı.push_back(a²ÎÊı.ma²ÎÊı[v0.mÎ»ÖÃ]);
+		case Cæ ¹ç­¾åå‚æ•°::Eæ ¹å‚æ•°ç±»å‹::eå¸¸é‡:
+		case Cæ ¹ç­¾åå‚æ•°::Eæ ¹å‚æ•°ç±»å‹::eæè¿°ç¬¦:
+			vaå‚æ•°.push_back(aå‚æ•°.maå‚æ•°[v0.mä½ç½®]);
 			break;
 		default:
 			return E_INVALIDARG;
 		}
 	}
-	vÃèÊö.NumParameters = va²ÎÊı.size();
-	vÃèÊö.pParameters = va²ÎÊı.data();
-	return f´´½¨¸ùÇ©Ãû(a, vÃèÊö);
+	væè¿°.NumParameters = vaå‚æ•°.size();
+	væè¿°.pParameters = vaå‚æ•°.data();
+	return fåˆ›å»ºæ ¹ç­¾å(a, væè¿°);
 }
-HRESULT CÈıÎ¬::f´´½¨¸ùÇ©Ãû(tp¸ùÇ©Ãû &a, const D3D12_ROOT_SIGNATURE_DESC &aÃèÊö) {
-	ComPtr<ID3DBlob> vÇ©Ãû, v´íÎó;
-	HRESULT hr = D3D12SerializeRootSignature(&aÃèÊö, D3D_ROOT_SIGNATURE_VERSION_1, &vÇ©Ãû, &v´íÎó);
+HRESULT Cä¸‰ç»´::fåˆ›å»ºæ ¹ç­¾å(tpæ ¹ç­¾å &a, const D3D12_ROOT_SIGNATURE_DESC &aæè¿°) {
+	ComPtr<ID3DBlob> vç­¾å, vé”™è¯¯;
+	HRESULT hr = D3D12SerializeRootSignature(&aæè¿°, D3D_ROOT_SIGNATURE_VERSION_1, &vç­¾å, &vé”™è¯¯);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = mÉè±¸->CreateRootSignature(0, vÇ©Ãû->GetBufferPointer(), vÇ©Ãû->GetBufferSize(), IID_PPV_ARGS(&a));
+	hr = mè®¾å¤‡->CreateRootSignature(0, vç­¾å->GetBufferPointer(), vç­¾å->GetBufferSize(), IID_PPV_ARGS(&a));
 	if (FAILED(hr)) {
 		return hr;
 	}
 	return S_OK;
 }
-D3D12_VIEWPORT CÈıÎ¬::fg´°¿ÚÊÓ¿Ú() {
-	D3D12_VIEWPORT vÊÓ¿Ú;
-	vÊÓ¿Ú.Width = (FLOAT)m´°¿Ú´óĞ¡[0];
-	vÊÓ¿Ú.Height = (FLOAT)m´°¿Ú´óĞ¡[1];
-	vÊÓ¿Ú.MinDepth = 0.0f;
-	vÊÓ¿Ú.MaxDepth = 1.0f;
-	vÊÓ¿Ú.TopLeftX = 0;
-	vÊÓ¿Ú.TopLeftY = 0;
-	return vÊÓ¿Ú;
+D3D12_VIEWPORT Cä¸‰ç»´::fgçª—å£è§†å£() {
+	D3D12_VIEWPORT vè§†å£;
+	vè§†å£.Width = (FLOAT)mçª—å£å¤§å°[0];
+	vè§†å£.Height = (FLOAT)mçª—å£å¤§å°[1];
+	vè§†å£.MinDepth = 0.0f;
+	vè§†å£.MaxDepth = 1.0f;
+	vè§†å£.TopLeftX = 0;
+	vè§†å£.TopLeftY = 0;
+	return vè§†å£;
 }
-D3D12_RECT CÈıÎ¬::fg´°¿Ú¾ØĞÎ() {
-	return {0, 0, m´°¿Ú´óĞ¡[0], m´°¿Ú´óĞ¡[1]};
+D3D12_RECT Cä¸‰ç»´::fgçª—å£çŸ©å½¢() {
+	return {0, 0, mçª—å£å¤§å°[0], mçª—å£å¤§å°[1]};
 }
-ÊıÑ§::SÏòÁ¿2 CÈıÎ¬::fg´°¿Ú´óĞ¡() const {
-	return {(float)m´°¿Ú´óĞ¡[0], (float)m´°¿Ú´óĞ¡[1]};
+æ•°å­¦::Så‘é‡2 Cä¸‰ç»´::fgçª—å£å¤§å°() const {
+	return {(float)mçª—å£å¤§å°[0], (float)mçª—å£å¤§å°[1]};
 }
-void CÈıÎ¬::fs´°¿Ú´óĞ¡() {
-	ÊÓ´°::S¿Í»§Çø³ß´ç v³ß´ç = ÊÓ´°::S¿Í»§Çø³ß´ç::fc´°¿Ú(m´°¿Ú);
-	fs´°¿Ú´óĞ¡_(v³ß´ç.fg¿í(), v³ß´ç.fg¸ß());
+void Cä¸‰ç»´::fsçª—å£å¤§å°() {
+	è§†çª—::Så®¢æˆ·åŒºå°ºå¯¸ vå°ºå¯¸ = è§†çª—::Så®¢æˆ·åŒºå°ºå¯¸::fcçª—å£(mçª—å£);
+	fsçª—å£å¤§å°_(vå°ºå¯¸.fgå®½(), vå°ºå¯¸.fgé«˜());
 }
-HRESULT CÈıÎ¬::fs´°¿Ú´óĞ¡(int a¿í, int a¸ß) {
-	fs´°¿Ú´óĞ¡_(a¿í, a¸ß);
-	if (!fiÈ«ÆÁ()) {
-		HRESULT hr = fµ÷ÕûÄ¿±ê´óĞ¡();
+HRESULT Cä¸‰ç»´::fsçª—å£å¤§å°(int aå®½, int aé«˜) {
+	fsçª—å£å¤§å°_(aå®½, aé«˜);
+	if (!fiå…¨å±()) {
+		HRESULT hr = fè°ƒæ•´ç›®æ ‡å¤§å°();
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
 	return S_OK;
 }
-void CÈıÎ¬::fs´°¿Ú´óĞ¡_(int a¿í, int a¸ß) {
-	m´°¿Ú´óĞ¡[0] = a¿í;
-	m´°¿Ú´óĞ¡[1] = a¸ß;
-	mÄ¬ÈÏÊÓ¿Ú = fg´°¿ÚÊÓ¿Ú();
-	mÄ¬ÈÏ²Ã¼ô¾ØĞÎ = fg´°¿Ú¾ØĞÎ();
+void Cä¸‰ç»´::fsçª—å£å¤§å°_(int aå®½, int aé«˜) {
+	mçª—å£å¤§å°[0] = aå®½;
+	mçª—å£å¤§å°[1] = aé«˜;
+	mé»˜è®¤è§†å£ = fgçª—å£è§†å£();
+	mé»˜è®¤è£å‰ªçŸ©å½¢ = fgçª—å£çŸ©å½¢();
 }
-bool CÈıÎ¬::fiÈ«ÆÁ() const {
+bool Cä¸‰ç»´::fiå…¨å±() const {
 	BOOL v;
-	m½»»»Á´->GetFullscreenState(&v, nullptr);
+	mäº¤æ¢é“¾->GetFullscreenState(&v, nullptr);
 	return v;
 }
-bool CÈıÎ¬::fi´°¿Ú() const {
-	return !fiÈ«ÆÁ();
+bool Cä¸‰ç»´::fiçª—å£() const {
+	return !fiå…¨å±();
 }
-void CÈıÎ¬::fsÈ«ÆÁ(bool a) {
-	m½»»»Á´->SetFullscreenState(a, nullptr);
+void Cä¸‰ç»´::fså…¨å±(bool a) {
+	mäº¤æ¢é“¾->SetFullscreenState(a, nullptr);
 	if (!a) {
-		fµ÷ÕûÄ¿±ê´óĞ¡();
+		fè°ƒæ•´ç›®æ ‡å¤§å°();
 	}
 }
-CäÖÈ¾¿ØÖÆ &CÈıÎ¬::fgäÖÈ¾¿ØÖÆ() {
-	if (mäÖÈ¾¿ØÖÆ == nullptr) {
-		mäÖÈ¾¿ØÖÆ = std::make_unique<CäÖÈ¾¿ØÖÆ>();
-		mäÖÈ¾¿ØÖÆ->mÈıÎ¬ = this;
-		f´´½¨ÃüÁîÁĞ±í(mäÖÈ¾¿ØÖÆ->mÃüÁîÁĞ±í);
-		mäÖÈ¾¿ØÖÆ->m¸ùÇ©Ãû = mÄ¬ÈÏ¸ùÇ©Ãû;
-		mäÖÈ¾Ä¿±ê¹ÜÀí->mÖ¡Ë÷Òı = &mäÖÈ¾¿ØÖÆ->mÖ¡Ë÷Òı;
-		mÉî¶ÈÄ£°å¹ÜÀí->mÖ¡Ë÷Òı = &mäÖÈ¾¿ØÖÆ->mÖ¡Ë÷Òı;
-		mäÖÈ¾¿ØÖÆ->f³õÊ¼»¯Î§À¸(mÉè±¸.Get());
+Cæ¸²æŸ“æ§åˆ¶ &Cä¸‰ç»´::fgæ¸²æŸ“æ§åˆ¶() {
+	if (mæ¸²æŸ“æ§åˆ¶ == nullptr) {
+		mæ¸²æŸ“æ§åˆ¶ = std::make_unique<Cæ¸²æŸ“æ§åˆ¶>();
+		mæ¸²æŸ“æ§åˆ¶->mä¸‰ç»´ = this;
+		fåˆ›å»ºå‘½ä»¤åˆ—è¡¨(mæ¸²æŸ“æ§åˆ¶->må‘½ä»¤åˆ—è¡¨);
+		mæ¸²æŸ“æ§åˆ¶->mæ ¹ç­¾å = mé»˜è®¤æ ¹ç­¾å;
+		mæ¸²æŸ“ç›®æ ‡ç®¡ç†->må¸§ç´¢å¼• = &mæ¸²æŸ“æ§åˆ¶->må¸§ç´¢å¼•;
+		mæ·±åº¦æ¨¡æ¿ç®¡ç†->må¸§ç´¢å¼• = &mæ¸²æŸ“æ§åˆ¶->må¸§ç´¢å¼•;
+		mæ¸²æŸ“æ§åˆ¶->fåˆå§‹åŒ–å›´æ (mè®¾å¤‡.Get());
 	}
-	return *mäÖÈ¾¿ØÖÆ;
+	return *mæ¸²æŸ“æ§åˆ¶;
 }
-CäÖÈ¾×´Ì¬ &CÈıÎ¬::fgäÖÈ¾×´Ì¬() {
-	if (mäÖÈ¾×´Ì¬ == nullptr) {
-		mäÖÈ¾×´Ì¬ = std::make_unique<CäÖÈ¾×´Ì¬>();
+Cæ¸²æŸ“çŠ¶æ€ &Cä¸‰ç»´::fgæ¸²æŸ“çŠ¶æ€() {
+	if (mæ¸²æŸ“çŠ¶æ€ == nullptr) {
+		mæ¸²æŸ“çŠ¶æ€ = std::make_unique<Cæ¸²æŸ“çŠ¶æ€>();
 	}
-	return *mäÖÈ¾×´Ì¬;
+	return *mæ¸²æŸ“çŠ¶æ€;
 }
-C´´½¨Éè±¸ &CÈıÎ¬::fg´´½¨Éè±¸() {
-	if (m´´½¨Éè±¸ == nullptr) {
-		m´´½¨Éè±¸ = std::make_unique<C´´½¨Éè±¸>();
+Cåˆ›å»ºè®¾å¤‡ &Cä¸‰ç»´::fgåˆ›å»ºè®¾å¤‡() {
+	if (måˆ›å»ºè®¾å¤‡ == nullptr) {
+		måˆ›å»ºè®¾å¤‡ = std::make_unique<Cåˆ›å»ºè®¾å¤‡>();
 	}
-	return *m´´½¨Éè±¸;
+	return *måˆ›å»ºè®¾å¤‡;
 }
-C»º³å¹¤³§ &CÈıÎ¬::fg»º³å¹¤³§() {
-	if (m»º³å¹¤³§ == nullptr) {
-		m»º³å¹¤³§ = std::make_unique<C»º³å¹¤³§>();
-		m»º³å¹¤³§->f³õÊ¼»¯(mÉè±¸.Get());
+Cç¼“å†²å·¥å‚ &Cä¸‰ç»´::fgç¼“å†²å·¥å‚() {
+	if (mç¼“å†²å·¥å‚ == nullptr) {
+		mç¼“å†²å·¥å‚ = std::make_unique<Cç¼“å†²å·¥å‚>();
+		mç¼“å†²å·¥å‚->fåˆå§‹åŒ–(mè®¾å¤‡.Get());
 	}
-	return *m»º³å¹¤³§;
+	return *mç¼“å†²å·¥å‚;
 }
-CÎÆÀí¹¤³§ &CÈıÎ¬::fgÎÆÀí¹¤³§() {
-	if (mÎÆÀí¹¤³§ == nullptr) {
-		mÎÆÀí¹¤³§ = std::make_unique<CÎÆÀí¹¤³§>();
-		mÎÆÀí¹¤³§->m»º³å¹¤³§ = &fg»º³å¹¤³§();
-		mÎÆÀí¹¤³§->mÉè±¸ = mÉè±¸;
-		mÎÆÀí¹¤³§->mäÖÈ¾¿ØÖÆ = &fgäÖÈ¾¿ØÖÆ();
-		mÎÆÀí¹¤³§->f³õÊ¼»¯();
+Cçº¹ç†å·¥å‚ &Cä¸‰ç»´::fgçº¹ç†å·¥å‚() {
+	if (mçº¹ç†å·¥å‚ == nullptr) {
+		mçº¹ç†å·¥å‚ = std::make_unique<Cçº¹ç†å·¥å‚>();
+		mçº¹ç†å·¥å‚->mç¼“å†²å·¥å‚ = &fgç¼“å†²å·¥å‚();
+		mçº¹ç†å·¥å‚->mè®¾å¤‡ = mè®¾å¤‡;
+		mçº¹ç†å·¥å‚->mæ¸²æŸ“æ§åˆ¶ = &fgæ¸²æŸ“æ§åˆ¶();
+		mçº¹ç†å·¥å‚->fåˆå§‹åŒ–();
 	}
-	return *mÎÆÀí¹¤³§;
+	return *mçº¹ç†å·¥å‚;
 }
-CäÖÈ¾Ä¿±ê¹ÜÀí &CÈıÎ¬::fgäÖÈ¾Ä¿±ê¹ÜÀí() {
-	return *mäÖÈ¾Ä¿±ê¹ÜÀí;
+Cæ¸²æŸ“ç›®æ ‡ç®¡ç† &Cä¸‰ç»´::fgæ¸²æŸ“ç›®æ ‡ç®¡ç†() {
+	return *mæ¸²æŸ“ç›®æ ‡ç®¡ç†;
 }
-CÉî¶ÈÄ£°å¹ÜÀí &CÈıÎ¬::fgÉî¶ÈÄ£°å¹ÜÀí() {
-	return *mÉî¶ÈÄ£°å¹ÜÀí;
+Cæ·±åº¦æ¨¡æ¿ç®¡ç† &Cä¸‰ç»´::fgæ·±åº¦æ¨¡æ¿ç®¡ç†() {
+	return *mæ·±åº¦æ¨¡æ¿ç®¡ç†;
 }
-ID3D12RootSignature *CÈıÎ¬::fgÄ¬ÈÏ¸ùÇ©Ãû() {
-	return mÄ¬ÈÏ¸ùÇ©Ãû.Get();
+ID3D12RootSignature *Cä¸‰ç»´::fgé»˜è®¤æ ¹ç­¾å() {
+	return mé»˜è®¤æ ¹ç­¾å.Get();
 }
-ComPtr<ID3D12Device> CÈıÎ¬::fgÉè±¸() const {
-	return mÉè±¸;
+ComPtr<ID3D12Device> Cä¸‰ç»´::fgè®¾å¤‡() const {
+	return mè®¾å¤‡;
 }
 //==============================================================================
-// ´´½¨Éè±¸
+// åˆ›å»ºè®¾å¤‡
 //==============================================================================
-ComPtr<IDXGIFactory5> C´´½¨Éè±¸::fg¹¤³§() {
-	if (m¹¤³§ == nullptr) {
-		HRESULT hr = CreateDXGIFactory1(IID_PPV_ARGS(&m¹¤³§));
+ComPtr<IDXGIFactory5> Cåˆ›å»ºè®¾å¤‡::fgå·¥å‚() {
+	if (må·¥å‚ == nullptr) {
+		HRESULT hr = CreateDXGIFactory1(IID_PPV_ARGS(&må·¥å‚));
 		if (FAILED(hr)) {
 			throw;
 		}
 	}
-	return m¹¤³§;
+	return må·¥å‚;
 }
-bool C´´½¨Éè±¸::f¿ªÆôµ÷ÊÔ²ã() {
-	ComPtr<ID3D12Debug> vµ÷ÊÔ;
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&vµ÷ÊÔ)))) {
-		vµ÷ÊÔ->EnableDebugLayer();
+bool Cåˆ›å»ºè®¾å¤‡::få¼€å¯è°ƒè¯•å±‚() {
+	ComPtr<ID3D12Debug> vè°ƒè¯•;
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&vè°ƒè¯•)))) {
+		vè°ƒè¯•->EnableDebugLayer();
 		return true;
 	}
 	return false;
 }
-bool C´´½¨Éè±¸::f¼ì²éËºÁÑ() {
-	fg¹¤³§();
-	BOOL vËºÁÑ = FALSE;
-	HRESULT hr = m¹¤³§->CheckFeatureSupport(DXGI_FEATURE_PRESENT_ALLOW_TEARING, &vËºÁÑ, sizeof(vËºÁÑ));
-	return SUCCEEDED(hr) && vËºÁÑ;
+bool Cåˆ›å»ºè®¾å¤‡::fæ£€æŸ¥æ’•è£‚() {
+	fgå·¥å‚();
+	BOOL væ’•è£‚ = FALSE;
+	HRESULT hr = må·¥å‚->CheckFeatureSupport(DXGI_FEATURE_PRESENT_ALLOW_TEARING, &væ’•è£‚, sizeof(væ’•è£‚));
+	return SUCCEEDED(hr) && væ’•è£‚;
 }
-HRESULT C´´½¨Éè±¸::fÈ¡ÏÔ¿¨(IDXGIAdapter3**aÏÔ¿¨) {
+HRESULT Cåˆ›å»ºè®¾å¤‡::få–æ˜¾å¡_é¦–é€‰(IDXGIAdapter3 **aæ˜¾å¡) {
 	HRESULT hr = S_OK;
-	fg¹¤³§();
-	ComPtr<IDXGIAdapter1> vÏÔ¿¨, vÄ¿±êÏÔ¿¨;
-	*aÏÔ¿¨ = nullptr;
-	SIZE_T vÏÔ´æ = 0;
-	for (UINT i = 0; DXGI_ERROR_NOT_FOUND != m¹¤³§->EnumAdapters1(i, &vÏÔ¿¨); ++i) {
-		DXGI_ADAPTER_DESC1 vÃèÊö;
-		vÏÔ¿¨->GetDesc1(&vÃèÊö);
-		if (vÃèÊö.Flags & DXGI_ADAPTER_FLAG_SOFTWARE) {
+	fgå·¥å‚();
+	ComPtr<IDXGIAdapter1> væ˜¾å¡, vç›®æ ‡æ˜¾å¡;
+	*aæ˜¾å¡ = nullptr;
+	for (UINT i = 0; DXGI_ERROR_NOT_FOUND != må·¥å‚->EnumAdapters1(i, &væ˜¾å¡); ++i) {
+		DXGI_ADAPTER_DESC1 væè¿°;
+		væ˜¾å¡->GetDesc1(&væè¿°);
+		if (væè¿°.Flags & DXGI_ADAPTER_FLAG_SOFTWARE) {
 			continue;
 		}
-		hr = D3D12CreateDevice(vÏÔ¿¨.Get(), D3D_FEATURE_LEVEL_11_0, __uuidof(ID3D12Device), nullptr);
+		hr = D3D12CreateDevice(væ˜¾å¡.Get(), cæœ€ä½åŠŸèƒ½çº§åˆ«, __uuidof(ID3D12Device), nullptr);
 		if (FAILED(hr)) {
 			continue;
-		}
-		if (vÃèÊö.DedicatedVideoMemory > vÏÔ´æ) {
-			vÄ¿±êÏÔ¿¨ = vÏÔ¿¨;
-			vÏÔ´æ = vÃèÊö.DedicatedVideoMemory;
+		} else {
+			vç›®æ ‡æ˜¾å¡ = væ˜¾å¡;
+			break;
 		}
 	}
-	if (vÄ¿±êÏÔ¿¨) {
-		ComPtr<IDXGIAdapter3> vÊä³ö;
-		vÄ¿±êÏÔ¿¨.As(&vÊä³ö);
-		*aÏÔ¿¨ = vÊä³ö.Detach();
+	if (vç›®æ ‡æ˜¾å¡) {
+		ComPtr<IDXGIAdapter3> vè¾“å‡º;
+		vç›®æ ‡æ˜¾å¡.As(&vè¾“å‡º);
+		*aæ˜¾å¡ = vè¾“å‡º.Detach();
 		return S_OK;
 	} else {
 		return hr;
 	}
 }
-HRESULT C´´½¨Éè±¸::fÈ¡Èí¼şÊÊÅäÆ÷(IDXGIAdapter3 **aÏÔ¿¨) {
-	return m¹¤³§->EnumWarpAdapter(IID_PPV_ARGS(aÏÔ¿¨));
+HRESULT Cåˆ›å»ºè®¾å¤‡::få–æ˜¾å¡_æ€§èƒ½(IDXGIAdapter3 **aæ˜¾å¡) {
+	HRESULT hr = S_OK;
+	fgå·¥å‚();
+	ComPtr<IDXGIAdapter1> væ˜¾å¡, vç›®æ ‡æ˜¾å¡;
+	*aæ˜¾å¡ = nullptr;
+	SIZE_T væ˜¾å­˜ = 0;
+	for (UINT i = 0; DXGI_ERROR_NOT_FOUND != må·¥å‚->EnumAdapters1(i, &væ˜¾å¡); ++i) {
+		DXGI_ADAPTER_DESC1 væè¿°;
+		væ˜¾å¡->GetDesc1(&væè¿°);
+		if (væè¿°.Flags & DXGI_ADAPTER_FLAG_SOFTWARE) {
+			continue;
+		}
+		hr = D3D12CreateDevice(væ˜¾å¡.Get(), cæœ€ä½åŠŸèƒ½çº§åˆ«, __uuidof(ID3D12Device), nullptr);
+		if (FAILED(hr)) {
+			continue;
+		}
+		if (væè¿°.DedicatedVideoMemory > væ˜¾å­˜) {
+			vç›®æ ‡æ˜¾å¡ = væ˜¾å¡;
+			væ˜¾å­˜ = væè¿°.DedicatedVideoMemory;
+		}
+	}
+	if (vç›®æ ‡æ˜¾å¡) {
+		ComPtr<IDXGIAdapter3> vè¾“å‡º;
+		vç›®æ ‡æ˜¾å¡.As(&vè¾“å‡º);
+		*aæ˜¾å¡ = vè¾“å‡º.Detach();
+		return S_OK;
+	} else {
+		return hr;
+	}
 }
-HRESULT C´´½¨Éè±¸::f´´½¨Éè±¸(IDXGIAdapter3 *aÏÔ¿¨, ID3D12Device **aÉè±¸) {
-	HRESULT hr = D3D12CreateDevice(aÏÔ¿¨, D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(aÉè±¸));
+HRESULT Cåˆ›å»ºè®¾å¤‡::få–è½¯ä»¶é€‚é…å™¨(IDXGIAdapter3 **aæ˜¾å¡) {
+	return må·¥å‚->EnumWarpAdapter(IID_PPV_ARGS(aæ˜¾å¡));
+}
+HRESULT Cåˆ›å»ºè®¾å¤‡::fåˆ›å»ºè®¾å¤‡(IDXGIAdapter3 *aæ˜¾å¡, ID3D12Device **aè®¾å¤‡) {
+	HRESULT hr = D3D12CreateDevice(aæ˜¾å¡, cæœ€ä½åŠŸèƒ½çº§åˆ«, IID_PPV_ARGS(aè®¾å¤‡));
 	return hr;
 }
 //==============================================================================
-// äÖÈ¾¿ØÖÆ
+// æ¸²æŸ“æ§åˆ¶
 //==============================================================================
-CäÖÈ¾¿ØÖÆ::~CäÖÈ¾¿ØÖÆ() {
-	fÏú»Ù();
+Cæ¸²æŸ“æ§åˆ¶::~Cæ¸²æŸ“æ§åˆ¶() {
+	fé”€æ¯();
 }
-void CäÖÈ¾¿ØÖÆ::fÏú»Ù() {
-	CloseHandle(mÎ§À¸ÊÂ¼ş);
+void Cæ¸²æŸ“æ§åˆ¶::fé”€æ¯() {
+	CloseHandle(må›´æ äº‹ä»¶);
 }
-HRESULT CäÖÈ¾¿ØÖÆ::f³õÊ¼»¯Î§À¸(ID3D12Device *aÉè±¸) {
-	HRESULT hr = aÉè±¸->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&mÎ§À¸));
-	mÎ§À¸Öµ = 1;
-	mÎ§À¸ÊÂ¼ş = CreateEventW(nullptr, FALSE, FALSE, nullptr);
-	if (mÎ§À¸ÊÂ¼ş == nullptr) {
+HRESULT Cæ¸²æŸ“æ§åˆ¶::fåˆå§‹åŒ–å›´æ (ID3D12Device *aè®¾å¤‡) {
+	HRESULT hr = aè®¾å¤‡->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&må›´æ ));
+	må›´æ å€¼ = 1;
+	må›´æ äº‹ä»¶ = CreateEventW(nullptr, FALSE, FALSE, nullptr);
+	if (må›´æ äº‹ä»¶ == nullptr) {
 		hr = HRESULT_FROM_WIN32(GetLastError());
 		if (FAILED(hr)) {
 			return hr;
 		}
 	}
-	fµÈ´ıÍê³ÉÖ¡();
+	fç­‰å¾…å®Œæˆå¸§();
 	return S_OK;
 }
-void CäÖÈ¾¿ØÖÆ::f¿ªÊ¼() {
-	mÃüÁîÁĞ±í->SetGraphicsRootSignature(m¸ùÇ©Ãû.Get());
-	mÃüÁîÁĞ±í->RSSetViewports(1, &mÈıÎ¬->mÄ¬ÈÏÊÓ¿Ú);
-	mÃüÁîÁĞ±í->RSSetScissorRects(1, &mÈıÎ¬->mÄ¬ÈÏ²Ã¼ô¾ØĞÎ);
-	const D3D12_RESOURCE_BARRIER vÕ¤À¸ = fcäÖÈ¾ÊÓÍ¼Õ¤À¸±ä»»(D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
-	mÃüÁîÁĞ±í->ResourceBarrier(1, &vÕ¤À¸);
-	mÈıÎ¬->mäÖÈ¾Ä¿±ê¹ÜÀí->f¸üĞÂÊÓÍ¼();
-	mÈıÎ¬->mÉî¶ÈÄ£°å¹ÜÀí->f¸üĞÂÊÓÍ¼();
-	mÃüÁîÁĞ±í->OMSetRenderTargets(1, &mÈıÎ¬->mäÖÈ¾Ä¿±ê¹ÜÀí->fgµ±Ç°ÊÓÍ¼(), FALSE, &mÈıÎ¬->mÉî¶ÈÄ£°å¹ÜÀí->fgµ±Ç°ÊÓÍ¼());
+void Cæ¸²æŸ“æ§åˆ¶::få¼€å§‹() {
+	må‘½ä»¤åˆ—è¡¨->SetGraphicsRootSignature(mæ ¹ç­¾å.Get());
+	må‘½ä»¤åˆ—è¡¨->RSSetViewports(1, &mä¸‰ç»´->mé»˜è®¤è§†å£);
+	må‘½ä»¤åˆ—è¡¨->RSSetScissorRects(1, &mä¸‰ç»´->mé»˜è®¤è£å‰ªçŸ©å½¢);
+	const D3D12_RESOURCE_BARRIER væ …æ  = fcæ¸²æŸ“è§†å›¾æ …æ å˜æ¢(D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
+	må‘½ä»¤åˆ—è¡¨->ResourceBarrier(1, &væ …æ );
+	mä¸‰ç»´->mæ¸²æŸ“ç›®æ ‡ç®¡ç†->fæ›´æ–°è§†å›¾();
+	mä¸‰ç»´->mæ·±åº¦æ¨¡æ¿ç®¡ç†->fæ›´æ–°è§†å›¾();
+	må‘½ä»¤åˆ—è¡¨->OMSetRenderTargets(1, &mä¸‰ç»´->mæ¸²æŸ“ç›®æ ‡ç®¡ç†->fgå½“å‰è§†å›¾(), FALSE, &mä¸‰ç»´->mæ·±åº¦æ¨¡æ¿ç®¡ç†->fgå½“å‰è§†å›¾());
 }
-void CäÖÈ¾¿ØÖÆ::f½áÊø() {
-	const D3D12_RESOURCE_BARRIER vÕ¤À¸ = fcäÖÈ¾ÊÓÍ¼Õ¤À¸±ä»»(D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
-	mÃüÁîÁĞ±í->ResourceBarrier(1, &vÕ¤À¸);
+void Cæ¸²æŸ“æ§åˆ¶::fç»“æŸ() {
+	const D3D12_RESOURCE_BARRIER væ …æ  = fcæ¸²æŸ“è§†å›¾æ …æ å˜æ¢(D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
+	må‘½ä»¤åˆ—è¡¨->ResourceBarrier(1, &væ …æ );
 }
-void CäÖÈ¾¿ØÖÆ::fÇåÆÁ() {
-	mÃüÁîÁĞ±í->ClearRenderTargetView(mÈıÎ¬->mäÖÈ¾Ä¿±ê¹ÜÀí->fgµ±Ç°ÊÓÍ¼(), mÇåÆÁÑÕÉ«.mÖµ, 0, nullptr);
-	constexpr D3D12_CLEAR_FLAGS cÇå³ıÉî¶ÈÄ£°å±êÖ¾ = D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL;
-	mÃüÁîÁĞ±í->ClearDepthStencilView(mÈıÎ¬->mÉî¶ÈÄ£°å¹ÜÀí->fgµ±Ç°ÊÓÍ¼(), cÇå³ıÉî¶ÈÄ£°å±êÖ¾, mÇåÆÁÉî¶È, mÇåÆÁÄ£°å, 0, nullptr);
+void Cæ¸²æŸ“æ§åˆ¶::fæ¸…å±() {
+	må‘½ä»¤åˆ—è¡¨->ClearRenderTargetView(mä¸‰ç»´->mæ¸²æŸ“ç›®æ ‡ç®¡ç†->fgå½“å‰è§†å›¾(), mæ¸…å±é¢œè‰².må€¼, 0, nullptr);
+	constexpr D3D12_CLEAR_FLAGS cæ¸…é™¤æ·±åº¦æ¨¡æ¿æ ‡å¿— = D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL;
+	må‘½ä»¤åˆ—è¡¨->ClearDepthStencilView(mä¸‰ç»´->mæ·±åº¦æ¨¡æ¿ç®¡ç†->fgå½“å‰è§†å›¾(), cæ¸…é™¤æ·±åº¦æ¨¡æ¿æ ‡å¿—, mæ¸…å±æ·±åº¦, mæ¸…å±æ¨¡æ¿, 0, nullptr);
 }
-void CäÖÈ¾¿ØÖÆ::fÏÔÊ¾() {
-	const UINT v±êÖ¾ = (mÈıÎ¬->m±êÖ¾[CÈıÎ¬::eËºÁÑ] && mÈıÎ¬->fi´°¿Ú()) ? DXGI_PRESENT_ALLOW_TEARING : 0;
-	mÈıÎ¬->m½»»»Á´->Present(0, v±êÖ¾);
-	fµÈ´ıÍê³ÉÖ¡();
-	f¸üĞÂÖ¡Ë÷Òı();
-	ma¸üĞÂ×ÊÔ´.clear();
+void Cæ¸²æŸ“æ§åˆ¶::fæ˜¾ç¤º() {
+	const UINT væ ‡å¿— = (mä¸‰ç»´->mæ ‡å¿—[Cä¸‰ç»´::eæ’•è£‚] && mä¸‰ç»´->fiçª—å£()) ? DXGI_PRESENT_ALLOW_TEARING : 0;
+	mä¸‰ç»´->mäº¤æ¢é“¾->Present(0, væ ‡å¿—);
+	fç­‰å¾…å®Œæˆå¸§();
+	fæ›´æ–°å¸§ç´¢å¼•();
+	maæ›´æ–°èµ„æº.clear();
 }
-void CäÖÈ¾¿ØÖÆ::fÖØÖÃÃüÁî() {
-	mÈıÎ¬->mÃüÁî·ÖÅäÆ÷->Reset();
-	mÃüÁîÁĞ±í->Reset(mÈıÎ¬->mÃüÁî·ÖÅäÆ÷.Get(), mÍ¼ĞÎ¹ÜÏß.Get());
+void Cæ¸²æŸ“æ§åˆ¶::fé‡ç½®å‘½ä»¤() {
+	mä¸‰ç»´->må‘½ä»¤åˆ†é…å™¨->Reset();
+	må‘½ä»¤åˆ—è¡¨->Reset(mä¸‰ç»´->må‘½ä»¤åˆ†é…å™¨.Get(), må›¾å½¢ç®¡çº¿.Get());
 }
-void CäÖÈ¾¿ØÖÆ::fÖ´ĞĞÃüÁî() {
-	mÃüÁîÁĞ±í->Close();
-	ID3D12CommandList* vÃüÁîÁĞ±í[] = {mÃüÁîÁĞ±í.Get()};
-	mÈıÎ¬->mÃüÁî¶ÓÁĞ->ExecuteCommandLists(_countof(vÃüÁîÁĞ±í), vÃüÁîÁĞ±í);
+void Cæ¸²æŸ“æ§åˆ¶::fæ‰§è¡Œå‘½ä»¤() {
+	må‘½ä»¤åˆ—è¡¨->Close();
+	ID3D12CommandList* vå‘½ä»¤åˆ—è¡¨[] = {må‘½ä»¤åˆ—è¡¨.Get()};
+	mä¸‰ç»´->må‘½ä»¤é˜Ÿåˆ—->ExecuteCommandLists(_countof(vå‘½ä»¤åˆ—è¡¨), vå‘½ä»¤åˆ—è¡¨);
 }
-void CäÖÈ¾¿ØÖÆ::fÖ´ĞĞÃüÁî²¢µÈ´ı() {
-	fÖ´ĞĞÃüÁî();
-	fµÈ´ıÍê³ÉÖ¡();
-	ma¸üĞÂ×ÊÔ´.clear();
+void Cæ¸²æŸ“æ§åˆ¶::fæ‰§è¡Œå‘½ä»¤å¹¶ç­‰å¾…() {
+	fæ‰§è¡Œå‘½ä»¤();
+	fç­‰å¾…å®Œæˆå¸§();
+	maæ›´æ–°èµ„æº.clear();
 }
-void CäÖÈ¾¿ØÖÆ::fÖ´ĞĞÃüÁî²¢ÏÔÊ¾() {
-	fÖ´ĞĞÃüÁî();
-	fÏÔÊ¾();
+void Cæ¸²æŸ“æ§åˆ¶::fæ‰§è¡Œå‘½ä»¤å¹¶æ˜¾ç¤º() {
+	fæ‰§è¡Œå‘½ä»¤();
+	fæ˜¾ç¤º();
 }
-void CäÖÈ¾¿ØÖÆ::f»æÖÆ(UINT a¶¥µãÊı, UINT a¿ªÊ¼) {
-	mÃüÁîÁĞ±í->DrawInstanced(a¶¥µãÊı, 1, a¿ªÊ¼, 0);
+void Cæ¸²æŸ“æ§åˆ¶::fç»˜åˆ¶(UINT aé¡¶ç‚¹æ•°, UINT aå¼€å§‹) {
+	må‘½ä»¤åˆ—è¡¨->DrawInstanced(aé¡¶ç‚¹æ•°, 1, aå¼€å§‹, 0);
 }
-void CäÖÈ¾¿ØÖÆ::f»æÖÆË÷Òı(UINT aË÷ÒıÊı, UINT a¿ªÊ¼Ë÷Òı, INT a¿ªÊ¼¶¥µã) {
-	mÃüÁîÁĞ±í->DrawIndexedInstanced(aË÷ÒıÊı, 1, a¿ªÊ¼Ë÷Òı, a¿ªÊ¼¶¥µã, 0);
+void Cæ¸²æŸ“æ§åˆ¶::fç»˜åˆ¶ç´¢å¼•(UINT aç´¢å¼•æ•°, UINT aå¼€å§‹ç´¢å¼•, INT aå¼€å§‹é¡¶ç‚¹) {
+	må‘½ä»¤åˆ—è¡¨->DrawIndexedInstanced(aç´¢å¼•æ•°, 1, aå¼€å§‹ç´¢å¼•, aå¼€å§‹é¡¶ç‚¹, 0);
 }
-void CäÖÈ¾¿ØÖÆ::fµÈ´ıÍê³ÉÖ¡() {
-	const UINT64 vÎ§À¸Öµ = mÎ§À¸Öµ;
-	mÈıÎ¬->mÃüÁî¶ÓÁĞ->Signal(mÎ§À¸.Get(), vÎ§À¸Öµ);
-	mÎ§À¸Öµ++;
-	// µÈµ½Ç°Ò»Ö¡Íê³É¡£
-	if (mÎ§À¸->GetCompletedValue() < vÎ§À¸Öµ) {
-		mÎ§À¸->SetEventOnCompletion(vÎ§À¸Öµ, mÎ§À¸ÊÂ¼ş);
-		WaitForSingleObject(mÎ§À¸ÊÂ¼ş, INFINITE);
+void Cæ¸²æŸ“æ§åˆ¶::fç­‰å¾…å®Œæˆå¸§() {
+	const UINT64 vå›´æ å€¼ = må›´æ å€¼;
+	mä¸‰ç»´->må‘½ä»¤é˜Ÿåˆ—->Signal(må›´æ .Get(), vå›´æ å€¼);
+	må›´æ å€¼++;
+	// ç­‰åˆ°å‰ä¸€å¸§å®Œæˆã€‚
+	if (må›´æ ->GetCompletedValue() < vå›´æ å€¼) {
+		må›´æ ->SetEventOnCompletion(vå›´æ å€¼, må›´æ äº‹ä»¶);
+		WaitForSingleObject(må›´æ äº‹ä»¶, INFINITE);
 	}
 }
-UINT CäÖÈ¾¿ØÖÆ::f¸üĞÂÖ¡Ë÷Òı() {
-	mÖ¡Ë÷Òı = mÈıÎ¬->m½»»»Á´->GetCurrentBackBufferIndex();
-	return mÖ¡Ë÷Òı;
+UINT Cæ¸²æŸ“æ§åˆ¶::fæ›´æ–°å¸§ç´¢å¼•() {
+	må¸§ç´¢å¼• = mä¸‰ç»´->mäº¤æ¢é“¾->GetCurrentBackBufferIndex();
+	return må¸§ç´¢å¼•;
 }
-UINT CäÖÈ¾¿ØÖÆ::fgÖ¡Ë÷Òı() const {
-	return mÖ¡Ë÷Òı;
+UINT Cæ¸²æŸ“æ§åˆ¶::fgå¸§ç´¢å¼•() const {
+	return må¸§ç´¢å¼•;
 }
-void CäÖÈ¾¿ØÖÆ::f¸üĞÂ×ÊÔ´(ID3D12Resource *aÄ¿±ê, ID3D12Resource *aÔ´) {
-	mÃüÁîÁĞ±í->CopyResource(aÄ¿±ê, aÔ´);
-	ma¸üĞÂ×ÊÔ´.emplace_back(aÔ´);
+void Cæ¸²æŸ“æ§åˆ¶::fæ›´æ–°èµ„æº(ID3D12Resource *aç›®æ ‡, ID3D12Resource *aæº) {
+	må‘½ä»¤åˆ—è¡¨->CopyResource(aç›®æ ‡, aæº);
+	maæ›´æ–°èµ„æº.emplace_back(aæº);
 }
-void CäÖÈ¾¿ØÖÆ::f¸üĞÂÎÆÀí(ID3D12Resource *aÄ¿±ê, ID3D12Resource *aÔ´, D3D12_SUBRESOURCE_DATA &a×ÊÔ´ÃèÊö) {
-	UpdateSubresources(mÃüÁîÁĞ±í.Get(), aÄ¿±ê, aÔ´, 0, 0, 1, &a×ÊÔ´ÃèÊö);
-	mÃüÁîÁĞ±í->ResourceBarrier(1, &S×ÊÔ´Õ¤À¸::fc±ä»»(aÄ¿±ê, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
-	ma¸üĞÂ×ÊÔ´.emplace_back(aÔ´);
+void Cæ¸²æŸ“æ§åˆ¶::fæ›´æ–°çº¹ç†(ID3D12Resource *aç›®æ ‡, ID3D12Resource *aæº, D3D12_SUBRESOURCE_DATA &aèµ„æºæè¿°) {
+	UpdateSubresources(må‘½ä»¤åˆ—è¡¨.Get(), aç›®æ ‡, aæº, 0, 0, 1, &aèµ„æºæè¿°);
+	må‘½ä»¤åˆ—è¡¨->ResourceBarrier(1, &Sèµ„æºæ …æ ::fcå˜æ¢(aç›®æ ‡, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+	maæ›´æ–°èµ„æº.emplace_back(aæº);
 }
-void CäÖÈ¾¿ØÖÆ::fsÇåÆÁÑÕÉ«(const ÊıÑ§::SÑÕÉ« &a) {
-	mÇåÆÁÑÕÉ« = a;
+void Cæ¸²æŸ“æ§åˆ¶::fsæ¸…å±é¢œè‰²(const æ•°å­¦::Sé¢œè‰² &a) {
+	mæ¸…å±é¢œè‰² = a;
 }
-void CäÖÈ¾¿ØÖÆ::fsÇåÆÁÉî¶È(float a) {
-	mÇåÆÁÉî¶È = a;
+void Cæ¸²æŸ“æ§åˆ¶::fsæ¸…å±æ·±åº¦(float a) {
+	mæ¸…å±æ·±åº¦ = a;
 }
-void CäÖÈ¾¿ØÖÆ::fsÇåÆÁÄ£°å(UINT8 a) {
-	mÇåÆÁÄ£°å = a;
+void Cæ¸²æŸ“æ§åˆ¶::fsæ¸…å±æ¨¡æ¿(UINT8 a) {
+	mæ¸…å±æ¨¡æ¿ = a;
 }
-void CäÖÈ¾¿ØÖÆ::fsÄ£°å²Î¿¼Öµ(UINT a) {
-	mÃüÁîÁĞ±í->OMSetStencilRef(a);
+void Cæ¸²æŸ“æ§åˆ¶::fsæ¨¡æ¿å‚è€ƒå€¼(UINT a) {
+	må‘½ä»¤åˆ—è¡¨->OMSetStencilRef(a);
 }
-void CäÖÈ¾¿ØÖÆ::fsÍ¼ĞÎ¹ÜÏß(ID3D12PipelineState *a) {
-	mÍ¼ĞÎ¹ÜÏß = a;
-	mÃüÁîÁĞ±í->SetPipelineState(a);
+void Cæ¸²æŸ“æ§åˆ¶::fså›¾å½¢ç®¡çº¿(ID3D12PipelineState *a) {
+	må›¾å½¢ç®¡çº¿ = a;
+	må‘½ä»¤åˆ—è¡¨->SetPipelineState(a);
 }
-void CäÖÈ¾¿ØÖÆ::fs¸ùÇ©Ãû(ID3D12RootSignature *a) {
-	m¸ùÇ©Ãû = a;
-	mÃüÁîÁĞ±í->SetGraphicsRootSignature(a);
+void Cæ¸²æŸ“æ§åˆ¶::fsæ ¹ç­¾å(ID3D12RootSignature *a) {
+	mæ ¹ç­¾å = a;
+	må‘½ä»¤åˆ—è¡¨->SetGraphicsRootSignature(a);
 }
-void CäÖÈ¾¿ØÖÆ::fsÍ¼ÔªÍØÆË(EÍ¼ÔªÍØÆË a) {
-	mÃüÁîÁĞ±í->IASetPrimitiveTopology((D3D_PRIMITIVE_TOPOLOGY)a);
+void Cæ¸²æŸ“æ§åˆ¶::fså›¾å…ƒæ‹“æ‰‘(Eå›¾å…ƒæ‹“æ‰‘ a) {
+	må‘½ä»¤åˆ—è¡¨->IASetPrimitiveTopology((D3D_PRIMITIVE_TOPOLOGY)a);
 }
-void CäÖÈ¾¿ØÖÆ::fs¶¥µã»º³å(const D3D12_VERTEX_BUFFER_VIEW &a) {
-	mÃüÁîÁĞ±í->IASetVertexBuffers(0, 1, &a);
+void Cæ¸²æŸ“æ§åˆ¶::fsé¡¶ç‚¹ç¼“å†²(const D3D12_VERTEX_BUFFER_VIEW &a) {
+	må‘½ä»¤åˆ—è¡¨->IASetVertexBuffers(0, 1, &a);
 }
-void CäÖÈ¾¿ØÖÆ::fsË÷Òı»º³å(const D3D12_INDEX_BUFFER_VIEW &a) {
-	mÃüÁîÁĞ±í->IASetIndexBuffer(&a);
+void Cæ¸²æŸ“æ§åˆ¶::fsç´¢å¼•ç¼“å†²(const D3D12_INDEX_BUFFER_VIEW &a) {
+	må‘½ä»¤åˆ—è¡¨->IASetIndexBuffer(&a);
 }
-void CäÖÈ¾¿ØÖÆ::fs³£Á¿»º³å(UINT a²Û, const D3D12_GPU_VIRTUAL_ADDRESS &aÎ»ÖÃ) {
-	mÃüÁîÁĞ±í->SetGraphicsRootConstantBufferView(a²Û, aÎ»ÖÃ);
+void Cæ¸²æŸ“æ§åˆ¶::fså¸¸é‡ç¼“å†²(UINT aæ§½, const D3D12_GPU_VIRTUAL_ADDRESS &aä½ç½®) {
+	må‘½ä»¤åˆ—è¡¨->SetGraphicsRootConstantBufferView(aæ§½, aä½ç½®);
 }
-void CäÖÈ¾¿ØÖÆ::fsÎÆÀí(UINT a²Û, const D3D12_GPU_VIRTUAL_ADDRESS &aÎ»ÖÃ) {
-	mÃüÁîÁĞ±í->SetGraphicsRootShaderResourceView(a²Û, aÎ»ÖÃ);
+void Cæ¸²æŸ“æ§åˆ¶::fsçº¹ç†(UINT aæ§½, const D3D12_GPU_VIRTUAL_ADDRESS &aä½ç½®) {
+	må‘½ä»¤åˆ—è¡¨->SetGraphicsRootShaderResourceView(aæ§½, aä½ç½®);
 }
-void CäÖÈ¾¿ØÖÆ::fsÃèÊö·û±í(UINT a²Û, ID3D12DescriptorHeap *a¶Ñ) {
-	mÃüÁîÁĞ±í->SetDescriptorHeaps(1, &a¶Ñ);
-	mÃüÁîÁĞ±í->SetGraphicsRootDescriptorTable(a²Û, a¶Ñ->GetGPUDescriptorHandleForHeapStart());
+void Cæ¸²æŸ“æ§åˆ¶::fsæè¿°ç¬¦è¡¨(UINT aæ§½, ID3D12DescriptorHeap *aå †) {
+	må‘½ä»¤åˆ—è¡¨->SetDescriptorHeaps(1, &aå †);
+	må‘½ä»¤åˆ—è¡¨->SetGraphicsRootDescriptorTable(aæ§½, aå †->GetGPUDescriptorHandleForHeapStart());
 }
-D3D12_RESOURCE_BARRIER CäÖÈ¾¿ØÖÆ::fcäÖÈ¾ÊÓÍ¼Õ¤À¸±ä»»(D3D12_RESOURCE_STATES aÇ°, D3D12_RESOURCE_STATES aºó) {
-	return S×ÊÔ´Õ¤À¸::fc±ä»»(mÈıÎ¬->mäÖÈ¾Ä¿±ê¹ÜÀí->fgµ±Ç°×ÊÔ´(), aÇ°, aºó);
-}
-//==============================================================================
-// äÖÈ¾Ä¿±ê
-//==============================================================================
-const D3D12_CPU_DESCRIPTOR_HANDLE &CäÖÈ¾Ä¿±ê¹ÜÀí::f¸üĞÂÊÓÍ¼() {
-	mµ±Ç°äÖÈ¾Ä¿±êÊÓÍ¼ = mäÖÈ¾Ä¿±ê¶Ñ->GetCPUDescriptorHandleForHeapStart();
-	mµ±Ç°äÖÈ¾Ä¿±êÊÓÍ¼.ptr += *mÖ¡Ë÷Òı * mäÖÈ¾Ä¿±êÊÓÍ¼´óĞ¡;
-	return mµ±Ç°äÖÈ¾Ä¿±êÊÓÍ¼;
-}
-const D3D12_CPU_DESCRIPTOR_HANDLE &CäÖÈ¾Ä¿±ê¹ÜÀí::fgµ±Ç°ÊÓÍ¼() const {
-	return mµ±Ç°äÖÈ¾Ä¿±êÊÓÍ¼;
-}
-ID3D12Resource *CäÖÈ¾Ä¿±ê¹ÜÀí::fgµ±Ç°×ÊÔ´() const {
-	return mäÖÈ¾Ä¿±ê[*mÖ¡Ë÷Òı].Get();
-}
-const D3D12_CPU_DESCRIPTOR_HANDLE &CÉî¶ÈÄ£°å¹ÜÀí::f¸üĞÂÊÓÍ¼() {
-	mµ±Ç°Éî¶ÈÄ£°åÊÓÍ¼ = mÉî¶ÈÄ£°å¶Ñ->GetCPUDescriptorHandleForHeapStart();
-	mµ±Ç°Éî¶ÈÄ£°åÊÓÍ¼.ptr += *mÖ¡Ë÷Òı * mÉî¶ÈÄ£°åÊÓÍ¼´óĞ¡;
-	return mµ±Ç°Éî¶ÈÄ£°åÊÓÍ¼;
-
-}
-const D3D12_CPU_DESCRIPTOR_HANDLE &CÉî¶ÈÄ£°å¹ÜÀí::fgµ±Ç°ÊÓÍ¼() const {
-	return mµ±Ç°Éî¶ÈÄ£°åÊÓÍ¼;
-
-}
-ID3D12Resource *CÉî¶ÈÄ£°å¹ÜÀí::fgµ±Ç°×ÊÔ´() const {
-	return mÉî¶ÈÄ£°å[*mÖ¡Ë÷Òı].Get();
-}
-
-//==============================================================================
-// ×ÊÔ´
-//==============================================================================
-void C³£Á¿»º³å::f¸´ÖÆ(void *aÊı¾İ, size_t a´óĞ¡) {
-	assert(mÓ³Éä);
-	memcpy(mÓ³Éä, aÊı¾İ, a´óĞ¡);
+D3D12_RESOURCE_BARRIER Cæ¸²æŸ“æ§åˆ¶::fcæ¸²æŸ“è§†å›¾æ …æ å˜æ¢(D3D12_RESOURCE_STATES aå‰, D3D12_RESOURCE_STATES aå) {
+	return Sèµ„æºæ …æ ::fcå˜æ¢(mä¸‰ç»´->mæ¸²æŸ“ç›®æ ‡ç®¡ç†->fgå½“å‰èµ„æº(), aå‰, aå);
 }
 //==============================================================================
-// äÖÈ¾×´Ì¬
+// æ¸²æŸ“ç›®æ ‡
 //==============================================================================
-CäÖÈ¾×´Ì¬::CäÖÈ¾×´Ì¬() {
-	//¹âÕ¤»¯	================================================================
-	//Ïß¿òäÖÈ¾
-	m¹âÕ¤»¯.mÏß¿òäÖÈ¾ = cÄ¬ÈÏ¹âÕ¤»¯;
-	m¹âÕ¤»¯.mÏß¿òäÖÈ¾.CullMode = D3D12_CULL_MODE_BACK;
-	m¹âÕ¤»¯.mÏß¿òäÖÈ¾.FillMode = D3D12_FILL_MODE_WIREFRAME;
-	m¹âÕ¤»¯.mÏß¿òäÖÈ¾.FrontCounterClockwise = false;
-	m¹âÕ¤»¯.mÏß¿òäÖÈ¾.DepthClipEnable = true;
-	m¹âÕ¤»¯.mÏß¿òäÖÈ¾.MultisampleEnable = true;
-	//ÏÔÊ¾Òş²ØÃæ
-	m¹âÕ¤»¯.mÏÔÊ¾Òş²ØÃæ = cÄ¬ÈÏ¹âÕ¤»¯;
-	m¹âÕ¤»¯.mÏÔÊ¾Òş²ØÃæ.CullMode = D3D12_CULL_MODE_NONE;
-	m¹âÕ¤»¯.mÏÔÊ¾Òş²ØÃæ.FillMode = D3D12_FILL_MODE_SOLID;
-	//ÉèÖÃÄæÊ±ÕëÎªÕıÃæ
-	m¹âÕ¤»¯.m·´ÃæäÖÈ¾ = cÄ¬ÈÏ¹âÕ¤»¯;
-	m¹âÕ¤»¯.m·´ÃæäÖÈ¾.FrontCounterClockwise = true;
-
-	//»ìºÏ	====================================================================
-	//¿ªÆôÍ¸Ã÷
-	m»ìºÏ.m¿ªÆôÍ¸Ã÷ = cÄ¬ÈÏ»ìºÏ;
-	m»ìºÏ.m¿ªÆôÍ¸Ã÷.RenderTarget[0].BlendEnable = true;
-	m»ìºÏ.m¿ªÆôÍ¸Ã÷.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
-	m»ìºÏ.m¿ªÆôÍ¸Ã÷.RenderTarget[0].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
-	m»ìºÏ.m¿ªÆôÍ¸Ã÷.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
-	m»ìºÏ.m¿ªÆôÍ¸Ã÷.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
-	m»ìºÏ.m¿ªÆôÍ¸Ã÷.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_DEST_ALPHA;
-	m»ìºÏ.m¿ªÆôÍ¸Ã÷.RenderTarget[0].BlendOpAlpha = D3D12_BLEND_OP_MAX;
-	m»ìºÏ.m¿ªÆôÍ¸Ã÷.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
-	//ÑÕÉ«µş¼Ó
-	m»ìºÏ.mÑÕÉ«µş¼Ó = m»ìºÏ.m¿ªÆôÍ¸Ã÷;
-	m»ìºÏ.mÑÕÉ«µş¼Ó.RenderTarget[0].DestBlend = D3D12_BLEND_DEST_ALPHA;
-	m»ìºÏ.mÑÕÉ«µş¼Ó.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
-	m»ìºÏ.mÑÕÉ«µş¼Ó.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_DEST_ALPHA;
-	//½ûÖ¹Ğ´ÑÕÉ«
-	m»ìºÏ.m½ûÖ¹Ğ´ÑÕÉ« = cÄ¬ÈÏ»ìºÏ;
-	m»ìºÏ.m½ûÖ¹Ğ´ÑÕÉ«.RenderTarget[0].BlendEnable = false;
-	m»ìºÏ.m½ûÖ¹Ğ´ÑÕÉ«.RenderTarget[0].RenderTargetWriteMask = 0;
-
-	//Éî¶ÈÄ£°å	================================================================
-	//Õı³£Éî¶È
-	mÉî¶ÈÄ£°å.mÕı³£Éî¶Èl = cÄ¬ÈÏÉî¶ÈÄ£°å;
-	mÉî¶ÈÄ£°å.mÕı³£Éî¶Èl.DepthEnable = true;
-	mÉî¶ÈÄ£°å.mÕı³£Éî¶Èl.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-	mÉî¶ÈÄ£°å.mÕı³£Éî¶Èl.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
-	mÉî¶ÈÄ£°å.mÕı³£Éî¶Èl.StencilEnable = false;
-	mÉî¶ÈÄ£°å.mÕı³£Éî¶Èr = mÉî¶ÈÄ£°å.mÕı³£Éî¶Èl;
-	mÉî¶ÈÄ£°å.mÕı³£Éî¶Èr.DepthFunc = D3D12_COMPARISON_FUNC_GREATER_EQUAL;
-	mÉî¶ÈÄ£°å.m×ÜÊÇ¸²¸Ç = mÉî¶ÈÄ£°å.mÕı³£Éî¶Èl;
-	mÉî¶ÈÄ£°å.m×ÜÊÇ¸²¸Ç.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
-	//Ä£°å±ê¼Ç
-	mÉî¶ÈÄ£°å.mÄ£°å±ê¼Ç = cÄ¬ÈÏÉî¶ÈÄ£°å;
-	mÉî¶ÈÄ£°å.mÄ£°å±ê¼Ç.DepthEnable = false;
-	mÉî¶ÈÄ£°å.mÄ£°å±ê¼Ç.StencilEnable = true;
-	mÉî¶ÈÄ£°å.mÄ£°å±ê¼Ç.FrontFace.StencilFailOp = D3D12_STENCIL_OP_KEEP;
-	mÉî¶ÈÄ£°å.mÄ£°å±ê¼Ç.FrontFace.StencilDepthFailOp = D3D12_STENCIL_OP_KEEP;
-	mÉî¶ÈÄ£°å.mÄ£°å±ê¼Ç.FrontFace.StencilPassOp = D3D12_STENCIL_OP_REPLACE;
-	mÉî¶ÈÄ£°å.mÄ£°å±ê¼Ç.FrontFace.StencilFunc = D3D12_COMPARISON_FUNC_ALWAYS;
-	mÉî¶ÈÄ£°å.mÄ£°å±ê¼Ç.BackFace = mÉî¶ÈÄ£°å.mÄ£°å±ê¼Ç.FrontFace;
-	//Ä£°å±È½Ï
-	mÉî¶ÈÄ£°å.mÄ£°å±È½Ï = cÄ¬ÈÏÉî¶ÈÄ£°å;
-	mÉî¶ÈÄ£°å.mÄ£°å±È½Ï.StencilEnable = true;
-	mÉî¶ÈÄ£°å.mÄ£°å±È½Ï.FrontFace.StencilFunc = D3D12_COMPARISON_FUNC_EQUAL;
-	mÉî¶ÈÄ£°å.mÄ£°å±È½Ï.BackFace.StencilFunc = D3D12_COMPARISON_FUNC_EQUAL;
-
-	//²ÉÑùÆ÷	================================================================
-	//ÎÆÀí
-	m²ÉÑùÆ÷.mÎÆÀí.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
-	m²ÉÑùÆ÷.mÎÆÀí.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-	m²ÉÑùÆ÷.mÎÆÀí.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-	m²ÉÑùÆ÷.mÎÆÀí.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-	m²ÉÑùÆ÷.mÎÆÀí.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-	m²ÉÑùÆ÷.mÎÆÀí.BorderColor[0] = 0;
-	m²ÉÑùÆ÷.mÎÆÀí.BorderColor[1] = 0;
-	m²ÉÑùÆ÷.mÎÆÀí.BorderColor[2] = 0;
-	m²ÉÑùÆ÷.mÎÆÀí.BorderColor[3] = 0;
-	m²ÉÑùÆ÷.mÎÆÀí.MinLOD = 0;
-	m²ÉÑùÆ÷.mÎÆÀí.MaxLOD = D3D12_FLOAT32_MAX;
-	m²ÉÑùÆ÷.mÎÆÀí.MipLODBias = 0;
-	m²ÉÑùÆ÷.mÎÆÀí.MaxAnisotropy = 16;
-	//Í¼°¸
-	m²ÉÑùÆ÷.mÍ¼°¸ = m²ÉÑùÆ÷.mÎÆÀí;
-	m²ÉÑùÆ÷.mÍ¼°¸.AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
-	m²ÉÑùÆ÷.mÍ¼°¸.AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
-	m²ÉÑùÆ÷.mÍ¼°¸.AddressW = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
-	//¸÷ÏòÒìĞÔ¹ıÂË
-	m²ÉÑùÆ÷.m¸÷ÏòÒìĞÔ¹ıÂË = m²ÉÑùÆ÷.mÎÆÀí;
-	m²ÉÑùÆ÷.m¸÷ÏòÒìĞÔ¹ıÂË.Filter = D3D12_FILTER_ANISOTROPIC;
+const D3D12_CPU_DESCRIPTOR_HANDLE &Cæ¸²æŸ“ç›®æ ‡ç®¡ç†::fæ›´æ–°è§†å›¾() {
+	må½“å‰æ¸²æŸ“ç›®æ ‡è§†å›¾ = mæ¸²æŸ“ç›®æ ‡å †->GetCPUDescriptorHandleForHeapStart();
+	må½“å‰æ¸²æŸ“ç›®æ ‡è§†å›¾.ptr += *må¸§ç´¢å¼• * mæ¸²æŸ“ç›®æ ‡è§†å›¾å¤§å°;
+	return må½“å‰æ¸²æŸ“ç›®æ ‡è§†å›¾;
 }
-CäÖÈ¾×´Ì¬::~CäÖÈ¾×´Ì¬() {
+const D3D12_CPU_DESCRIPTOR_HANDLE &Cæ¸²æŸ“ç›®æ ‡ç®¡ç†::fgå½“å‰è§†å›¾() const {
+	return må½“å‰æ¸²æŸ“ç›®æ ‡è§†å›¾;
 }
-D3D12_SAMPLER_DESC CäÖÈ¾×´Ì¬::ft²ÉÑùÆ÷(const D3D12_STATIC_SAMPLER_DESC &a) {
+ID3D12Resource *Cæ¸²æŸ“ç›®æ ‡ç®¡ç†::fgå½“å‰èµ„æº() const {
+	return mæ¸²æŸ“ç›®æ ‡[*må¸§ç´¢å¼•].Get();
+}
+const D3D12_CPU_DESCRIPTOR_HANDLE &Cæ·±åº¦æ¨¡æ¿ç®¡ç†::fæ›´æ–°è§†å›¾() {
+	må½“å‰æ·±åº¦æ¨¡æ¿è§†å›¾ = mæ·±åº¦æ¨¡æ¿å †->GetCPUDescriptorHandleForHeapStart();
+	må½“å‰æ·±åº¦æ¨¡æ¿è§†å›¾.ptr += *må¸§ç´¢å¼• * mæ·±åº¦æ¨¡æ¿è§†å›¾å¤§å°;
+	return må½“å‰æ·±åº¦æ¨¡æ¿è§†å›¾;
+
+}
+const D3D12_CPU_DESCRIPTOR_HANDLE &Cæ·±åº¦æ¨¡æ¿ç®¡ç†::fgå½“å‰è§†å›¾() const {
+	return må½“å‰æ·±åº¦æ¨¡æ¿è§†å›¾;
+
+}
+ID3D12Resource *Cæ·±åº¦æ¨¡æ¿ç®¡ç†::fgå½“å‰èµ„æº() const {
+	return mæ·±åº¦æ¨¡æ¿[*må¸§ç´¢å¼•].Get();
+}
+
+//==============================================================================
+// èµ„æº
+//==============================================================================
+void Cå¸¸é‡ç¼“å†²::få¤åˆ¶(void *aæ•°æ®, size_t aå¤§å°) {
+	assert(mæ˜ å°„);
+	memcpy(mæ˜ å°„, aæ•°æ®, aå¤§å°);
+}
+//==============================================================================
+// æ¸²æŸ“çŠ¶æ€
+//==============================================================================
+Cæ¸²æŸ“çŠ¶æ€::Cæ¸²æŸ“çŠ¶æ€() {
+	//å…‰æ …åŒ–	================================================================
+	//çº¿æ¡†æ¸²æŸ“
+	må…‰æ …åŒ–.mçº¿æ¡†æ¸²æŸ“ = cé»˜è®¤å…‰æ …åŒ–;
+	må…‰æ …åŒ–.mçº¿æ¡†æ¸²æŸ“.CullMode = D3D12_CULL_MODE_BACK;
+	må…‰æ …åŒ–.mçº¿æ¡†æ¸²æŸ“.FillMode = D3D12_FILL_MODE_WIREFRAME;
+	må…‰æ …åŒ–.mçº¿æ¡†æ¸²æŸ“.FrontCounterClockwise = false;
+	må…‰æ …åŒ–.mçº¿æ¡†æ¸²æŸ“.DepthClipEnable = true;
+	må…‰æ …åŒ–.mçº¿æ¡†æ¸²æŸ“.MultisampleEnable = true;
+	//æ˜¾ç¤ºéšè—é¢
+	må…‰æ …åŒ–.mæ˜¾ç¤ºéšè—é¢ = cé»˜è®¤å…‰æ …åŒ–;
+	må…‰æ …åŒ–.mæ˜¾ç¤ºéšè—é¢.CullMode = D3D12_CULL_MODE_NONE;
+	må…‰æ …åŒ–.mæ˜¾ç¤ºéšè—é¢.FillMode = D3D12_FILL_MODE_SOLID;
+	//è®¾ç½®é€†æ—¶é’ˆä¸ºæ­£é¢
+	må…‰æ …åŒ–.måé¢æ¸²æŸ“ = cé»˜è®¤å…‰æ …åŒ–;
+	må…‰æ …åŒ–.måé¢æ¸²æŸ“.FrontCounterClockwise = true;
+
+	//æ··åˆ	====================================================================
+	//å¼€å¯é€æ˜
+	mæ··åˆ.må¼€å¯é€æ˜ = cé»˜è®¤æ··åˆ;
+	mæ··åˆ.må¼€å¯é€æ˜.RenderTarget[0].BlendEnable = true;
+	mæ··åˆ.må¼€å¯é€æ˜.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+	mæ··åˆ.må¼€å¯é€æ˜.RenderTarget[0].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+	mæ··åˆ.må¼€å¯é€æ˜.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
+	mæ··åˆ.må¼€å¯é€æ˜.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
+	mæ··åˆ.må¼€å¯é€æ˜.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_DEST_ALPHA;
+	mæ··åˆ.må¼€å¯é€æ˜.RenderTarget[0].BlendOpAlpha = D3D12_BLEND_OP_MAX;
+	mæ··åˆ.må¼€å¯é€æ˜.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	//é¢œè‰²å åŠ 
+	mæ··åˆ.mé¢œè‰²å åŠ  = mæ··åˆ.må¼€å¯é€æ˜;
+	mæ··åˆ.mé¢œè‰²å åŠ .RenderTarget[0].DestBlend = D3D12_BLEND_DEST_ALPHA;
+	mæ··åˆ.mé¢œè‰²å åŠ .RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
+	mæ··åˆ.mé¢œè‰²å åŠ .RenderTarget[0].DestBlendAlpha = D3D12_BLEND_DEST_ALPHA;
+	//ç¦æ­¢å†™é¢œè‰²
+	mæ··åˆ.mç¦æ­¢å†™é¢œè‰² = cé»˜è®¤æ··åˆ;
+	mæ··åˆ.mç¦æ­¢å†™é¢œè‰².RenderTarget[0].BlendEnable = false;
+	mæ··åˆ.mç¦æ­¢å†™é¢œè‰².RenderTarget[0].RenderTargetWriteMask = 0;
+
+	//æ·±åº¦æ¨¡æ¿	================================================================
+	//æ­£å¸¸æ·±åº¦
+	mæ·±åº¦æ¨¡æ¿.mæ­£å¸¸æ·±åº¦l = cé»˜è®¤æ·±åº¦æ¨¡æ¿;
+	mæ·±åº¦æ¨¡æ¿.mæ­£å¸¸æ·±åº¦l.DepthEnable = true;
+	mæ·±åº¦æ¨¡æ¿.mæ­£å¸¸æ·±åº¦l.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	mæ·±åº¦æ¨¡æ¿.mæ­£å¸¸æ·±åº¦l.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+	mæ·±åº¦æ¨¡æ¿.mæ­£å¸¸æ·±åº¦l.StencilEnable = false;
+	mæ·±åº¦æ¨¡æ¿.mæ­£å¸¸æ·±åº¦r = mæ·±åº¦æ¨¡æ¿.mæ­£å¸¸æ·±åº¦l;
+	mæ·±åº¦æ¨¡æ¿.mæ­£å¸¸æ·±åº¦r.DepthFunc = D3D12_COMPARISON_FUNC_GREATER_EQUAL;
+	mæ·±åº¦æ¨¡æ¿.mæ€»æ˜¯è¦†ç›– = mæ·±åº¦æ¨¡æ¿.mæ­£å¸¸æ·±åº¦l;
+	mæ·±åº¦æ¨¡æ¿.mæ€»æ˜¯è¦†ç›–.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+	//æ¨¡æ¿æ ‡è®°
+	mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ ‡è®° = cé»˜è®¤æ·±åº¦æ¨¡æ¿;
+	mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ ‡è®°.DepthEnable = false;
+	mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ ‡è®°.StencilEnable = true;
+	mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ ‡è®°.FrontFace.StencilFailOp = D3D12_STENCIL_OP_KEEP;
+	mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ ‡è®°.FrontFace.StencilDepthFailOp = D3D12_STENCIL_OP_KEEP;
+	mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ ‡è®°.FrontFace.StencilPassOp = D3D12_STENCIL_OP_REPLACE;
+	mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ ‡è®°.FrontFace.StencilFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+	mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ ‡è®°.BackFace = mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ ‡è®°.FrontFace;
+	//æ¨¡æ¿æ¯”è¾ƒ
+	mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ¯”è¾ƒ = cé»˜è®¤æ·±åº¦æ¨¡æ¿;
+	mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ¯”è¾ƒ.StencilEnable = true;
+	mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ¯”è¾ƒ.FrontFace.StencilFunc = D3D12_COMPARISON_FUNC_EQUAL;
+	mæ·±åº¦æ¨¡æ¿.mæ¨¡æ¿æ¯”è¾ƒ.BackFace.StencilFunc = D3D12_COMPARISON_FUNC_EQUAL;
+
+	//é‡‡æ ·å™¨	================================================================
+	//çº¹ç†
+	mé‡‡æ ·å™¨.mçº¹ç†.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+	mé‡‡æ ·å™¨.mçº¹ç†.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	mé‡‡æ ·å™¨.mçº¹ç†.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	mé‡‡æ ·å™¨.mçº¹ç†.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	mé‡‡æ ·å™¨.mçº¹ç†.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+	mé‡‡æ ·å™¨.mçº¹ç†.BorderColor[0] = 0;
+	mé‡‡æ ·å™¨.mçº¹ç†.BorderColor[1] = 0;
+	mé‡‡æ ·å™¨.mçº¹ç†.BorderColor[2] = 0;
+	mé‡‡æ ·å™¨.mçº¹ç†.BorderColor[3] = 0;
+	mé‡‡æ ·å™¨.mçº¹ç†.MinLOD = 0;
+	mé‡‡æ ·å™¨.mçº¹ç†.MaxLOD = D3D12_FLOAT32_MAX;
+	mé‡‡æ ·å™¨.mçº¹ç†.MipLODBias = 0;
+	mé‡‡æ ·å™¨.mçº¹ç†.MaxAnisotropy = 16;
+	//å›¾æ¡ˆ
+	mé‡‡æ ·å™¨.må›¾æ¡ˆ = mé‡‡æ ·å™¨.mçº¹ç†;
+	mé‡‡æ ·å™¨.må›¾æ¡ˆ.AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+	mé‡‡æ ·å™¨.må›¾æ¡ˆ.AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+	mé‡‡æ ·å™¨.må›¾æ¡ˆ.AddressW = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+	//å„å‘å¼‚æ€§è¿‡æ»¤
+	mé‡‡æ ·å™¨.må„å‘å¼‚æ€§è¿‡æ»¤ = mé‡‡æ ·å™¨.mçº¹ç†;
+	mé‡‡æ ·å™¨.må„å‘å¼‚æ€§è¿‡æ»¤.Filter = D3D12_FILTER_ANISOTROPIC;
+}
+Cæ¸²æŸ“çŠ¶æ€::~Cæ¸²æŸ“çŠ¶æ€() {
+}
+D3D12_SAMPLER_DESC Cæ¸²æŸ“çŠ¶æ€::fté‡‡æ ·å™¨(const D3D12_STATIC_SAMPLER_DESC &a) {
 	return {a.Filter, a.AddressU, a.AddressV, a.AddressW, a.MipLODBias, a.MaxAnisotropy, a.ComparisonFunc, {0, 0, 0, 0}, a.MinLOD, a.MaxLOD};
 }
-D3D12_STATIC_SAMPLER_DESC CäÖÈ¾×´Ì¬::ft¾²Ì¬²ÉÑùÆ÷(const D3D12_SAMPLER_DESC &a, UINT a¼Ä´æÆ÷, UINT a¿Õ¼ä, D3D12_SHADER_VISIBILITY a¿ÉÊÓĞÔ) {
-	return {a.Filter, a.AddressU, a.AddressV, a.AddressW, a.MipLODBias, a.MaxAnisotropy, a.ComparisonFunc, D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK, a.MinLOD, a.MaxLOD, a¼Ä´æÆ÷, a¿Õ¼ä, a¿ÉÊÓĞÔ};
+D3D12_STATIC_SAMPLER_DESC Cæ¸²æŸ“çŠ¶æ€::fté™æ€é‡‡æ ·å™¨(const D3D12_SAMPLER_DESC &a, UINT aå¯„å­˜å™¨, UINT aç©ºé—´, D3D12_SHADER_VISIBILITY aå¯è§†æ€§) {
+	return {a.Filter, a.AddressU, a.AddressV, a.AddressW, a.MipLODBias, a.MaxAnisotropy, a.ComparisonFunc, D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK, a.MinLOD, a.MaxLOD, aå¯„å­˜å™¨, aç©ºé—´, aå¯è§†æ€§};
 }
 //==============================================================================
-// ¶¥µã¸ñÊ½
+// é¡¶ç‚¹æ ¼å¼
 //==============================================================================
-void C¶¥µã¸ñÊ½::fÇå¿Õ() {
-	mÊı×é.clear();
-	mÀàĞÍÀÛ¼Æ.clear();
-	m×Ö½ÚÀÛ¼Æ = 0;
+void Cé¡¶ç‚¹æ ¼å¼::fæ¸…ç©º() {
+	mæ•°ç»„.clear();
+	mç±»å‹ç´¯è®¡.clear();
+	må­—èŠ‚ç´¯è®¡ = 0;
 }
-void C¶¥µã¸ñÊ½::fÌí¼Ó(EÀàĞÍ aÀàĞÍ, int a´óĞ¡) {
-	static const char*const vÓïÒå[] = {
+void Cé¡¶ç‚¹æ ¼å¼::fæ·»åŠ (Eç±»å‹ aç±»å‹, int aå¤§å°) {
+	static const char*const vè¯­ä¹‰[] = {
 		"POSITION",
 		"NORMAL",
 		"BINORMAL",
@@ -770,182 +801,182 @@ void C¶¥µã¸ñÊ½::fÌí¼Ó(EÀàĞÍ aÀàĞÍ, int a´óĞ¡) {
 		"TANGENT",
 		"ALPHA"
 	};
-	fÌí¼Ó(vÓïÒå[aÀàĞÍ], a´óĞ¡);
+	fæ·»åŠ (vè¯­ä¹‰[aç±»å‹], aå¤§å°);
 }
-void C¶¥µã¸ñÊ½::fÌí¼Ó(const char *aÓïÒå, int a´óĞ¡) {
-	static const DXGI_FORMAT v¸ñÊ½[] = {
+void Cé¡¶ç‚¹æ ¼å¼::fæ·»åŠ (const char *aè¯­ä¹‰, int aå¤§å°) {
+	static const DXGI_FORMAT væ ¼å¼[] = {
 		DXGI_FORMAT_R32_FLOAT,
 		DXGI_FORMAT_R32G32_FLOAT,
 		DXGI_FORMAT_R32G32B32_FLOAT,
 		DXGI_FORMAT_R32G32B32A32_FLOAT
 	};
 	D3D12_INPUT_ELEMENT_DESC v;
-	v.AlignedByteOffset = m×Ö½ÚÀÛ¼Æ;
-	v.Format = v¸ñÊ½[a´óĞ¡ - 1];
-	m×Ö½ÚÀÛ¼Æ += a´óĞ¡ * 4;
-	v.SemanticName = aÓïÒå;
-	auto &vÓïÒåË÷Òı = mÀàĞÍÀÛ¼Æ[aÓïÒå];
-	v.SemanticIndex = vÓïÒåË÷Òı;
-	vÓïÒåË÷Òı += 1;
+	v.AlignedByteOffset = må­—èŠ‚ç´¯è®¡;
+	v.Format = væ ¼å¼[aå¤§å° - 1];
+	må­—èŠ‚ç´¯è®¡ += aå¤§å° * 4;
+	v.SemanticName = aè¯­ä¹‰;
+	auto &vè¯­ä¹‰ç´¢å¼• = mç±»å‹ç´¯è®¡[aè¯­ä¹‰];
+	v.SemanticIndex = vè¯­ä¹‰ç´¢å¼•;
+	vè¯­ä¹‰ç´¢å¼• += 1;
 	v.InputSlot = 0;
 	v.InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
 	v.InstanceDataStepRate = 0;
-	mÊı×é.push_back(v);
+	mæ•°ç»„.push_back(v);
 }
-D3D12_INPUT_LAYOUT_DESC C¶¥µã¸ñÊ½::fgÊäÈë²ãÃèÊö() const {
-	return {mÊı×é.data(), (UINT)mÊı×é.size()};
+D3D12_INPUT_LAYOUT_DESC Cé¡¶ç‚¹æ ¼å¼::fgè¾“å…¥å±‚æè¿°() const {
+	return {mæ•°ç»„.data(), (UINT)mæ•°ç»„.size()};
 }
 //==============================================================================
-// ¸ùÇ©Ãû
+// æ ¹ç­¾å
 //==============================================================================
-void C¸ùÇ©Ãû²ÎÊı::fÇå¿Õ() {
-	maË÷Òı.clear();
-	ma²ÎÊı.clear();
-	ma²ÉÑùÆ÷.clear();
-	maÃèÊö·¶Î§.clear();
-	maÃèÊö·û±í.clear();
-	miÁ¬ĞøÌí¼Ó = false;
+void Cæ ¹ç­¾åå‚æ•°::fæ¸…ç©º() {
+	maç´¢å¼•.clear();
+	maå‚æ•°.clear();
+	maé‡‡æ ·å™¨.clear();
+	maæè¿°èŒƒå›´.clear();
+	maæè¿°ç¬¦è¡¨.clear();
+	miè¿ç»­æ·»åŠ  = false;
 }
-C¸ùÇ©Ãû²ÎÊı &C¸ùÇ©Ãû²ÎÊı::fÌí¼ÓÃèÊö·û(EÀàĞÍ aÀàĞÍ, UINT a¼Ä´æÆ÷, UINT a¿Õ¼ä, E×ÅÉ«Æ÷ a¿É¼ûĞÔ) {
-	fÊµÏÖ_Ìí¼ÓË÷Òı(E¸ù²ÎÊıÀàĞÍ::eÃèÊö·û);
-	D3D12_ROOT_PARAMETER v²ÎÊı;
-	v²ÎÊı.ParameterType = f¼ÆËã¸ù²ÎÊıÀàĞÍ(aÀàĞÍ);
-	v²ÎÊı.Descriptor.ShaderRegister = a¼Ä´æÆ÷;
-	v²ÎÊı.Descriptor.RegisterSpace = a¿Õ¼ä;
-	v²ÎÊı.ShaderVisibility = f¼ÆËã¿É¼ûĞÔ(a¿É¼ûĞÔ);
-	ma²ÎÊı.push_back(v²ÎÊı);
+Cæ ¹ç­¾åå‚æ•° &Cæ ¹ç­¾åå‚æ•°::fæ·»åŠ æè¿°ç¬¦(Eç±»å‹ aç±»å‹, UINT aå¯„å­˜å™¨, UINT aç©ºé—´, Eç€è‰²å™¨ aå¯è§æ€§) {
+	få®ç°_æ·»åŠ ç´¢å¼•(Eæ ¹å‚æ•°ç±»å‹::eæè¿°ç¬¦);
+	D3D12_ROOT_PARAMETER vå‚æ•°;
+	vå‚æ•°.ParameterType = fè®¡ç®—æ ¹å‚æ•°ç±»å‹(aç±»å‹);
+	vå‚æ•°.Descriptor.ShaderRegister = aå¯„å­˜å™¨;
+	vå‚æ•°.Descriptor.RegisterSpace = aç©ºé—´;
+	vå‚æ•°.ShaderVisibility = fè®¡ç®—å¯è§æ€§(aå¯è§æ€§);
+	maå‚æ•°.push_back(vå‚æ•°);
 	return *this;
 }
-C¸ùÇ©Ãû²ÎÊı &C¸ùÇ©Ãû²ÎÊı::fÌí¼Ó²ÉÑùÆ÷(const D3D12_SAMPLER_DESC &a²ÉÑùÆ÷, UINT a¼Ä´æÆ÷, UINT a¿Õ¼ä, E×ÅÉ«Æ÷ a¿É¼ûĞÔ) {
-	ma²ÉÑùÆ÷.push_back(CäÖÈ¾×´Ì¬::ft¾²Ì¬²ÉÑùÆ÷(a²ÉÑùÆ÷, a¼Ä´æÆ÷, a¿Õ¼ä, f¼ÆËã¿É¼ûĞÔ(a¿É¼ûĞÔ)));
+Cæ ¹ç­¾åå‚æ•° &Cæ ¹ç­¾åå‚æ•°::fæ·»åŠ é‡‡æ ·å™¨(const D3D12_SAMPLER_DESC &aé‡‡æ ·å™¨, UINT aå¯„å­˜å™¨, UINT aç©ºé—´, Eç€è‰²å™¨ aå¯è§æ€§) {
+	maé‡‡æ ·å™¨.push_back(Cæ¸²æŸ“çŠ¶æ€::fté™æ€é‡‡æ ·å™¨(aé‡‡æ ·å™¨, aå¯„å­˜å™¨, aç©ºé—´, fè®¡ç®—å¯è§æ€§(aå¯è§æ€§)));
 	return *this;
 }
-C¸ùÇ©Ãû²ÎÊı &C¸ùÇ©Ãû²ÎÊı::fÌí¼Ó·¶Î§(EÀàĞÍ aÀàĞÍ, UINT aÊıÁ¿, UINT a¿ªÊ¼¼Ä´æÆ÷, UINT a¼Ä´æÆ÷¿Õ¼ä, UINT aÆ«ÒÆ, E×ÅÉ«Æ÷ a¿É¼ûĞÔ) {
-	assert(miÁ¬ĞøÌí¼Ó == false);	//Á¬ĞøÌí¼Ó·¶Î§Ê±²»ÄÜÌí¼Óµ¥¸ö·¶Î§
-	assert(aÊıÁ¿ > 0);
-	fÊµÏÖ_Ìí¼ÓË÷Òı(E¸ù²ÎÊıÀàĞÍ::eÃèÊö·û±í);
-	SÃèÊö·û±í vÃèÊö±í;
-	vÃèÊö±í.m¿ªÊ¼Î»ÖÃ = maÃèÊö·¶Î§.size();
-	vÃèÊö±í.mÊıÁ¿ = 1;
-	vÃèÊö±í.m¿É¼ûĞÔ = f¼ÆËã¿É¼ûĞÔ(a¿É¼ûĞÔ);
-	maÃèÊö·û±í.push_back(vÃèÊö±í);
-	fÊµÏÖ_Ìí¼Ó·¶Î§(aÀàĞÍ, aÊıÁ¿, a¿ªÊ¼¼Ä´æÆ÷, a¼Ä´æÆ÷¿Õ¼ä, aÆ«ÒÆ);
+Cæ ¹ç­¾åå‚æ•° &Cæ ¹ç­¾åå‚æ•°::fæ·»åŠ èŒƒå›´(Eç±»å‹ aç±»å‹, UINT aæ•°é‡, UINT aå¼€å§‹å¯„å­˜å™¨, UINT aå¯„å­˜å™¨ç©ºé—´, UINT aåç§», Eç€è‰²å™¨ aå¯è§æ€§) {
+	assert(miè¿ç»­æ·»åŠ  == false);	//è¿ç»­æ·»åŠ èŒƒå›´æ—¶ä¸èƒ½æ·»åŠ å•ä¸ªèŒƒå›´
+	assert(aæ•°é‡ > 0);
+	få®ç°_æ·»åŠ ç´¢å¼•(Eæ ¹å‚æ•°ç±»å‹::eæè¿°ç¬¦è¡¨);
+	Sæè¿°ç¬¦è¡¨ væè¿°è¡¨;
+	væè¿°è¡¨.må¼€å§‹ä½ç½® = maæè¿°èŒƒå›´.size();
+	væè¿°è¡¨.mæ•°é‡ = 1;
+	væè¿°è¡¨.må¯è§æ€§ = fè®¡ç®—å¯è§æ€§(aå¯è§æ€§);
+	maæè¿°ç¬¦è¡¨.push_back(væè¿°è¡¨);
+	få®ç°_æ·»åŠ èŒƒå›´(aç±»å‹, aæ•°é‡, aå¼€å§‹å¯„å­˜å™¨, aå¯„å­˜å™¨ç©ºé—´, aåç§»);
 	return *this;
 }
-C¸ùÇ©Ãû²ÎÊı &C¸ùÇ©Ãû²ÎÊı::fÁ¬ĞøÌí¼Ó·¶Î§(EÀàĞÍ aÀàĞÍ, UINT aÊıÁ¿, UINT a¿ªÊ¼¼Ä´æÆ÷, UINT a¼Ä´æÆ÷¿Õ¼ä, UINT aÆ«ÒÆ) {
-	assert(miÁ¬ĞøÌí¼Ó == true);
-	fÊµÏÖ_Ìí¼Ó·¶Î§(aÀàĞÍ, aÊıÁ¿, a¿ªÊ¼¼Ä´æÆ÷, a¼Ä´æÆ÷¿Õ¼ä, aÆ«ÒÆ);
-	++mÁ¬ĞøÌí¼Ó.mÊıÁ¿;
+Cæ ¹ç­¾åå‚æ•° &Cæ ¹ç­¾åå‚æ•°::fè¿ç»­æ·»åŠ èŒƒå›´(Eç±»å‹ aç±»å‹, UINT aæ•°é‡, UINT aå¼€å§‹å¯„å­˜å™¨, UINT aå¯„å­˜å™¨ç©ºé—´, UINT aåç§») {
+	assert(miè¿ç»­æ·»åŠ  == true);
+	få®ç°_æ·»åŠ èŒƒå›´(aç±»å‹, aæ•°é‡, aå¼€å§‹å¯„å­˜å™¨, aå¯„å­˜å™¨ç©ºé—´, aåç§»);
+	++mè¿ç»­æ·»åŠ .mæ•°é‡;
 	return *this;
 }
-C¸ùÇ©Ãû²ÎÊı &C¸ùÇ©Ãû²ÎÊı::fÁ¬ĞøÌí¼Ó·¶Î§¿ªÊ¼(E×ÅÉ«Æ÷ a¿É¼ûĞÔ) {
-	assert(miÁ¬ĞøÌí¼Ó == false);
-	fÊµÏÖ_Ìí¼ÓË÷Òı(E¸ù²ÎÊıÀàĞÍ::eÃèÊö·û±í);
-	mÁ¬ĞøÌí¼Ó.m¿ªÊ¼Î»ÖÃ = maÃèÊö·¶Î§.size();
-	mÁ¬ĞøÌí¼Ó.mÊıÁ¿ = 0;
-	mÁ¬ĞøÌí¼Ó.m¿É¼ûĞÔ = f¼ÆËã¿É¼ûĞÔ(a¿É¼ûĞÔ);
-	miÁ¬ĞøÌí¼Ó = true;
+Cæ ¹ç­¾åå‚æ•° &Cæ ¹ç­¾åå‚æ•°::fè¿ç»­æ·»åŠ èŒƒå›´å¼€å§‹(Eç€è‰²å™¨ aå¯è§æ€§) {
+	assert(miè¿ç»­æ·»åŠ  == false);
+	få®ç°_æ·»åŠ ç´¢å¼•(Eæ ¹å‚æ•°ç±»å‹::eæè¿°ç¬¦è¡¨);
+	mè¿ç»­æ·»åŠ .må¼€å§‹ä½ç½® = maæè¿°èŒƒå›´.size();
+	mè¿ç»­æ·»åŠ .mæ•°é‡ = 0;
+	mè¿ç»­æ·»åŠ .må¯è§æ€§ = fè®¡ç®—å¯è§æ€§(aå¯è§æ€§);
+	miè¿ç»­æ·»åŠ  = true;
 	return *this;
 }
-C¸ùÇ©Ãû²ÎÊı &C¸ùÇ©Ãû²ÎÊı::fÁ¬ĞøÌí¼Ó·¶Î§½áÊø() {
-	assert(miÁ¬ĞøÌí¼Ó == true);
-	maÃèÊö·û±í.push_back(mÁ¬ĞøÌí¼Ó);
-	miÁ¬ĞøÌí¼Ó = false;
+Cæ ¹ç­¾åå‚æ•° &Cæ ¹ç­¾åå‚æ•°::fè¿ç»­æ·»åŠ èŒƒå›´ç»“æŸ() {
+	assert(miè¿ç»­æ·»åŠ  == true);
+	maæè¿°ç¬¦è¡¨.push_back(mè¿ç»­æ·»åŠ );
+	miè¿ç»­æ·»åŠ  = false;
 	return *this;
 }
-void C¸ùÇ©Ãû²ÎÊı::fs±êÖ¾(E¸ùÇ©Ãû±êÖ¾ a) {
-	fs±êÖ¾((D3D12_ROOT_SIGNATURE_FLAGS)a);
+void Cæ ¹ç­¾åå‚æ•°::fsæ ‡å¿—(Eæ ¹ç­¾åæ ‡å¿— a) {
+	fsæ ‡å¿—((D3D12_ROOT_SIGNATURE_FLAGS)a);
 }
-void C¸ùÇ©Ãû²ÎÊı::fs±êÖ¾(D3D12_ROOT_SIGNATURE_FLAGS a) {
+void Cæ ¹ç­¾åå‚æ•°::fsæ ‡å¿—(D3D12_ROOT_SIGNATURE_FLAGS a) {
 
 }
-void C¸ùÇ©Ãû²ÎÊı::fÊµÏÖ_Ìí¼Ó·¶Î§(EÀàĞÍ aÀàĞÍ, UINT aÊıÁ¿, UINT a¿ªÊ¼¼Ä´æÆ÷, UINT a¼Ä´æÆ÷¿Õ¼ä, UINT aÆ«ÒÆ) {
-	D3D12_DESCRIPTOR_RANGE v·¶Î§;
-	v·¶Î§.RangeType = f¼ÆËãÃèÊö·¶Î§ÀàĞÍ(aÀàĞÍ);
-	v·¶Î§.NumDescriptors = aÊıÁ¿;
-	v·¶Î§.BaseShaderRegister = a¿ªÊ¼¼Ä´æÆ÷;
-	v·¶Î§.RegisterSpace = a¼Ä´æÆ÷¿Õ¼ä;
-	v·¶Î§.OffsetInDescriptorsFromTableStart = aÆ«ÒÆ;
-	maÃèÊö·¶Î§.push_back(v·¶Î§);
+void Cæ ¹ç­¾åå‚æ•°::få®ç°_æ·»åŠ èŒƒå›´(Eç±»å‹ aç±»å‹, UINT aæ•°é‡, UINT aå¼€å§‹å¯„å­˜å™¨, UINT aå¯„å­˜å™¨ç©ºé—´, UINT aåç§») {
+	D3D12_DESCRIPTOR_RANGE vèŒƒå›´;
+	vèŒƒå›´.RangeType = fè®¡ç®—æè¿°èŒƒå›´ç±»å‹(aç±»å‹);
+	vèŒƒå›´.NumDescriptors = aæ•°é‡;
+	vèŒƒå›´.BaseShaderRegister = aå¼€å§‹å¯„å­˜å™¨;
+	vèŒƒå›´.RegisterSpace = aå¯„å­˜å™¨ç©ºé—´;
+	vèŒƒå›´.OffsetInDescriptorsFromTableStart = aåç§»;
+	maæè¿°èŒƒå›´.push_back(vèŒƒå›´);
 }
-void C¸ùÇ©Ãû²ÎÊı::fÊµÏÖ_Ìí¼ÓË÷Òı(E¸ù²ÎÊıÀàĞÍ aÀàĞÍ) {
-	S¸ù²ÎÊıË÷Òı vË÷Òı = {};
-	vË÷Òı.mÀàĞÍ = aÀàĞÍ;
-	switch (aÀàĞÍ) {
-	case E¸ù²ÎÊıÀàĞÍ::eÃèÊö·û±í:
-		vË÷Òı.mÎ»ÖÃ = maÃèÊö·û±í.size();
+void Cæ ¹ç­¾åå‚æ•°::få®ç°_æ·»åŠ ç´¢å¼•(Eæ ¹å‚æ•°ç±»å‹ aç±»å‹) {
+	Sæ ¹å‚æ•°ç´¢å¼• vç´¢å¼• = {};
+	vç´¢å¼•.mç±»å‹ = aç±»å‹;
+	switch (aç±»å‹) {
+	case Eæ ¹å‚æ•°ç±»å‹::eæè¿°ç¬¦è¡¨:
+		vç´¢å¼•.mä½ç½® = maæè¿°ç¬¦è¡¨.size();
 		break;
-	case E¸ù²ÎÊıÀàĞÍ::e³£Á¿:
-	case E¸ù²ÎÊıÀàĞÍ::eÃèÊö·û:
-		vË÷Òı.mÎ»ÖÃ = ma²ÎÊı.size();
+	case Eæ ¹å‚æ•°ç±»å‹::eå¸¸é‡:
+	case Eæ ¹å‚æ•°ç±»å‹::eæè¿°ç¬¦:
+		vç´¢å¼•.mä½ç½® = maå‚æ•°.size();
 		break;
 	default:
 		throw;
 	}
-	maË÷Òı.push_back(vË÷Òı);
+	maç´¢å¼•.push_back(vç´¢å¼•);
 }
-D3D12_SHADER_VISIBILITY C¸ùÇ©Ãû²ÎÊı::f¼ÆËã¿É¼ûĞÔ(E×ÅÉ«Æ÷ a) {
+D3D12_SHADER_VISIBILITY Cæ ¹ç­¾åå‚æ•°::fè®¡ç®—å¯è§æ€§(Eç€è‰²å™¨ a) {
 	switch (a) {
-	case E×ÅÉ«Æ÷::e¶¥µã×ÅÉ«Æ÷:
+	case Eç€è‰²å™¨::eé¡¶ç‚¹ç€è‰²å™¨:
 		return D3D12_SHADER_VISIBILITY_VERTEX;
-	case E×ÅÉ«Æ÷::eÍâ¿Ç×ÅÉ«Æ÷:
+	case Eç€è‰²å™¨::eå¤–å£³ç€è‰²å™¨:
 		return D3D12_SHADER_VISIBILITY_HULL;
-	case E×ÅÉ«Æ÷::eÓò×ÅÉ«Æ÷:
+	case Eç€è‰²å™¨::eåŸŸç€è‰²å™¨:
 		return D3D12_SHADER_VISIBILITY_DOMAIN;
-	case E×ÅÉ«Æ÷::e¼¸ºÎ×ÅÉ«Æ÷:
+	case Eç€è‰²å™¨::eå‡ ä½•ç€è‰²å™¨:
 		return D3D12_SHADER_VISIBILITY_GEOMETRY;
-	case E×ÅÉ«Æ÷::eÏñËØ×ÅÉ«Æ÷:
+	case Eç€è‰²å™¨::eåƒç´ ç€è‰²å™¨:
 		return D3D12_SHADER_VISIBILITY_PIXEL;
 	default:
 		return D3D12_SHADER_VISIBILITY_ALL;
 	}
 }
-D3D12_ROOT_PARAMETER_TYPE C¸ùÇ©Ãû²ÎÊı::f¼ÆËã¸ù²ÎÊıÀàĞÍ(EÀàĞÍ a) {
+D3D12_ROOT_PARAMETER_TYPE Cæ ¹ç­¾åå‚æ•°::fè®¡ç®—æ ¹å‚æ•°ç±»å‹(Eç±»å‹ a) {
 	switch (a) {
-	case EÀàĞÍ::e×ÅÉ«Æ÷×ÊÔ´ÊÓÍ¼:
+	case Eç±»å‹::eç€è‰²å™¨èµ„æºè§†å›¾:
 		return D3D12_ROOT_PARAMETER_TYPE_SRV;
-	case EÀàĞÍ::e³£Á¿»º³åÊÓÍ¼:
+	case Eç±»å‹::eå¸¸é‡ç¼“å†²è§†å›¾:
 		return D3D12_ROOT_PARAMETER_TYPE_CBV;
-	case EÀàĞÍ::eÎŞĞò·ÃÎÊÊÓÍ¼:
+	case Eç±»å‹::eæ— åºè®¿é—®è§†å›¾:
 		return D3D12_ROOT_PARAMETER_TYPE_UAV;
-	case EÀàĞÍ::e¸ù³£Á¿:
+	case Eç±»å‹::eæ ¹å¸¸é‡:
 		return D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
 	default:
 		throw;
 	}
 }
-D3D12_DESCRIPTOR_RANGE_TYPE C¸ùÇ©Ãû²ÎÊı::f¼ÆËãÃèÊö·¶Î§ÀàĞÍ(EÀàĞÍ a) {
+D3D12_DESCRIPTOR_RANGE_TYPE Cæ ¹ç­¾åå‚æ•°::fè®¡ç®—æè¿°èŒƒå›´ç±»å‹(Eç±»å‹ a) {
 	switch (a) {
-	case EÀàĞÍ::e×ÅÉ«Æ÷×ÊÔ´ÊÓÍ¼:
+	case Eç±»å‹::eç€è‰²å™¨èµ„æºè§†å›¾:
 		return D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	case EÀàĞÍ::e³£Á¿»º³åÊÓÍ¼:
+	case Eç±»å‹::eå¸¸é‡ç¼“å†²è§†å›¾:
 		return D3D12_DESCRIPTOR_RANGE_TYPE_CBV;
-	case EÀàĞÍ::eÎŞĞò·ÃÎÊÊÓÍ¼:
+	case Eç±»å‹::eæ— åºè®¿é—®è§†å›¾:
 		return D3D12_DESCRIPTOR_RANGE_TYPE_UAV;
-	case EÀàĞÍ::e²ÉÑùÆ÷:
+	case Eç±»å‹::eé‡‡æ ·å™¨:
 		return D3D12_DESCRIPTOR_RANGE_TYPE_SAMPLER;
 	default:
 		throw;
 	}
 }
 //==============================================================================
-// ĞŞ¸Ä
+// ä¿®æ”¹
 //==============================================================================
-C×Ô¶¯Ó³Éä::C×Ô¶¯Ó³Éä(ID3D12Resource *a):
-	m×ÊÔ´(a) {
-	HRESULT hr = m×ÊÔ´->Map(0, nullptr, &mÖ¸Õë);
+Cè‡ªåŠ¨æ˜ å°„::Cè‡ªåŠ¨æ˜ å°„(ID3D12Resource *a):
+	mèµ„æº(a) {
+	HRESULT hr = mèµ„æº->Map(0, nullptr, &mæŒ‡é’ˆ);
 	if (FAILED(hr)) {
 		throw;
 	}
 }
-C×Ô¶¯Ó³Éä::~C×Ô¶¯Ó³Éä() {
-	m×ÊÔ´->Unmap(0, nullptr);
+Cè‡ªåŠ¨æ˜ å°„::~Cè‡ªåŠ¨æ˜ å°„() {
+	mèµ„æº->Unmap(0, nullptr);
 }
 //==============================================================================
-// ×ÊÔ´¹¤³§
+// èµ„æºå·¥å‚
 //==============================================================================
-DXGI_FORMAT C»º³å¹¤³§::f¼ÆËãË÷Òı¸ñÊ½(UINT aÀàĞÍ´óĞ¡) {
-	switch (aÀàĞÍ´óĞ¡) {
+DXGI_FORMAT Cç¼“å†²å·¥å‚::fè®¡ç®—ç´¢å¼•æ ¼å¼(UINT aç±»å‹å¤§å°) {
+	switch (aç±»å‹å¤§å°) {
 	case 2:
 		return DXGI_FORMAT_R16_UINT;
 	case 4:
@@ -954,188 +985,188 @@ DXGI_FORMAT C»º³å¹¤³§::f¼ÆËãË÷Òı¸ñÊ½(UINT aÀàĞÍ´óĞ¡) {
 		return DXGI_FORMAT_UNKNOWN;
 	}
 }
-void C»º³å¹¤³§::f³õÊ¼»¯(ID3D12Device *aÉè±¸) {
-	mÉè±¸ = aÉè±¸;
+void Cç¼“å†²å·¥å‚::fåˆå§‹åŒ–(ID3D12Device *aè®¾å¤‡) {
+	mè®¾å¤‡ = aè®¾å¤‡;
 }
-HRESULT C»º³å¹¤³§::f´´½¨ÉÏ´«×ÊÔ´(ComPtr<ID3D12Resource> &a, const void *aÊı¾İ, UINT aÊı¾İ´óĞ¡) {
-	const D3D12_HEAP_PROPERTIES v¶ÑÊôĞÔ = {D3D12_HEAP_TYPE_UPLOAD, D3D12_CPU_PAGE_PROPERTY_UNKNOWN, D3D12_MEMORY_POOL_UNKNOWN, 1, 1};
-	const D3D12_RESOURCE_DESC v×ÊÔ´ÃèÊö = S×ÊÔ´ÃèÊö::fc»º´æ(aÊı¾İ´óĞ¡);
-	HRESULT hr = mÉè±¸->CreateCommittedResource(&v¶ÑÊôĞÔ, D3D12_HEAP_FLAG_NONE, &v×ÊÔ´ÃèÊö, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&a));
+HRESULT Cç¼“å†²å·¥å‚::fåˆ›å»ºä¸Šä¼ èµ„æº(ComPtr<ID3D12Resource> &a, const void *aæ•°æ®, UINT aæ•°æ®å¤§å°) {
+	const D3D12_HEAP_PROPERTIES vå †å±æ€§ = {D3D12_HEAP_TYPE_UPLOAD, D3D12_CPU_PAGE_PROPERTY_UNKNOWN, D3D12_MEMORY_POOL_UNKNOWN, 1, 1};
+	const D3D12_RESOURCE_DESC vèµ„æºæè¿° = Sèµ„æºæè¿°::fcç¼“å­˜(aæ•°æ®å¤§å°);
+	HRESULT hr = mè®¾å¤‡->CreateCommittedResource(&vå †å±æ€§, D3D12_HEAP_FLAG_NONE, &vèµ„æºæè¿°, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&a));
 	if (FAILED(hr)) {
 		return hr;
 	}
-	a->SetName(L"ÉÏ´«");
-	if (aÊı¾İ) {
+	a->SetName(L"ä¸Šä¼ ");
+	if (aæ•°æ®) {
 		void *vp;
 		hr = a->Map(0, nullptr, &vp);
 		if (FAILED(hr)) {
 			return hr;
 		}
-		memcpy(vp, aÊı¾İ, aÊı¾İ´óĞ¡);
+		memcpy(vp, aæ•°æ®, aæ•°æ®å¤§å°);
 		a->Unmap(0, nullptr);
 	}
 	return S_OK;
 }
-HRESULT C»º³å¹¤³§::f´´½¨¶¥µã(tp¶¥µã &a, const void *aÊı¾İ, UINT aÀàĞÍ´óĞ¡, UINT aÊı¾İ´óĞ¡) {
-	tp¶¥µã v = std::make_shared<C¶¥µã»º³å>();
-	HRESULT hr = f´´½¨ÉÏ´«×ÊÔ´(v->m×ÊÔ´, aÊı¾İ, aÊı¾İ´óĞ¡);
+HRESULT Cç¼“å†²å·¥å‚::fåˆ›å»ºé¡¶ç‚¹(tpé¡¶ç‚¹ &a, const void *aæ•°æ®, UINT aç±»å‹å¤§å°, UINT aæ•°æ®å¤§å°) {
+	tpé¡¶ç‚¹ v = std::make_shared<Cé¡¶ç‚¹ç¼“å†²>();
+	HRESULT hr = fåˆ›å»ºä¸Šä¼ èµ„æº(v->mèµ„æº, aæ•°æ®, aæ•°æ®å¤§å°);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	v->m×ÊÔ´->SetName(L"¶¥µã");
-	//¶¥µã»º´æÊÓÍ¼
-	v->mÊÓÍ¼.BufferLocation = v->m×ÊÔ´->GetGPUVirtualAddress();
-	v->mÊÓÍ¼.StrideInBytes = aÀàĞÍ´óĞ¡;
-	v->mÊÓÍ¼.SizeInBytes = aÊı¾İ´óĞ¡;
-	//½áÊø
+	v->mèµ„æº->SetName(L"é¡¶ç‚¹");
+	//é¡¶ç‚¹ç¼“å­˜è§†å›¾
+	v->mè§†å›¾.BufferLocation = v->mèµ„æº->GetGPUVirtualAddress();
+	v->mè§†å›¾.StrideInBytes = aç±»å‹å¤§å°;
+	v->mè§†å›¾.SizeInBytes = aæ•°æ®å¤§å°;
+	//ç»“æŸ
 	a = std::move(v);
 	return S_OK;
 }
-HRESULT C»º³å¹¤³§::f´´½¨Ë÷Òı(tpË÷Òı &a, const void *aÊı¾İ, UINT aÀàĞÍ´óĞ¡, UINT aÊı¾İ´óĞ¡) {
-	//¼ì²é²ÎÊı
-	const DXGI_FORMAT vË÷Òı¸ñÊ½ = f¼ÆËãË÷Òı¸ñÊ½(aÀàĞÍ´óĞ¡);
-	if (vË÷Òı¸ñÊ½ == DXGI_FORMAT_UNKNOWN) {
+HRESULT Cç¼“å†²å·¥å‚::fåˆ›å»ºç´¢å¼•(tpç´¢å¼• &a, const void *aæ•°æ®, UINT aç±»å‹å¤§å°, UINT aæ•°æ®å¤§å°) {
+	//æ£€æŸ¥å‚æ•°
+	const DXGI_FORMAT vç´¢å¼•æ ¼å¼ = fè®¡ç®—ç´¢å¼•æ ¼å¼(aç±»å‹å¤§å°);
+	if (vç´¢å¼•æ ¼å¼ == DXGI_FORMAT_UNKNOWN) {
 		return E_INVALIDARG;
 	}
-	//×ÊÔ´
-	tpË÷Òı v = std::make_shared<CË÷Òı»º³å>();
-	HRESULT hr = f´´½¨ÉÏ´«×ÊÔ´(v->m×ÊÔ´, aÊı¾İ, aÊı¾İ´óĞ¡);
+	//èµ„æº
+	tpç´¢å¼• v = std::make_shared<Cç´¢å¼•ç¼“å†²>();
+	HRESULT hr = fåˆ›å»ºä¸Šä¼ èµ„æº(v->mèµ„æº, aæ•°æ®, aæ•°æ®å¤§å°);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	v->m×ÊÔ´->SetName(L"Ë÷Òı");
-	//¶¥µã»º´æÊÓÍ¼
-	v->mÊÓÍ¼.BufferLocation = v->m×ÊÔ´->GetGPUVirtualAddress();
-	v->mÊÓÍ¼.SizeInBytes = aÊı¾İ´óĞ¡;
-	v->mÊÓÍ¼.Format = vË÷Òı¸ñÊ½;
-	//½áÊø
+	v->mèµ„æº->SetName(L"ç´¢å¼•");
+	//é¡¶ç‚¹ç¼“å­˜è§†å›¾
+	v->mè§†å›¾.BufferLocation = v->mèµ„æº->GetGPUVirtualAddress();
+	v->mè§†å›¾.SizeInBytes = aæ•°æ®å¤§å°;
+	v->mè§†å›¾.Format = vç´¢å¼•æ ¼å¼;
+	//ç»“æŸ
 	a = std::move(v);
 	return S_OK;
 }
-HRESULT C»º³å¹¤³§::f´´½¨³£Á¿(tp³£Á¿ &a, const void *aÊı¾İ, UINT aÀàĞÍ´óĞ¡, UINT aÊı¾İ´óĞ¡) {
-	//¶ÑÃèÊö·û
-	D3D12_DESCRIPTOR_HEAP_DESC vÃèÊö·û¶Ñ²ÎÊı = {};
-	vÃèÊö·û¶Ñ²ÎÊı.NumDescriptors = 1;
-	vÃèÊö·û¶Ñ²ÎÊı.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	vÃèÊö·û¶Ñ²ÎÊı.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	tp³£Á¿ v = std::make_shared<C³£Á¿»º³å>();
-	HRESULT hr = mÉè±¸->CreateDescriptorHeap(&vÃèÊö·û¶Ñ²ÎÊı, IID_PPV_ARGS(&v->mÃèÊö·û¶Ñ));
+HRESULT Cç¼“å†²å·¥å‚::fåˆ›å»ºå¸¸é‡(tpå¸¸é‡ &a, const void *aæ•°æ®, UINT aç±»å‹å¤§å°, UINT aæ•°æ®å¤§å°) {
+	//å †æè¿°ç¬¦
+	D3D12_DESCRIPTOR_HEAP_DESC væè¿°ç¬¦å †å‚æ•° = {};
+	væè¿°ç¬¦å †å‚æ•°.NumDescriptors = 1;
+	væè¿°ç¬¦å †å‚æ•°.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+	væè¿°ç¬¦å †å‚æ•°.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	tpå¸¸é‡ v = std::make_shared<Cå¸¸é‡ç¼“å†²>();
+	HRESULT hr = mè®¾å¤‡->CreateDescriptorHeap(&væè¿°ç¬¦å †å‚æ•°, IID_PPV_ARGS(&v->mæè¿°ç¬¦å †));
 	if (FAILED(hr)) {
 		return hr;
 	}
-	//×ÊÔ´
-	const S¶ÑÊôĞÔ v¶ÑÊôĞÔ = S¶ÑÊôĞÔ::fcÀàĞÍ(D3D12_HEAP_TYPE_UPLOAD);
-	const UINT vÊı¾İ´óĞ¡ = (aÊı¾İ´óĞ¡ + 255) & ~255;	// 256×Ö½Ú¶ÔÆë
-	const D3D12_RESOURCE_DESC v×ÊÔ´ÃèÊö = S×ÊÔ´ÃèÊö::fc»º´æ(vÊı¾İ´óĞ¡);
-	hr = mÉè±¸->CreateCommittedResource(&v¶ÑÊôĞÔ, D3D12_HEAP_FLAG_NONE, &v×ÊÔ´ÃèÊö, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&v->m×ÊÔ´));
+	//èµ„æº
+	const Så †å±æ€§ vå †å±æ€§ = Så †å±æ€§::fcç±»å‹(D3D12_HEAP_TYPE_UPLOAD);
+	const UINT væ•°æ®å¤§å° = (aæ•°æ®å¤§å° + 255) & ~255;	// 256å­—èŠ‚å¯¹é½
+	const D3D12_RESOURCE_DESC vèµ„æºæè¿° = Sèµ„æºæè¿°::fcç¼“å­˜(væ•°æ®å¤§å°);
+	hr = mè®¾å¤‡->CreateCommittedResource(&vå †å±æ€§, D3D12_HEAP_FLAG_NONE, &vèµ„æºæè¿°, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&v->mèµ„æº));
 	if (FAILED(hr)) {
 		return hr;
 	}
-	v->m×ÊÔ´->SetName(L"³£Á¿");
-	//ÊÓÍ¼
-	D3D12_CONSTANT_BUFFER_VIEW_DESC v³£Á¿»º³åÊÓÍ¼²ÎÊı = {};
-	v³£Á¿»º³åÊÓÍ¼²ÎÊı.BufferLocation = v->m×ÊÔ´->GetGPUVirtualAddress();
-	v³£Á¿»º³åÊÓÍ¼²ÎÊı.SizeInBytes = vÊı¾İ´óĞ¡;
-	mÉè±¸->CreateConstantBufferView(&v³£Á¿»º³åÊÓÍ¼²ÎÊı, v->mÃèÊö·û¶Ñ->GetCPUDescriptorHandleForHeapStart());
+	v->mèµ„æº->SetName(L"å¸¸é‡");
+	//è§†å›¾
+	D3D12_CONSTANT_BUFFER_VIEW_DESC vå¸¸é‡ç¼“å†²è§†å›¾å‚æ•° = {};
+	vå¸¸é‡ç¼“å†²è§†å›¾å‚æ•°.BufferLocation = v->mèµ„æº->GetGPUVirtualAddress();
+	vå¸¸é‡ç¼“å†²è§†å›¾å‚æ•°.SizeInBytes = væ•°æ®å¤§å°;
+	mè®¾å¤‡->CreateConstantBufferView(&vå¸¸é‡ç¼“å†²è§†å›¾å‚æ•°, v->mæè¿°ç¬¦å †->GetCPUDescriptorHandleForHeapStart());
 	if (FAILED(hr)) {
 		return hr;
 	}
-	const D3D12_RANGE v·¶Î§{0, 0};
-	v->m×ÊÔ´->Map(0, &v·¶Î§, (void**)&v->mÓ³Éä);
-	memcpy(v->mÓ³Éä, aÊı¾İ, aÊı¾İ´óĞ¡);
-	//½áÊø
+	const D3D12_RANGE vèŒƒå›´{0, 0};
+	v->mèµ„æº->Map(0, &vèŒƒå›´, (void**)&v->mæ˜ å°„);
+	memcpy(v->mæ˜ å°„, aæ•°æ®, aæ•°æ®å¤§å°);
+	//ç»“æŸ
 	a = std::move(v);
 	return S_OK;
 }
 //==============================================================================
-// ÎÆÀí¹¤³§
+// çº¹ç†å·¥å‚
 //==============================================================================
-CÎÆÀí¹¤³§::~CÎÆÀí¹¤³§() {}
-HRESULT CÎÆÀí¹¤³§::f³õÊ¼»¯() {
-	m¹¤³§ = std::make_unique<ÎÆÀí::CÍ¼Ïñ¹¤³§>();
-	return m¹¤³§->f³õÊ¼»¯();
+Cçº¹ç†å·¥å‚::~Cçº¹ç†å·¥å‚() {}
+HRESULT Cçº¹ç†å·¥å‚::fåˆå§‹åŒ–() {
+	må·¥å‚ = std::make_unique<çº¹ç†::Cå›¾åƒå·¥å‚>();
+	return må·¥å‚->fåˆå§‹åŒ–();
 }
-HRESULT CÎÆÀí¹¤³§::f´ÓÎÄ¼ş´´½¨ÎÆÀí(tpÎÆÀí &aÊä³ö, const wchar_t *aÎÄ¼ş) {
-	std::unique_ptr<ÎÆÀí::CÖ»¶ÁÎÆÀí> vÎÆÀí = m¹¤³§->fÒ»¼ü¶ÁÈ¡(aÎÄ¼ş);
-	if (vÎÆÀí == nullptr) {
+HRESULT Cçº¹ç†å·¥å‚::fä»æ–‡ä»¶åˆ›å»ºçº¹ç†(tpçº¹ç† &aè¾“å‡º, const wchar_t *aæ–‡ä»¶) {
+	std::unique_ptr<çº¹ç†::Cåªè¯»çº¹ç†> vçº¹ç† = må·¥å‚->fä¸€é”®è¯»å–(aæ–‡ä»¶);
+	if (vçº¹ç† == nullptr) {
 		return E_FAIL;
 	}
-	return f´ÓÎÆÀí¶ÔÏó´´½¨ÎÆÀí(aÊä³ö, *vÎÆÀí);
+	return fä»çº¹ç†å¯¹è±¡åˆ›å»ºçº¹ç†(aè¾“å‡º, *vçº¹ç†);
 }
-HRESULT CÎÆÀí¹¤³§::f´ÓÎÆÀí¶ÔÏó´´½¨ÎÆÀí(tpÎÆÀí &aÊä³ö, const ÎÆÀí::IÎÆÀí &aÎÆÀí) {
-	tpÎÆÀí v = std::make_shared<CÎÆÀí×ÊÔ´>();
-	HRESULT hr = f´ÓÎÆÀí¶ÔÏó´´½¨ÎÆÀí×ÊÔ´(v->m×ÊÔ´, aÎÆÀí);
+HRESULT Cçº¹ç†å·¥å‚::fä»çº¹ç†å¯¹è±¡åˆ›å»ºçº¹ç†(tpçº¹ç† &aè¾“å‡º, const çº¹ç†::Içº¹ç† &açº¹ç†) {
+	tpçº¹ç† v = std::make_shared<Cçº¹ç†èµ„æº>();
+	HRESULT hr = fä»çº¹ç†å¯¹è±¡åˆ›å»ºçº¹ç†èµ„æº(v->mèµ„æº, açº¹ç†);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = f´ÓÎÆÀí×ÊÔ´´´½¨ÎÆÀíÊÓÍ¼(v->mÃèÊö·û¶Ñ, v->m×ÊÔ´, aÎÆÀí.fg¸ñÊ½());
+	hr = fä»çº¹ç†èµ„æºåˆ›å»ºçº¹ç†è§†å›¾(v->mæè¿°ç¬¦å †, v->mèµ„æº, açº¹ç†.fgæ ¼å¼());
 	if (FAILED(hr)) {
 		return hr;
 	}
-	//½áÊø
-	aÊä³ö = std::move(v);
+	//ç»“æŸ
+	aè¾“å‡º = std::move(v);
 	return S_OK;
 }
-HRESULT CÎÆÀí¹¤³§::f´ÓÄÚ´æ´´½¨ÎÆÀí×ÊÔ´(tp×ÊÔ´ &aÊä³ö, const void *aÊı¾İ, DXGI_FORMAT a¸ñÊ½, UINT a¿í, UINT a¸ß, UINT aĞĞ¾à, UINT a´óĞ¡) {
-	//´´½¨×ÊÔ´
-	D3D12_RESOURCE_DESC vÎÆÀíÃèÊö = {};
-	vÎÆÀíÃèÊö.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	vÎÆÀíÃèÊö.Width = a¿í;
-	vÎÆÀíÃèÊö.Height = a¸ß;
-	vÎÆÀíÃèÊö.DepthOrArraySize = 1;
-	vÎÆÀíÃèÊö.MipLevels = 1;
-	vÎÆÀíÃèÊö.Format = a¸ñÊ½;
-	vÎÆÀíÃèÊö.SampleDesc.Count = 1;
-	vÎÆÀíÃèÊö.SampleDesc.Quality = 0;
-	vÎÆÀíÃèÊö.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
-	vÎÆÀíÃèÊö.Flags = D3D12_RESOURCE_FLAG_NONE;
-	HRESULT hr = mÉè±¸->CreateCommittedResource(&S¶ÑÊôĞÔ::fcÀàĞÍ(D3D12_HEAP_TYPE_DEFAULT), D3D12_HEAP_FLAG_NONE, &vÎÆÀíÃèÊö, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS(&aÊä³ö));
+HRESULT Cçº¹ç†å·¥å‚::fä»å†…å­˜åˆ›å»ºçº¹ç†èµ„æº(tpèµ„æº &aè¾“å‡º, const void *aæ•°æ®, DXGI_FORMAT aæ ¼å¼, UINT aå®½, UINT aé«˜, UINT aè¡Œè·, UINT aå¤§å°) {
+	//åˆ›å»ºèµ„æº
+	D3D12_RESOURCE_DESC vçº¹ç†æè¿° = {};
+	vçº¹ç†æè¿°.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	vçº¹ç†æè¿°.Width = aå®½;
+	vçº¹ç†æè¿°.Height = aé«˜;
+	vçº¹ç†æè¿°.DepthOrArraySize = 1;
+	vçº¹ç†æè¿°.MipLevels = 1;
+	vçº¹ç†æè¿°.Format = aæ ¼å¼;
+	vçº¹ç†æè¿°.SampleDesc.Count = 1;
+	vçº¹ç†æè¿°.SampleDesc.Quality = 0;
+	vçº¹ç†æè¿°.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
+	vçº¹ç†æè¿°.Flags = D3D12_RESOURCE_FLAG_NONE;
+	HRESULT hr = mè®¾å¤‡->CreateCommittedResource(&Så †å±æ€§::fcç±»å‹(D3D12_HEAP_TYPE_DEFAULT), D3D12_HEAP_FLAG_NONE, &vçº¹ç†æè¿°, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS(&aè¾“å‡º));
 	if (FAILED(hr)) {
 		return hr;
 	}
-	aÊä³ö->SetName(L"ÎÆÀí");
-	//¸´ÖÆÊı¾İ
-	const UINT64 vÉÏ´«´óĞ¡ = GetRequiredIntermediateSize(aÊä³ö.Get(), 0, 1);
-	ComPtr<ID3D12Resource> vÉÏ´«×ÊÔ´;
-	hr = m»º³å¹¤³§->f´´½¨ÉÏ´«×ÊÔ´(vÉÏ´«×ÊÔ´, nullptr, vÉÏ´«´óĞ¡);
+	aè¾“å‡º->SetName(L"çº¹ç†");
+	//å¤åˆ¶æ•°æ®
+	const UINT64 vä¸Šä¼ å¤§å° = GetRequiredIntermediateSize(aè¾“å‡º.Get(), 0, 1);
+	ComPtr<ID3D12Resource> vä¸Šä¼ èµ„æº;
+	hr = mç¼“å†²å·¥å‚->fåˆ›å»ºä¸Šä¼ èµ„æº(vä¸Šä¼ èµ„æº, nullptr, vä¸Šä¼ å¤§å°);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	D3D12_SUBRESOURCE_DATA v×ÊÔ´ÃèÊö = {};
-	v×ÊÔ´ÃèÊö.pData = aÊı¾İ;
-	v×ÊÔ´ÃèÊö.RowPitch = aĞĞ¾à;
-	v×ÊÔ´ÃèÊö.SlicePitch = a´óĞ¡;
-	mäÖÈ¾¿ØÖÆ->f¸üĞÂÎÆÀí(aÊä³ö.Get(), vÉÏ´«×ÊÔ´.Get(), v×ÊÔ´ÃèÊö);
+	D3D12_SUBRESOURCE_DATA vèµ„æºæè¿° = {};
+	vèµ„æºæè¿°.pData = aæ•°æ®;
+	vèµ„æºæè¿°.RowPitch = aè¡Œè·;
+	vèµ„æºæè¿°.SlicePitch = aå¤§å°;
+	mæ¸²æŸ“æ§åˆ¶->fæ›´æ–°çº¹ç†(aè¾“å‡º.Get(), vä¸Šä¼ èµ„æº.Get(), vèµ„æºæè¿°);
 	return S_OK;
 }
-HRESULT CÎÆÀí¹¤³§::f´ÓÎÆÀí¶ÔÏó´´½¨ÎÆÀí×ÊÔ´(tp×ÊÔ´ &aÊä³ö, const ÎÆÀí::IÎÆÀí &aÎÆÀí) {
-	return f´ÓÄÚ´æ´´½¨ÎÆÀí×ÊÔ´(aÊä³ö, aÎÆÀí.fgÊı¾İ(), aÎÆÀí.fg¸ñÊ½(), aÎÆÀí.fg¿í(), aÎÆÀí.fg¸ß(), aÎÆÀí.fgĞĞ¾à(), aÎÆÀí.fgÍ¼Ïñ´óĞ¡());
+HRESULT Cçº¹ç†å·¥å‚::fä»çº¹ç†å¯¹è±¡åˆ›å»ºçº¹ç†èµ„æº(tpèµ„æº &aè¾“å‡º, const çº¹ç†::Içº¹ç† &açº¹ç†) {
+	return fä»å†…å­˜åˆ›å»ºçº¹ç†èµ„æº(aè¾“å‡º, açº¹ç†.fgæ•°æ®(), açº¹ç†.fgæ ¼å¼(), açº¹ç†.fgå®½(), açº¹ç†.fgé«˜(), açº¹ç†.fgè¡Œè·(), açº¹ç†.fgå›¾åƒå¤§å°());
 }
-HRESULT CÎÆÀí¹¤³§::f´ÓÎÆÀí×ÊÔ´´´½¨ÎÆÀíÊÓÍ¼(tpÃèÊö·û¶Ñ &aÊä³ö, const tp×ÊÔ´ &a×ÊÔ´, DXGI_FORMAT a¸ñÊ½) {
-	D3D12_DESCRIPTOR_HEAP_DESC v¶ÑÃèÊö = {};
-	v¶ÑÃèÊö.NumDescriptors = 1;
-	v¶ÑÃèÊö.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	v¶ÑÃèÊö.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	HRESULT hr = mÉè±¸->CreateDescriptorHeap(&v¶ÑÃèÊö, IID_PPV_ARGS(&aÊä³ö));
+HRESULT Cçº¹ç†å·¥å‚::fä»çº¹ç†èµ„æºåˆ›å»ºçº¹ç†è§†å›¾(tpæè¿°ç¬¦å † &aè¾“å‡º, const tpèµ„æº &aèµ„æº, DXGI_FORMAT aæ ¼å¼) {
+	D3D12_DESCRIPTOR_HEAP_DESC vå †æè¿° = {};
+	vå †æè¿°.NumDescriptors = 1;
+	vå †æè¿°.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	vå †æè¿°.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+	HRESULT hr = mè®¾å¤‡->CreateDescriptorHeap(&vå †æè¿°, IID_PPV_ARGS(&aè¾“å‡º));
 	if (FAILED(hr)) {
 		return hr;
 	}
-	D3D12_SHADER_RESOURCE_VIEW_DESC vÊÓÍ¼ÃèÊö = {};
-	vÊÓÍ¼ÃèÊö.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	vÊÓÍ¼ÃèÊö.Format = a¸ñÊ½;
-	vÊÓÍ¼ÃèÊö.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	vÊÓÍ¼ÃèÊö.Texture2D.MipLevels = 1;
-	mÉè±¸->CreateShaderResourceView(a×ÊÔ´.Get(), &vÊÓÍ¼ÃèÊö, aÊä³ö->GetCPUDescriptorHandleForHeapStart());
+	D3D12_SHADER_RESOURCE_VIEW_DESC vè§†å›¾æè¿° = {};
+	vè§†å›¾æè¿°.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	vè§†å›¾æè¿°.Format = aæ ¼å¼;
+	vè§†å›¾æè¿°.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	vè§†å›¾æè¿°.Texture2D.MipLevels = 1;
+	mè®¾å¤‡->CreateShaderResourceView(aèµ„æº.Get(), &vè§†å›¾æè¿°, aè¾“å‡º->GetCPUDescriptorHandleForHeapStart());
 	return S_OK;
 }
 //==============================================================================
-// ×ÊÔ´ÃèÊö
+// èµ„æºæè¿°
 //==============================================================================
-S×ÊÔ´ÃèÊö S×ÊÔ´ÃèÊö::fc»º´æ(UINT64 a¿í) {
-	S×ÊÔ´ÃèÊö v = {};
+Sèµ„æºæè¿° Sèµ„æºæè¿°::fcç¼“å­˜(UINT64 aå®½) {
+	Sèµ„æºæè¿° v = {};
 	v.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	v.Alignment = 0;
-	v.Width = a¿í;
+	v.Width = aå®½;
 	v.Height = 1;
 	v.DepthOrArraySize = 1;
 	v.MipLevels = 1;
@@ -1146,157 +1177,157 @@ S×ÊÔ´ÃèÊö S×ÊÔ´ÃèÊö::fc»º´æ(UINT64 a¿í) {
 	v.Flags = D3D12_RESOURCE_FLAG_NONE;
 	return v;
 }
-S×ÊÔ´ÃèÊö S×ÊÔ´ÃèÊö::fcÎÆÀí2(UINT64 a¿í, UINT a¸ß, DXGI_FORMAT a¸ñÊ½, D3D12_RESOURCE_FLAGS a±êÖ¾) {
-	S×ÊÔ´ÃèÊö v = {};
+Sèµ„æºæè¿° Sèµ„æºæè¿°::fcçº¹ç†2(UINT64 aå®½, UINT aé«˜, DXGI_FORMAT aæ ¼å¼, D3D12_RESOURCE_FLAGS aæ ‡å¿—) {
+	Sèµ„æºæè¿° v = {};
 	v.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	v.Alignment = 0;
-	v.Width = a¿í;
-	v.Height = a¸ß;
+	v.Width = aå®½;
+	v.Height = aé«˜;
 	v.DepthOrArraySize = 1;
 	v.MipLevels = 1;
-	v.Format = a¸ñÊ½;
+	v.Format = aæ ¼å¼;
 	v.SampleDesc.Count = 1;
 	v.SampleDesc.Quality = 0;
 	v.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
-	v.Flags = a±êÖ¾;
+	v.Flags = aæ ‡å¿—;
 	return v;
 }
 //==============================================================================
-// Í¼ĞÎ¹ÜÏß²ÎÊı
+// å›¾å½¢ç®¡çº¿å‚æ•°
 //==============================================================================
-SÍ¼ĞÎ¹ÜÏß²ÎÊı::SÍ¼ĞÎ¹ÜÏß²ÎÊı():
+Så›¾å½¢ç®¡çº¿å‚æ•°::Så›¾å½¢ç®¡çº¿å‚æ•°():
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC() {
 	NumRenderTargets = 1;
-	RTVFormats[0] = c½»»»Á´¸ñÊ½;
+	RTVFormats[0] = cäº¤æ¢é“¾æ ¼å¼;
 	SampleDesc.Count = 1;
 	SampleMask = UINT_MAX;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÊäÈë²¼¾Ö(const C¶¥µã¸ñÊ½ &a) {
-	InputLayout = a.fgÊäÈë²ãÃèÊö();
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsè¾“å…¥å¸ƒå±€(const Cé¡¶ç‚¹æ ¼å¼ &a) {
+	InputLayout = a.fgè¾“å…¥å±‚æè¿°();
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¸ùÇ©Ãû(ID3D12RootSignature *a) {
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsæ ¹ç­¾å(ID3D12RootSignature *a) {
 	pRootSignature = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¶¥µã×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsé¡¶ç‚¹ç€è‰²å™¨(const std::span<const std::byte> &a) {
 	VS.pShaderBytecode = a.data();
 	VS.BytecodeLength = a.size();
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÏñËØ×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsåƒç´ ç€è‰²å™¨(const std::span<const std::byte> &a) {
 	PS.pShaderBytecode = a.data();
 	PS.BytecodeLength = a.size();
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¼¸ºÎ×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fså‡ ä½•ç€è‰²å™¨(const std::span<const std::byte> &a) {
 	GS.pShaderBytecode = a.data();
 	GS.BytecodeLength = a.size();
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÍâ¿Ç×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fså¤–å£³ç€è‰²å™¨(const std::span<const std::byte> &a) {
 	HS.pShaderBytecode = a.data();
 	HS.BytecodeLength = a.size();
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÓò×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsåŸŸç€è‰²å™¨(const std::span<const std::byte> &a) {
 	DS.pShaderBytecode = a.data();
 	DS.BytecodeLength = a.size();
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs¹âÕ¤»¯(const D3D12_RASTERIZER_DESC &a) {
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fså…‰æ …åŒ–(const D3D12_RASTERIZER_DESC &a) {
 	RasterizerState = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fs»ìºÏ(const D3D12_BLEND_DESC &a) {
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsæ··åˆ(const D3D12_BLEND_DESC &a) {
 	BlendState = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÉî¶ÈÄ£°å(const D3D12_DEPTH_STENCIL_DESC &a) {
-	DSVFormat = cÉî¶ÈÄ£°å¸ñÊ½;
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fsæ·±åº¦æ¨¡æ¿(const D3D12_DEPTH_STENCIL_DESC &a) {
+	DSVFormat = cæ·±åº¦æ¨¡æ¿æ ¼å¼;
 	DepthStencilState = a;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::f¹Ø±ÕÉî¶ÈÄ£°å() {
+void Så›¾å½¢ç®¡çº¿å‚æ•°::få…³é—­æ·±åº¦æ¨¡æ¿() {
 	DepthStencilState.DepthEnable = FALSE;
 	DepthStencilState.StencilEnable = FALSE;
 }
-void SÍ¼ĞÎ¹ÜÏß²ÎÊı::fsÍ¼ÔªÍØÆËÀàĞÍ(EÍ¼ÔªÍØÆËÀàĞÍ a) {
+void Så›¾å½¢ç®¡çº¿å‚æ•°::fså›¾å…ƒæ‹“æ‰‘ç±»å‹(Eå›¾å…ƒæ‹“æ‰‘ç±»å‹ a) {
 	PrimitiveTopologyType = (D3D12_PRIMITIVE_TOPOLOGY_TYPE)a;
 }
-S×ÊÔ´Õ¤À¸ S×ÊÔ´Õ¤À¸::fc±ä»»(ID3D12Resource* a×ÊÔ´, D3D12_RESOURCE_STATES aÇ°, D3D12_RESOURCE_STATES aºó, UINT a×Ó×ÊÔ´, D3D12_RESOURCE_BARRIER_FLAGS a±êÖ¾) {
-	S×ÊÔ´Õ¤À¸ vÕ¤À¸{};
-	vÕ¤À¸.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	vÕ¤À¸.Flags = a±êÖ¾;
-	vÕ¤À¸.Transition.StateBefore = aÇ°;
-	vÕ¤À¸.Transition.StateAfter = aºó;
-	vÕ¤À¸.Transition.pResource = a×ÊÔ´;
-	vÕ¤À¸.Transition.Subresource = a×Ó×ÊÔ´;
-	return vÕ¤À¸;
+Sèµ„æºæ …æ  Sèµ„æºæ …æ ::fcå˜æ¢(ID3D12Resource* aèµ„æº, D3D12_RESOURCE_STATES aå‰, D3D12_RESOURCE_STATES aå, UINT aå­èµ„æº, D3D12_RESOURCE_BARRIER_FLAGS aæ ‡å¿—) {
+	Sèµ„æºæ …æ  væ …æ {};
+	væ …æ .Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	væ …æ .Flags = aæ ‡å¿—;
+	væ …æ .Transition.StateBefore = aå‰;
+	væ …æ .Transition.StateAfter = aå;
+	væ …æ .Transition.pResource = aèµ„æº;
+	væ …æ .Transition.Subresource = aå­èµ„æº;
+	return væ …æ ;
 }
 //==============================================================================
-// ¼ÆËã¹ÜÏß²ÎÊı
+// è®¡ç®—ç®¡çº¿å‚æ•°
 //==============================================================================
-S¼ÆËã¹ÜÏß²ÎÊı::S¼ÆËã¹ÜÏß²ÎÊı():
+Sè®¡ç®—ç®¡çº¿å‚æ•°::Sè®¡ç®—ç®¡çº¿å‚æ•°():
 	D3D12_COMPUTE_PIPELINE_STATE_DESC() {
 }
-void S¼ÆËã¹ÜÏß²ÎÊı::fs¸ùÇ©Ãû(ID3D12RootSignature *a) {
+void Sè®¡ç®—ç®¡çº¿å‚æ•°::fsæ ¹ç­¾å(ID3D12RootSignature *a) {
 	pRootSignature = a;
 }
-void S¼ÆËã¹ÜÏß²ÎÊı::fs¼ÆËã×ÅÉ«Æ÷(const std::span<const std::byte> &a) {
+void Sè®¡ç®—ç®¡çº¿å‚æ•°::fsè®¡ç®—ç€è‰²å™¨(const std::span<const std::byte> &a) {
 	CS.pShaderBytecode = a.data();
 	CS.BytecodeLength = a.size();
 }
 //==============================================================================
-// ¶ÑÊôĞÔ
+// å †å±æ€§
 //==============================================================================
-S¶ÑÊôĞÔ S¶ÑÊôĞÔ::fcÀàĞÍ(D3D12_HEAP_TYPE aÀàĞÍ, UINT a´´½¨½ÚµãÑÚÂë, UINT a¿É¼û½ÚµãÑÚÂë) {
-	S¶ÑÊôĞÔ v¶ÑÊôĞÔ = {};
-	v¶ÑÊôĞÔ.Type = aÀàĞÍ;
-	v¶ÑÊôĞÔ.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-	v¶ÑÊôĞÔ.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-	v¶ÑÊôĞÔ.CreationNodeMask = a´´½¨½ÚµãÑÚÂë;
-	v¶ÑÊôĞÔ.VisibleNodeMask = a¿É¼û½ÚµãÑÚÂë;
-	return v¶ÑÊôĞÔ;
+Så †å±æ€§ Så †å±æ€§::fcç±»å‹(D3D12_HEAP_TYPE aç±»å‹, UINT aåˆ›å»ºèŠ‚ç‚¹æ©ç , UINT aå¯è§èŠ‚ç‚¹æ©ç ) {
+	Så †å±æ€§ vå †å±æ€§ = {};
+	vå †å±æ€§.Type = aç±»å‹;
+	vå †å±æ€§.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+	vå †å±æ€§.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+	vå †å±æ€§.CreationNodeMask = aåˆ›å»ºèŠ‚ç‚¹æ©ç ;
+	vå †å±æ€§.VisibleNodeMask = aå¯è§èŠ‚ç‚¹æ©ç ;
+	return vå †å±æ€§;
 }
 //==============================================================================
-// ÎÆÀí¸´ÖÆÇø
+// çº¹ç†å¤åˆ¶åŒº
 //==============================================================================
-SÎÆÀí¸´ÖÆÇø SÎÆÀí¸´ÖÆÇø::fc½ÅÓ¡(ID3D12Resource *a×ÊÔ´, const D3D12_PLACED_SUBRESOURCE_FOOTPRINT &a½ÅÓ¡) {
-	SÎÆÀí¸´ÖÆÇø v = {};
-	v.pResource = a×ÊÔ´;
+Sçº¹ç†å¤åˆ¶åŒº Sçº¹ç†å¤åˆ¶åŒº::fcè„šå°(ID3D12Resource *aèµ„æº, const D3D12_PLACED_SUBRESOURCE_FOOTPRINT &aè„šå°) {
+	Sçº¹ç†å¤åˆ¶åŒº v = {};
+	v.pResource = aèµ„æº;
 	v.Type = D3D12_TEXTURE_COPY_TYPE_PLACED_FOOTPRINT;
-	v.PlacedFootprint = a½ÅÓ¡;
+	v.PlacedFootprint = aè„šå°;
 	return v;
 }
-SÎÆÀí¸´ÖÆÇø SÎÆÀí¸´ÖÆÇø::fcË÷Òı(ID3D12Resource *a×ÊÔ´, UINT aË÷Òı) {
-	SÎÆÀí¸´ÖÆÇø v = {};
-	v.pResource = a×ÊÔ´;
+Sçº¹ç†å¤åˆ¶åŒº Sçº¹ç†å¤åˆ¶åŒº::fcç´¢å¼•(ID3D12Resource *aèµ„æº, UINT aç´¢å¼•) {
+	Sçº¹ç†å¤åˆ¶åŒº v = {};
+	v.pResource = aèµ„æº;
 	v.Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
-	v.SubresourceIndex = aË÷Òı;
+	v.SubresourceIndex = aç´¢å¼•;
 	return v;
 }
 //==============================================================================
-// Çå³ıÖµ
+// æ¸…é™¤å€¼
 //==============================================================================
-SÇå³ıÖµ SÇå³ıÖµ::fcÑÕÉ«(DXGI_FORMAT a¸ñÊ½, const ÊıÑ§::SÑÕÉ« &aÑÕÉ«) {
-	SÇå³ıÖµ v = {};
-	v.Format = a¸ñÊ½;
-	v.Color[0] = aÑÕÉ«.r;
-	v.Color[1] = aÑÕÉ«.g;
-	v.Color[2] = aÑÕÉ«.b;
-	v.Color[3] = aÑÕÉ«.a;
+Sæ¸…é™¤å€¼ Sæ¸…é™¤å€¼::fcé¢œè‰²(DXGI_FORMAT aæ ¼å¼, const æ•°å­¦::Sé¢œè‰² &aé¢œè‰²) {
+	Sæ¸…é™¤å€¼ v = {};
+	v.Format = aæ ¼å¼;
+	v.Color[0] = aé¢œè‰².r;
+	v.Color[1] = aé¢œè‰².g;
+	v.Color[2] = aé¢œè‰².b;
+	v.Color[3] = aé¢œè‰².a;
 	return v;
 }
-SÇå³ıÖµ SÇå³ıÖµ::fcÉî¶ÈÄ£°å(DXGI_FORMAT a¸ñÊ½, float aÉî¶È, UINT8 aÄ£°å) {
-	SÇå³ıÖµ v = {};
-	v.Format = a¸ñÊ½;
-	v.DepthStencil.Depth = aÉî¶È;
-	v.DepthStencil.Stencil = aÄ£°å;
+Sæ¸…é™¤å€¼ Sæ¸…é™¤å€¼::fcæ·±åº¦æ¨¡æ¿(DXGI_FORMAT aæ ¼å¼, float aæ·±åº¦, UINT8 aæ¨¡æ¿) {
+	Sæ¸…é™¤å€¼ v = {};
+	v.Format = aæ ¼å¼;
+	v.DepthStencil.Depth = aæ·±åº¦;
+	v.DepthStencil.Stencil = aæ¨¡æ¿;
 	return v;
 }
 //==============================================================================
-// Éî¶ÈÄ£°å²ÎÊı
+// æ·±åº¦æ¨¡æ¿å‚æ•°
 //==============================================================================
-SÉî¶ÈÄ£°å²ÎÊı::SÉî¶ÈÄ£°å²ÎÊı() :
-	D3D12_DEPTH_STENCIL_DESC(cÄ¬ÈÏÉî¶ÈÄ£°å) {
+Sæ·±åº¦æ¨¡æ¿å‚æ•°::Sæ·±åº¦æ¨¡æ¿å‚æ•°() :
+	D3D12_DEPTH_STENCIL_DESC(cé»˜è®¤æ·±åº¦æ¨¡æ¿) {
 }
-void SÉî¶ÈÄ£°å²ÎÊı::fsÉî¶È²¿·Ö(const D3D12_DEPTH_STENCIL_DESC &a) {
+void Sæ·±åº¦æ¨¡æ¿å‚æ•°::fsæ·±åº¦éƒ¨åˆ†(const D3D12_DEPTH_STENCIL_DESC &a) {
 	DepthEnable = a.DepthEnable;
 	DepthWriteMask = a.DepthWriteMask;
 	DepthFunc = a.DepthFunc;
 }
-void SÉî¶ÈÄ£°å²ÎÊı::fsÄ£°å²¿·Ö(const D3D12_DEPTH_STENCIL_DESC &a) {
+void Sæ·±åº¦æ¨¡æ¿å‚æ•°::fsæ¨¡æ¿éƒ¨åˆ†(const D3D12_DEPTH_STENCIL_DESC &a) {
 	StencilEnable = a.StencilEnable;
 	StencilReadMask = a.StencilReadMask;
 	StencilWriteMask = a.StencilWriteMask;
@@ -1304,4 +1335,4 @@ void SÉî¶ÈÄ£°å²ÎÊı::fsÄ£°å²¿·Ö(const D3D12_DEPTH_STENCIL_DESC &a) {
 	BackFace = a.BackFace;
 }
 
-}	//namespace cflw::Í¼ĞÎ::d3d12
+}	//namespace cflw::å›¾å½¢::d3d12
