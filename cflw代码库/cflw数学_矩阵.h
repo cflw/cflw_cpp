@@ -1,134 +1,132 @@
-#pragma once
+ï»¿#pragma once
 #include <cassert>
-#include "cflwÊıÑ§.h"
-namespace cflw::ÊıÑ§ {
+#include "cflwæ•°å­¦.h"
+namespace cflw::æ•°å­¦ {
 //=============================================================================
-// ÉùÃ÷
+// å£°æ˜
 //=============================================================================
-//ÆäËüÎÄ¼ş
-struct SÏòÁ¿3;
-struct SÏòÁ¿4;
-struct SÆ½Ãæ·½³Ì;
+//å…¶å®ƒæ–‡ä»¶
+struct Så‘é‡3;
+struct Så‘é‡4;
+struct Så¹³é¢3;
 //=============================================================================
-// ¾ØÕó
+// çŸ©é˜µ
 //=============================================================================
-template<unsigned int ĞĞ, unsigned int ÁĞ> struct S¾ØÕó {
-	const static unsigned int cĞĞ = ĞĞ;
-	const static unsigned int cÁĞ = ÁĞ;
-	float mÖµ[ĞĞ][ÁĞ];
-	S¾ØÕó();
-	S¾ØÕó(std::initializer_list<float>);
+template<unsigned int è¡Œ, unsigned int åˆ—> struct SçŸ©é˜µ {
+	const static unsigned int cè¡Œ = è¡Œ;
+	const static unsigned int cåˆ— = åˆ—;
+	float må€¼[è¡Œ][åˆ—];
+	SçŸ©é˜µ();
+	SçŸ©é˜µ(std::initializer_list<float>);
 	float &operator ()(unsigned int i, unsigned int j) {
-		return mÖµ[i][j];
+		return må€¼[i][j];
 	}
 };
-struct S¾ØÕóĞÅÏ¢ {
+struct SçŸ©é˜µä¿¡æ¯ {
 private:
-	int mĞĞ, mÁĞ;
-	float *mÊı;
+	int mè¡Œ, måˆ—;
+	float *mæ•°;
 public:
-	float &fÈ¡(int ĞĞ, int ÁĞ) {
-		return mÊı[ĞĞ * mÁĞ + ÁĞ];
+	float &få–(int è¡Œ, int åˆ—) {
+		return mæ•°[è¡Œ * måˆ— + åˆ—];
 	}
 };
-class C¾ØÕó {	//Ìá¹©¾ØÕóÔËËã
+class CçŸ©é˜µ {	//æä¾›çŸ©é˜µè¿ç®—
 public:
-	static void f¿Õ¾ØÕó_(float *, int, int);
-	static void f¾ØÕóÏà³Ë_(float *, const float *, const float *, int, int, int);
-	static void fµ¥Î»¾ØÕó_(float *, int);
-	static void f¾ØÕóÏà¼Ó_(float *, const float *, const float *, int, int);
-	static void f¾ØÕó×ªÖÃ_(float *, const float *, int, int);
-	static float fËãĞĞÁĞÊ½_(float *, int);
+	static void fç©ºçŸ©é˜µ_(float *, int, int);
+	static void fçŸ©é˜µç›¸ä¹˜_(float *, const float *, const float *, int, int, int);
+	static void få•ä½çŸ©é˜µ_(float *, int);
+	static void fçŸ©é˜µç›¸åŠ _(float *, const float *, const float *, int, int);
+	static void fçŸ©é˜µè½¬ç½®_(float *, const float *, int, int);
+	static float fç®—è¡Œåˆ—å¼_(float *, int);
 public:
-	template<unsigned int ĞĞ, unsigned int ÁĞ> static void f¿Õ¾ØÕó(S¾ØÕó<ĞĞ, ÁĞ> &p);
-	template<unsigned int Ò», unsigned int ¶ş, unsigned int Èı> static void f¾ØÕóÏà³Ë(S¾ØÕó<Ò», Èı> &p³ö, const S¾ØÕó<Ò», ¶ş> &pÒ», const S¾ØÕó<¶ş, Èı> &p¶ş);
-	template<unsigned int Ò»> static void fµ¥Î»¾ØÕó(S¾ØÕó<Ò», Ò»> &p);
-	template<unsigned int i, unsigned int j> static void f¾ØÕóÏà¼Ó(S¾ØÕó<i, j> &o, const S¾ØÕó<i, j> &p1, const S¾ØÕó<i, j> &p2);
-	template<unsigned int i, unsigned int j> static void f¾ØÕó×ªÖÃ(S¾ØÕó<i, j> &po, const S¾ØÕó<j, i> &pi);
-	template<unsigned int i> static float fËãĞĞÁĞÊ½(S¾ØÕó<i, i> &pi);
+	template<unsigned int è¡Œ, unsigned int åˆ—> static void fç©ºçŸ©é˜µ(SçŸ©é˜µ<è¡Œ, åˆ—> &p);
+	template<unsigned int ä¸€, unsigned int äºŒ, unsigned int ä¸‰> static void fçŸ©é˜µç›¸ä¹˜(SçŸ©é˜µ<ä¸€, ä¸‰> &på‡º, const SçŸ©é˜µ<ä¸€, äºŒ> &pä¸€, const SçŸ©é˜µ<äºŒ, ä¸‰> &päºŒ);
+	template<unsigned int ä¸€> static void få•ä½çŸ©é˜µ(SçŸ©é˜µ<ä¸€, ä¸€> &p);
+	template<unsigned int i, unsigned int j> static void fçŸ©é˜µç›¸åŠ (SçŸ©é˜µ<i, j> &o, const SçŸ©é˜µ<i, j> &p1, const SçŸ©é˜µ<i, j> &p2);
+	template<unsigned int i, unsigned int j> static void fçŸ©é˜µè½¬ç½®(SçŸ©é˜µ<i, j> &po, const SçŸ©é˜µ<j, i> &pi);
+	template<unsigned int i> static float fç®—è¡Œåˆ—å¼(SçŸ©é˜µ<i, i> &pi);
 };
-//¶ş½×¾ØÕó
-struct S¾ØÕó2 : public S¾ØÕó<2, 2> {
-	typedef S¾ØÕó<2, 2> t»ùÀà;
-	using t»ùÀà::t»ùÀà;
-	//²Ù×÷·û
-	S¾ØÕó2 &operator +=(const S¾ØÕó2 &);
-	S¾ØÕó2 &operator *=(const S¾ØÕó2 &);
-	S¾ØÕó2 operator +(const S¾ØÕó2 &) const;
-	S¾ØÕó2 operator *(const S¾ØÕó2 &) const;
-	//¾²Ì¬º¯Êı
-	static S¾ØÕó2 fcµ¥Î»();
-	static S¾ØÕó2 fcĞı×ª(const float &);
-	static S¾ØÕó2 fcËõ·Å(const float &, const float &);
-	static S¾ØÕó2 fcÇĞ±ä(const float &, const float &);
-	static S¾ØÕó2 fc·­×ª(const float &, const float &);
-	static S¾ØÕó2 fc¸´Êı(const t¸´Êı<float> &);
+//äºŒé˜¶çŸ©é˜µ
+struct SçŸ©é˜µ2 : public SçŸ©é˜µ<2, 2> {
+	typedef SçŸ©é˜µ<2, 2> tåŸºç±»;
+	using tåŸºç±»::tåŸºç±»;
+	//æ“ä½œç¬¦
+	SçŸ©é˜µ2 &operator +=(const SçŸ©é˜µ2 &);
+	SçŸ©é˜µ2 &operator *=(const SçŸ©é˜µ2 &);
+	SçŸ©é˜µ2 operator +(const SçŸ©é˜µ2 &) const;
+	SçŸ©é˜µ2 operator *(const SçŸ©é˜µ2 &) const;
+	//é™æ€å‡½æ•°
+	static SçŸ©é˜µ2 fcå•ä½();
+	static SçŸ©é˜µ2 fcæ—‹è½¬(const float &);
+	static SçŸ©é˜µ2 fcç¼©æ”¾(const float &, const float &);
+	static SçŸ©é˜µ2 fcåˆ‡å˜(const float &, const float &);
+	static SçŸ©é˜µ2 fcç¿»è½¬(const float &, const float &);
+	static SçŸ©é˜µ2 fcå¤æ•°(const tå¤æ•°<float> &);
 };
-//ËÄ½×¾ØÕó
-struct S¾ØÕó4 : public S¾ØÕó < 4, 4 > {
-	typedef S¾ØÕó<4, 4> t»ùÀà;
-	static const S¾ØÕó4 cµ¥Î»;
-	//¹¹Ôìº¯Êı
-	S¾ØÕó4();
-	//²Ù×÷·û
-	S¾ØÕó4 &operator +=(const S¾ØÕó4 &);
-	S¾ØÕó4 &operator *=(const S¾ØÕó4 &);
-	S¾ØÕó4 operator +(const S¾ØÕó4 &) const;
-	S¾ØÕó4 operator *(const S¾ØÕó4 &) const;
-	//¾²Ì¬º¯Êı
-	static S¾ØÕó4 fcµ¥Î»();
-	static S¾ØÕó4 fcÈÆxĞı×ª(const float &);
-	static S¾ØÕó4 fcÈÆyĞı×ª(const float &);
-	static S¾ØÕó4 fcÈÆzĞı×ª(const float &);
-	static S¾ØÕó4 fcĞı×ª(const float &x, const float &y, const float &z);
-	static S¾ØÕó4 fc¿´l(const SÏòÁ¿3 &Î»ÖÃ, const SÏòÁ¿3 &Ä¿±ê, const SÏòÁ¿3 &ÉÏ·½);
-	static S¾ØÕó4 fc¿´r(const SÏòÁ¿3 &Î»ÖÃ, const SÏòÁ¿3 &Ä¿±ê, const SÏòÁ¿3 &ÉÏ·½);
-	static S¾ØÕó4 fc¿´Ïòl(const SÏòÁ¿3 &Î»ÖÃ, const SÏòÁ¿3 &ÊÓÏß, const SÏòÁ¿3 &ÉÏ·½);
-	static S¾ØÕó4 fc¿´Ïòr(const SÏòÁ¿3 &Î»ÖÃ, const SÏòÁ¿3 &ÊÓÏß, const SÏòÁ¿3 &ÉÏ·½);
-	static S¾ØÕó4 fcÍ¸ÊÓÍ¶Ó°ÊÓ½Çl(const float &·¶Î§, const float &¿í¸ß±È, const float &½ü²Ã¼ôÃæ, const float &Ô¶²Ã¼ôÃæ);
-	static S¾ØÕó4 fcÍ¸ÊÓÍ¶Ó°ÊÓ½Çr(const float &·¶Î§, const float &¿í¸ß±È, const float &½ü²Ã¼ôÃæ, const float &Ô¶²Ã¼ôÃæ);
-	static S¾ØÕó4 fcÍ¸ÊÓÍ¶Ó°ÖĞĞÄl(float ¿í, float ¸ß, float ½ü²Ã¼ôÃæ, float Ô¶²Ã¼ôÃæ);
-	static S¾ØÕó4 fcÍ¸ÊÓÍ¶Ó°ÖĞĞÄr(float ¿í, float ¸ß, float ½ü²Ã¼ôÃæ, float Ô¶²Ã¼ôÃæ);
-	static S¾ØÕó4 fcÍ¸ÊÓÍ¶Ó°×Ô¶¨Òål(float ×ó, float ÓÒ, float ÏÂ, float ÉÏ, float ½ü²Ã¼ôÃæ, float Ô¶²Ã¼ôÃæ);
-	static S¾ØÕó4 fcÍ¸ÊÓÍ¶Ó°×Ô¶¨Òår(float ×ó, float ÓÒ, float ÏÂ, float ÉÏ, float ½ü²Ã¼ôÃæ, float Ô¶²Ã¼ôÃæ);
-	static S¾ØÕó4 fc×ªÖÃ(const S¾ØÕó4 &);
-	static S¾ØÕó4 fcÆ½ÒÆ(const float &x, const float &y, const float &z);
-	static S¾ØÕó4 fcËõ·Å(const float &x, const float &y, const float &z);
-	static S¾ØÕó4 fc¾µÃæ·´Éä(const SÆ½Ãæ·½³Ì &);
-	static S¾ØÕó4 fcÒõÓ°(const SÆ½Ãæ·½³Ì &Æ½Ãæ, const SÏòÁ¿4 &¹â·½Ïò);
+//å››é˜¶çŸ©é˜µ
+struct SçŸ©é˜µ4 : public SçŸ©é˜µ < 4, 4 > {
+	typedef SçŸ©é˜µ<4, 4> tåŸºç±»;
+	static const SçŸ©é˜µ4 cå•ä½;
+	//æ„é€ å‡½æ•°
+	SçŸ©é˜µ4();
+	//æ“ä½œç¬¦
+	SçŸ©é˜µ4 &operator +=(const SçŸ©é˜µ4 &);
+	SçŸ©é˜µ4 &operator *=(const SçŸ©é˜µ4 &);
+	SçŸ©é˜µ4 operator +(const SçŸ©é˜µ4 &) const;
+	SçŸ©é˜µ4 operator *(const SçŸ©é˜µ4 &) const;
+	//é™æ€å‡½æ•°
+	static SçŸ©é˜µ4 fcå•ä½();
+	static SçŸ©é˜µ4 fcç»•xæ—‹è½¬(const float &);
+	static SçŸ©é˜µ4 fcç»•yæ—‹è½¬(const float &);
+	static SçŸ©é˜µ4 fcç»•zæ—‹è½¬(const float &);
+	static SçŸ©é˜µ4 fcæ—‹è½¬(const float &x, const float &y, const float &z);
+	static SçŸ©é˜µ4 fcçœ‹l(const Så‘é‡3 &ä½ç½®, const Så‘é‡3 &ç›®æ ‡, const Så‘é‡3 &ä¸Šæ–¹);
+	static SçŸ©é˜µ4 fcçœ‹r(const Så‘é‡3 &ä½ç½®, const Så‘é‡3 &ç›®æ ‡, const Så‘é‡3 &ä¸Šæ–¹);
+	static SçŸ©é˜µ4 fcçœ‹å‘l(const Så‘é‡3 &ä½ç½®, const Så‘é‡3 &è§†çº¿, const Så‘é‡3 &ä¸Šæ–¹);
+	static SçŸ©é˜µ4 fcçœ‹å‘r(const Så‘é‡3 &ä½ç½®, const Så‘é‡3 &è§†çº¿, const Så‘é‡3 &ä¸Šæ–¹);
+	static SçŸ©é˜µ4 fcé€è§†æŠ•å½±è§†è§’l(const float &èŒƒå›´, const float &å®½é«˜æ¯”, const float &è¿‘è£å‰ªé¢, const float &è¿œè£å‰ªé¢);
+	static SçŸ©é˜µ4 fcé€è§†æŠ•å½±è§†è§’r(const float &èŒƒå›´, const float &å®½é«˜æ¯”, const float &è¿‘è£å‰ªé¢, const float &è¿œè£å‰ªé¢);
+	static SçŸ©é˜µ4 fcé€è§†æŠ•å½±ä¸­å¿ƒl(float å®½, float é«˜, float è¿‘è£å‰ªé¢, float è¿œè£å‰ªé¢);
+	static SçŸ©é˜µ4 fcé€è§†æŠ•å½±ä¸­å¿ƒr(float å®½, float é«˜, float è¿‘è£å‰ªé¢, float è¿œè£å‰ªé¢);
+	static SçŸ©é˜µ4 fcé€è§†æŠ•å½±è‡ªå®šä¹‰l(float å·¦, float å³, float ä¸‹, float ä¸Š, float è¿‘è£å‰ªé¢, float è¿œè£å‰ªé¢);
+	static SçŸ©é˜µ4 fcé€è§†æŠ•å½±è‡ªå®šä¹‰r(float å·¦, float å³, float ä¸‹, float ä¸Š, float è¿‘è£å‰ªé¢, float è¿œè£å‰ªé¢);
+	static SçŸ©é˜µ4 fcè½¬ç½®(const SçŸ©é˜µ4 &);
+	static SçŸ©é˜µ4 fcå¹³ç§»(const float &x, const float &y, const float &z);
+	static SçŸ©é˜µ4 fcç¼©æ”¾(const float &x, const float &y, const float &z);
+	static SçŸ©é˜µ4 fcé•œé¢åå°„(const Så¹³é¢3 &);
+	static SçŸ©é˜µ4 fcé˜´å½±(const Så¹³é¢3 &å¹³é¢, const Så‘é‡4 &å…‰);
 };
-
-
 //=============================================================================
-// ¾ØÕó
+// çŸ©é˜µ
 //=============================================================================
-template<unsigned int ĞĞ, unsigned int ÁĞ> S¾ØÕó<ĞĞ, ÁĞ>::S¾ØÕó() :mÖµ{0} {}
-template<unsigned int ĞĞ, unsigned int ÁĞ> S¾ØÕó<ĞĞ, ÁĞ>::S¾ØÕó(std::initializer_list<float> p) {
-	for (int i = 0; i != ĞĞ; ++i) {
-		for (int j = 0; j != ÁĞ; ++j) {
-			const int n = i * ĞĞ + j;
+template<unsigned int è¡Œ, unsigned int åˆ—> SçŸ©é˜µ<è¡Œ, åˆ—>::SçŸ©é˜µ() :må€¼{0} {}
+template<unsigned int è¡Œ, unsigned int åˆ—> SçŸ©é˜µ<è¡Œ, åˆ—>::SçŸ©é˜µ(std::initializer_list<float> p) {
+	for (int i = 0; i != è¡Œ; ++i) {
+		for (int j = 0; j != åˆ—; ++j) {
+			const int n = i * è¡Œ + j;
 			assert(n <= p.size());
-			mÖµ[i][j] = p[n];
+			må€¼[i][j] = p[n];
 		}
 	}
 }
-template<unsigned int ĞĞ, unsigned int ÁĞ> void C¾ØÕó::f¿Õ¾ØÕó(S¾ØÕó<ĞĞ, ÁĞ> &a¾ØÕó) {
-	f¿Õ¾ØÕó_(*a¾ØÕó.mÖµ, a¾ØÕó.cĞĞ, a¾ØÕó.cÁĞ);
+template<unsigned int è¡Œ, unsigned int åˆ—> void CçŸ©é˜µ::fç©ºçŸ©é˜µ(SçŸ©é˜µ<è¡Œ, åˆ—> &açŸ©é˜µ) {
+	fç©ºçŸ©é˜µ_(*açŸ©é˜µ.må€¼, açŸ©é˜µ.cè¡Œ, açŸ©é˜µ.cåˆ—);
 }
-template<unsigned int Ò», unsigned int ¶ş, unsigned int Èı> void C¾ØÕó::f¾ØÕóÏà³Ë(S¾ØÕó<Ò», Èı> &aÊä³ö, const S¾ØÕó<Ò», ¶ş> &a¾ØÕó0, const S¾ØÕó<¶ş, Èı> &a¾ØÕó1) {
-	f¾ØÕóÏà³Ë_(*aÊä³ö.mÖµ, *a¾ØÕó0.mÖµ, *a¾ØÕó1.mÖµ, Ò», ¶ş, Èı);
+template<unsigned int ä¸€, unsigned int äºŒ, unsigned int ä¸‰> void CçŸ©é˜µ::fçŸ©é˜µç›¸ä¹˜(SçŸ©é˜µ<ä¸€, ä¸‰> &aè¾“å‡º, const SçŸ©é˜µ<ä¸€, äºŒ> &açŸ©é˜µ0, const SçŸ©é˜µ<äºŒ, ä¸‰> &açŸ©é˜µ1) {
+	fçŸ©é˜µç›¸ä¹˜_(*aè¾“å‡º.må€¼, *açŸ©é˜µ0.må€¼, *açŸ©é˜µ1.må€¼, ä¸€, äºŒ, ä¸‰);
 }
-template<unsigned int Ò»> void C¾ØÕó::fµ¥Î»¾ØÕó(S¾ØÕó<Ò», Ò»> &a¾ØÕó) {
-	fµ¥Î»¾ØÕó_(*a¾ØÕó.mÖµ, Ò»);
+template<unsigned int ä¸€> void CçŸ©é˜µ::få•ä½çŸ©é˜µ(SçŸ©é˜µ<ä¸€, ä¸€> &açŸ©é˜µ) {
+	få•ä½çŸ©é˜µ_(*açŸ©é˜µ.må€¼, ä¸€);
 }
-template<unsigned int i, unsigned int j> void C¾ØÕó::f¾ØÕóÏà¼Ó(S¾ØÕó<i, j> &aÊä³ö, const S¾ØÕó<i, j> &a¾ØÕó0, const S¾ØÕó<i, j> &a¾ØÕó1) {
-	f¾ØÕóÏà¼Ó_(*aÊä³ö.mÖµ, *a¾ØÕó0.mÖµ, *a¾ØÕó1.mÖµ, i, j);
+template<unsigned int i, unsigned int j> void CçŸ©é˜µ::fçŸ©é˜µç›¸åŠ (SçŸ©é˜µ<i, j> &aè¾“å‡º, const SçŸ©é˜µ<i, j> &açŸ©é˜µ0, const SçŸ©é˜µ<i, j> &açŸ©é˜µ1) {
+	fçŸ©é˜µç›¸åŠ _(*aè¾“å‡º.må€¼, *açŸ©é˜µ0.må€¼, *açŸ©é˜µ1.må€¼, i, j);
 }
-template<unsigned int i, unsigned int j>  void C¾ØÕó::f¾ØÕó×ªÖÃ(S¾ØÕó<i, j> &aÊä³ö, const S¾ØÕó<j, i> &aÊäÈë) {
-	f¾ØÕó×ªÖÃ_(*aÊä³ö.mÖµ, *aÊäÈë.mÖµ, i, j);
+template<unsigned int i, unsigned int j>  void CçŸ©é˜µ::fçŸ©é˜µè½¬ç½®(SçŸ©é˜µ<i, j> &aè¾“å‡º, const SçŸ©é˜µ<j, i> &aè¾“å…¥) {
+	fçŸ©é˜µè½¬ç½®_(*aè¾“å‡º.må€¼, *aè¾“å…¥.må€¼, i, j);
 }
-template<unsigned int i> float C¾ØÕó::fËãĞĞÁĞÊ½(S¾ØÕó<i, i> &a¾ØÕó) {
-	return fËãĞĞÁĞÊ½_(a¾ØÕó.mÖµ, i);
+template<unsigned int i> float CçŸ©é˜µ::fç®—è¡Œåˆ—å¼(SçŸ©é˜µ<i, i> &açŸ©é˜µ) {
+	return fç®—è¡Œåˆ—å¼_(açŸ©é˜µ.må€¼, i);
 }
 
-}	//namespace cflw::ÊıÑ§
+}	//namespace cflw::æ•°å­¦

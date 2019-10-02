@@ -45,8 +45,8 @@ bool f线段相交判定(const S向量2 &a点0, const S向量2 &a点1, const S�
 	const float v范围左 = std::max<float>(v1最小.x, v2最小.x);
 	const float v范围右 = std::min<float>(v1最大.x, v2最大.x);
 	//计算直线方程
-	const S直线方程 v直线0 = S直线方程::fc两点(a点0, a点1);
-	const S直线方程 v直线1 = S直线方程::fc两点(a点2, a点3);
+	const S直线2 v直线0 = S直线2::fc两点(a点0, a点1);
+	const S直线2 v直线1 = S直线2::fc两点(a点2, a点3);
 	if (v直线0.f平行(v直线1)) {
 		return false;
 	}
@@ -141,7 +141,7 @@ bool f圆形旋转椭圆相交判定(const S圆形 &a圆形, const S旋转椭圆
 	const float y平方 = (a平方 - a圆形.m半径*a圆形.m半径) / a平方 * b平方;
 	return y平方 >= 0;
 }
-bool f圆形直线相交判定(const S圆形 &a圆形, const S直线方程 &a直线) {
+bool f圆形直线相交判定(const S圆形 &a圆形, const S直线2 &a直线) {
 	return a直线.f到点距离(a圆形.m坐标) <= a圆形.m半径;
 }
 bool f旋转矩形相交判定(const S旋转矩形 &a1, const S旋转矩形 &a2) {
@@ -201,7 +201,7 @@ bool f旋转矩形射线相交判定(const S旋转矩形 &a矩形, const S射线
 			return false;	//两点同侧
 		if (a1.x >= 0 && a2.x >= 0)
 			return true;	//连点都在前面
-		S直线方程 m直线 = S直线方程::fc两点(a1, a2);
+		S直线2 m直线 = S直线2::fc两点(a1, a2);
 		return m直线.f求x(0) >= 0;
 	};
 	if (f(v顶点[0], v顶点[1])) return true;
@@ -260,6 +260,12 @@ S圆形::S圆形(const S向量2 &a坐标, const float &a半径) :
 	m坐标(a坐标),
 	m半径(a半径) {
 }
+S圆形 S圆形::fc坐标半径(const S向量2 &a坐标, float a半径) {
+	return S圆形(a坐标, a半径);
+}
+S圆形 S圆形::fc坐标直径(const S向量2 &a坐标, float a直径) {
+	return S圆形(a坐标, a直径 * 0.5f);
+}
 S向量2 S圆形::f取点r(const float &r) const {
 	S向量2 v = S向量2::fc方向r(m半径, r);
 	v += m坐标;
@@ -316,6 +322,14 @@ S矩形 S矩形::fc坐标半尺寸(const S向量2 &a坐标, const S向量2 &a半
 S矩形 S矩形::fc正方形(const S向量2 &a坐标, float a边长) {
 	const float v半尺寸 = a边长 / 2;
 	return {a坐标, {v半尺寸, v半尺寸}};
+}
+S矩形 S矩形::fc对角点(const S向量2 &a, const S向量2 &b) {
+	S矩形 v;
+	v.m坐标.x = (a.x + b.x) / 2;
+	v.m坐标.y = (a.y + b.y) / 2;
+	v.m半尺寸.x = std::abs(a.x - b.x) / 2;
+	v.m半尺寸.y = std::abs(a.y - b.y) / 2;
+	return v;
 }
 S向量2 S矩形::fg中心() const {
 	return m坐标;
@@ -579,6 +593,135 @@ S圆形 S三角形::fg外接圆() const {
 	v.m坐标 = fg外心();
 	v.m半径 = v.m坐标.f到点距离(m点[0]);
 	return v;
+}
+//==============================================================================
+// 直线方程
+//==============================================================================
+S直线2::S直线2() :
+	a(0), b(0), c(0) {
+}
+S直线2::S直线2(float A, float B, float C) :
+	a{A}, b{B}, c{C} {
+}
+S直线2 S直线2::fc点斜(const S向量2 &p, const float &k) {
+	const float a = k;
+	const float b = -1;
+	const float c = k * p.x + p.y;
+	return {a, b, c};
+}
+S直线2 S直线2::fc两点(const S向量2 &p1, const S向量2 &p2) {
+	const float a = p2.y - p1.y;
+	const float b = p1.x - p2.x;
+	const float c = -p1.x * a - p2.y * b;
+	return {a, b, c};
+}
+S直线2 S直线2::fc斜截(const float &k, const float &y) {
+	const float a = k;
+	const float b = -1;
+	const float c = y;
+	return{a, b, c};
+}
+S直线2 S直线2::fc截距(const float &x, const float &y) {
+	const float a = x;
+	const float b = y;
+	const float c = -1;
+	return{a, b, c};
+}
+S直线2 S直线2::fc一般(const float &A, const float &B, const float &C) {
+	const float a = A;
+	const float b = B;
+	const float c = C;
+	return{a, b, c};
+}
+S直线2 S直线2::fc点法(const S向量2 &p, const S向量2 &n) {
+	const float a = n.x;
+	const float b = n.y;
+	const float c = -n.x * p.x - n.y * p.y;
+	return{a, b, c};
+}
+S直线2 S直线2::fc点向(const S向量2 &p, const float &d) {
+	return fc点法(p, S向量2::fc方向r(1, d + c半π<float>));
+}
+float S直线2::fg斜率() const {
+	return a / b;
+}
+float S直线2::f到点距离(const S向量2 &p) const {
+	return abs(a * p.x + b * p.y + c) / sqrt(a * a + b * b);
+}
+S直线2 S直线2::f平移(const S向量2 &a向量) const {
+	S直线2 v = *this;
+	v.c -= v.a * a向量.x;
+	v.c -= v.b * a向量.y;
+	return v;
+}
+float S直线2::f求x(const float &y) const {
+	assert(a != 0);
+	return (b * y + c) / -a;
+}
+float S直线2::f求y(const float &x) const {
+	assert(b != 0);
+	return (a * x + c) / -b;
+}
+bool S直线2::f平行(const S直线2 &a直线方程) const {
+	if (a == 0) return a直线方程.a == 0;
+	else return (b / a) == (a直线方程.b / a直线方程.a);
+}
+float S直线2::fg方向r() const {
+	return C角度计算<float>::c弧度.f取半(atan2(b, a) + c半π<float>);
+}
+float S直线2::fg方向d() const {
+	return fg方向r() * c弧度到度<float>;
+}
+S向量2 S直线2::f交点(const S直线2 &a直线方程) const {
+	const float y = (a直线方程.a * c - a * a直线方程.c) / (a直线方程.b * a - b * a直线方程.a);
+	const float x = f求x(y);
+	return S向量2(x, y);
+}
+S向量2 S直线2::fg法向量() const {
+	const float m = hypotf(a, b);
+	return S向量2(a / m, b / m);
+}
+bool S直线2::f交x轴(int p) const {
+	if (a == 0) {
+		if (p == 0)
+			return true;
+		else
+			return f取符号(c) == f取符号(p);
+	} else if (b == 0) {
+		return c == 0;
+	} else {
+		if (p == 0)
+			return true;
+		else
+			return -c / a * f取符号(p) > 0;
+	}
+}
+bool S直线2::f交y轴(int p) const {
+	if (a == 0) {
+		return c == 0;
+	} else if (b == 0) {
+		if (p == 0)
+			return true;
+		else
+			return f取符号(c) == f取符号(p);
+	} else {
+		if (p == 0)
+			return true;
+		else
+			return -c / b * f取符号(p) > 0;
+	}
+}
+bool S直线2::fi平行x轴() const {
+	return b == 0;
+}
+bool S直线2::fi平行y轴() const {
+	return a == 0;
+}
+bool S直线2::fi垂直x轴() const {
+	return a == 0;
+}
+bool S直线2::fi垂直y轴() const {
+	return b == 0;
 }
 //=============================================================================
 // 线段2

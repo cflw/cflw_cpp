@@ -1,12 +1,12 @@
 ﻿#pragma once
 #include <complex>
 namespace cflw::数学 {
-//=============================================================================
+//==============================================================================
 // 声明
-//=============================================================================
+//==============================================================================
 //其它文件
 template<typename t = double> using t复数 = std::complex<t>;
-struct S直线方程;
+struct S直线2;
 struct S矩阵4;
 struct S圆形;
 //本文件
@@ -17,7 +17,8 @@ template<typename t> t f插值(const t&起始值, const t&终止值, float 中�
 template<typename t> t f绝对值(const t &);
 template<> S向量2 f绝对值<S向量2>(const S向量2 &);
 template<> S向量3 f绝对值<S向量3>(const S向量3 &);
-//=============================================================================
+template<> S向量4 f绝对值<S向量4>(const S向量4 &);
+//==============================================================================
 //向量2
 struct S向量2 {
 	static const S向量2 c零, c一;
@@ -81,7 +82,7 @@ struct S向量2 {
 	S向量2 f线性渐变(const S向量2 &目标, const float &渐变值) const;
 	S向量2 &fs倍数渐变(const S向量2 &目标, const float &渐变值, const float &最小渐变 = 0, const float &最大渐变 = 999999999);
 	S向量2 f倍数渐变(const S向量2 &目标, const float &渐变值, const float &最小渐变 = 0, const float &最大渐变 = 999999999) const;
-	S向量2 f翻折(const S直线方程 &) const;
+	S向量2 f翻折(const S直线2 &) const;
 	S向量2 f翻折(const float &) const;
 	S向量2 f翻折(const S圆形 &) const;
 	S向量2 f对齐(const float &) const;
@@ -97,9 +98,10 @@ struct S向量2 {
 //向量3
 struct S向量3 {
 	static const S向量3 c零, c一;
-	float x, y, z;
-	S向量3();
+	float x = 0, y = 0, z = 0;
+	S向量3() = default;
 	S向量3(const float &, const float &, const float &);
+	static S向量3 fc相同(float);	//x,y,z都等于参数
 	S向量3 &operator +=(const S向量3 &);
 	S向量3 &operator -=(const S向量3 &);
 	S向量3 &operator *=(const float &);
@@ -108,6 +110,7 @@ struct S向量3 {
 	S向量3 operator -(const S向量3 &) const;
 	S向量3 operator *(const float &) const;
 	S向量3 operator /(const float &) const;
+	S向量3 operator -() const;
 	float fg大小() const;
 	float fg平方() const;
 	S向量3 fg反向() const;
@@ -123,6 +126,7 @@ struct S向量3 {
 };
 //向量4
 struct S向量4 {
+	static const S向量4 c零, c一;
 	union {
 		struct {
 			float x, y, z, w;
@@ -131,7 +135,19 @@ struct S向量4 {
 	};
 	S向量4();
 	S向量4(const float &, const float &, const float &, const float &);
+	S向量4 operator +(const S向量4 &) const;
+	S向量4 operator -(const S向量4 &) const;
+	S向量4 operator *(const float &) const;
+	S向量4 operator /(const float &) const;
 	S向量4 operator *(const S矩阵4 &) const;
+	S向量4 operator -() const;
+	float fg大小() const;
+	float fg平方() const;
+	S向量4 fg反向() const;
+	S向量4 fg归一() const;
+	S向量4 fg三维归一() const;	//x,y,z归一, w不变
+	S向量4 fg三维取反() const;	//x,y,z取反，w不变
+	float f点乘(const S向量4 &) const;
 	S向量3 ft向量3() const;
 };
 

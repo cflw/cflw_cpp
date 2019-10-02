@@ -459,6 +459,7 @@ public:
 	HRESULT f初始化(ID3D11Device *);
 public:	//创建纹理
 	HRESULT f从文件创建纹理(tp纹理 &输出, const wchar_t *文件);
+	HRESULT f从纹理对象创建纹理(tp纹理 &, const 纹理::I纹理 &);
 	HRESULT f从内存创建纹理2(tp纹理2 &输出, const void *数据, DXGI_FORMAT 格式, UINT 宽, UINT 高, UINT 行距, UINT 图像大小);
 	HRESULT f从纹理对象创建纹理2(tp纹理2 &输出, const 纹理::I纹理 &纹理);
 	HRESULT f创建纹理资源视图(tp纹理 &输出, tp纹理2, DXGI_FORMAT 格式);

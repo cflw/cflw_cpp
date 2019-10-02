@@ -1,96 +1,97 @@
-#pragma once
+ï»¿#pragma once
 #include <cassert>
 #include <initializer_list>
-namespace cflw::ÊıÑ§ {
-class C×ª»»Òò×Ó±í {
+#include <type_traits>
+namespace cflw::æ•°å­¦ {
+class Cè½¬æ¢å› å­è¡¨ {
 public:
-	C×ª»»Òò×Ó±í(const std::initializer_list<double> &pÁĞ±í) :
-		v´óĞ¡{pÁĞ±í.size()},
-		vÊı¾İ{new double[v´óĞ¡ * v´óĞ¡]} {
+	Cè½¬æ¢å› å­è¡¨(const std::initializer_list<double> &påˆ—è¡¨) :
+		vå¤§å°{påˆ—è¡¨.size()},
+		væ•°æ®{new double[vå¤§å° * vå¤§å°]} {
 		int i = 0;
-		for (const double &x : pÁĞ±í) {
+		for (const double &x : påˆ—è¡¨) {
 			int j = 0;
-			for (const double &y : pÁĞ±í) {
-				vÊı¾İ[i + j] = y / x;
+			for (const double &y : påˆ—è¡¨) {
+				væ•°æ®[i + j] = y / x;
 				++j;
 			}
-			i += v´óĞ¡;
+			i += vå¤§å°;
 		}
 	}
-	C×ª»»Òò×Ó±í(const C×ª»»Òò×Ó±í &) = delete;
-	C×ª»»Òò×Ó±í(C×ª»»Òò×Ó±í &&) = delete;
-	~C×ª»»Òò×Ó±í() {
-		delete[] vÊı¾İ;
+	Cè½¬æ¢å› å­è¡¨(const Cè½¬æ¢å› å­è¡¨ &) = delete;
+	Cè½¬æ¢å› å­è¡¨(Cè½¬æ¢å› å­è¡¨ &&) = delete;
+	~Cè½¬æ¢å› å­è¡¨() {
+		delete[] væ•°æ®;
 	}
 	template<typename t>
 	double operator()(const t &x, const t &y) const {
-		static_assert(std::is_enum<t>::value, "±ØĞèÊÇÃ¶¾ÙÀàĞÍ");
+		static_assert(std::is_enum<t>::value, "å¿…éœ€æ˜¯æšä¸¾ç±»å‹");
 		const int vx = static_cast<int>(x);
-		assert(vx < v´óĞ¡);
+		assert(vx < vå¤§å°);
 		const int vy = static_cast<int>(y);
-		assert(vy < v´óĞ¡);
-		return vÊı¾İ[vx * v´óĞ¡ + vy];
+		assert(vy < vå¤§å°);
+		return væ•°æ®[vx * vå¤§å° + vy];
 	}
-	template<typename tµ¥Î», typename tÊıÖµ = double>
-	tÊıÖµ operator()(const tµ¥Î» &x, const tµ¥Î» &y, const tÊıÖµ &pÊıÖµ) const {
-		return static_cast<tÊıÖµ>(operator()(x, y)) * pÊıÖµ;
+	template<typename tå•ä½, typename tæ•°å€¼ = double>
+	tæ•°å€¼ operator()(const tå•ä½ &x, const tå•ä½ &y, const tæ•°å€¼ &pæ•°å€¼) const {
+		return static_cast<tæ•°å€¼>(operator()(x, y)) * pæ•°å€¼;
 	}
 private:
-	size_t v´óĞ¡ = 0;
-	double *vÊı¾İ = nullptr;
+	size_t vå¤§å° = 0;
+	double *væ•°æ® = nullptr;
 };
-extern const C×ª»»Òò×Ó±í f½Ç¶È×ª»»;
-extern const C×ª»»Òò×Ó±í fÊ±¼ä×ª»»;
-extern const C×ª»»Òò×Ó±í f³¤¶È×ª»»;
-extern const C×ª»»Òò×Ó±í fÖÊÁ¿×ª»»;
-extern const C×ª»»Òò×Ó±í fÊıÁ¿×ª»»;
-//extern const C×ª»»Òò×Ó±í fÎÂ¶È×ª»»;
-extern const C×ª»»Òò×Ó±í f»õ±Ò×ª»»;
-enum class E½Ç¶È {
-	e¶È,	//ÖÜ½Ç£½360
-	e·Ö,
-	eÃë,
-	e»¡¶È,	//ÖÜ½Ç£½c¶ş¦Ğ
+extern const Cè½¬æ¢å› å­è¡¨ fè§’åº¦è½¬æ¢;
+extern const Cè½¬æ¢å› å­è¡¨ fæ—¶é—´è½¬æ¢;
+extern const Cè½¬æ¢å› å­è¡¨ fé•¿åº¦è½¬æ¢;
+extern const Cè½¬æ¢å› å­è¡¨ fè´¨é‡è½¬æ¢;
+extern const Cè½¬æ¢å› å­è¡¨ fæ•°é‡è½¬æ¢;
+//extern const Cè½¬æ¢å› å­è¡¨ fæ¸©åº¦è½¬æ¢;
+extern const Cè½¬æ¢å› å­è¡¨ fè´§å¸è½¬æ¢;
+enum class Eè§’åº¦ {
+	eåº¦,	//å‘¨è§’ï¼360
+	eåˆ†,
+	eç§’,
+	eå¼§åº¦,	//å‘¨è§’ï¼cäºŒÏ€
 };
-enum class EÊ±¼ä {
-	eºÁÃë,
-	eÃë,
-	e·Ö,
-	eÊ±,
-	eÈÕ,
-	eÔÂ,
-	eÄê,
-	eÊÀ¼Í,
+enum class Eæ—¶é—´ {
+	eæ¯«ç§’,
+	eç§’,
+	eåˆ†,
+	eæ—¶,
+	eæ—¥,
+	eæœˆ,
+	eå¹´,
+	eä¸–çºª,
 };
-enum class E³¤¶È {
-	eºÁÃ×,
-	eÀåÃ×,
-	e·ÖÃ×,
-	eÃ×,
-	eÇ§Ã×,
+enum class Eé•¿åº¦ {
+	eæ¯«ç±³,
+	eå˜ç±³,
+	eåˆ†ç±³,
+	eç±³,
+	eåƒç±³,
 };
-enum class EÖÊÁ¿ {
-	eºÁ¿Ë,	//mg
-	e¿Ë,	//g
-	e½ï,
-	eÇ§¿Ë,	//kg
-	e¶Ö,	//t
+enum class Eè´¨é‡ {
+	eæ¯«å…‹,	//mg
+	eå…‹,	//g
+	eæ–¤,
+	eåƒå…‹,	//kg
+	eå¨,	//t
 };
-enum class EÊıÁ¿ {
-	e¸ö,
-	eÄ¦¶û,	//mol
+enum class Eæ•°é‡ {
+	eä¸ª,
+	eæ‘©å°”,	//mol
 };
-enum class EÎÂ¶È {
-	eÉãÊÏ¶È,	//C
-	e»ªÊÏ¶È,	//F
-	e¿ªÊÏ¶È,	//K
-	eÀ¼ÊÏ¶È,	//Ra
-	eÁĞÊÏ¶È,	//Re
+enum class Eæ¸©åº¦ {
+	eæ‘„æ°åº¦,	//C
+	eåæ°åº¦,	//F
+	eå¼€æ°åº¦,	//K
+	eå…°æ°åº¦,	//Ra
+	eåˆ—æ°åº¦,	//Re
 };
-enum class E»õ±Ò {
-	eÈËÃñ±Ò,
-	eÃÀÔª,
-	eÅ·Ôª,
-	eÈÕÔª
+enum class Eè´§å¸ {
+	eäººæ°‘å¸,
+	eç¾å…ƒ,
+	eæ¬§å…ƒ,
+	eæ—¥å…ƒ
 };
-}	//namespace cflw::ÊıÑ§
+}	//namespace cflw::æ•°å­¦

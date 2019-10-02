@@ -979,6 +979,15 @@ HRESULT C纹理工厂::f从文件创建纹理(tp纹理 &a输出, const wchar_t *
 	hr = f创建纹理资源视图(a输出, v纹理2.Get(), v纹理->fg格式());
 	return hr;
 }
+HRESULT C纹理工厂::f从纹理对象创建纹理(tp纹理 &a输出, const 纹理::I纹理 &a纹理) {
+	tp纹理2 v纹理2;
+	HRESULT hr = f从纹理对象创建纹理2(v纹理2, a纹理);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	hr = f创建纹理资源视图(a输出, v纹理2.Get(), a纹理.fg格式());
+	return hr;
+}
 HRESULT C纹理工厂::f从内存创建纹理2(tp纹理2 &a输出, const void *a数据, DXGI_FORMAT a格式, UINT a宽, UINT a高, UINT a行距, UINT a大小) {
 	m纹理描述.Width = a宽;
 	m纹理描述.Height = a高;

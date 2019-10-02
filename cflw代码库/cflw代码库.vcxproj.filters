@@ -133,6 +133,12 @@
     <ClInclude Include="cflw工具_函数.h">
       <Filter>工具</Filter>
     </ClInclude>
+    <ClInclude Include="cflw数学_分辨率.h">
+      <Filter>图形</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw数学_立体几何.h">
+      <Filter>数学</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cflw数学_单位转换.cpp">
@@ -227,6 +233,9 @@
     </ClCompile>
     <ClCompile Include="cflw图形_dx着色器.cpp">
       <Filter>图形</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw数学_立体几何.cpp">
+      <Filter>数学</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

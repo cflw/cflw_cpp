@@ -11,12 +11,15 @@ template<> S向量2 f绝对值<S向量2>(const S向量2 &_) {
 template<> S向量3 f绝对值<S向量3>(const S向量3 &_) {
 	return S向量3(abs(_.x), abs(_.y), abs(_.z));
 }
-//=============================================================================
+template<> S向量4 f绝对值<S向量4>(const S向量4 &a) {
+	return S向量4(abs(a.x), abs(a.y), abs(a.z), abs(a.w));
+}
+//==============================================================================
 // 向量
-//=============================================================================
+//==============================================================================
 //常量
-const S向量2 S向量2::c零{0, 0};
-const S向量2 S向量2::c一{1, 1};
+const S向量2 S向量2::c零(0, 0);
+const S向量2 S向量2::c一(1, 1);
 //构造函数
 S向量2::S向量2(float X, float Y):
 	x(X), y(Y) {
@@ -150,49 +153,49 @@ S向量2 &S向量2::fs(const float &X, const float &Y) {
 	y = Y;
 	return *this;
 }
-S向量2 &S向量2::fs大小(const float &p) {
+S向量2 &S向量2::fs大小(const float &a大小) {
 	float v模 = fg大小();
 	assert(v模 != 0);
-	x = x / v模 * p;
-	y = y / v模 * p;
+	x = x / v模 * a大小;
+	y = y / v模 * a大小;
 	return *this;
 }
-S向量2 &S向量2::fs方向(const float &p) {
+S向量2 &S向量2::fs方向(const float &a弧度) {
 	const float v模 = fg大小();
-	x = cos(p) * v模;
-	y = sin(p) * v模;
+	x = cos(a弧度) * v模;
+	y = sin(a弧度) * v模;
 	return *this;
 }
-S向量2 &S向量2::fs方向d(const float &p) {
+S向量2 &S向量2::fs方向d(const float &a度) {
 	const float v模 = fg大小();
-	const float r = p * c度到弧度<float>;
+	const float r = a度 * c度到弧度<float>;
 	x = cos(r) * v模;
 	y = sin(r) * v模;
 	return *this;
 }
-S向量2 &S向量2::fs旋转r(const float &p) {
-	*this = f旋转r(p);
+S向量2 &S向量2::fs旋转r(const float &a弧度) {
+	*this = f旋转r(a弧度);
 	return *this;
 }
-S向量2 &S向量2::fs旋转d(const float &p) {
-	*this = f旋转d(p);
+S向量2 &S向量2::fs旋转d(const float &a度) {
+	*this = f旋转d(a度);
 	return *this;
 }
-S向量2 S向量2::f大小(const float &p) const {
-	return S向量2(*this).fs大小(p);
+S向量2 S向量2::f大小(const float &a大小) const {
+	return S向量2(*this).fs大小(a大小);
 }
-S向量2 S向量2::f方向r(const float &p) const {
-	return S向量2(*this).fs方向(p);
+S向量2 S向量2::f方向r(const float &a弧度) const {
+	return S向量2(*this).fs方向(a弧度);
 }
-S向量2 S向量2::f方向d(const float &p) const {
-	return S向量2(*this).fs方向d(p);
+S向量2 S向量2::f方向d(const float &a度) const {
+	return S向量2(*this).fs方向d(a度);
 }
-float S向量2::f到点方向r(const S向量2 &_) const {
-	const S向量2 v = _ - *this;
+float S向量2::f到点方向r(const S向量2 &a向量) const {
+	const S向量2 v = a向量 - *this;
 	return C角度计算<float>::c弧度.f方向(v.x, v.y);
 }
-float S向量2::f到点方向d(const S向量2 &_) const {
-	const S向量2 v = _ - *this;
+float S向量2::f到点方向d(const S向量2 &a向量) const {
+	const S向量2 v = a向量 - *this;
 	return C角度计算<float>::c度.f方向(v.x, v.y);
 }
 S向量2 S向量2::f旋转r(const float &a角度) const {
@@ -263,7 +266,7 @@ S向量2 S向量2::f倍数渐变(const S向量2 &a, const float &a渐变, const 
 		v.fs大小(a最大);
 	return *this + v;
 }
-S向量2 S向量2::f翻折(const S直线方程 &a直线方程) const {
+S向量2 S向量2::f翻折(const S直线2 &a直线方程) const {
 	assert(a直线方程.a != 0 || a直线方程.b != 0);
 	S向量2 v = *this;
 	if (a直线方程.a == 0) {//直线平行于y轴
@@ -314,13 +317,17 @@ S向量3 S向量2::ft向量3(float z)const {
 S向量4 S向量2::ft向量4(float z, float w) const {
 	return S向量4(x, y, z, w);
 }
-//=============================================================================
+//==============================================================================
 // 向量3
-//=============================================================================
-const S向量3 S向量3::c零{0, 0, 0};
-const S向量3 S向量3::c一{1, 1, 1};
-S向量3::S向量3() : x(0), y(0), z(0) {}
-S向量3::S向量3(const float &X, const float &Y, const float &Z) : x(X), y(Y), z(Z) {}
+//==============================================================================
+const S向量3 S向量3::c零(0, 0, 0);
+const S向量3 S向量3::c一(1, 1, 1);
+S向量3::S向量3(const float &X, const float &Y, const float &Z) : 
+	x(X), y(Y), z(Z) {
+}
+S向量3 S向量3::fc相同(float a) {
+	return S向量3(a, a, a);
+}
 //赋值操作符
 S向量3& S向量3::operator +=(const S向量3 &_) {
 	x += _.x;
@@ -359,9 +366,12 @@ S向量3 S向量3::operator *(const float &_) const {
 S向量3 S向量3::operator /(const float &_) const {
 	return S向量3(x / _, y / _, z / _);
 }
+S向量3 S向量3::operator -() const {
+	return fg反向();
+}
 //
 float S向量3::fg大小() const {
-	return sqrt(x * x + y * y + z * z);
+	return std::sqrt(fg平方());
 }
 float S向量3::fg平方() const {
 	return x * x + y * y + z * z;
@@ -403,20 +413,66 @@ S向量2 S向量3::ft向量2() const {
 S向量4 S向量3::ft向量4(const float &w) const {
 	return S向量4(x, y, z, w);
 }
-//=============================================================================
+//==============================================================================
 // 向量4
-//=============================================================================
-S向量4::S向量4() :x(0), y(0), z(0), w(0) {}
-S向量4::S向量4(const float &X, const float &Y, const float &Z, const float &W) : x(X), y(Y), z(Z), w(W) {}
-S向量3 S向量4::ft向量3() const {
-	return S向量3(x, y, z);
+//==============================================================================
+const S向量4 S向量4::c零(0, 0, 0, 0);
+const S向量4 S向量4::c一(1, 1, 1, 1);
+S向量4::S向量4() :
+	x(0), y(0), z(0), w(0) {
+}
+S向量4::S向量4(const float &X, const float &Y, const float &Z, const float &W) : 
+	x(X), y(Y), z(Z), w(W) {
+}
+S向量4 S向量4::operator +(const S向量4 &a) const {
+	return S向量4(x + a.x, y + a.y, z + a.z, w + a.w);
+}
+S向量4 S向量4::operator -(const S向量4 &a) const {
+	return S向量4(x - a.x, y - a.y, z - a.z, w - a.w);
+}
+S向量4 S向量4::operator *(const float &a) const {
+	return S向量4(x * a, y * a, z * a, w * a);
+}
+S向量4 S向量4::operator /(const float &a) const {
+	return S向量4(x / a, y / a, z / a, w / a);
 }
 S向量4 S向量4::operator *(const S矩阵4 &a) const {
 	S向量4 v;
-	for (int i = 0; i != 4; ++i)
-		for (int j = 0; j != 4; ++j)
+	for (int i = 0; i != 4; ++i) {
+		for (int j = 0; j != 4; ++j) {
 			v.m值[i] += a.m值[i][j] * m值[j];
+		}
+	}
 	return v;
+}
+S向量4 S向量4::operator -() const {
+	return fg反向();
+}
+float S向量4::fg大小() const {
+	return std::sqrt(fg平方());
+}
+float S向量4::fg平方() const {
+	return x * x + y * y + z * z + w * w;
+}
+S向量4 S向量4::fg反向() const {
+	return S向量4(-x, -y, -z, -w);
+}
+S向量4 S向量4::fg归一() const {
+	const float v大小 = fg大小();
+	return *this / v大小;
+}
+S向量4 S向量4::fg三维归一() const {
+	const float v = fg大小();
+	return S向量4(x / v, y / v, z / v, w);
+}
+S向量4 S向量4::fg三维取反() const {
+	return S向量4(-x, -y, -z, w);
+}
+float S向量4::f点乘(const S向量4 &a) const {
+	return x * a.x + y * a.y + z * a.z + w * a.w;
+}
+S向量3 S向量4::ft向量3() const {
+	return S向量3(x, y, z);
 }
 
 }

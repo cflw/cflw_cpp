@@ -1,234 +1,71 @@
-#include <assert.h>
-#include "cflwÊıÑ§.h"
-#include "cflwÊıÑ§_º¯Êı·½³Ì.h"
-#include "cflwÊıÑ§_ÏòÁ¿.h"
-namespace cflw::ÊıÑ§ {
+ï»¿#include <assert.h>
+#include "cflwæ•°å­¦.h"
+#include "cflwæ•°å­¦_å‡½æ•°æ–¹ç¨‹.h"
+#include "cflwæ•°å­¦_å‘é‡.h"
+namespace cflw::æ•°å­¦ {
 //==============================================================================
-// ¶ş´Îº¯Êı
+// äºŒæ¬¡å‡½æ•°
 //==============================================================================
-S¶ş´Îº¯Êı::S¶ş´Îº¯Êı() : a(0), b(0), c(0) {}
-S¶ş´Îº¯Êı::S¶ş´Îº¯Êı(const SÏòÁ¿2 &p1, const SÏòÁ¿2 &p2, const SÏòÁ¿2 &p3) {
-	fsÈıµã(p1, p2, p3);
+SäºŒæ¬¡å‡½æ•°::SäºŒæ¬¡å‡½æ•°() : a(0), b(0), c(0) {}
+SäºŒæ¬¡å‡½æ•°::SäºŒæ¬¡å‡½æ•°(float A, float B, float C) :
+	a(A), b(B), c(C) {
 }
-S¶ş´Îº¯Êı &S¶ş´Îº¯Êı::fsÈıµã(const SÏòÁ¿2 &p1, const SÏòÁ¿2 &p2, const SÏòÁ¿2 &p3) {
+SäºŒæ¬¡å‡½æ•° SäºŒæ¬¡å‡½æ•°::fcä¸€èˆ¬(float A, float B, float C) {
+	return SäºŒæ¬¡å‡½æ•°(A, B, C);
+}
+SäºŒæ¬¡å‡½æ•° SäºŒæ¬¡å‡½æ•°::fcä¸‰ç‚¹(const Så‘é‡2 &p1, const Så‘é‡2 &p2, const Så‘é‡2 &p3) {
+	SäºŒæ¬¡å‡½æ•° v;
+	v.fsä¸‰ç‚¹(p1, p2, p3);
+	return v;
+}
+float SäºŒæ¬¡å‡½æ•°::operator()(float x) const {
+	return fæ±‚y(x);
+}
+SäºŒæ¬¡å‡½æ•° &SäºŒæ¬¡å‡½æ•°::fsä¸‰ç‚¹(const Så‘é‡2 &p1, const Så‘é‡2 &p2, const Så‘é‡2 &p3) {
 	a = ((p1.y - p2.y) * (p2.x - p3.x) - (p2.y - p3.y) * (p1.x - p2.x)) /
 		((p1.x*p1.x - p2.x*p2.x) * (p2.x - p3.x) - (p2.x*p2.x - p3.x*p3.x) * (p1.x - p2.x));
 	b = (p1.y - p2.y - a * (p1.x*p1.x - p2.x*p2.x)) / (p1.x - p2.x);
 	c = p1.y - a * p1.x * p1.x - b * p1.x;
-	assert(abs(fÇóy(p3.x) - p3.y) < 0.0001f);	//ÑéËã
+	assert(abs(fæ±‚y(p3.x) - p3.y) < 0.0001f);	//éªŒç®—
 	return *this;
 }
-float S¶ş´Îº¯Êı::f´¹Ö±·½Ïò(const SÏòÁ¿2 &p) const {
-	return p.y - fÇóy(p.x);
+float SäºŒæ¬¡å‡½æ•°::få‚ç›´æ–¹å‘(const Så‘é‡2 &p) const {
+	return p.y - fæ±‚y(p.x);
 }
-float S¶ş´Îº¯Êı::fÇóy(float x) const {
-	return	a * x * x + b * x + c;
+float SäºŒæ¬¡å‡½æ•°::fæ±‚y(float x) const {
+	return a * x * x + b * x + c;
 }
 //==============================================================================
-// Ö±Ïß·½³Ì
+// æŒ‡æ•°å‡½æ•°
 //==============================================================================
-SÖ±Ïß·½³Ì::SÖ±Ïß·½³Ì() :
-	a(0), b(0), c(0) {}
-SÖ±Ïß·½³Ì::SÖ±Ïß·½³Ì(float A, float B, float C) :
-	a{A}, b{B}, c{C} {}
-SÖ±Ïß·½³Ì SÖ±Ïß·½³Ì::fcµãĞ±(const SÏòÁ¿2 &p, const float &k) {
-	const float a = k;
-	const float b = -1;
-	const float c = k * p.x + p.y;
-	return {a, b, c};
+SæŒ‡æ•°å‡½æ•°::SæŒ‡æ•°å‡½æ•°() :a(0), b(0), c(0), d(0) {}
+SæŒ‡æ•°å‡½æ•°::SæŒ‡æ•°å‡½æ•°(float A, float B, float C, float D):
+	a(A), b(B), c(C), d(D) {
 }
-SÖ±Ïß·½³Ì SÖ±Ïß·½³Ì::fcÁ½µã(const SÏòÁ¿2 &p1, const SÏòÁ¿2 &p2) {
-	const float a = p2.y - p1.y;
-	const float b = p1.x - p2.x;
-	const float c = -p1.x * a - p2.y * b;
-	return {a, b, c};
+SæŒ‡æ•°å‡½æ•° SæŒ‡æ•°å‡½æ•°::fcä¸€èˆ¬(float A, float B, float C, float D) {
+	return SæŒ‡æ•°å‡½æ•°(A, B, C, D);
 }
-SÖ±Ïß·½³Ì SÖ±Ïß·½³Ì::fcĞ±½Ø(const float &k, const float &y) {
-	const float a = k;
-	const float b = -1;
-	const float c = y;
-	return{a, b, c};
-}
-SÖ±Ïß·½³Ì SÖ±Ïß·½³Ì::fc½Ø¾à(const float &x, const float &y) {
-	const float a = x;
-	const float b = y;
-	const float c = -1;
-	return{a, b, c};
-}
-SÖ±Ïß·½³Ì SÖ±Ïß·½³Ì::fcÒ»°ã(const float &A, const float &B, const float &C) {
-	const float a = A;
-	const float b = B;
-	const float c = C;
-	return{a, b, c};
-}
-SÖ±Ïß·½³Ì SÖ±Ïß·½³Ì::fcµã·¨(const SÏòÁ¿2 &p, const SÏòÁ¿2 &n) {
-	const float a = n.x;
-	const float b = n.y;
-	const float c = -n.x * p.x - n.y * p.y;
-	return{a, b, c};
-}
-SÖ±Ïß·½³Ì SÖ±Ïß·½³Ì::fcµãÏò(const SÏòÁ¿2 &p, const float &d) {
-	return fcµã·¨(p, SÏòÁ¿2::fc·½Ïòr(1, d + c°ë¦Ğ<float>));
-}
-float SÖ±Ïß·½³Ì::fgĞ±ÂÊ() const {
-	return a / b;
-}
-float SÖ±Ïß·½³Ì::fµ½µã¾àÀë(const SÏòÁ¿2 &p) const {
-	return abs(a * p.x + b * p.y + c) / sqrt(a*a + b * b);
-}
-SÖ±Ïß·½³Ì SÖ±Ïß·½³Ì::fÆ½ÒÆ(const SÏòÁ¿2 &aÏòÁ¿) const {
-	SÖ±Ïß·½³Ì v = *this;
-	v.c -= v.a * aÏòÁ¿.x;
-	v.c -= v.b * aÏòÁ¿.y;
+SæŒ‡æ•°å‡½æ•° SæŒ‡æ•°å‡½æ•°::fcåŸç‚¹(const Så‘é‡2 &o, const Så‘é‡2 &p1, const Så‘é‡2 &p2) {
+	SæŒ‡æ•°å‡½æ•° v;
+	v.fsåŸç‚¹(o, p1, p2);
 	return v;
 }
-float SÖ±Ïß·½³Ì::fÇóx(const float &y) const {
-	assert(a != 0);
-	return (b * y + c) / -a;
+float SæŒ‡æ•°å‡½æ•°::operator()(float x) const {
+	return fæ±‚y(x);
 }
-float SÖ±Ïß·½³Ì::fÇóy(const float &x) const {
-	assert(b != 0);
-	return (a * x + c) / -b;
-}
-bool SÖ±Ïß·½³Ì::fÆ½ĞĞ(const SÖ±Ïß·½³Ì &aÖ±Ïß·½³Ì) const {
-	if (a == 0) return aÖ±Ïß·½³Ì.a == 0;
-	else return (b / a) == (aÖ±Ïß·½³Ì.b / aÖ±Ïß·½³Ì.a);
-}
-float SÖ±Ïß·½³Ì::fg·½Ïòr() const {
-	return C½Ç¶È¼ÆËã<float>::c»¡¶È.fÈ¡°ë(atan2(b, a) + c°ë¦Ğ<float>);
-}
-float SÖ±Ïß·½³Ì::fg·½Ïòd() const {
-	return fg·½Ïòr() * c»¡¶Èµ½¶È<float>;
-}
-SÏòÁ¿2 SÖ±Ïß·½³Ì::f½»µã(const SÖ±Ïß·½³Ì &aÖ±Ïß·½³Ì) const {
-	const float y = (aÖ±Ïß·½³Ì.a*c - a * aÖ±Ïß·½³Ì.c) / (aÖ±Ïß·½³Ì.b*a - b * aÖ±Ïß·½³Ì.a);
-	const float x = fÇóx(y);
-	return SÏòÁ¿2(x, y);
-}
-SÏòÁ¿2 SÖ±Ïß·½³Ì::fg·¨ÏòÁ¿() const {
-	const float m = hypotf(a, b);
-	return SÏòÁ¿2(a / m, b / m);
-}
-bool SÖ±Ïß·½³Ì::f½»xÖá(int p) const {
-	if (a == 0) {
-		if (p == 0)
-			return true;
-		else
-			return fÈ¡·ûºÅ(c) == fÈ¡·ûºÅ(p);
-	} else if (b == 0) {
-		return c == 0;
-	} else {
-		if (p == 0)
-			return true;
-		else
-			return -c / a * fÈ¡·ûºÅ(p) > 0;
-	}
-}
-bool SÖ±Ïß·½³Ì::f½»yÖá(int p) const {
-	if (a == 0) {
-		return c == 0;
-	} else if (b == 0) {
-		if (p == 0)
-			return true;
-		else
-			return fÈ¡·ûºÅ(c) == fÈ¡·ûºÅ(p);
-	} else {
-		if (p == 0)
-			return true;
-		else
-			return -c / b * fÈ¡·ûºÅ(p) > 0;
-	}
-}
-bool SÖ±Ïß·½³Ì::fiÆ½ĞĞxÖá() const {
-	return b == 0;
-}
-bool SÖ±Ïß·½³Ì::fiÆ½ĞĞyÖá() const {
-	return a == 0;
-}
-bool SÖ±Ïß·½³Ì::fi´¹Ö±xÖá() const {
-	return a == 0;
-}
-bool SÖ±Ïß·½³Ì::fi´¹Ö±yÖá() const {
-	return b == 0;
-}
-//==============================================================================
-// Ö±Ïß·½³Ì3d
-//==============================================================================
-SÖ±Ïß·½³Ì3::SÖ±Ïß·½³Ì3() :x(), y(), z() {}
-SÖ±Ïß·½³Ì3 &SÖ±Ïß·½³Ì3::fsÁ½µã(const SÏòÁ¿3 &p1, const SÏòÁ¿3 &p2) {
-	x[0] = p1.x - p2.x;
-	x[1] = p2.x;
-	y[0] = p1.y - p2.y;
-	y[1] = p2.y;
-	z[0] = p1.z - p2.z;
-	z[1] = p2.z;
-	return *this;
-}
-SÖ±Ïß·½³Ì3 &SÖ±Ïß·½³Ì3::fs¹éÒ»() {
-	const float v = fgÄ£();
-	x[0] /= v;
-	y[0] /= v;
-	z[0] /= v;
-	return *this;
-}
-bool SÖ±Ïß·½³Ì3::fÏà½»ÅĞ¶¨(const SÖ±Ïß·½³Ì3 &aÖ±Ïß·½³Ì, SÏòÁ¿3 *aÊä³ö) const {
-	const float v[2] = {fgÄ£(), aÖ±Ïß·½³Ì.fgÄ£()};
-	auto f = [](float *p1, float *p2)->float {
-		return (p2[1] - p1[1]) / (p1[0] - p2[2]);
-	};
-	if (x[0] / v[0] == aÖ±Ïß·½³Ì.x[0] / v[1]) {
-		return true;
-	} else if (y[0] / v[0] == aÖ±Ïß·½³Ì.y[0] / v[1]) {
-		return true;
-	} else if (z[0] / v[0] == aÖ±Ïß·½³Ì.z[0] / v[1]) {
-		return true;
-	}
-	return false;
-}
-float SÖ±Ïß·½³Ì3::fgÄ£() const {
-	return sqrt(x[0] * x[0] + y[0] * y[0] + z[0] * z[0]);
-}
-//==============================================================================
-// Æ½Ãæ·½³Ì
-//==============================================================================
-SÆ½Ãæ·½³Ì::SÆ½Ãæ·½³Ì() :a(0), b(0), c(0), d(0) {}
-SÆ½Ãæ·½³Ì &SÆ½Ãæ·½³Ì::fsÈıµã(const SÏòÁ¿3 &p1, const SÏòÁ¿3 &p2, const SÏòÁ¿3 &p3) {
-	return fsµã·¨(p1, (p1 - p2).f²æ³Ë(p2 - p3));
-}
-SÆ½Ãæ·½³Ì &SÆ½Ãæ·½³Ì::fsµã·¨(const SÏòÁ¿3 &p, const SÏòÁ¿3 &n) {
-	a = n.x;
-	b = n.y;
-	c = n.z;
-	d = -n.x * p.x - n.y * p.y - n.z * p.z;
-	return *this;
-}
-SÆ½Ãæ·½³Ì &SÆ½Ãæ·½³Ì::fsÒ»°ã(float A, float B, float C, float D) {
-	a = A;
-	b = B;
-	c = C;
-	d = D;
-	return *this;
-}
-SÏòÁ¿3 SÆ½Ãæ·½³Ì::fg·¨() const {
-	return SÏòÁ¿3(a, b, c);
-}
-//==============================================================================
-// Ö¸Êıº¯Êı
-//==============================================================================
-SÖ¸Êıº¯Êı::SÖ¸Êıº¯Êı() :a(0), b(0), c(0), d(0) {}
-float SÖ¸Êıº¯Êı::fÇóy(const float &x) const {
+float SæŒ‡æ•°å‡½æ•°::fæ±‚y(const float &x) const {
 	return a * pow(b, x + c) + d;
 }
-SÖ¸Êıº¯Êı &SÖ¸Êıº¯Êı::fsÔ­µã(const SÏòÁ¿2 &o, const SÏòÁ¿2 &p1, const SÏòÁ¿2 &p2) {
+SæŒ‡æ•°å‡½æ•° &SæŒ‡æ•°å‡½æ•°::fsåŸç‚¹(const Så‘é‡2 &o, const Så‘é‡2 &p1, const Så‘é‡2 &p2) {
 	c = -o.x;
 	d = o.y;
 	const float v1 = (p1.y - d) / (p2.y - d);
 	const float v2 = 1 / (p1.x - p2.x);
-	const float v·ûºÅ = ((p1.y - d > 0) && (p2.y - d > 0)) ? 1.f : -1.f;
+	const float vç¬¦å· = ((p1.y - d > 0) && (p2.y - d > 0)) ? 1.f : -1.f;
 	b = pow(v1, v2);
-	a = (p1.y - d) / pow(b, p1.x + c) * v·ûºÅ;
-	assert(abs(fÇóy(p2.x) - p2.y) < 0.001f);	//ÑéËã
+	a = (p1.y - d) / pow(b, p1.x + c) * vç¬¦å·;
+	assert(abs(fæ±‚y(p2.x) - p2.y) < 0.001f);	//éªŒç®—
 	return *this;
 }
 
-}
+}	//namespace cflw::æ•°å­¦

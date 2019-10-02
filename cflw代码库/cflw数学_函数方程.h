@@ -1,67 +1,30 @@
-#pragma once
-namespace cflw::ÊıÑ§ {
-struct SÏòÁ¿2;
-struct SÏòÁ¿3;
+ï»¿#pragma once
+namespace cflw::æ•°å­¦ {
+struct Så‘é‡2;
+struct Så‘é‡3;
 //=============================================================================
-// º¯ÊıºÍ·½³Ì
+// å‡½æ•°å’Œæ–¹ç¨‹
 //=============================================================================
-struct S¶ş´Îº¯Êı {
+struct SäºŒæ¬¡å‡½æ•° {
 	float a, b, c;	// y = a * x^2 + b * x + c
-	S¶ş´Îº¯Êı();
-	S¶ş´Îº¯Êı(const SÏòÁ¿2 &, const SÏòÁ¿2 &, const SÏòÁ¿2 &);
-	S¶ş´Îº¯Êı &fsÈıµã(const SÏòÁ¿2 &, const SÏòÁ¿2 &, const SÏòÁ¿2 &);
-	float fÇóy(float) const;//y=f(x)
-	float f´¹Ö±·½Ïò(const SÏòÁ¿2 &) const;//²ÎÊı.y-f(²ÎÊı.x)
+	SäºŒæ¬¡å‡½æ•°();
+	SäºŒæ¬¡å‡½æ•°(float, float, float);
+	static SäºŒæ¬¡å‡½æ•° fcä¸€èˆ¬(float, float, float);
+	static SäºŒæ¬¡å‡½æ•° fcä¸‰ç‚¹(const Så‘é‡2 &, const Så‘é‡2 &, const Så‘é‡2 &);
+	float operator()(float) const;
+	SäºŒæ¬¡å‡½æ•° &fsä¸‰ç‚¹(const Så‘é‡2 &, const Så‘é‡2 &, const Så‘é‡2 &);
+	float fæ±‚y(float) const;//y=f(x)
+	float få‚ç›´æ–¹å‘(const Så‘é‡2 &) const;//å‚æ•°.y-f(å‚æ•°.x)
 };
-struct SÖ±Ïß·½³Ì {
-	float a, b, c;	// a*x + b*y + c = 0
-	SÖ±Ïß·½³Ì();
-	SÖ±Ïß·½³Ì(float, float, float);
-	static SÖ±Ïß·½³Ì fcµãĞ±(const SÏòÁ¿2 &, const float &);
-	static SÖ±Ïß·½³Ì fcÁ½µã(const SÏòÁ¿2 &, const SÏòÁ¿2 &);
-	static SÖ±Ïß·½³Ì fcĞ±½Ø(const float &, const float &);
-	static SÖ±Ïß·½³Ì fc½Ø¾à(const float &, const float &);
-	static SÖ±Ïß·½³Ì fcÒ»°ã(const float &, const float &, const float &);
-	static SÖ±Ïß·½³Ì fcµã·¨(const SÏòÁ¿2 &, const SÏòÁ¿2 &);
-	static SÖ±Ïß·½³Ì fcµãÏò(const SÏòÁ¿2 &, const float &);
-	float fµ½µã¾àÀë(const SÏòÁ¿2 &) const;
-	float fgĞ±ÂÊ() const;
-	SÖ±Ïß·½³Ì fÆ½ÒÆ(const SÏòÁ¿2 &) const;
-	float fÇóx(const float &) const;
-	float fÇóy(const float &) const;
-	bool fÆ½ĞĞ(const SÖ±Ïß·½³Ì &) const;
-	float fg·½Ïòr() const;
-	float fg·½Ïòd() const;
-	SÏòÁ¿2 f½»µã(const SÖ±Ïß·½³Ì &) const;
-	SÏòÁ¿2 fg·¨ÏòÁ¿() const;
-	bool f½»xÖá(int) const;
-	bool f½»yÖá(int) const;
-	bool fiÆ½ĞĞxÖá() const;
-	bool fiÆ½ĞĞyÖá() const;
-	bool fi´¹Ö±xÖá() const;
-	bool fi´¹Ö±yÖá() const;
-};
-struct SÖ±Ïß·½³Ì3 {
-	float x[2], y[2], z[2];//²ÎÊı·½³ÌµÄĞÎÊ½
-	SÖ±Ïß·½³Ì3();
-	SÖ±Ïß·½³Ì3 &fsÁ½µã(const SÏòÁ¿3 &, const SÏòÁ¿3 &);
-	SÖ±Ïß·½³Ì3 &fs¹éÒ»();
-	bool fÏà½»ÅĞ¶¨(const SÖ±Ïß·½³Ì3 &, SÏòÁ¿3 * = nullptr) const;
-	float fgÄ£() const;
-};
-struct SÆ½Ãæ·½³Ì {
-	float a, b, c, d;
-	SÆ½Ãæ·½³Ì();
-	SÆ½Ãæ·½³Ì &fsÈıµã(const SÏòÁ¿3 &, const SÏòÁ¿3 &, const SÏòÁ¿3 &);
-	SÆ½Ãæ·½³Ì &fsµã·¨(const SÏòÁ¿3 &, const SÏòÁ¿3 &);
-	SÆ½Ãæ·½³Ì &fsÒ»°ã(float, float, float, float);
-	SÏòÁ¿3 fg·¨() const;
-};
-struct SÖ¸Êıº¯Êı {
+struct SæŒ‡æ•°å‡½æ•° {
 	float a, b, c, d;	// y = a * b^(x + c) + d
-	SÖ¸Êıº¯Êı();
-	SÖ¸Êıº¯Êı &fsÔ­µã(const SÏòÁ¿2 &, const SÏòÁ¿2 &, const SÏòÁ¿2 &);
-	float fÇóy(const float &) const;
+	SæŒ‡æ•°å‡½æ•°();
+	SæŒ‡æ•°å‡½æ•°(float, float, float, float);
+	static SæŒ‡æ•°å‡½æ•° fcä¸€èˆ¬(float, float, float, float);
+	static SæŒ‡æ•°å‡½æ•° fcåŸç‚¹(const Så‘é‡2 &, const Så‘é‡2 &, const Så‘é‡2 &);
+	float operator()(float) const;
+	SæŒ‡æ•°å‡½æ•° &fsåŸç‚¹(const Så‘é‡2 &, const Så‘é‡2 &, const Så‘é‡2 &);
+	float fæ±‚y(const float &) const;
 };
 
-}
+}	//namespace cflw::æ•°å­¦

@@ -22,6 +22,8 @@ struct S圆形 {
 	float m半径;
 	S圆形();
 	S圆形(const S向量2 &, const float &);
+	static S圆形 fc坐标半径(const S向量2 &, float);
+	static S圆形 fc坐标直径(const S向量2 &, float);
 	S向量2 f取点r(const float &方向) const;
 	S向量2 f取点d(const float &方向) const;
 	S向量2 f离边最近点(const S圆形 &) const;
@@ -38,6 +40,7 @@ struct S矩形 {
 	static S矩形 fc坐标尺寸(const S向量2 &, const S向量2 &);
 	static S矩形 fc坐标半尺寸(const S向量2 &, const S向量2 &);
 	static S矩形 fc正方形(const S向量2 &, float 边长);
+	static S矩形 fc对角点(const S向量2 &, const S向量2 &);
 	S向量2 fg中心() const;
 	S向量2 fg半尺寸() const;
 	S向量2 fg尺寸() const;
@@ -114,6 +117,35 @@ struct S三角形 {
 	S圆形 fg内切圆() const;
 	S圆形 fg外接圆() const;
 };
+//直线
+struct S直线2 {
+	float a, b, c;	// a*x + b*y + c = 0
+	S直线2();
+	S直线2(float, float, float);
+	static S直线2 fc点斜(const S向量2 &, const float &);
+	static S直线2 fc两点(const S向量2 &, const S向量2 &);
+	static S直线2 fc斜截(const float &, const float &);
+	static S直线2 fc截距(const float &, const float &);
+	static S直线2 fc一般(const float &, const float &, const float &);
+	static S直线2 fc点法(const S向量2 &, const S向量2 &);
+	static S直线2 fc点向(const S向量2 &, const float &);
+	float f到点距离(const S向量2 &) const;
+	float fg斜率() const;
+	S直线2 f平移(const S向量2 &) const;
+	float f求x(const float &) const;
+	float f求y(const float &) const;
+	bool f平行(const S直线2 &) const;
+	float fg方向r() const;
+	float fg方向d() const;
+	S向量2 f交点(const S直线2 &) const;
+	S向量2 fg法向量() const;
+	bool f交x轴(int) const;
+	bool f交y轴(int) const;
+	bool fi平行x轴() const;
+	bool fi平行y轴() const;
+	bool fi垂直x轴() const;
+	bool fi垂直y轴() const;
+};
 //线段2
 struct S线段2 {
 	S向量2 m点[2];
@@ -187,7 +219,7 @@ bool f圆形旋转矩形相交判定(const S圆形 &, const S旋转矩形 &);
 bool f圆形线段相交判定(const S圆形 &, const S线段2 &);
 bool f圆形射线相交判定(const S圆形 &, const S射线2 &);
 bool f圆形旋转椭圆相交判定(const S圆形 &, const S旋转椭圆 &);
-bool f圆形直线相交判定(const S圆形 &, const S直线方程 &);
+bool f圆形直线相交判定(const S圆形 &, const S直线2 &);
 bool f旋转矩形相交判定(const S旋转矩形 &, const S旋转矩形 &);
 bool f旋转矩形线段相交判定(const S旋转矩形 &, const S线段2 &);
 bool f旋转矩形射线相交判定(const S旋转矩形 &, const S射线2 &);
