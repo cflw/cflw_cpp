@@ -1,124 +1,124 @@
-#include <assert.h>
-#include "cflw¹¤¾ß.h"
-#include "cflwÒì³£.h"
+ï»¿#include <assert.h>
+#include "cflwå·¥å…·.h"
+#include "cflwå¼‚å¸¸.h"
 namespace cflw {
-namespace ¹¤¾ß {
+namespace å·¥å…· {
 //==============================================================================
-// ¼Æ´ÎÆ÷
+// è®¡æ¬¡å™¨
 //==============================================================================
-void C¼Æ´ÎÆ÷::fÖØÖÃ(int i) {
-	m¼ä¸ô = i;
-	m´ÎÊı = 0;
+void Cè®¡æ¬¡å™¨::fé‡ç½®(int i) {
+	mé—´éš” = i;
+	mæ¬¡æ•° = 0;
 }
-bool C¼Æ´ÎÆ÷::fµÎ´ğ() {
-	++m´ÎÊı;
-	if (m´ÎÊı >= m¼ä¸ô) {
-		m´ÎÊı = 0;
+bool Cè®¡æ¬¡å™¨::fæ»´ç­”() {
+	++mæ¬¡æ•°;
+	if (mæ¬¡æ•° >= mé—´éš”) {
+		mæ¬¡æ•° = 0;
 		return true;
 	} else {
 		return false;
 	}
 }
 //==============================================================================
-// ÎÄ±¾±à¼©
+// æ–‡æœ¬ç¼–ç¼‰
 //==============================================================================
-#define _ÎÄ±¾×ª»»Ä£°å(t1, t2, f) \
-	template<> t2 CÎÄ±¾::f×ª»»<t1, t2>(t1 p) { \
-		return CÎÄ±¾::f(p); \
+#define _æ–‡æœ¬è½¬æ¢æ¨¡æ¿(t1, t2, f) \
+	template<> t2 Cæ–‡æœ¬::fè½¬æ¢<t1, t2>(t1 p) { \
+		return Cæ–‡æœ¬::f(p); \
 	}
-#define _ÎÄ±¾×ª»»Ä£°å_µ½ÎÄ±¾(t, f) _ÎÄ±¾×ª»»Ä£°å(t, CÎÄ±¾::t×Ö·û´®, f<t>)
-#define _ÎÄ±¾×ª»»Ä£°å_µ½Êı×Ö(t, f) _ÎÄ±¾×ª»»Ä£°å(CÎÄ±¾::t×Ö·û´®, t, f<t>)
-_ÎÄ±¾×ª»»Ä£°å_µ½ÎÄ±¾(unsigned char, fÕûÊı_ÎÄ±¾)
-_ÎÄ±¾×ª»»Ä£°å_µ½ÎÄ±¾(unsigned long, fÕûÊı_ÎÄ±¾)
-_ÎÄ±¾×ª»»Ä£°å_µ½ÎÄ±¾(int, fÕûÊı_ÎÄ±¾)
-_ÎÄ±¾×ª»»Ä£°å_µ½ÎÄ±¾(long long, fÕûÊı_ÎÄ±¾)
-_ÎÄ±¾×ª»»Ä£°å_µ½ÎÄ±¾(float, f¸¡µãÊı_ÎÄ±¾)
-_ÎÄ±¾×ª»»Ä£°å_µ½ÎÄ±¾(double, f¸¡µãÊı_ÎÄ±¾)
-_ÎÄ±¾×ª»»Ä£°å_µ½Êı×Ö(unsigned char, fÎÄ±¾_ÕûÊı)
-_ÎÄ±¾×ª»»Ä£°å_µ½Êı×Ö(unsigned long, fÎÄ±¾_ÕûÊı)
-_ÎÄ±¾×ª»»Ä£°å_µ½Êı×Ö(int, fÎÄ±¾_ÕûÊı)
-_ÎÄ±¾×ª»»Ä£°å_µ½Êı×Ö(long long, fÎÄ±¾_ÕûÊı)
-_ÎÄ±¾×ª»»Ä£°å_µ½Êı×Ö(float, fÎÄ±¾_¸¡µãÊı)
-_ÎÄ±¾×ª»»Ä£°å_µ½Êı×Ö(double, fÎÄ±¾_¸¡µãÊı)
-#undef _ÎÄ±¾×ª»»Ä£°å_µ½ÎÄ±¾
-#undef _ÎÄ±¾×ª»»Ä£°å_µ½Êı×Ö
-#undef _ÎÄ±¾×ª»»Ä£°å
-CÎÄ±¾::t×Ö·û´® CÎÄ±¾::fÊı¾İ_Ê®Áù½øÖÆ(const void *aÊı¾İ, size_t a´óĞ¡) {
-	auto f = [](unsigned char aÊı×Ö)->wchar_t {
-		if (aÊı×Ö < 10) {
-			return L'0' + aÊı×Ö;
+#define _æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ–‡æœ¬(t, f) _æ–‡æœ¬è½¬æ¢æ¨¡æ¿(t, Cæ–‡æœ¬::tå­—ç¬¦ä¸², f<t>)
+#define _æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ•°å­—(t, f) _æ–‡æœ¬è½¬æ¢æ¨¡æ¿(Cæ–‡æœ¬::tå­—ç¬¦ä¸², t, f<t>)
+_æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ–‡æœ¬(unsigned char, fæ•´æ•°_æ–‡æœ¬)
+_æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ–‡æœ¬(unsigned long, fæ•´æ•°_æ–‡æœ¬)
+_æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ–‡æœ¬(int, fæ•´æ•°_æ–‡æœ¬)
+_æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ–‡æœ¬(long long, fæ•´æ•°_æ–‡æœ¬)
+_æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ–‡æœ¬(float, fæµ®ç‚¹æ•°_æ–‡æœ¬)
+_æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ–‡æœ¬(double, fæµ®ç‚¹æ•°_æ–‡æœ¬)
+_æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ•°å­—(unsigned char, fæ–‡æœ¬_æ•´æ•°)
+_æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ•°å­—(unsigned long, fæ–‡æœ¬_æ•´æ•°)
+_æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ•°å­—(int, fæ–‡æœ¬_æ•´æ•°)
+_æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ•°å­—(long long, fæ–‡æœ¬_æ•´æ•°)
+_æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ•°å­—(float, fæ–‡æœ¬_æµ®ç‚¹æ•°)
+_æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ•°å­—(double, fæ–‡æœ¬_æµ®ç‚¹æ•°)
+#undef _æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ–‡æœ¬
+#undef _æ–‡æœ¬è½¬æ¢æ¨¡æ¿_åˆ°æ•°å­—
+#undef _æ–‡æœ¬è½¬æ¢æ¨¡æ¿
+Cæ–‡æœ¬::tå­—ç¬¦ä¸² Cæ–‡æœ¬::fæ•°æ®_åå…­è¿›åˆ¶(const void *aæ•°æ®, size_t aå¤§å°) {
+	auto f = [](unsigned char aæ•°å­—)->wchar_t {
+		if (aæ•°å­— < 10) {
+			return L'0' + aæ•°å­—;
 		} else {
-			return L'a' + (aÊı×Ö - 10);
+			return L'a' + (aæ•°å­— - 10);
 		}
 	};
-	std::unique_ptr<wchar_t[]> va»º³å = std::make_unique<wchar_t[]>(a´óĞ¡ * 2 + 1);
-	unsigned char *vÊı¾İ = (unsigned char*)aÊı¾İ;
-	size_t v´óĞ¡;
-	for (v´óĞ¡ = 0; v´óĞ¡ != a´óĞ¡; ++v´óĞ¡) {
-		unsigned char vÊı = vÊı¾İ[v´óĞ¡];
-		va»º³å[2*v´óĞ¡] = f(vÊı / 0x10);
-		va»º³å[2*v´óĞ¡+1] = f(vÊı >> 4);
+	std::unique_ptr<wchar_t[]> vaç¼“å†² = std::make_unique<wchar_t[]>(aå¤§å° * 2 + 1);
+	unsigned char *væ•°æ® = (unsigned char*)aæ•°æ®;
+	size_t vå¤§å°;
+	for (vå¤§å° = 0; vå¤§å° != aå¤§å°; ++vå¤§å°) {
+		unsigned char væ•° = væ•°æ®[vå¤§å°];
+		vaç¼“å†²[2*vå¤§å°] = f(væ•° / 0x10);
+		vaç¼“å†²[2*vå¤§å°+1] = f(væ•° >> 4);
 	}
-	va»º³å[a´óĞ¡ * 2] = 0;
-	return {va»º³å.get()};
+	vaç¼“å†²[aå¤§å° * 2] = 0;
+	return {vaç¼“å†².get()};
 }
-std::tuple<std::byte*, size_t> CÎÄ±¾::fÊ®Áù½øÖÆ_Êı¾İ(const t×Ö·û´® &aÎÄ±¾) {
-	auto f = [](wchar_t a×Ö·û)->unsigned char {
-		if (a×Ö·û >= L'0' && a×Ö·û <= L'9') {
-			return (unsigned char)(a×Ö·û - L'0');
-		} else if (a×Ö·û >= L'A' && a×Ö·û <= L'F') {
-			return (unsigned char)(a×Ö·û - L'A');
-		} else if (a×Ö·û >= L'a' && a×Ö·û <= L'f') {
-			return (unsigned char)(a×Ö·û - L'a');
+std::tuple<std::byte*, size_t> Cæ–‡æœ¬::fåå…­è¿›åˆ¶_æ•°æ®(const tå­—ç¬¦ä¸² &aæ–‡æœ¬) {
+	auto f = [](wchar_t aå­—ç¬¦)->unsigned char {
+		if (aå­—ç¬¦ >= L'0' && aå­—ç¬¦ <= L'9') {
+			return (unsigned char)(aå­—ç¬¦ - L'0');
+		} else if (aå­—ç¬¦ >= L'A' && aå­—ç¬¦ <= L'F') {
+			return (unsigned char)(aå­—ç¬¦ - L'A');
+		} else if (aå­—ç¬¦ >= L'a' && aå­—ç¬¦ <= L'f') {
+			return (unsigned char)(aå­—ç¬¦ - L'a');
 		}
-		throw Òì³£::X²ÎÊı("ÎŞĞ§×Ö·û");
+		throw å¼‚å¸¸::Xå‚æ•°("æ— æ•ˆå­—ç¬¦");
 	};
-	t×Ö·û´® v×Ö·û´® = (aÎÄ±¾.find(L"0x", 0) != 0) ? aÎÄ±¾ : aÎÄ±¾.substr(2);
-	size_t v´óĞ¡ = v×Ö·û´®.size() * 2;
-	std::byte *vÊı¾İ = new std::byte[v´óĞ¡];
-	for (size_t i = 0; i != v´óĞ¡; ++i) {
-		unsigned char &vµ±Ç°Êı¾İ = (unsigned char &)vÊı¾İ[i];
-		vµ±Ç°Êı¾İ = f(v×Ö·û´®[2*i]) << 0x10;
-		vµ±Ç°Êı¾İ |= f(v×Ö·û´®[2*i+1]);
-		//if (2 * i + 2 >= v´óĞ¡) {
+	tå­—ç¬¦ä¸² vå­—ç¬¦ä¸² = (aæ–‡æœ¬.find(L"0x", 0) != 0) ? aæ–‡æœ¬ : aæ–‡æœ¬.substr(2);
+	size_t vå¤§å° = vå­—ç¬¦ä¸².size() * 2;
+	std::byte *væ•°æ® = new std::byte[vå¤§å°];
+	for (size_t i = 0; i != vå¤§å°; ++i) {
+		unsigned char &vå½“å‰æ•°æ® = (unsigned char &)væ•°æ®[i];
+		vå½“å‰æ•°æ® = f(vå­—ç¬¦ä¸²[2*i]) << 0x10;
+		vå½“å‰æ•°æ® |= f(vå­—ç¬¦ä¸²[2*i+1]);
+		//if (2 * i + 2 >= vå¤§å°) {
 		//	break;
 		//}
 	}
-	return {vÊı¾İ, v´óĞ¡};
+	return {væ•°æ®, vå¤§å°};
 }
-bool CÎÄ±¾::fwÊı×Ö(const t×Ö·û´® &aÎÄ±¾) {
-	bool v¿É¸º = true;
-	bool v¿Éµã = true;
-	bool v¿Ée = true;
-	for (int i = 0; i < aÎÄ±¾.size(); ++i) {
-		const wchar_t v×Ö = aÎÄ±¾[i];
-		if (v×Ö == L'-') {//¸ººÅ
-			if (v¿É¸º) {
-				v¿É¸º = false;
+bool Cæ–‡æœ¬::fwæ•°å­—(const tå­—ç¬¦ä¸² &aæ–‡æœ¬) {
+	bool vå¯è´Ÿ = true;
+	bool vå¯ç‚¹ = true;
+	bool vå¯e = true;
+	for (int i = 0; i < aæ–‡æœ¬.size(); ++i) {
+		const wchar_t vå­— = aæ–‡æœ¬[i];
+		if (vå­— == L'-') {//è´Ÿå·
+			if (vå¯è´Ÿ) {
+				vå¯è´Ÿ = false;
 				continue;
 			} else {
 				return false;
 			}
-		} else if (v×Ö == L'.') {
-			if (v¿Éµã) {
-				v¿Éµã = false;
+		} else if (vå­— == L'.') {
+			if (vå¯ç‚¹) {
+				vå¯ç‚¹ = false;
 				continue;
 			} else {
 				return false;
 			}
-		} else if (v×Ö == L'e' && v×Ö == L'E') {
-			if (v¿Ée) {
-				v¿Ée = false;
-				v¿Éµã = false;
-				v¿É¸º = true;
+		} else if (vå­— == L'e' && vå­— == L'E') {
+			if (vå¯e) {
+				vå¯e = false;
+				vå¯ç‚¹ = false;
+				vå¯è´Ÿ = true;
 				continue;
 			} else {
 				return false;
 			}
-		} else if (v×Ö >= L'0' && v×Ö <= L'9') {
-			v¿É¸º = false;
+		} else if (vå­— >= L'0' && vå­— <= L'9') {
+			vå¯è´Ÿ = false;
 			continue;
-		} else if (v×Ö == L'\0') {
+		} else if (vå­— == L'\0') {
 			return i != 0;
 		} else {
 			return false;
@@ -126,211 +126,211 @@ bool CÎÄ±¾::fwÊı×Ö(const t×Ö·û´® &aÎÄ±¾) {
 	}
 	return true;
 }
-int CÎÄ±¾::f²éÕÒ(const t×Ö·û´® &aÎÄ±¾, const t×Ö·û´® &a²éÕÒ, int a¿ªÊ¼) {
-	for (int i = a¿ªÊ¼; i < aÎÄ±¾.size(); ++i) {
-		if (i >= aÎÄ±¾.size() - a²éÕÒ.size()) {
+int Cæ–‡æœ¬::fæŸ¥æ‰¾(const tå­—ç¬¦ä¸² &aæ–‡æœ¬, const tå­—ç¬¦ä¸² &aæŸ¥æ‰¾, int aå¼€å§‹) {
+	for (int i = aå¼€å§‹; i < aæ–‡æœ¬.size(); ++i) {
+		if (i >= aæ–‡æœ¬.size() - aæŸ¥æ‰¾.size()) {
 			return -1;
 		}
-		bool v½á¹û = true;
-		for (int j = 0; j < a²éÕÒ.size(); ++j) {
-			if (aÎÄ±¾[i+j] != a²éÕÒ[j]) {
-				v½á¹û = false;
+		bool vç»“æœ = true;
+		for (int j = 0; j < aæŸ¥æ‰¾.size(); ++j) {
+			if (aæ–‡æœ¬[i+j] != aæŸ¥æ‰¾[j]) {
+				vç»“æœ = false;
 				break;
 			}
 		}
-		if (v½á¹û) {
+		if (vç»“æœ) {
 			return i;
 		}
 	}
 	return -1;
 }
-CÎÄ±¾::t×Ö·û´® CÎÄ±¾::fÓĞĞ§Êı×Ö(const t×Ö·û´® &aÎÄ±¾, int aÎ»Êı) {
+Cæ–‡æœ¬::tå­—ç¬¦ä¸² Cæ–‡æœ¬::fæœ‰æ•ˆæ•°å­—(const tå­—ç¬¦ä¸² &aæ–‡æœ¬, int aä½æ•°) {
 	wchar_t v[16] = L"";
-	int vĞŞ¸ÄÎ» = 0;
-	bool vĞ¡ÊıÎ» = false;
-	for (; vĞŞ¸ÄÎ» < aÎÄ±¾.size(); ++vĞŞ¸ÄÎ») {
-		const wchar_t v×Ö = aÎÄ±¾[vĞŞ¸ÄÎ»];
-		if (v×Ö == L'.') {
-			vĞ¡ÊıÎ» = true;
+	int vä¿®æ”¹ä½ = 0;
+	bool vå°æ•°ä½ = false;
+	for (; vä¿®æ”¹ä½ < aæ–‡æœ¬.size(); ++vä¿®æ”¹ä½) {
+		const wchar_t vå­— = aæ–‡æœ¬[vä¿®æ”¹ä½];
+		if (vå­— == L'.') {
+			vå°æ•°ä½ = true;
 			continue;
 		}
-		if ((++vĞŞ¸ÄÎ») <= aÎ»Êı) {
-			v[vĞŞ¸ÄÎ»] = v×Ö;
+		if ((++vä¿®æ”¹ä½) <= aä½æ•°) {
+			v[vä¿®æ”¹ä½] = vå­—;
 		} else {
-			if (vĞ¡ÊıÎ») {
+			if (vå°æ•°ä½) {
 				break;
 			}
-			v[vĞŞ¸ÄÎ»] = L'0';
+			v[vä¿®æ”¹ä½] = L'0';
 		}
 	}
 	return {v};
 }
-CÎÄ±¾::t×Ö·û´® CÎÄ±¾::fĞ¡ÊıÎ»Êı(const t×Ö·û´® &aÎÄ±¾, int aÎ»Êı) {
+Cæ–‡æœ¬::tå­—ç¬¦ä¸² Cæ–‡æœ¬::få°æ•°ä½æ•°(const tå­—ç¬¦ä¸² &aæ–‡æœ¬, int aä½æ•°) {
 	wchar_t v[16] = L"";
-	int vĞ¡Êı = -999;
-	int vĞŞ¸ÄÎ» = 0;
-	for (; vĞŞ¸ÄÎ» < aÎÄ±¾.size(); ++vĞŞ¸ÄÎ») {
-		const wchar_t v×Ö = aÎÄ±¾[vĞŞ¸ÄÎ»];
-		v[vĞŞ¸ÄÎ»] = v×Ö;
-		if (v×Ö == L'.') {
-			vĞ¡Êı = 0;
+	int vå°æ•° = -999;
+	int vä¿®æ”¹ä½ = 0;
+	for (; vä¿®æ”¹ä½ < aæ–‡æœ¬.size(); ++vä¿®æ”¹ä½) {
+		const wchar_t vå­— = aæ–‡æœ¬[vä¿®æ”¹ä½];
+		v[vä¿®æ”¹ä½] = vå­—;
+		if (vå­— == L'.') {
+			vå°æ•° = 0;
 		}
-		if ((++vĞ¡Êı) > aÎ»Êı) {
+		if ((++vå°æ•°) > aä½æ•°) {
 			return {v};
 		}
 	}
 	//
-	if (vĞ¡Êı < 0) {
-		v[vĞŞ¸ÄÎ»++] = L'.';
-		vĞ¡Êı = 0;
+	if (vå°æ•° < 0) {
+		v[vä¿®æ”¹ä½++] = L'.';
+		vå°æ•° = 0;
 	}
-	while ((++vĞ¡Êı) <= aÎ»Êı) {
-		v[vĞŞ¸ÄÎ»++] = L'0';
+	while ((++vå°æ•°) <= aä½æ•°) {
+		v[vä¿®æ”¹ä½++] = L'0';
 	}
 	return {v};
 }
 //--------------------------------------------------------------------------------
-// Êı¾İ
+// æ•°æ®
 //--------------------------------------------------------------------------------
-CÊı¾İ::CÊı¾İ(unsigned int a´óĞ¡) : mÖ¸Õë(new unsigned char[a´óĞ¡]), m´óĞ¡(a´óĞ¡) {
+Cæ•°æ®::Cæ•°æ®(unsigned int aå¤§å°) : mæŒ‡é’ˆ(new unsigned char[aå¤§å°]), må¤§å°(aå¤§å°) {
 }
-CÊı¾İ::CÊı¾İ(const CÊı¾İ &aÊı¾İ) {
-	if (aÊı¾İ.mÖ¸Õë) {
-		fĞÂ½¨(aÊı¾İ.m´óĞ¡);
-		f¸´ÖÆ(aÊı¾İ.mÖ¸Õë, aÊı¾İ.m´óĞ¡);
+Cæ•°æ®::Cæ•°æ®(const Cæ•°æ® &aæ•°æ®) {
+	if (aæ•°æ®.mæŒ‡é’ˆ) {
+		fæ–°å»º(aæ•°æ®.må¤§å°);
+		få¤åˆ¶(aæ•°æ®.mæŒ‡é’ˆ, aæ•°æ®.må¤§å°);
 	}
 }
-CÊı¾İ::~CÊı¾İ() {
-	if (mÖ¸Õë) {
-		delete[] mÖ¸Õë;
+Cæ•°æ®::~Cæ•°æ®() {
+	if (mæŒ‡é’ˆ) {
+		delete[] mæŒ‡é’ˆ;
 	}
 }
-bool CÊı¾İ::fĞÂ½¨(unsigned int a´óĞ¡) {
-	fÉ¾³ı();
-	mÖ¸Õë = new unsigned char[a´óĞ¡];
-	if (mÖ¸Õë != nullptr) {
-		m´óĞ¡ = a´óĞ¡;
+bool Cæ•°æ®::fæ–°å»º(unsigned int aå¤§å°) {
+	fåˆ é™¤();
+	mæŒ‡é’ˆ = new unsigned char[aå¤§å°];
+	if (mæŒ‡é’ˆ != nullptr) {
+		må¤§å° = aå¤§å°;
 		return true;
 	} else {
 		return false;
 	}
 }
-void CÊı¾İ::fÉ¾³ı() {
-	if (mÖ¸Õë) {
-		delete[] mÖ¸Õë;
-		mÖ¸Õë = nullptr;
-		m´óĞ¡ = 0;
+void Cæ•°æ®::fåˆ é™¤() {
+	if (mæŒ‡é’ˆ) {
+		delete[] mæŒ‡é’ˆ;
+		mæŒ‡é’ˆ = nullptr;
+		må¤§å° = 0;
 	}
 }
-void CÊı¾İ::f¸´ÖÆ(void *aÖ¸Õë, unsigned int a´óĞ¡) {
-	const unsigned int v¸´ÖÆ´óĞ¡ = (m´óĞ¡ >= a´óĞ¡) ? a´óĞ¡ : m´óĞ¡;
-	memcpy(mÖ¸Õë, aÖ¸Õë, v¸´ÖÆ´óĞ¡);
+void Cæ•°æ®::få¤åˆ¶(void *aæŒ‡é’ˆ, unsigned int aå¤§å°) {
+	const unsigned int vå¤åˆ¶å¤§å° = (må¤§å° >= aå¤§å°) ? aå¤§å° : må¤§å°;
+	memcpy(mæŒ‡é’ˆ, aæŒ‡é’ˆ, vå¤åˆ¶å¤§å°);
 }
-void CÊı¾İ::f¸´ÖÆ(const CÊı¾İ &aÊı¾İ) {
-	if (aÊı¾İ.mÖ¸Õë) {
-		f¸´ÖÆ(aÊı¾İ.mÖ¸Õë, aÊı¾İ.m´óĞ¡);
+void Cæ•°æ®::få¤åˆ¶(const Cæ•°æ® &aæ•°æ®) {
+	if (aæ•°æ®.mæŒ‡é’ˆ) {
+		få¤åˆ¶(aæ•°æ®.mæŒ‡é’ˆ, aæ•°æ®.må¤§å°);
 	}
 }
-unsigned char *&CÊı¾İ::fgÊı¾İ() {
-	return mÖ¸Õë;
+unsigned char *&Cæ•°æ®::fgæ•°æ®() {
+	return mæŒ‡é’ˆ;
 }
-unsigned int CÊı¾İ::fg´óĞ¡() {
-	return m´óĞ¡;
+unsigned int Cæ•°æ®::fgå¤§å°() {
+	return må¤§å°;
 }
 //--------------------------------------------------------------------------------
-// Î»´óĞ¡,Î»Ö¸Õë
+// ä½å¤§å°,ä½æŒ‡é’ˆ
 //--------------------------------------------------------------------------------
-//Î»´óĞ¡
-SÎ»´óĞ¡::SÎ»´óĞ¡(int a×Ö½Ú, int aÎ»):
-	v×Ö½Ú(a×Ö½Ú + aÎ» / 8),
-	vÎ»(aÎ» % 8)
+//ä½å¤§å°
+Sä½å¤§å°::Sä½å¤§å°(int aå­—èŠ‚, int aä½):
+	vå­—èŠ‚(aå­—èŠ‚ + aä½ / 8),
+	vä½(aä½ % 8)
 {}
-SÎ»´óĞ¡ &SÎ»´óĞ¡::operator +=(const SÎ»´óĞ¡ &a´óĞ¡) {
-	v×Ö½Ú += a´óĞ¡.v×Ö½Ú;
-	vÎ» += a´óĞ¡.vÎ»;
-	while (vÎ» >= 8) {
-		v×Ö½Ú += 1;
-		vÎ» -= 8;
+Sä½å¤§å° &Sä½å¤§å°::operator +=(const Sä½å¤§å° &aå¤§å°) {
+	vå­—èŠ‚ += aå¤§å°.vå­—èŠ‚;
+	vä½ += aå¤§å°.vä½;
+	while (vä½ >= 8) {
+		vå­—èŠ‚ += 1;
+		vä½ -= 8;
 	}
 	return *this;
 }
-SÎ»´óĞ¡ SÎ»´óĞ¡::operator +(const SÎ»´óĞ¡ &a´óĞ¡) const {
-	return SÎ»´óĞ¡(v×Ö½Ú + a´óĞ¡.v×Ö½Ú, vÎ» + a´óĞ¡.vÎ»);
+Sä½å¤§å° Sä½å¤§å°::operator +(const Sä½å¤§å° &aå¤§å°) const {
+	return Sä½å¤§å°(vå­—èŠ‚ + aå¤§å°.vå­—èŠ‚, vä½ + aå¤§å°.vä½);
 }
-SÎ»´óĞ¡::operator int() const {
-	return v×Ö½Ú * 8 + vÎ»;
+Sä½å¤§å°::operator int() const {
+	return vå­—èŠ‚ * 8 + vä½;
 }
-//Î»Ö¸Õë
-CÎ»Ö¸Õë::CÎ»Ö¸Õë():
-	vÖ¸Õë(nullptr),
-	vÆ«ÒÆ(0, 0)
+//ä½æŒ‡é’ˆ
+Cä½æŒ‡é’ˆ::Cä½æŒ‡é’ˆ():
+	væŒ‡é’ˆ(nullptr),
+	våç§»(0, 0)
 {}
-CÎ»Ö¸Õë::CÎ»Ö¸Õë(void *aÖ¸Õë):
-	vÖ¸Õë(aÖ¸Õë),
-	vÆ«ÒÆ(0, 0)
+Cä½æŒ‡é’ˆ::Cä½æŒ‡é’ˆ(void *aæŒ‡é’ˆ):
+	væŒ‡é’ˆ(aæŒ‡é’ˆ),
+	våç§»(0, 0)
 {}
-CÎ»Ö¸Õë::CÎ»Ö¸Õë(void *aÖ¸Õë, int aÎ»):
-	vÖ¸Õë(aÖ¸Õë),
-	vÆ«ÒÆ(0, aÎ»)
+Cä½æŒ‡é’ˆ::Cä½æŒ‡é’ˆ(void *aæŒ‡é’ˆ, int aä½):
+	væŒ‡é’ˆ(aæŒ‡é’ˆ),
+	våç§»(0, aä½)
 {}
-CÎ»Ö¸Õë &CÎ»Ö¸Õë::fsÖ¸Õë(void *aÖ¸Õë, int aÎ») {
-	vÖ¸Õë = aÖ¸Õë;
-	vÆ«ÒÆ.v×Ö½Ú = 0;
-	vÆ«ÒÆ.vÎ» = aÎ»;
+Cä½æŒ‡é’ˆ &Cä½æŒ‡é’ˆ::fsæŒ‡é’ˆ(void *aæŒ‡é’ˆ, int aä½) {
+	væŒ‡é’ˆ = aæŒ‡é’ˆ;
+	våç§».vå­—èŠ‚ = 0;
+	våç§».vä½ = aä½;
 	return *this;
 }
-void CÎ»Ö¸Õë::f¶Á(void *aÖ¸Õë, const SÎ»´óĞ¡ &a´óĞ¡) {
-	assert(vÖ¸Õë);
-	fÄÚ´æ¸´ÖÆ(*this, CÎ»Ö¸Õë(aÖ¸Õë), a´óĞ¡);
+void Cä½æŒ‡é’ˆ::fè¯»(void *aæŒ‡é’ˆ, const Sä½å¤§å° &aå¤§å°) {
+	assert(væŒ‡é’ˆ);
+	få†…å­˜å¤åˆ¶(*this, Cä½æŒ‡é’ˆ(aæŒ‡é’ˆ), aå¤§å°);
 }
-void CÎ»Ö¸Õë::f¶Á(const CÎ»Ö¸Õë &aÖ¸Õë, const SÎ»´óĞ¡ &a´óĞ¡) {
-	assert(vÖ¸Õë);
-	fÄÚ´æ¸´ÖÆ(*this, aÖ¸Õë, a´óĞ¡);
+void Cä½æŒ‡é’ˆ::fè¯»(const Cä½æŒ‡é’ˆ &aæŒ‡é’ˆ, const Sä½å¤§å° &aå¤§å°) {
+	assert(væŒ‡é’ˆ);
+	få†…å­˜å¤åˆ¶(*this, aæŒ‡é’ˆ, aå¤§å°);
 }
-void CÎ»Ö¸Õë::fĞ´(void *aÖ¸Õë, const SÎ»´óĞ¡ &a´óĞ¡) {
-	assert(vÖ¸Õë);
-	fÄÚ´æ¸´ÖÆ(CÎ»Ö¸Õë(aÖ¸Õë), *this, a´óĞ¡);
+void Cä½æŒ‡é’ˆ::få†™(void *aæŒ‡é’ˆ, const Sä½å¤§å° &aå¤§å°) {
+	assert(væŒ‡é’ˆ);
+	få†…å­˜å¤åˆ¶(Cä½æŒ‡é’ˆ(aæŒ‡é’ˆ), *this, aå¤§å°);
 }
-void CÎ»Ö¸Õë::fĞ´(const CÎ»Ö¸Õë &aÖ¸Õë, const SÎ»´óĞ¡ &a´óĞ¡) {
-	assert(vÖ¸Õë);
-	fÄÚ´æ¸´ÖÆ(aÖ¸Õë, *this, a´óĞ¡);
+void Cä½æŒ‡é’ˆ::få†™(const Cä½æŒ‡é’ˆ &aæŒ‡é’ˆ, const Sä½å¤§å° &aå¤§å°) {
+	assert(væŒ‡é’ˆ);
+	få†…å­˜å¤åˆ¶(aæŒ‡é’ˆ, *this, aå¤§å°);
 }
-CÎ»Ö¸Õë &CÎ»Ö¸Õë::fÆ«ÒÆ(const SÎ»´óĞ¡ &aÎ»´óĞ¡) {
-	vÆ«ÒÆ += aÎ»´óĞ¡;
+Cä½æŒ‡é’ˆ &Cä½æŒ‡é’ˆ::fåç§»(const Sä½å¤§å° &aä½å¤§å°) {
+	våç§» += aä½å¤§å°;
 	return *this;
 }
-void CÎ»Ö¸Õë::fÄÚ´æ¸´ÖÆ(const CÎ»Ö¸Õë &a×ó, const CÎ»Ö¸Õë &aÓÒ, const SÎ»´óĞ¡ &a´óĞ¡) {
-	fÄÚ´æ¸´ÖÆ(a×ó.vÖ¸Õë, a×ó.vÆ«ÒÆ, aÓÒ.vÖ¸Õë, aÓÒ.vÆ«ÒÆ, a´óĞ¡);
+void Cä½æŒ‡é’ˆ::få†…å­˜å¤åˆ¶(const Cä½æŒ‡é’ˆ &aå·¦, const Cä½æŒ‡é’ˆ &aå³, const Sä½å¤§å° &aå¤§å°) {
+	få†…å­˜å¤åˆ¶(aå·¦.væŒ‡é’ˆ, aå·¦.våç§», aå³.væŒ‡é’ˆ, aå³.våç§», aå¤§å°);
 }
-void CÎ»Ö¸Õë::fÄÚ´æ¸´ÖÆ(void *aÖ¸Õë1, int aÆ«ÒÆ1, void *aÖ¸Õë2, int aÆ«ÒÆ2, int a´óĞ¡) {
-	while (a´óĞ¡ > 0) {
-		const int vÊı¾İ´óĞ¡ = (a´óĞ¡ >= 8) ? 8 : a´óĞ¡;
-		const unsigned long vÊı¾İ = fÈ¡Êı¾İ(aÖ¸Õë2, aÆ«ÒÆ2, vÊı¾İ´óĞ¡);
-		f¸³Êı¾İ(aÖ¸Õë1, aÆ«ÒÆ1, vÊı¾İ);
-		++(unsigned char *&)aÖ¸Õë1;
-		++(unsigned char *&)aÖ¸Õë2;
-		a´óĞ¡ -= 8;
+void Cä½æŒ‡é’ˆ::få†…å­˜å¤åˆ¶(void *aæŒ‡é’ˆ1, int aåç§»1, void *aæŒ‡é’ˆ2, int aåç§»2, int aå¤§å°) {
+	while (aå¤§å° > 0) {
+		const int væ•°æ®å¤§å° = (aå¤§å° >= 8) ? 8 : aå¤§å°;
+		const unsigned long væ•°æ® = få–æ•°æ®(aæŒ‡é’ˆ2, aåç§»2, væ•°æ®å¤§å°);
+		fèµ‹æ•°æ®(aæŒ‡é’ˆ1, aåç§»1, væ•°æ®);
+		++(unsigned char *&)aæŒ‡é’ˆ1;
+		++(unsigned char *&)aæŒ‡é’ˆ2;
+		aå¤§å° -= 8;
 	}
 }
-unsigned long CÎ»Ö¸Õë::fÈ¡Êı¾İ(void *aÖ¸Õë, int aÆ«ÒÆ, int a´óĞ¡) {
-	assert(aÆ«ÒÆ + a´óĞ¡ <= 32);
-	unsigned long vÊı¾İ = *((unsigned long *)aÖ¸Õë);
-	vÊı¾İ = vÊı¾İ >> aÆ«ÒÆ;
-	vÊı¾İ &= 0xffffffff >> (32 - a´óĞ¡);
-	return vÊı¾İ;
+unsigned long Cä½æŒ‡é’ˆ::få–æ•°æ®(void *aæŒ‡é’ˆ, int aåç§», int aå¤§å°) {
+	assert(aåç§» + aå¤§å° <= 32);
+	unsigned long væ•°æ® = *((unsigned long *)aæŒ‡é’ˆ);
+	væ•°æ® = væ•°æ® >> aåç§»;
+	væ•°æ® &= 0xffffffff >> (32 - aå¤§å°);
+	return væ•°æ®;
 }
-void CÎ»Ö¸Õë::f¸³Êı¾İ(void *aÖ¸Õë, int aÆ«ÒÆ, unsigned long aÊı¾İ) {
-	unsigned char *vÖ¸Õë = (unsigned char *)aÖ¸Õë;
-	unsigned long vÊı¾İ = aÊı¾İ << aÆ«ÒÆ;
-	//µÚ1×Ö½Ú
-	*vÖ¸Õë &= 0xff >> (8 - aÆ«ÒÆ);
-	*vÖ¸Õë |= (unsigned char)vÊı¾İ;
-	//µÚ2×Ö½Ú
-	*(++vÖ¸Õë) = (unsigned char)(vÊı¾İ >> 8);
-	//µÚ3×Ö½Ú
-	*(++vÖ¸Õë) = (unsigned char)(vÊı¾İ >> 16);
-	//µÚ4×Ö½Ú
-	*(++vÖ¸Õë) = (unsigned char)(vÊı¾İ >> (24 - aÆ«ÒÆ));
+void Cä½æŒ‡é’ˆ::fèµ‹æ•°æ®(void *aæŒ‡é’ˆ, int aåç§», unsigned long aæ•°æ®) {
+	unsigned char *væŒ‡é’ˆ = (unsigned char *)aæŒ‡é’ˆ;
+	unsigned long væ•°æ® = aæ•°æ® << aåç§»;
+	//ç¬¬1å­—èŠ‚
+	*væŒ‡é’ˆ &= 0xff >> (8 - aåç§»);
+	*væŒ‡é’ˆ |= (unsigned char)væ•°æ®;
+	//ç¬¬2å­—èŠ‚
+	*(++væŒ‡é’ˆ) = (unsigned char)(væ•°æ® >> 8);
+	//ç¬¬3å­—èŠ‚
+	*(++væŒ‡é’ˆ) = (unsigned char)(væ•°æ® >> 16);
+	//ç¬¬4å­—èŠ‚
+	*(++væŒ‡é’ˆ) = (unsigned char)(væ•°æ® >> (24 - aåç§»));
 }
-//ÃüÃû¿Õ¼ä½áÊø
+//å‘½åç©ºé—´ç»“æŸ
 }}

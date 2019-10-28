@@ -1,293 +1,293 @@
-#include <math.h>
+ï»¿#include <math.h>
 #include <string.h>
 #include <algorithm>
-#include "cflwÊÓ´°.h"
-namespace cflw::ÊÓ´° {
+#include "cflwè§†çª—.h"
+namespace cflw::è§†çª— {
 //==============================================================================
-// ´°¿Ú¿ØÖÆ
+// çª—å£æ§åˆ¶
 //==============================================================================
-void fs´°¿Ú´óĞ¡(HWND a´°¿Ú, int a¿í, int a¸ß) {
-	RECT v¾ØĞÎ;
-	GetWindowRect(a´°¿Ú, &v¾ØĞÎ);
-	const auto[vÑùÊ½, vÑùÊ½ex] = fg´°¿ÚÑùÊ½(a´°¿Ú);
-	const S¿Í»§Çø³ß´ç v³ß´ç = S¿Í»§Çø³ß´ç::fc³ß´çÑùÊ½(a¿í, a¸ß, vÑùÊ½, vÑùÊ½ex);
-	MoveWindow(a´°¿Ú, v¾ØĞÎ.left, v¾ØĞÎ.top, v³ß´ç.fg¿í(), v³ß´ç.fg¸ß(), false);
+void fsçª—å£å¤§å°(HWND açª—å£, int aå®½, int aé«˜) {
+	RECT vçŸ©å½¢;
+	GetWindowRect(açª—å£, &vçŸ©å½¢);
+	const auto[væ ·å¼, væ ·å¼ex] = fgçª—å£æ ·å¼(açª—å£);
+	const Så®¢æˆ·åŒºå°ºå¯¸ vå°ºå¯¸ = Så®¢æˆ·åŒºå°ºå¯¸::fcå°ºå¯¸æ ·å¼(aå®½, aé«˜, væ ·å¼, væ ·å¼ex);
+	MoveWindow(açª—å£, vçŸ©å½¢.left, vçŸ©å½¢.top, vå°ºå¯¸.fgå®½(), vå°ºå¯¸.fgé«˜(), false);
 }
-std::pair<DWORD, DWORD> fg´°¿ÚÑùÊ½(HWND a´°¿Ú) {
-	const DWORD vÑùÊ½ = (DWORD)GetWindowLongW(a´°¿Ú, GWL_STYLE);
-	const DWORD vÑùÊ½ex = (DWORD)GetWindowLongW(a´°¿Ú, GWL_EXSTYLE);
-	return {vÑùÊ½, vÑùÊ½ex};
+std::pair<DWORD, DWORD> fgçª—å£æ ·å¼(HWND açª—å£) {
+	const DWORD væ ·å¼ = (DWORD)GetWindowLongW(açª—å£, GWL_STYLE);
+	const DWORD væ ·å¼ex = (DWORD)GetWindowLongW(açª—å£, GWL_EXSTYLE);
+	return {væ ·å¼, væ ·å¼ex};
 }
 //==============================================================================
-// ¼ÆÊ±Æ÷
+// è®¡æ—¶å™¨
 //==============================================================================
-C¼ÆÊ±Æ÷::C¼ÆÊ±Æ÷() :mÊ±¼ä(0), m¼ÆÊ±(0), m¼ä¸ô(0) {};
-void C¼ÆÊ±Æ÷::fÖØÖÃ(float p¼ä¸ô) {
-	mÊ±¼ä = timeGetTime() / 1000.f;
-	m¼ÆÊ± = 0;
-	m¼ä¸ô = p¼ä¸ô;
+Cè®¡æ—¶å™¨::Cè®¡æ—¶å™¨() :mæ—¶é—´(0), mè®¡æ—¶(0), mé—´éš”(0) {};
+void Cè®¡æ—¶å™¨::fé‡ç½®(float pé—´éš”) {
+	mæ—¶é—´ = timeGetTime() / 1000.f;
+	mè®¡æ—¶ = 0;
+	mé—´éš” = pé—´éš”;
 }
-void C¼ÆÊ±Æ÷::f¼ÆÊ±() {
-	float vÉÏ´ÎÊ±¼ä = mÊ±¼ä;
-	mÊ±¼ä = timeGetTime() / 1000.f;
-	m¼ÆÊ± += mÊ±¼ä - vÉÏ´ÎÊ±¼ä;
+void Cè®¡æ—¶å™¨::fè®¡æ—¶() {
+	float vä¸Šæ¬¡æ—¶é—´ = mæ—¶é—´;
+	mæ—¶é—´ = timeGetTime() / 1000.f;
+	mè®¡æ—¶ += mæ—¶é—´ - vä¸Šæ¬¡æ—¶é—´;
 }
-int C¼ÆÊ±Æ÷::fg´ÎÊı() {
-	return m´ÎÊı;
+int Cè®¡æ—¶å™¨::fgæ¬¡æ•°() {
+	return mæ¬¡æ•°;
 }
-float C¼ÆÊ±Æ÷::fgÓÃÊ±() {
-	return mÕâ´ÎµÎ´ğ - mÉÏ´ÎµÎ´ğ;
+float Cè®¡æ—¶å™¨::fgç”¨æ—¶() {
+	return mè¿™æ¬¡æ»´ç­” - mä¸Šæ¬¡æ»´ç­”;
 }
-int C¼ÆÊ±Æ÷::fµÎ´ğ() {
-	f¼ÆÊ±();
-	m´ÎÊı = (int)floor(m¼ÆÊ± / m¼ä¸ô);
-	if (m´ÎÊı) {
-		mÉÏ´ÎµÎ´ğ = mÕâ´ÎµÎ´ğ;
-		mÕâ´ÎµÎ´ğ = mÊ±¼ä;
-		m¼ÆÊ± -= m´ÎÊı * m¼ä¸ô;
+int Cè®¡æ—¶å™¨::fæ»´ç­”() {
+	fè®¡æ—¶();
+	mæ¬¡æ•° = (int)floor(mè®¡æ—¶ / mé—´éš”);
+	if (mæ¬¡æ•°) {
+		mä¸Šæ¬¡æ»´ç­” = mè¿™æ¬¡æ»´ç­”;
+		mè¿™æ¬¡æ»´ç­” = mæ—¶é—´;
+		mè®¡æ—¶ -= mæ¬¡æ•° * mé—´éš”;
 	}
-	return m´ÎÊı;
+	return mæ¬¡æ•°;
 }
-int C¼ÆÊ±Æ÷::fµ¥´ÎµÎ´ğ() {
-	f¼ÆÊ±();
-	if (m¼ÆÊ± >= m¼ä¸ô) {
-		m¼ÆÊ± -= m¼ä¸ô;
-		mÉÏ´ÎµÎ´ğ = mÕâ´ÎµÎ´ğ;
-		mÕâ´ÎµÎ´ğ = mÊ±¼ä;
-		return m´ÎÊı = 1;
+int Cè®¡æ—¶å™¨::få•æ¬¡æ»´ç­”() {
+	fè®¡æ—¶();
+	if (mè®¡æ—¶ >= mé—´éš”) {
+		mè®¡æ—¶ -= mé—´éš”;
+		mä¸Šæ¬¡æ»´ç­” = mè¿™æ¬¡æ»´ç­”;
+		mè¿™æ¬¡æ»´ç­” = mæ—¶é—´;
+		return mæ¬¡æ•° = 1;
 	} else {
-		return m´ÎÊı = 0;
+		return mæ¬¡æ•° = 0;
 	}
 }
-int C¼ÆÊ±Æ÷::fÓÎÏ·µÎ´ğ() {
-	f¼ÆÊ±();
-	m´ÎÊı = (int)floor(m¼ÆÊ± / m¼ä¸ô);
-	if (m´ÎÊı) {
-		m¼ÆÊ± -= m´ÎÊı * m¼ä¸ô;
-		mÉÏ´ÎµÎ´ğ = mÕâ´ÎµÎ´ğ;
-		mÕâ´ÎµÎ´ğ = mÊ±¼ä;
-		if (m´ÎÊı >= 2) {
-			m¼ÆÊ± += m¼ä¸ô;
+int Cè®¡æ—¶å™¨::fæ¸¸æˆæ»´ç­”() {
+	fè®¡æ—¶();
+	mæ¬¡æ•° = (int)floor(mè®¡æ—¶ / mé—´éš”);
+	if (mæ¬¡æ•°) {
+		mè®¡æ—¶ -= mæ¬¡æ•° * mé—´éš”;
+		mä¸Šæ¬¡æ»´ç­” = mè¿™æ¬¡æ»´ç­”;
+		mè¿™æ¬¡æ»´ç­” = mæ—¶é—´;
+		if (mæ¬¡æ•° >= 2) {
+			mè®¡æ—¶ += mé—´éš”;
 		}
 	}
-	return m´ÎÊı;
+	return mæ¬¡æ•°;
 }
 //==============================================================================
-// ¹Ø¼ü¶Î
+// å…³é”®æ®µ
 //==============================================================================
-C¹Ø¼ü¶Î::C¹Ø¼ü¶Î() {
-	InitializeCriticalSection(&m¹Ø¼ü¶Î);
+Cå…³é”®æ®µ::Cå…³é”®æ®µ() {
+	InitializeCriticalSection(&må…³é”®æ®µ);
 }
-C¹Ø¼ü¶Î::~C¹Ø¼ü¶Î() {
-	LeaveCriticalSection(&m¹Ø¼ü¶Î);
-	DeleteCriticalSection(&m¹Ø¼ü¶Î);
+Cå…³é”®æ®µ::~Cå…³é”®æ®µ() {
+	LeaveCriticalSection(&må…³é”®æ®µ);
+	DeleteCriticalSection(&må…³é”®æ®µ);
 }
-void C¹Ø¼ü¶Î::f½øÈë() {
-	EnterCriticalSection(&m¹Ø¼ü¶Î);
+void Cå…³é”®æ®µ::fè¿›å…¥() {
+	EnterCriticalSection(&må…³é”®æ®µ);
 }
-void C¹Ø¼ü¶Î::fÀë¿ª() {
-	LeaveCriticalSection(&m¹Ø¼ü¶Î);
+void Cå…³é”®æ®µ::fç¦»å¼€() {
+	LeaveCriticalSection(&må…³é”®æ®µ);
 }
 //==============================================================================
-// ´°¿ÚÑùÊ½
+// çª—å£æ ·å¼
 //==============================================================================
-const S´°¿ÚÑùÊ½ S´°¿ÚÑùÊ½::c²ãµş´°¿Ú = {WS_OVERLAPPEDWINDOW, WS_EX_OVERLAPPEDWINDOW};
-const S´°¿ÚÑùÊ½ S´°¿ÚÑùÊ½::cµ¯³ö´°¿Ú = {WS_POPUPWINDOW, 0};
-const S´°¿ÚÑùÊ½ S´°¿ÚÑùÊ½::c×Ó´°¿Ú = {WS_CHILDWINDOW, 0};
-const S´°¿ÚÑùÊ½ S´°¿ÚÑùÊ½::cÓÎÏ·´°¿Ú = {
+const Sçª—å£æ ·å¼ Sçª—å£æ ·å¼::cå±‚å çª—å£ = {WS_OVERLAPPEDWINDOW, WS_EX_OVERLAPPEDWINDOW};
+const Sçª—å£æ ·å¼ Sçª—å£æ ·å¼::cå¼¹å‡ºçª—å£ = {WS_POPUPWINDOW, 0};
+const Sçª—å£æ ·å¼ Sçª—å£æ ·å¼::cå­çª—å£ = {WS_CHILDWINDOW, 0};
+const Sçª—å£æ ·å¼ Sçª—å£æ ·å¼::cæ¸¸æˆçª—å£ = {
 	WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
 	WS_EX_APPWINDOW | WS_EX_WINDOWEDGE
 };
-void S´°¿ÚÑùÊ½::fs²ãµş(bool) {}
-void S´°¿ÚÑùÊ½::fs±êÌâ(bool) {}
-void S´°¿ÚÑùÊ½::fs²Ëµ¥(bool) {}
-void S´°¿ÚÑùÊ½::fs×î°´Å¥(bool /*´ó*/, bool /*Ğ¡*/) {}
-void S´°¿ÚÑùÊ½::fs¹ö¶¯Ìõ(bool /*´¹Ö±*/, bool /*Ë®Æ½*/) {}
+void Sçª—å£æ ·å¼::fså±‚å (bool) {}
+void Sçª—å£æ ·å¼::fsæ ‡é¢˜(bool) {}
+void Sçª—å£æ ·å¼::fsèœå•(bool) {}
+void Sçª—å£æ ·å¼::fsæœ€æŒ‰é’®(bool /*å¤§*/, bool /*å°*/) {}
+void Sçª—å£æ ·å¼::fsæ»šåŠ¨æ¡(bool /*å‚ç›´*/, bool /*æ°´å¹³*/) {}
 //==============================================================================
-// ¿Í»§Çø³ß´ç
+// å®¢æˆ·åŒºå°ºå¯¸
 //==============================================================================
-S¿Í»§Çø³ß´ç::S¿Í»§Çø³ß´ç(long a¿í, long a¸ß):
-	m¾ØĞÎ{0, 0, a¿í, a¸ß} {
+Så®¢æˆ·åŒºå°ºå¯¸::Så®¢æˆ·åŒºå°ºå¯¸(long aå®½, long aé«˜):
+	mçŸ©å½¢{0, 0, aå®½, aé«˜} {
 }
-S¿Í»§Çø³ß´ç::S¿Í»§Çø³ß´ç(RECT p¾ØĞÎ):
-	m¾ØĞÎ{p¾ØĞÎ} {
+Så®¢æˆ·åŒºå°ºå¯¸::Så®¢æˆ·åŒºå°ºå¯¸(RECT pçŸ©å½¢):
+	mçŸ©å½¢{pçŸ©å½¢} {
 }
-S¿Í»§Çø³ß´ç S¿Í»§Çø³ß´ç::fc´°¿Ú(HWND p´°¿Ú) {
+Så®¢æˆ·åŒºå°ºå¯¸ Så®¢æˆ·åŒºå°ºå¯¸::fcçª—å£(HWND pçª—å£) {
 	RECT rc;
-	GetClientRect(p´°¿Ú, &rc);
-	return S¿Í»§Çø³ß´ç{rc.right - rc.left, rc.bottom - rc.top};
+	GetClientRect(pçª—å£, &rc);
+	return Så®¢æˆ·åŒºå°ºå¯¸{rc.right - rc.left, rc.bottom - rc.top};
 }
-S¿Í»§Çø³ß´ç S¿Í»§Çø³ß´ç::fc³ß´çÑùÊ½(long px, long py, DWORD pÑùÊ½, DWORD pÑùÊ½ex) {
-	RECT v´°¿Ú³ß´ç = {0, 0, px, py};
-	AdjustWindowRectEx(&v´°¿Ú³ß´ç, pÑùÊ½, FALSE, pÑùÊ½ex);
-	return S¿Í»§Çø³ß´ç{v´°¿Ú³ß´ç.right - v´°¿Ú³ß´ç.left, v´°¿Ú³ß´ç.bottom - v´°¿Ú³ß´ç.top};
+Så®¢æˆ·åŒºå°ºå¯¸ Så®¢æˆ·åŒºå°ºå¯¸::fcå°ºå¯¸æ ·å¼(long px, long py, DWORD pæ ·å¼, DWORD pæ ·å¼ex) {
+	RECT vçª—å£å°ºå¯¸ = {0, 0, px, py};
+	AdjustWindowRectEx(&vçª—å£å°ºå¯¸, pæ ·å¼, FALSE, pæ ·å¼ex);
+	return Så®¢æˆ·åŒºå°ºå¯¸{vçª—å£å°ºå¯¸.right - vçª—å£å°ºå¯¸.left, vçª—å£å°ºå¯¸.bottom - vçª—å£å°ºå¯¸.top};
 }
-long S¿Í»§Çø³ß´ç::fg¿í() const {
-	return m¾ØĞÎ.right - m¾ØĞÎ.left;
+long Så®¢æˆ·åŒºå°ºå¯¸::fgå®½() const {
+	return mçŸ©å½¢.right - mçŸ©å½¢.left;
 }
-long S¿Í»§Çø³ß´ç::fg¸ß() const {
-	return m¾ØĞÎ.bottom - m¾ØĞÎ.top;
+long Så®¢æˆ·åŒºå°ºå¯¸::fgé«˜() const {
+	return mçŸ©å½¢.bottom - mçŸ©å½¢.top;
 }
-float S¿Í»§Çø³ß´ç::f³ıÒÔ³ß´ç(long a¿í, long a¸ß) const {
-	const float v¿í = (float)fg¿í() / (float)a¿í;
-	const float v¸ß = (float)fg¸ß() / (float)a¸ß;
-	return std::min<float>(v¿í, v¸ß);
-}
-//==============================================================================
-// ×ø±ê¼ÆËã
-//==============================================================================
-CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã::CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã(HWND a´°¿Ú) {
-	GetClientRect(a´°¿Ú, &m¿Í»§Çø);
-	GetWindowRect(a´°¿Ú, &m´°¿ÚÇø);
-	m±ß¿ò = (m´°¿ÚÇø.right - m´°¿ÚÇø.left - m¿Í»§Çø.right) / 2;
-}
-long CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã::f´°¿Ú×ø±êxl(long x) const {
-	return x - m´°¿ÚÇø.left - m±ß¿ò;
-}
-long CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã::f´°¿Ú×ø±êyl(long y) const {
-	return y - m´°¿ÚÇø.bottom + m±ß¿ò + m¿Í»§Çø.bottom;
-}
-float CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã::f´°¿Ú×ø±êxf(float x) const {
-	return x - m´°¿ÚÇø.left - m±ß¿ò;
-}
-float CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã::f´°¿Ú×ø±êyf(float y) const {
-	return y - m´°¿ÚÇø.bottom + m±ß¿ò + m¿Í»§Çø.bottom;
-}
-long CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã::fÖ±½Ç×ø±êxl(long x) const {
-	return f´°¿Ú×ø±êxl(x) - m¿Í»§Çø.right / 2;
-}
-long CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã::fÖ±½Ç×ø±êyl(long y) const {
-	return m¿Í»§Çø.bottom / 2 - f´°¿Ú×ø±êyl(y);
-}
-float CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã::fÖ±½Ç×ø±êxf(float x) const {
-	return f´°¿Ú×ø±êxf(x) - (float)m¿Í»§Çø.right / 2.f;
-}
-float CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã::fÖ±½Ç×ø±êyf(float y) const {
-	return (float)m¿Í»§Çø.bottom / 2.f - f´°¿Ú×ø±êyf(y);
+float Så®¢æˆ·åŒºå°ºå¯¸::fé™¤ä»¥å°ºå¯¸(long aå®½, long aé«˜) const {
+	const float vå®½ = (float)fgå®½() / (float)aå®½;
+	const float vé«˜ = (float)fgé«˜() / (float)aé«˜;
+	return std::min<float>(vå®½, vé«˜);
 }
 //==============================================================================
-// ÈÎÎñÀ¸°´Å¥
+// åæ ‡è®¡ç®—
 //==============================================================================
-const TBPFLAG CÈÎÎñÀ¸°´Å¥::c×´Ì¬Ó³Éä[] = {
+Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®—::Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®—(HWND açª—å£) {
+	GetClientRect(açª—å£, &må®¢æˆ·åŒº);
+	GetWindowRect(açª—å£, &mçª—å£åŒº);
+	mè¾¹æ¡† = (mçª—å£åŒº.right - mçª—å£åŒº.left - må®¢æˆ·åŒº.right) / 2;
+}
+long Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®—::fçª—å£åæ ‡xl(long x) const {
+	return x - mçª—å£åŒº.left - mè¾¹æ¡†;
+}
+long Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®—::fçª—å£åæ ‡yl(long y) const {
+	return y - mçª—å£åŒº.bottom + mè¾¹æ¡† + må®¢æˆ·åŒº.bottom;
+}
+float Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®—::fçª—å£åæ ‡xf(float x) const {
+	return x - mçª—å£åŒº.left - mè¾¹æ¡†;
+}
+float Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®—::fçª—å£åæ ‡yf(float y) const {
+	return y - mçª—å£åŒº.bottom + mè¾¹æ¡† + må®¢æˆ·åŒº.bottom;
+}
+long Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®—::fç›´è§’åæ ‡xl(long x) const {
+	return fçª—å£åæ ‡xl(x) - må®¢æˆ·åŒº.right / 2;
+}
+long Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®—::fç›´è§’åæ ‡yl(long y) const {
+	return må®¢æˆ·åŒº.bottom / 2 - fçª—å£åæ ‡yl(y);
+}
+float Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®—::fç›´è§’åæ ‡xf(float x) const {
+	return fçª—å£åæ ‡xf(x) - (float)må®¢æˆ·åŒº.right / 2.f;
+}
+float Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®—::fç›´è§’åæ ‡yf(float y) const {
+	return (float)må®¢æˆ·åŒº.bottom / 2.f - fçª—å£åæ ‡yf(y);
+}
+//==============================================================================
+// ä»»åŠ¡æ æŒ‰é’®
+//==============================================================================
+const TBPFLAG Cä»»åŠ¡æ æŒ‰é’®::cçŠ¶æ€æ˜ å°„[] = {
 	TBPF_NOPROGRESS,
 	TBPF_INDETERMINATE,
 	TBPF_NORMAL,
 	TBPF_ERROR,
 	TBPF_PAUSED,
 };
-void CÈÎÎñÀ¸°´Å¥::f³õÊ¼»¯(HWND p´°¿Ú) {
-	m´°¿Ú = p´°¿Ú;
-	HRESULT hr = CoCreateInstance(CLSID_TaskbarList, nullptr, CLSCTX_INPROC_SERVER, __uuidof(ITaskbarList3), &mÈÎÎñÀ¸);
+void Cä»»åŠ¡æ æŒ‰é’®::fåˆå§‹åŒ–(HWND pçª—å£) {
+	mçª—å£ = pçª—å£;
+	HRESULT hr = CoCreateInstance(CLSID_TaskbarList, nullptr, CLSCTX_INPROC_SERVER, __uuidof(ITaskbarList3), &mä»»åŠ¡æ );
 	if (FAILED(hr)) {
 		return;
 	}
 }
-void CÈÎÎñÀ¸°´Å¥::fs×´Ì¬(int p) {
-	m×´Ì¬ = p;
-	mÈÎÎñÀ¸->SetProgressState(m´°¿Ú, c×´Ì¬Ó³Éä[p]);
-	//fË¢ĞÂ();
+void Cä»»åŠ¡æ æŒ‰é’®::fsçŠ¶æ€(int p) {
+	mçŠ¶æ€ = p;
+	mä»»åŠ¡æ ->SetProgressState(mçª—å£, cçŠ¶æ€æ˜ å°„[p]);
+	//fåˆ·æ–°();
 }
-void CÈÎÎñÀ¸°´Å¥::fs½ø¶È(double p) {
-	m½ø¶È = p;
-	mÈÎÎñÀ¸->SetProgressValue(m´°¿Ú, (int)(m½ø¶È * 100), 100);
-	//fË¢ĞÂ();
+void Cä»»åŠ¡æ æŒ‰é’®::fsè¿›åº¦(double p) {
+	mè¿›åº¦ = p;
+	mä»»åŠ¡æ ->SetProgressValue(mçª—å£, (int)(mè¿›åº¦ * 100), 100);
+	//fåˆ·æ–°();
 }
-TBPFLAG CÈÎÎñÀ¸°´Å¥::fg×´Ì¬±ê¼Ç() const {
-	return c×´Ì¬Ó³Éä[m×´Ì¬];
+TBPFLAG Cä»»åŠ¡æ æŒ‰é’®::fgçŠ¶æ€æ ‡è®°() const {
+	return cçŠ¶æ€æ˜ å°„[mçŠ¶æ€];
 }
-void CÈÎÎñÀ¸°´Å¥::fË¢ĞÂ() {
-	mÈÎÎñÀ¸->SetProgressValue(m´°¿Ú, (int)(m½ø¶È * 100), 100);
-	mÈÎÎñÀ¸->SetProgressState(m´°¿Ú, c×´Ì¬Ó³Éä[m×´Ì¬]);
+void Cä»»åŠ¡æ æŒ‰é’®::fåˆ·æ–°() {
+	mä»»åŠ¡æ ->SetProgressValue(mçª—å£, (int)(mè¿›åº¦ * 100), 100);
+	mä»»åŠ¡æ ->SetProgressState(mçª—å£, cçŠ¶æ€æ˜ å°„[mçŠ¶æ€]);
 }
-UINT CÈÎÎñÀ¸°´Å¥::f×¢²áÏûÏ¢() {
+UINT Cä»»åŠ¡æ æŒ‰é’®::fæ³¨å†Œæ¶ˆæ¯() {
 	return RegisterWindowMessageW(L"TaskbarButtonCreated");
 }
 //==============================================================================
-// »·¾³
+// ç¯å¢ƒ
 //==============================================================================
-SYSTEM_INFO &C»·¾³::fgÏµÍ³ĞÅÏ¢() {
+SYSTEM_INFO &Cç¯å¢ƒ::fgç³»ç»Ÿä¿¡æ¯() {
 	SYSTEM_INFO si;
 	GetSystemInfo(&si);
 	return si;
 }
-std::wstring C»·¾³::fg¼ÆËã»úÃû³Æ() {
-	WCHAR vÎÄ±¾[256];
-	DWORD v´óĞ¡ = 256;
-	GetComputerNameW(vÎÄ±¾, &v´óĞ¡);
-	return vÎÄ±¾;
+std::wstring Cç¯å¢ƒ::fgè®¡ç®—æœºåç§°() {
+	WCHAR væ–‡æœ¬[256];
+	DWORD vå¤§å° = 256;
+	GetComputerNameW(væ–‡æœ¬, &vå¤§å°);
+	return væ–‡æœ¬;
 }
-std::wstring C»·¾³::fgÓÃ»§Ãû³Æ() {
-	WCHAR vÎÄ±¾[256];
-	DWORD v´óĞ¡ = 256;
-	GetUserNameW(vÎÄ±¾, &v´óĞ¡);
-	return vÎÄ±¾;
+std::wstring Cç¯å¢ƒ::fgç”¨æˆ·åç§°() {
+	WCHAR væ–‡æœ¬[256];
+	DWORD vå¤§å° = 256;
+	GetUserNameW(væ–‡æœ¬, &vå¤§å°);
+	return væ–‡æœ¬;
 }
-std::wstring C»·¾³::fgÖ´ĞĞ³ÌĞòÄ¿Â¼() {
+std::wstring Cç¯å¢ƒ::fgæ‰§è¡Œç¨‹åºç›®å½•() {
 	wchar_t exeFullPath[MAX_PATH] = {0};
 	GetModuleFileNameW(NULL, exeFullPath, MAX_PATH);
 	wchar_t *p = wcsrchr(exeFullPath, L'\\');
 	*p = 0;
 	return {exeFullPath};
 }
-std::wstring C»·¾³::fgÖ´ĞĞ³ÌĞòÂ·¾¶() {
+std::wstring Cç¯å¢ƒ::fgæ‰§è¡Œç¨‹åºè·¯å¾„() {
 	wchar_t exeFullPath[MAX_PATH] = {0};
 	GetModuleFileNameW(NULL, exeFullPath, MAX_PATH);
 	return {exeFullPath};
 }
-std::wstring C»·¾³::fg¹¤×÷Ä¿Â¼() {
+std::wstring Cç¯å¢ƒ::fgå·¥ä½œç›®å½•() {
 	wchar_t exeFullPath[MAX_PATH] = {0};
-	GetCurrentDirectoryW(MAX_PATH, exeFullPath);  //µÃµ½µ±Ç°¹¤×÷Â·¾¶  
+	GetCurrentDirectoryW(MAX_PATH, exeFullPath);  //å¾—åˆ°å½“å‰å·¥ä½œè·¯å¾„  
 	return {exeFullPath};
 }
-int C»·¾³::fg´¦ÀíÆ÷ÊıÁ¿() {
-	return fgÏµÍ³ĞÅÏ¢().dwNumberOfProcessors;
+int Cç¯å¢ƒ::fgå¤„ç†å™¨æ•°é‡() {
+	return fgç³»ç»Ÿä¿¡æ¯().dwNumberOfProcessors;
 }
-UINT C»·¾³::fgÃ¿Ó¢´çµãÊı() {
+UINT Cç¯å¢ƒ::fgæ¯è‹±å¯¸ç‚¹æ•°() {
 	return GetDpiForSystem();
 }
-float C»·¾³::fgËõ·Å() {
-	return (float)fgÃ¿Ó¢´çµãÊı() / 96.f;
+float Cç¯å¢ƒ::fgç¼©æ”¾() {
+	return (float)fgæ¯è‹±å¯¸ç‚¹æ•°() / 96.f;
 }
 //==============================================================================
-// ÊäÈë·¨
+// è¾“å…¥æ³•
 //==============================================================================
-void CÊäÈë·¨¿ª¹Ø::f³õÊ¼»¯(HWND p´°¿Ú) {
-	m´°¿Ú = p´°¿Ú;
+void Cè¾“å…¥æ³•å¼€å…³::fåˆå§‹åŒ–(HWND pçª—å£) {
+	mçª—å£ = pçª—å£;
 }
-void CÊäÈë·¨¿ª¹Ø::f¿ª¹Ø(bool p) {
+void Cè¾“å…¥æ³•å¼€å…³::få¼€å…³(bool p) {
 	if (p) {
-		f¿ªÆô();
+		få¼€å¯();
 	} else {
-		f¹Ø±Õ();
+		få…³é—­();
 	}
 }
-void CÊäÈë·¨¿ª¹Ø::f¿ªÆô() {
-	ImmAssociateContext(m´°¿Ú, mÊäÈë·¨);
+void Cè¾“å…¥æ³•å¼€å…³::få¼€å¯() {
+	ImmAssociateContext(mçª—å£, mè¾“å…¥æ³•);
 }
-void CÊäÈë·¨¿ª¹Ø::f¹Ø±Õ() {
-	mÊäÈë·¨ = ImmAssociateContext(m´°¿Ú, nullptr);
+void Cè¾“å…¥æ³•å¼€å…³::få…³é—­() {
+	mè¾“å…¥æ³• = ImmAssociateContext(mçª—å£, nullptr);
 }
 //==============================================================================
-// ÊäÈë·¨
+// è¾“å…¥æ³•
 //==============================================================================
-LANGID CÓïÑÔÇøÓò::fÌáÈ¡Ö÷ÓïÑÔ±êÊ¶(LANGID a) {
+LANGID Cè¯­è¨€åŒºåŸŸ::fæå–ä¸»è¯­è¨€æ ‡è¯†(LANGID a) {
 	return a & 0x3ff;
 }
-LANGID CÓïÑÔÇøÓò::fÌáÈ¡×ÓÓïÑÔ±êÊ¶(LANGID a) {
+LANGID Cè¯­è¨€åŒºåŸŸ::fæå–å­è¯­è¨€æ ‡è¯†(LANGID a) {
 	return a >> 10;
 }
-LANGID CÓïÑÔÇøÓò::fºÏ²¢ÓïÑÔ±êÊ¶(LANGID aÖ÷, LANGID a×Ó) {
-	return aÖ÷ + (a×Ó << 10);
+LANGID Cè¯­è¨€åŒºåŸŸ::fåˆå¹¶è¯­è¨€æ ‡è¯†(LANGID aä¸», LANGID aå­) {
+	return aä¸» + (aå­ << 10);
 }
-LANGID CÓïÑÔÇøÓò::fgÓïÑÔ±êÊ¶() {
+LANGID Cè¯­è¨€åŒºåŸŸ::fgè¯­è¨€æ ‡è¯†() {
 	return GetUserDefaultLangID();
 }
-std::wstring CÓïÑÔÇøÓò::fgÓïÑÔÃû³Æ() {
-	ULONG vÓïÑÔÊı;
-	WCHAR vÎÄ±¾[256];
-	ULONG vÎÄ±¾´óĞ¡ = 256;
-	GetUserPreferredUILanguages(MUI_LANGUAGE_NAME, &vÓïÑÔÊı, vÎÄ±¾, &vÎÄ±¾´óĞ¡);
-	return vÎÄ±¾;
+std::wstring Cè¯­è¨€åŒºåŸŸ::fgè¯­è¨€åç§°() {
+	ULONG vè¯­è¨€æ•°;
+	WCHAR væ–‡æœ¬[256];
+	ULONG væ–‡æœ¬å¤§å° = 256;
+	GetUserPreferredUILanguages(MUI_LANGUAGE_NAME, &vè¯­è¨€æ•°, væ–‡æœ¬, &væ–‡æœ¬å¤§å°);
+	return væ–‡æœ¬;
 }
 
-}	//namespace cflw::ÊÓ´°
+}	//namespace cflw::è§†çª—

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <memory>
 #include <string>
 #include <span>
@@ -7,27 +7,27 @@
 #ifdef _WINDOWS
 #pragma comment(lib, "d3dcompiler.lib")
 #endif
-namespace cflw::Í¼ĞÎ::d3d×ÅÉ«Æ÷ {
+namespace cflw::å›¾å½¢::d3dç€è‰²å™¨ {
 using Microsoft::WRL::ComPtr;
-using tp×ÅÉ«Æ÷ = ComPtr<ID3DBlob>;
-class C×ÅÉ«Æ÷¹¤³§ {
+using tpç€è‰²å™¨ = ComPtr<ID3DBlob>;
+class Cç€è‰²å™¨å·¥å‚ {
 public:
-	void f³õÊ¼»¯(const char *×ÅÉ«Ä£ĞÍ = "5_0");
-	//±àÒë×ÅÉ«Æ÷
-	HRESULT f±àÒë¶¥µã×ÅÉ«Æ÷(ComPtr<ID3DBlob> &, const wchar_t *ÎÄ¼şÃû, const char *º¯ÊıÃû);
-	HRESULT f±àÒëÏñËØ×ÅÉ«Æ÷(ComPtr<ID3DBlob> &, const wchar_t *ÎÄ¼şÃû, const char *º¯ÊıÃû);
-	HRESULT f±àÒë¼¸ºÎ×ÅÉ«Æ÷(ComPtr<ID3DBlob> &, const wchar_t *ÎÄ¼şÃû, const char *º¯ÊıÃû);
-	HRESULT f±àÒëÍâ¿Ç×ÅÉ«Æ÷(ComPtr<ID3DBlob> &, const wchar_t *ÎÄ¼şÃû, const char *º¯ÊıÃû);
-	HRESULT f±àÒëÓò×ÅÉ«Æ÷(ComPtr<ID3DBlob> &, const wchar_t *ÎÄ¼şÃû, const char *º¯ÊıÃû);
-	HRESULT f±àÒë¼ÆËã×ÅÉ«Æ÷(ComPtr<ID3DBlob> &, const wchar_t *ÎÄ¼şÃû, const char *º¯ÊıÃû);
-	//¾²Ì¬º¯Êı
-	HRESULT f±àÒë×ÅÉ«Æ÷(ComPtr<ID3DBlob> &, const wchar_t *ÎÄ¼şÃû, const char *Èë¿Ú, const char *×ÅÉ«Ä£ĞÍ);
-	HRESULT f¶ÁÈ¡×ÅÉ«Æ÷(std::unique_ptr<std::byte[]> &Êı¾İ, DWORD &´óĞ¡, const wchar_t *ÎÄ¼şÃû);
-	HRESULT f¶ÁÈ¡×ÅÉ«Æ÷(ComPtr<ID3DBlob> &, const wchar_t *ÎÄ¼şÃû);
+	void fåˆå§‹åŒ–(const char *ç€è‰²æ¨¡å‹ = "5_0");
+	//ç¼–è¯‘ç€è‰²å™¨
+	HRESULT fç¼–è¯‘é¡¶ç‚¹ç€è‰²å™¨(ComPtr<ID3DBlob> &, const wchar_t *æ–‡ä»¶å, const char *å‡½æ•°å);
+	HRESULT fç¼–è¯‘åƒç´ ç€è‰²å™¨(ComPtr<ID3DBlob> &, const wchar_t *æ–‡ä»¶å, const char *å‡½æ•°å);
+	HRESULT fç¼–è¯‘å‡ ä½•ç€è‰²å™¨(ComPtr<ID3DBlob> &, const wchar_t *æ–‡ä»¶å, const char *å‡½æ•°å);
+	HRESULT fç¼–è¯‘å¤–å£³ç€è‰²å™¨(ComPtr<ID3DBlob> &, const wchar_t *æ–‡ä»¶å, const char *å‡½æ•°å);
+	HRESULT fç¼–è¯‘åŸŸç€è‰²å™¨(ComPtr<ID3DBlob> &, const wchar_t *æ–‡ä»¶å, const char *å‡½æ•°å);
+	HRESULT fç¼–è¯‘è®¡ç®—ç€è‰²å™¨(ComPtr<ID3DBlob> &, const wchar_t *æ–‡ä»¶å, const char *å‡½æ•°å);
+	//é™æ€å‡½æ•°
+	HRESULT fç¼–è¯‘ç€è‰²å™¨(ComPtr<ID3DBlob> &, const wchar_t *æ–‡ä»¶å, const char *å…¥å£, const char *ç€è‰²æ¨¡å‹);
+	HRESULT fè¯»å–ç€è‰²å™¨(std::unique_ptr<std::byte[]> &æ•°æ®, DWORD &å¤§å°, const wchar_t *æ–‡ä»¶å);
+	HRESULT fè¯»å–ç€è‰²å™¨(ComPtr<ID3DBlob> &, const wchar_t *æ–‡ä»¶å);
 public:
-	std::string m¶¥µã×ÅÉ«Ä£ĞÍ, mÏñËØ×ÅÉ«Ä£ĞÍ, m¼¸ºÎ×ÅÉ«Ä£ĞÍ, mÍâ¿Ç×ÅÉ«Ä£ĞÍ, mÓò×ÅÉ«Ä£ĞÍ, m¼ÆËã×ÅÉ«Ä£ĞÍ;
+	std::string mé¡¶ç‚¹ç€è‰²æ¨¡å‹, måƒç´ ç€è‰²æ¨¡å‹, må‡ ä½•ç€è‰²æ¨¡å‹, må¤–å£³ç€è‰²æ¨¡å‹, måŸŸç€è‰²æ¨¡å‹, mè®¡ç®—ç€è‰²æ¨¡å‹;
 };
-inline std::span<std::byte> fc¿ç¶È(const ComPtr<ID3DBlob> &a) {
+inline std::span<std::byte> fcè·¨åº¦(const ComPtr<ID3DBlob> &a) {
 	return {(std::byte*)a->GetBufferPointer(), (std::span<std::byte>::index_type)a->GetBufferSize()};
 }
-}	//namespace cflw::Í¼ĞÎ::d3d×ÅÉ«Æ÷
+}	//namespace cflw::å›¾å½¢::d3dç€è‰²å™¨

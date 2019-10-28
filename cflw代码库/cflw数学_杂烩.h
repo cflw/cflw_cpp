@@ -1,89 +1,89 @@
-#pragma once
+ï»¿#pragma once
 #include <utility>
-namespace cflw::ÊıÑ§ {
-//Î»ÖÃ¼ÆËã
-template<typename t> class CÎ»ÖÃ¼ÆËã {
-public:	//²ÎÊı1"Î»ÖÃ":µ±Ç°Î»ÖÃ	²ÎÊı2"³¤¶È":	·µ»ØÖµ:¼ÆËãºóÎ»ÖÃ
-	static t f×óµ½ÖĞ(const t &Î»ÖÃ, const t &³¤¶È);//¶ÔÆëµ½[-³¤¶È/2, ³¤¶È/2]
-	static t fÖĞµ½×ó(const t &Î»ÖÃ, const t &³¤¶È);//[0, ³¤¶È]
-	static t fÓÒµ½ÖĞ(const t &Î»ÖÃ, const t &³¤¶È);
-	static t fÖĞµ½ÓÒ(const t &Î»ÖÃ, const t &³¤¶È);
-	static t fÓÒµ½×ó(const t &Î»ÖÃ, const t &³¤¶È);
-	static t f×óµ½ÓÒ(const t &Î»ÖÃ, const t &³¤¶È);
-	static t fÏÂµ½ÖĞ(const t &Î»ÖÃ, const t &³¤¶È);
-	static t fÏÂµ½ÉÏ(const t &Î»ÖÃ, const t &³¤¶È);
-	static t fÖĞµ½ÏÂ(const t &Î»ÖÃ, const t &³¤¶È);
-	static t fÖĞµ½ÉÏ(const t &Î»ÖÃ, const t &³¤¶È);
-	static t fÉÏµ½ÖĞ(const t &Î»ÖÃ, const t &³¤¶È);
-	static t fÉÏµ½ÏÂ(const t &Î»ÖÃ, const t &³¤¶È);
+namespace cflw::æ•°å­¦ {
+//ä½ç½®è®¡ç®—
+template<typename t> class Cä½ç½®è®¡ç®— {
+public:	//å‚æ•°1"ä½ç½®":å½“å‰ä½ç½®	å‚æ•°2"é•¿åº¦":	è¿”å›å€¼:è®¡ç®—åä½ç½®
+	static t få·¦åˆ°ä¸­(const t &ä½ç½®, const t &é•¿åº¦);//å¯¹é½åˆ°[-é•¿åº¦/2, é•¿åº¦/2]
+	static t fä¸­åˆ°å·¦(const t &ä½ç½®, const t &é•¿åº¦);//[0, é•¿åº¦]
+	static t få³åˆ°ä¸­(const t &ä½ç½®, const t &é•¿åº¦);
+	static t fä¸­åˆ°å³(const t &ä½ç½®, const t &é•¿åº¦);
+	static t få³åˆ°å·¦(const t &ä½ç½®, const t &é•¿åº¦);
+	static t få·¦åˆ°å³(const t &ä½ç½®, const t &é•¿åº¦);
+	static t fä¸‹åˆ°ä¸­(const t &ä½ç½®, const t &é•¿åº¦);
+	static t fä¸‹åˆ°ä¸Š(const t &ä½ç½®, const t &é•¿åº¦);
+	static t fä¸­åˆ°ä¸‹(const t &ä½ç½®, const t &é•¿åº¦);
+	static t fä¸­åˆ°ä¸Š(const t &ä½ç½®, const t &é•¿åº¦);
+	static t fä¸Šåˆ°ä¸­(const t &ä½ç½®, const t &é•¿åº¦);
+	static t fä¸Šåˆ°ä¸‹(const t &ä½ç½®, const t &é•¿åº¦);
 };
-template<typename t> class C´°¿ÚÎ»ÖÃ¼ÆËã {//°´´°¿Ú×ø±êÏµ¼ÆËã,Î´Íê³É
+template<typename t> class Cçª—å£ä½ç½®è®¡ç®— {//æŒ‰çª—å£åæ ‡ç³»è®¡ç®—,æœªå®Œæˆ
 public:
-	static t f×óµ½ÖĞ(const t &Î»ÖÃ, const t &³¤¶È);
+	static t få·¦åˆ°ä¸­(const t &ä½ç½®, const t &é•¿åº¦);
 };
-//ÓĞÏŞÖµ
-template<class t> struct SÓĞÏŞÖµ {
-	typedef typename std::conditional<std::is_floating_point<t>::value, t, float>::type tĞ¡Êı;
-	t mµ±Ç°, m×î´ó;
-	//¹¹Ôìº¯Êı
-	SÓĞÏŞÖµ();
-	SÓĞÏŞÖµ(const t &);
-	//º¯Êı
-	void f¼ì²é();	//¼ì²éµ±Ç°ÖµÊÇ·ñ³¬¹ı×î´óÖµ,Èç¹ûÊÇ,Áîµ±Ç°Öµ=×î´óÖµ
-	void fÖØÖÃ(const t &);	//ÖØĞÂÉèÖÃµ±Ç°ÖµºÍ×î´óÖµ
-	void fÂú();	//µ±Ç°Öµ=×î´óÖµ
-	tĞ¡Êı fg°Ù·Ö±È() const;
+//æœ‰é™å€¼
+template<class t> struct Sæœ‰é™å€¼ {
+	typedef typename std::conditional<std::is_floating_point<t>::value, t, float>::type tå°æ•°;
+	t må½“å‰, mæœ€å¤§;
+	//æ„é€ å‡½æ•°
+	Sæœ‰é™å€¼();
+	Sæœ‰é™å€¼(const t &);
+	//å‡½æ•°
+	void fæ£€æŸ¥();	//æ£€æŸ¥å½“å‰å€¼æ˜¯å¦è¶…è¿‡æœ€å¤§å€¼,å¦‚æœæ˜¯,ä»¤å½“å‰å€¼=æœ€å¤§å€¼
+	void fé‡ç½®(const t &);	//é‡æ–°è®¾ç½®å½“å‰å€¼å’Œæœ€å¤§å€¼
+	void fæ»¡();	//å½“å‰å€¼=æœ€å¤§å€¼
+	tå°æ•° fgç™¾åˆ†æ¯”() const;
 };
-//Ò»¸öÒ»Î¬µÄ·¶Î§
-template<typename t> struct S·¶Î§ {
-	t mĞ¡, m´ó;
-	S·¶Î§();
-	S·¶Î§(const t &, const t &);
-	static S·¶Î§ fcÖĞĞÄ°ë¾¶(const t &ÖĞĞÄ, const t &°ë¾¶);
-	t fgĞ¡() const;
-	t fg´ó() const;
-	t fgÖĞĞÄ() const;
-	t fgÖ±¾¶() const;
-	t fg°ë¾¶() const;
-	S·¶Î§ &fs´ó(const t &);
-	S·¶Î§ &fsĞ¡(const t &);
-	S·¶Î§ &fsÖĞĞÄ°ë¾¶(const t &, const t &);
-	S·¶Î§ &fsÖĞĞÄ(const t &);
-	S·¶Î§ &fsÖ±¾¶(const t &);
-	S·¶Î§ &fs°ë¾¶(const t &);
-	S·¶Î§ &fsÒÆ¶¯(const t &);
-	S·¶Î§ &fsºÏ²¢(const S·¶Î§ &);
-	bool fi·¶Î§ÄÚ(const t &) const;
-	bool fiÏà½»(const S·¶Î§ &) const;
-	S·¶Î§ fºÏ²¢(const S·¶Î§ &) const;
+//ä¸€ä¸ªä¸€ç»´çš„èŒƒå›´
+template<typename t> struct SèŒƒå›´ {
+	t må°, må¤§;
+	SèŒƒå›´();
+	SèŒƒå›´(const t &, const t &);
+	static SèŒƒå›´ fcä¸­å¿ƒåŠå¾„(const t &ä¸­å¿ƒ, const t &åŠå¾„);
+	t fgå°() const;
+	t fgå¤§() const;
+	t fgä¸­å¿ƒ() const;
+	t fgç›´å¾„() const;
+	t fgåŠå¾„() const;
+	SèŒƒå›´ &fså¤§(const t &);
+	SèŒƒå›´ &fså°(const t &);
+	SèŒƒå›´ &fsä¸­å¿ƒåŠå¾„(const t &, const t &);
+	SèŒƒå›´ &fsä¸­å¿ƒ(const t &);
+	SèŒƒå›´ &fsç›´å¾„(const t &);
+	SèŒƒå›´ &fsåŠå¾„(const t &);
+	SèŒƒå›´ &fsç§»åŠ¨(const t &);
+	SèŒƒå›´ &fsåˆå¹¶(const SèŒƒå›´ &);
+	bool fièŒƒå›´å†…(const t &) const;
+	bool fiç›¸äº¤(const SèŒƒå›´ &) const;
+	SèŒƒå›´ fåˆå¹¶(const SèŒƒå›´ &) const;
 };
-//·¶Î§±ä»»¼ÆËã
-template<typename t> class C·¶Î§±ä»»¼ÆËã {
+//èŒƒå›´å˜æ¢è®¡ç®—
+template<typename t> class CèŒƒå›´å˜æ¢è®¡ç®— {
 public:
-	S·¶Î§<t> mÇ°, mºó;
-	C·¶Î§±ä»»¼ÆËã();
-	C·¶Î§±ä»»¼ÆËã(const S·¶Î§<t> &, const S·¶Î§<t> &);
-	static t f±ä»»¼ÆËã(const S·¶Î§<t> &, const S·¶Î§<t> &, const t &);
+	SèŒƒå›´<t> må‰, må;
+	CèŒƒå›´å˜æ¢è®¡ç®—();
+	CèŒƒå›´å˜æ¢è®¡ç®—(const SèŒƒå›´<t> &, const SèŒƒå›´<t> &);
+	static t få˜æ¢è®¡ç®—(const SèŒƒå›´<t> &, const SèŒƒå›´<t> &, const t &);
 	t operator ()(const t &) const;
-	t f¼ÆËã(const t &) const;
-	t fÄæ¼ÆËã(const t &) const;
+	t fè®¡ç®—(const t &) const;
+	t fé€†è®¡ç®—(const t &) const;
 };
-//¶şÎ¬ĞòºÅ¼ÆËã
-template<typename t> class C¶şÎ¬ĞòºÅ¼ÆËã {
+//äºŒç»´åºå·è®¡ç®—
+template<typename t> class CäºŒç»´åºå·è®¡ç®— {
 public:
-	t mÁĞ;
-	C¶şÎ¬ĞòºÅ¼ÆËã();
-	C¶şÎ¬ĞòºÅ¼ÆËã(const t &ÁĞ);
-	t operator()(const t &ĞĞ, const t &ÁĞ) const;
-	std::pair<t, t> operator()(const t &Ò»Î¬) const;
-	static t f¶şµ½Ò»(const t &, const t &, const t &);
-	static std::pair<t, t> fÒ»µ½¶ş(const t &, const t &);
+	t måˆ—;
+	CäºŒç»´åºå·è®¡ç®—();
+	CäºŒç»´åºå·è®¡ç®—(const t &åˆ—);
+	t operator()(const t &è¡Œ, const t &åˆ—) const;
+	std::pair<t, t> operator()(const t &ä¸€ç»´) const;
+	static t fäºŒåˆ°ä¸€(const t &, const t &, const t &);
+	static std::pair<t, t> fä¸€åˆ°äºŒ(const t &, const t &);
 };
-//½¥±äÖµ
-template<typename t> struct S½¥±äÖµ {
-	t mµ±Ç° = 0, mÄ¿±ê = 0;
-	t fÏßĞÔ½¥±ä(t Öµ);
-	t f±¶Êı½¥±ä(float ±¶Êı, t ×îĞ¡, t ×î´ó);
+//æ¸å˜å€¼
+template<typename t> struct Sæ¸å˜å€¼ {
+	t må½“å‰ = 0, mç›®æ ‡ = 0;
+	t fçº¿æ€§æ¸å˜(t å€¼);
+	t få€æ•°æ¸å˜(float å€æ•°, t æœ€å°, t æœ€å¤§);
 };
-}	//namespace cflw::ÊıÑ§
-#include "cflwÊıÑ§_ÔÓ»â.inl"
+}	//namespace cflw::æ•°å­¦
+#include "cflwæ•°å­¦_æ‚çƒ©.inl"

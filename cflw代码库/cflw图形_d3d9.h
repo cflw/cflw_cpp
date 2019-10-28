@@ -1,7 +1,7 @@
 #pragma once
-#ifndef Í·ÎÄ¼ş_cflwÍ¼ĞÎ_d3d9
-#define Í·ÎÄ¼ş_cflwÍ¼ĞÎ_d3d9
-//Á´½Ó
+#ifndef å¤´æ–‡ä»¶_cflwå›¾å½¢_d3d9
+#define å¤´æ–‡ä»¶_cflwå›¾å½¢_d3d9
+//é“¾æ¥
 #ifdef _WINDOWS
 #pragma comment(lib, "dxerr.lib")
 #pragma comment(lib, "dxguid.lib")
@@ -12,487 +12,487 @@
 #pragma comment(lib, "d3dx9.lib")
 #endif //DEBUG
 #endif
-//°üÀ¨Í·ÎÄ¼ş
+//åŒ…æ‹¬å¤´æ–‡ä»¶
 #include <d3d9.h>
 #include <d3dx9.h>
-#include "cflwÊÓ´°.h"
-#include "cflw¸¨Öú_win.h"
-//ÕıÎÄ¿ªÊ¼
+#include "cflwè§†çª—.h"
+#include "cflwè¾…åŠ©_win.h"
+//æ­£æ–‡å¼€å§‹
 namespace cflw {
-namespace Í¼ĞÎ {
+namespace å›¾å½¢ {
 namespace d3d9 {
 //!--------------------------------------------------------------------------------
-//!++³£Á¿
+//!++å¸¸é‡
 //!--------------------------------------------------------------------------------
-#define c´°¿Ú¿í¶È 640
-#define c´°¿Ú¸ß¶È 480
-#define cÎÆÀí³ß´ç_ÖĞ D3DXVECTOR2(256,256)
-#define cÎÆÀí³ß´ç_´ó D3DXVECTOR2(512,512)
-#define c1ÏòÁ¿2 D3DXVECTOR2(1,1)
-#define c0ÏòÁ¿3 D3DXVECTOR3(0,0,0)
-#define c1±¶Ëõ·Å D3DXVECTOR3(1,1,1)
+#define cçª—å£å®½åº¦ 640
+#define cçª—å£é«˜åº¦ 480
+#define cçº¹ç†å°ºå¯¸_ä¸­ D3DXVECTOR2(256,256)
+#define cçº¹ç†å°ºå¯¸_å¤§ D3DXVECTOR2(512,512)
+#define c1å‘é‡2 D3DXVECTOR2(1,1)
+#define c0å‘é‡3 D3DXVECTOR3(0,0,0)
+#define c1å€ç¼©æ”¾ D3DXVECTOR3(1,1,1)
 //!--------------------------------------------------------------------------------
-//!++direct3dÀàĞÍÁíÃüÃû
+//!++direct3dç±»å‹å¦å‘½å
 //!--------------------------------------------------------------------------------
-//Direct3DÍ¼ĞÎ¸÷ÖÖ½Ó¿Ú
-typedef IDirect3D9				*t½Ó¿ÚÖ¸Õë;
-typedef IDirect3DDevice9		*tÉè±¸Ö¸Õë;
-typedef IDirect3DVertexBuffer9	*t¶¥µã;
-typedef IDirect3DTexture9		*tÎÆÀí;
-typedef ID3DXSprite				*t¾«ÁéÖ¸Õë;
-typedef ID3DXFont				*t×ÖÌåÖ¸Õë;
-typedef ID3DXMesh				*tÍø¸ñÖ¸Õë;
-//Ò»¼¶·Ö¸îÏß============================================================
-//Direct3DÍ¼ĞÎ¸÷ÖÖ½á¹¹
-typedef D3DXMATRIX t¾ØÕó;
-typedef D3DXVECTOR2 tÏòÁ¿2;
-typedef D3DXVECTOR3 tÏòÁ¿3;
-typedef D3DXQUATERNION tËÄÔªÊı;
-typedef D3DXCOLOR tÑÕÉ«;
-typedef D3DMATERIAL9 t²ÄÖÊ;
-typedef D3DLIGHT9 t¹â;
+//Direct3Då›¾å½¢å„ç§æ¥å£
+typedef IDirect3D9				*tæ¥å£æŒ‡é’ˆ;
+typedef IDirect3DDevice9		*tè®¾å¤‡æŒ‡é’ˆ;
+typedef IDirect3DVertexBuffer9	*té¡¶ç‚¹;
+typedef IDirect3DTexture9		*tçº¹ç†;
+typedef ID3DXSprite				*tç²¾çµæŒ‡é’ˆ;
+typedef ID3DXFont				*tå­—ä½“æŒ‡é’ˆ;
+typedef ID3DXMesh				*tç½‘æ ¼æŒ‡é’ˆ;
+//ä¸€çº§åˆ†å‰²çº¿============================================================
+//Direct3Då›¾å½¢å„ç§ç»“æ„
+typedef D3DXMATRIX tçŸ©é˜µ;
+typedef D3DXVECTOR2 tå‘é‡2;
+typedef D3DXVECTOR3 tå‘é‡3;
+typedef D3DXQUATERNION tå››å…ƒæ•°;
+typedef D3DXCOLOR té¢œè‰²;
+typedef D3DMATERIAL9 tæè´¨;
+typedef D3DLIGHT9 tå…‰;
 //--------------------------------------------------------------------------------
-//!++Àà
+//!++ç±»
 //--------------------------------------------------------------------------------
-//!+ÉùÃ÷
-class CÊÀ½ç¾ØÕó3d;
-typedef class CÊÀ½ç¾ØÕó3d tÊÀ½ç¾ØÕó, tÊÀ½ç¾ØÕó3;
-typedef class CÊÀ½ç¾ØÕó2d tÊÀ½ç¾ØÕó2;
-//!+¾ØĞÎ½á¹¹
-typedef struct S¾ØĞÎ {
-	tÏòÁ¿2 v×ø±ê;
-	tÏòÁ¿2 v°ë³ß´ç;
-	S¾ØĞÎ();
-	S¾ØĞÎ(const tÏòÁ¿2 &, const tÏòÁ¿2 &);
-	S¾ØĞÎ(const ÊÓ´°::t¾ØĞÎ &);
-	S¾ØĞÎ(const float &×ó, const float &ÉÏ, const float &ÓÒ, const float &ÏÂ);
-}t¾ØĞÎ;
-//!+¶¥µã½á¹¹
-typedef struct SÈıÎ¬¶¥µã {
-	SÈıÎ¬¶¥µã (void);
-	SÈıÎ¬¶¥µã (const float &_x, const float &_y, const float &_u, const float &_v);
-	SÈıÎ¬¶¥µã (const float &_x, const float &_y, const float &_z, const float &_u, const float &_v);
-	//¶ş¼¶·Ö¸îÏß========================================
-	float	x, y, z;	// ¶¥µãµÄ3DÎ»ÖÃ
-	float	u, v;		// ÎÆÀí×ø±ê
-}tÈıÎ¬¶¥µã, *tÈıÎ¬¶¥µãÖ¸Õë;
-//!+ÊÀ½ç¾ØÕó
-class CÊÀ½ç¾ØÕó3d {
+//!+å£°æ˜
+class Cä¸–ç•ŒçŸ©é˜µ3d;
+typedef class Cä¸–ç•ŒçŸ©é˜µ3d tä¸–ç•ŒçŸ©é˜µ, tä¸–ç•ŒçŸ©é˜µ3;
+typedef class Cä¸–ç•ŒçŸ©é˜µ2d tä¸–ç•ŒçŸ©é˜µ2;
+//!+çŸ©å½¢ç»“æ„
+typedef struct SçŸ©å½¢ {
+	tå‘é‡2 våæ ‡;
+	tå‘é‡2 våŠå°ºå¯¸;
+	SçŸ©å½¢();
+	SçŸ©å½¢(const tå‘é‡2 &, const tå‘é‡2 &);
+	SçŸ©å½¢(const è§†çª—::tçŸ©å½¢ &);
+	SçŸ©å½¢(const float &å·¦, const float &ä¸Š, const float &å³, const float &ä¸‹);
+}tçŸ©å½¢;
+//!+é¡¶ç‚¹ç»“æ„
+typedef struct Sä¸‰ç»´é¡¶ç‚¹ {
+	Sä¸‰ç»´é¡¶ç‚¹ (void);
+	Sä¸‰ç»´é¡¶ç‚¹ (const float &_x, const float &_y, const float &_u, const float &_v);
+	Sä¸‰ç»´é¡¶ç‚¹ (const float &_x, const float &_y, const float &_z, const float &_u, const float &_v);
+	//äºŒçº§åˆ†å‰²çº¿========================================
+	float	x, y, z;	// é¡¶ç‚¹çš„3Dä½ç½®
+	float	u, v;		// çº¹ç†åæ ‡
+}tä¸‰ç»´é¡¶ç‚¹, *tä¸‰ç»´é¡¶ç‚¹æŒ‡é’ˆ;
+//!+ä¸–ç•ŒçŸ©é˜µ
+class Cä¸–ç•ŒçŸ©é˜µ3d {
 public:
-//±äÁ¿
-	tÏòÁ¿3 vÆ½ÒÆ;
-	tÏòÁ¿3 vĞı×ª;
-	tÏòÁ¿3 vËõ·Å;
-//¹¹Ôìº¯Êı
-	CÊÀ½ç¾ØÕó3d ();
-	CÊÀ½ç¾ØÕó3d (const tÏòÁ¿3 &, const tÏòÁ¿3 &, const tÏòÁ¿3 &);
-//º¯Êı
-	void f¾ØÕóÓ¦ÓÃ ();
-	void f¾ØÕóÓ¦ÓÃ2 ();
-	CÊÀ½ç¾ØÕó3d& f¾ØÕó¸´Î» ();
-	CÊÀ½ç¾ØÕó3d& f¾ØÕóĞı×ª (const float &);	//Æ½ÃæĞı×ª
-	tÊÀ½ç¾ØÕó2 fgÊÀ½ç¾ØÕó2 ();
-	inline CÊÀ½ç¾ØÕó3d &fgÊÀ½ç¾ØÕó3() {
+//å˜é‡
+	tå‘é‡3 vå¹³ç§»;
+	tå‘é‡3 væ—‹è½¬;
+	tå‘é‡3 vç¼©æ”¾;
+//æ„é€ å‡½æ•°
+	Cä¸–ç•ŒçŸ©é˜µ3d ();
+	Cä¸–ç•ŒçŸ©é˜µ3d (const tå‘é‡3 &, const tå‘é‡3 &, const tå‘é‡3 &);
+//å‡½æ•°
+	void fçŸ©é˜µåº”ç”¨ ();
+	void fçŸ©é˜µåº”ç”¨2 ();
+	Cä¸–ç•ŒçŸ©é˜µ3d& fçŸ©é˜µå¤ä½ ();
+	Cä¸–ç•ŒçŸ©é˜µ3d& fçŸ©é˜µæ—‹è½¬ (const float &);	//å¹³é¢æ—‹è½¬
+	tä¸–ç•ŒçŸ©é˜µ2 fgä¸–ç•ŒçŸ©é˜µ2 ();
+	inline Cä¸–ç•ŒçŸ©é˜µ3d &fgä¸–ç•ŒçŸ©é˜µ3() {
 		return *this;
 	};
-	inline void fsĞı×ª2 (const float &p = 0) {
-		vĞı×ª.x = 0;
-		vĞı×ª.y = 0;
-		vĞı×ª.z = p;
+	inline void fsæ—‹è½¬2 (const float &p = 0) {
+		væ—‹è½¬.x = 0;
+		væ—‹è½¬.y = 0;
+		væ—‹è½¬.z = p;
 	};
-	inline void fsËõ·Å2 (const float &px = 1, const float &py = 1) {
-		vËõ·Å.x = px;
-		vËõ·Å.y = py;
+	inline void fsç¼©æ”¾2 (const float &px = 1, const float &py = 1) {
+		vç¼©æ”¾.x = px;
+		vç¼©æ”¾.y = py;
 	}
 };
-class CÊÀ½ç¾ØÕó2d {
+class Cä¸–ç•ŒçŸ©é˜µ2d {
 public:
-//±äÁ¿
-	tÏòÁ¿2 vÆ½ÒÆ;
-	float vĞı×ª;
-	tÏòÁ¿2 vËõ·Å;
-//¹¹Ôìº¯Êı
-	CÊÀ½ç¾ØÕó2d ();
-	CÊÀ½ç¾ØÕó2d (const tÏòÁ¿2 &, const float &, const tÏòÁ¿2 &);
-//º¯Êı
-	void f¾ØÕóÓ¦ÓÃ ();
-	CÊÀ½ç¾ØÕó2d& f¾ØÕó¸´Î» ();
-	CÊÀ½ç¾ØÕó2d& f¾ØÕó·´Ïò ();	//·´ÏòÆ½ÒÆ
+//å˜é‡
+	tå‘é‡2 vå¹³ç§»;
+	float væ—‹è½¬;
+	tå‘é‡2 vç¼©æ”¾;
+//æ„é€ å‡½æ•°
+	Cä¸–ç•ŒçŸ©é˜µ2d ();
+	Cä¸–ç•ŒçŸ©é˜µ2d (const tå‘é‡2 &, const float &, const tå‘é‡2 &);
+//å‡½æ•°
+	void fçŸ©é˜µåº”ç”¨ ();
+	Cä¸–ç•ŒçŸ©é˜µ2d& fçŸ©é˜µå¤ä½ ();
+	Cä¸–ç•ŒçŸ©é˜µ2d& fçŸ©é˜µåå‘ ();	//åå‘å¹³ç§»
 };
-//!+Ïà»úÀà
-typedef class CÏà»ú
+//!+ç›¸æœºç±»
+typedef class Cç›¸æœº
 {
 public:
-//±äÁ¿
-	tÏòÁ¿3 vÎ»ÖÃ;
-	tÏòÁ¿3 v¿´Ïò;
-	tÏòÁ¿3 vÉÏ·½;
-//¹¹Ôìº¯Êı
-	CÏà»ú ();
-	CÏà»ú (const tÏòÁ¿3 &, const tÏòÁ¿3 &, const tÏòÁ¿3 &);
-//º¯Êı
-	void fÓ¦ÓÃ ();
-	CÏà»ú& f¸´Î» ();
-	CÏà»ú& fÆ½ÒÆ (const tÏòÁ¿3 &);
-}tÏà»ú;
-//!+Í¶Ó°¾ØÕó
-class CÍ¶Ó°¾ØÕó	//¶¨ÒåÎïÌåÈçºÎÍ¶Ó°µ½ÆÁÄ»ÉÏ
+//å˜é‡
+	tå‘é‡3 vä½ç½®;
+	tå‘é‡3 vçœ‹å‘;
+	tå‘é‡3 vä¸Šæ–¹;
+//æ„é€ å‡½æ•°
+	Cç›¸æœº ();
+	Cç›¸æœº (const tå‘é‡3 &, const tå‘é‡3 &, const tå‘é‡3 &);
+//å‡½æ•°
+	void fåº”ç”¨ ();
+	Cç›¸æœº& få¤ä½ ();
+	Cç›¸æœº& få¹³ç§» (const tå‘é‡3 &);
+}tç›¸æœº;
+//!+æŠ•å½±çŸ©é˜µ
+class CæŠ•å½±çŸ©é˜µ	//å®šä¹‰ç‰©ä½“å¦‚ä½•æŠ•å½±åˆ°å±å¹•ä¸Š
 {
 public:
-	float vÊÓ½Ç;	//»¡¶È,3dÊÓ½Ç·¶Î§
-	float v¿í;		//2d¿í¶È,3dÓÃÓÚ¿í¸ß±È
-	float v¸ß;		//2d¸ß¶È,3dÓÃÓÚ¿í¸ß±È
-	float v½üz;		//½ü²Ã¼ôÃæ
-	float vÔ¶z;		//Ô¶²Ã¼ôÃæ
-	CÍ¶Ó°¾ØÕó ();
-	void fÓ¦ÓÃ2d ();
-	void fÓ¦ÓÃ3d ();
+	float vè§†è§’;	//å¼§åº¦,3dè§†è§’èŒƒå›´
+	float vå®½;		//2då®½åº¦,3dç”¨äºå®½é«˜æ¯”
+	float vé«˜;		//2dé«˜åº¦,3dç”¨äºå®½é«˜æ¯”
+	float vè¿‘z;		//è¿‘è£å‰ªé¢
+	float vè¿œz;		//è¿œè£å‰ªé¢
+	CæŠ•å½±çŸ©é˜µ ();
+	void fåº”ç”¨2d ();
+	void fåº”ç”¨3d ();
 };
-//!+ÊÓ¿Ú
-class CÊÓ¿Ú	//¶¨ÒåÍ¶Ó°µ½ÆÁÄ»ÉÏµÄÇøÓò
-{	//×¢Òâ±ØĞëÊ¹ÓÃÊıÑ§Ö±½Ç×ø±êÏµ
+//!+è§†å£
+class Cè§†å£	//å®šä¹‰æŠ•å½±åˆ°å±å¹•ä¸Šçš„åŒºåŸŸ
+{	//æ³¨æ„å¿…é¡»ä½¿ç”¨æ•°å­¦ç›´è§’åæ ‡ç³»
 public:
-	tÏòÁ¿2 v×óÉÏ;
-	tÏòÁ¿2 vÓÒÏÂ;
-	CÊÓ¿Ú ();
-	void fÓ¦ÓÃ ();
-	void fs (const float &×ó, const float &ÉÏ, const float &ÓÒ, const float &ÏÂ);
+	tå‘é‡2 vå·¦ä¸Š;
+	tå‘é‡2 vå³ä¸‹;
+	Cè§†å£ ();
+	void fåº”ç”¨ ();
+	void fs (const float &å·¦, const float &ä¸Š, const float &å³, const float &ä¸‹);
 };
-//+Í¼ĞÎÀà
-typedef class CÍ¼ĞÎ tÍ¼ĞÎ;
-typedef void (*tÍ¼ĞÎº¯ÊıÖ¸Õë)(tÍ¼ĞÎ &);
-class CÍ¼ĞÎ:public CÊÀ½ç¾ØÕó3d
+//+å›¾å½¢ç±»
+typedef class Cå›¾å½¢ tå›¾å½¢;
+typedef void (*tå›¾å½¢å‡½æ•°æŒ‡é’ˆ)(tå›¾å½¢ &);
+class Cå›¾å½¢:public Cä¸–ç•ŒçŸ©é˜µ3d
 {
 public:
-//³ÉÔ±±äÁ¿
-	tÎÆÀí vÎÆÀí;	//°ó¶¨µÄÎÆÀí
-	t¶¥µã v¶¥µã;	//Ê¹ÓÃµÄ¶¥µã
-	t²ÄÖÊ v²ÄÖÊ;		//Ê¹ÓÃµÄ²ÄÖÊ
-//¹¹Ôìº¯Êı
-	CÍ¼ĞÎ (void);
-//³ÉÔ±º¯Êı
-	void f»æÖÆ×¼±¸ ();
-	void fÏÔÊ¾2d ();
-	void fÏÔÊ¾3d ();
+//æˆå‘˜å˜é‡
+	tçº¹ç† vçº¹ç†;	//ç»‘å®šçš„çº¹ç†
+	té¡¶ç‚¹ vé¡¶ç‚¹;	//ä½¿ç”¨çš„é¡¶ç‚¹
+	tæè´¨ væè´¨;		//ä½¿ç”¨çš„æè´¨
+//æ„é€ å‡½æ•°
+	Cå›¾å½¢ (void);
+//æˆå‘˜å‡½æ•°
+	void fç»˜åˆ¶å‡†å¤‡ ();
+	void fæ˜¾ç¤º2d ();
+	void fæ˜¾ç¤º3d ();
 };
-//+¶¥µãÖÆÔì»ú
-typedef class C¶¥µãÖÆÔì»ú_¾ØĞÎ t¶¥µãÖÆÔì_¾ØĞÎ;
-typedef class C¶¥µãÖÆÔì»ú_¾ØĞÎex t¶¥µãÖÆÔì_¾ØĞÎex;
-class C¶¥µãÖÆÔì»ú_¾ØĞÎ {
+//+é¡¶ç‚¹åˆ¶é€ æœº
+typedef class Cé¡¶ç‚¹åˆ¶é€ æœº_çŸ©å½¢ té¡¶ç‚¹åˆ¶é€ _çŸ©å½¢;
+typedef class Cé¡¶ç‚¹åˆ¶é€ æœº_çŸ©å½¢ex té¡¶ç‚¹åˆ¶é€ _çŸ©å½¢ex;
+class Cé¡¶ç‚¹åˆ¶é€ æœº_çŸ©å½¢ {
 public:
-	tÏòÁ¿2 vÎÆÀí³ß´ç;
-	tÏòÁ¿2 v¾ØĞÎ×ø±ê;
-	tÏòÁ¿2 v¾ØĞÎ°ë³ß´ç;
-	float v¾ØĞÎÀ©ÕÅ;
-	C¶¥µãÖÆÔì»ú_¾ØĞÎ ();
-	inline void fÉèÖÃÎÆÀí³ß´ç (const float &x, const float &y) {
-		vÎÆÀí³ß´ç.x = x;
-		vÎÆÀí³ß´ç.y = y;
+	tå‘é‡2 vçº¹ç†å°ºå¯¸;
+	tå‘é‡2 vçŸ©å½¢åæ ‡;
+	tå‘é‡2 vçŸ©å½¢åŠå°ºå¯¸;
+	float vçŸ©å½¢æ‰©å¼ ;
+	Cé¡¶ç‚¹åˆ¶é€ æœº_çŸ©å½¢ ();
+	inline void fè®¾ç½®çº¹ç†å°ºå¯¸ (const float &x, const float &y) {
+		vçº¹ç†å°ºå¯¸.x = x;
+		vçº¹ç†å°ºå¯¸.y = y;
 	};
-	inline void fÉèÖÃ¾ØĞÎ×ø±ê (const float &x, const float &y) {
-		v¾ØĞÎ×ø±ê.x = x;
-		v¾ØĞÎ×ø±ê.y = y;
+	inline void fè®¾ç½®çŸ©å½¢åæ ‡ (const float &x, const float &y) {
+		vçŸ©å½¢åæ ‡.x = x;
+		vçŸ©å½¢åæ ‡.y = y;
 	};
-	inline void fÉèÖÃ¾ØĞÎ°ë³ß´ç (const float &x, const float &y) {
-		v¾ØĞÎ°ë³ß´ç.x = x;
-		v¾ØĞÎ°ë³ß´ç.y = y;
+	inline void fè®¾ç½®çŸ©å½¢åŠå°ºå¯¸ (const float &x, const float &y) {
+		vçŸ©å½¢åŠå°ºå¯¸.x = x;
+		vçŸ©å½¢åŠå°ºå¯¸.y = y;
 	};
-	void fÉèÖÃ¾ØĞÎ (const float &×ó, const float &ÉÏ, const float &ÓÒ, const float &ÏÂ);
-	bool f´´½¨¶¥µã (t¶¥µã &);
+	void fè®¾ç½®çŸ©å½¢ (const float &å·¦, const float &ä¸Š, const float &å³, const float &ä¸‹);
+	bool fåˆ›å»ºé¡¶ç‚¹ (té¡¶ç‚¹ &);
 };
-class C¶¥µãÖÆÔì»ú_¾ØĞÎex: public C¶¥µãÖÆÔì»ú_¾ØĞÎ
+class Cé¡¶ç‚¹åˆ¶é€ æœº_çŸ©å½¢ex: public Cé¡¶ç‚¹åˆ¶é€ æœº_çŸ©å½¢
 {
 public:
-	tÏòÁ¿2 vÆ½ÒÆ;
-	float vĞı×ª;
-	tÏòÁ¿2 vËõ·Å;
-	C¶¥µãÖÆÔì»ú_¾ØĞÎex ();
-	inline void fÉèÖÃÆ½ÒÆ (const float &x, const float &y)
+	tå‘é‡2 vå¹³ç§»;
+	float væ—‹è½¬;
+	tå‘é‡2 vç¼©æ”¾;
+	Cé¡¶ç‚¹åˆ¶é€ æœº_çŸ©å½¢ex ();
+	inline void fè®¾ç½®å¹³ç§» (const float &x, const float &y)
 	{
-		vÆ½ÒÆ.x = x;
-		vÆ½ÒÆ.y = y;
+		vå¹³ç§».x = x;
+		vå¹³ç§».y = y;
 	};
-	inline void fÉèÖÃĞı×ª (const float &»¡¶È)
+	inline void fè®¾ç½®æ—‹è½¬ (const float &å¼§åº¦)
 	{
-		vĞı×ª = »¡¶È;
+		væ—‹è½¬ = å¼§åº¦;
 	};
-	inline void fÉèÖÃËõ·Å (const float &x, const float &y)
+	inline void fè®¾ç½®ç¼©æ”¾ (const float &x, const float &y)
 	{
-		vËõ·Å.x = x;
-		vËõ·Å.y = y;
+		vç¼©æ”¾.x = x;
+		vç¼©æ”¾.y = y;
 	};
-	inline void fexÊôĞÔÇå¿Õ ()
+	inline void fexå±æ€§æ¸…ç©º ()
 	{
-		vÆ½ÒÆ.x = 0;
-		vÆ½ÒÆ.y = 0;
-		vĞı×ª = 0;
-		vËõ·Å.x = 0;
-		vËõ·Å.y = 0;
+		vå¹³ç§».x = 0;
+		vå¹³ç§».y = 0;
+		væ—‹è½¬ = 0;
+		vç¼©æ”¾.x = 0;
+		vç¼©æ”¾.y = 0;
 	};
-	void fÉèÖÃÏÔÊ¾¾ØĞÎ (const float &×ó, const float &ÉÏ, const float &ÓÒ, const float &ÏÂ);
-	bool f´´½¨¶¥µãex (t¶¥µã &);
+	void fè®¾ç½®æ˜¾ç¤ºçŸ©å½¢ (const float &å·¦, const float &ä¸Š, const float &å³, const float &ä¸‹);
+	bool fåˆ›å»ºé¡¶ç‚¹ex (té¡¶ç‚¹ &);
 };
-class C¶¥µãÖÆÔì»ú_µã
+class Cé¡¶ç‚¹åˆ¶é€ æœº_ç‚¹
 {
 public:
-	tÏòÁ¿3 v×ø±ê;
-	tÏòÁ¿2 vÎÆÀíÓ³Éä;
-	tÏòÁ¿2 vÎÆÀí³ß´ç;
-	C¶¥µãÖÆÔì»ú_µã ();
-	~C¶¥µãÖÆÔì»ú_µã ();
+	tå‘é‡3 våæ ‡;
+	tå‘é‡2 vçº¹ç†æ˜ å°„;
+	tå‘é‡2 vçº¹ç†å°ºå¯¸;
+	Cé¡¶ç‚¹åˆ¶é€ æœº_ç‚¹ ();
+	~Cé¡¶ç‚¹åˆ¶é€ æœº_ç‚¹ ();
 };
-//+¶¥µãËø¶¨»ú
-class C¶¥µãËø¶¨»ú
+//+é¡¶ç‚¹é”å®šæœº
+class Cé¡¶ç‚¹é”å®šæœº
 {
-	t¶¥µã vËø¶¨¶¥µã;
-	void **vĞŞ¸Ä¶¥µã;
+	té¡¶ç‚¹ vé”å®šé¡¶ç‚¹;
+	void **vä¿®æ”¹é¡¶ç‚¹;
 public:
-	C¶¥µãËø¶¨»ú ();
-	~C¶¥µãËø¶¨»ú ();
-	bool fËø¶¨_ (const t¶¥µã &, void **);
-	template<class t> inline bool fËø¶¨ (const t¶¥µã &pËø¶¨¶¥µã, t &pĞŞ¸Ä¶¥µã)
+	Cé¡¶ç‚¹é”å®šæœº ();
+	~Cé¡¶ç‚¹é”å®šæœº ();
+	bool fé”å®š_ (const té¡¶ç‚¹ &, void **);
+	template<class t> inline bool fé”å®š (const té¡¶ç‚¹ &pé”å®šé¡¶ç‚¹, t &pä¿®æ”¹é¡¶ç‚¹)
 	{
-		return fËø¶¨_ (pËø¶¨¶¥µã, (void**)&pĞŞ¸Ä¶¥µã);
+		return fé”å®š_ (pé”å®šé¡¶ç‚¹, (void**)&pä¿®æ”¹é¡¶ç‚¹);
 	};
-	bool f½âËø ();
+	bool fè§£é” ();
 };
-//+ÎÄ±¾ÖÆÔì»ú
-typedef class CÎÄ±¾ÖÆÔì»ú tÎÄ±¾ÖÆÔì»ú;
-class CÎÄ±¾ÖÆÔì»ú
+//+æ–‡æœ¬åˆ¶é€ æœº
+typedef class Cæ–‡æœ¬åˆ¶é€ æœº tæ–‡æœ¬åˆ¶é€ æœº;
+class Cæ–‡æœ¬åˆ¶é€ æœº
 {
 public:
-	LONG ¸ß;	//µ¥¸öÎÄ×ÖµÄ¸ß¶È
-	LONG ¿í;	//µ¥¸öÎÄ×ÖµÄ¿í¶È
-	LONG ´Ö;	//0-1000 ÊıÖµÔ½´óÔ½´Ö
-	FLOAT ºñ;	//ÍùZÖáÑÓÉìµÄºñ¶È
-	BYTE Ğ±Ìå;		//ÊÇ·ñĞ±Ìå
-	BYTE ÏÂ»®Ïß;	//ÊÇ·ñÓĞÏÂ»®Ïß
-	BYTE É¾³ıÏß;	//ÊÇ·ñÓĞÉ¾³ıÏß
-	WCHAR ×ÖÌå[32];	//×ÖÌåµÄÃû³Æ
-	CÎÄ±¾ÖÆÔì»ú ();
-	inline void fÉèÖÃ×ÖÌå (wchar_t* _×ÖÌå)
+	LONG é«˜;	//å•ä¸ªæ–‡å­—çš„é«˜åº¦
+	LONG å®½;	//å•ä¸ªæ–‡å­—çš„å®½åº¦
+	LONG ç²—;	//0-1000 æ•°å€¼è¶Šå¤§è¶Šç²—
+	FLOAT åš;	//å¾€Zè½´å»¶ä¼¸çš„åšåº¦
+	BYTE æ–œä½“;		//æ˜¯å¦æ–œä½“
+	BYTE ä¸‹åˆ’çº¿;	//æ˜¯å¦æœ‰ä¸‹åˆ’çº¿
+	BYTE åˆ é™¤çº¿;	//æ˜¯å¦æœ‰åˆ é™¤çº¿
+	WCHAR å­—ä½“[32];	//å­—ä½“çš„åç§°
+	Cæ–‡æœ¬åˆ¶é€ æœº ();
+	inline void fè®¾ç½®å­—ä½“ (wchar_t* _å­—ä½“)
 	{
-		wcscpy_s (×ÖÌå, _×ÖÌå);
+		wcscpy_s (å­—ä½“, _å­—ä½“);
 	};
-	inline void fÉèÖÃ´ÖÌå (const bool &´ÖÌå)
+	inline void fè®¾ç½®ç²—ä½“ (const bool &ç²—ä½“)
 	{
-		´Ö = ´ÖÌå ? FW_BOLD : FW_NORMAL;
+		ç²— = ç²—ä½“ ? FW_BOLD : FW_NORMAL;
 	};
-	bool f´´½¨ÎÄ±¾ (wchar_t* ÎÄ±¾, tÍø¸ñÖ¸Õë&);
+	bool fåˆ›å»ºæ–‡æœ¬ (wchar_t* æ–‡æœ¬, tç½‘æ ¼æŒ‡é’ˆ&);
 };
 //--------------------------------------------------------------------------------
-//!++direct3dÃ¶¾ÙºÍ³£Á¿
+//!++direct3dæšä¸¾å’Œå¸¸é‡
 //--------------------------------------------------------------------------------
-//D3DPRIMITIVETYPEÃ¶¾Ù
-enum EÍ¼ÔªÀàĞÍ
+//D3DPRIMITIVETYPEæšä¸¾
+enum Eå›¾å…ƒç±»å‹
 {
-	cÍ¼ÔªÀàĞÍ_ÁĞ±íµã = D3DPT_POINTLIST,
-	cÍ¼ÔªÀàĞÍ_ÁĞ±íÏß¶Î = D3DPT_LINELIST,
-	cÍ¼ÔªÀàĞÍ_Á¬ĞøÏß¶Î = D3DPT_LINESTRIP,
-	cÍ¼ÔªÀàĞÍ_ÁĞ±íÈı½ÇĞÎ = D3DPT_TRIANGLELIST,
-	cÍ¼ÔªÀàĞÍ_Á¬ĞøÈı½ÇĞÎ = D3DPT_TRIANGLESTRIP,
-	cÍ¼ÔªÀàĞÍ_ÉÈĞÎÈı½ÇĞÎ = D3DPT_TRIANGLEFAN
+	cå›¾å…ƒç±»å‹_åˆ—è¡¨ç‚¹ = D3DPT_POINTLIST,
+	cå›¾å…ƒç±»å‹_åˆ—è¡¨çº¿æ®µ = D3DPT_LINELIST,
+	cå›¾å…ƒç±»å‹_è¿ç»­çº¿æ®µ = D3DPT_LINESTRIP,
+	cå›¾å…ƒç±»å‹_åˆ—è¡¨ä¸‰è§’å½¢ = D3DPT_TRIANGLELIST,
+	cå›¾å…ƒç±»å‹_è¿ç»­ä¸‰è§’å½¢ = D3DPT_TRIANGLESTRIP,
+	cå›¾å…ƒç±»å‹_æ‰‡å½¢ä¸‰è§’å½¢ = D3DPT_TRIANGLEFAN
 };
-typedef _D3DPRIMITIVETYPE tÍ¼ÔªÀàĞÍ;
-//D3DTEXTURESTAGESTATETYPEÃ¶¾Ù
-enum EÎÆÀíÍ¼²ã×´Ì¬ÀàĞÍ
+typedef _D3DPRIMITIVETYPE tå›¾å…ƒç±»å‹;
+//D3DTEXTURESTAGESTATETYPEæšä¸¾
+enum Eçº¹ç†å›¾å±‚çŠ¶æ€ç±»å‹
 {
-	cÎÆÀíÍ¼²ã×´Ì¬ÀàĞÍ_ÑÕÉ«²Ù×÷ = D3DTSS_COLOROP,
-	cÎÆÀíÍ¼²ã×´Ì¬ÀàĞÍ_ÑÕÉ«²ÎÊı1 = D3DTSS_COLORARG1,
-	cÎÆÀíÍ¼²ã×´Ì¬ÀàĞÍ_ÑÕÉ«²ÎÊı2 = D3DTSS_COLORARG2,
-	cÎÆÀíÍ¼²ã×´Ì¬ÀàĞÍ_°¢¶û·¨²Ù×÷ = D3DTSS_ALPHAOP,
-	cÎÆÀíÍ¼²ã×´Ì¬ÀàĞÍ_°¢¶û·¨²ÎÊı1 = D3DTSS_ALPHAARG1,
-	cÎÆÀíÍ¼²ã×´Ì¬ÀàĞÍ_°¢¶û·¨²ÎÊı2 = D3DTSS_ALPHAARG2
+	cçº¹ç†å›¾å±‚çŠ¶æ€ç±»å‹_é¢œè‰²æ“ä½œ = D3DTSS_COLOROP,
+	cçº¹ç†å›¾å±‚çŠ¶æ€ç±»å‹_é¢œè‰²å‚æ•°1 = D3DTSS_COLORARG1,
+	cçº¹ç†å›¾å±‚çŠ¶æ€ç±»å‹_é¢œè‰²å‚æ•°2 = D3DTSS_COLORARG2,
+	cçº¹ç†å›¾å±‚çŠ¶æ€ç±»å‹_é˜¿å°”æ³•æ“ä½œ = D3DTSS_ALPHAOP,
+	cçº¹ç†å›¾å±‚çŠ¶æ€ç±»å‹_é˜¿å°”æ³•å‚æ•°1 = D3DTSS_ALPHAARG1,
+	cçº¹ç†å›¾å±‚çŠ¶æ€ç±»å‹_é˜¿å°”æ³•å‚æ•°2 = D3DTSS_ALPHAARG2
 };
-typedef _D3DTEXTURESTAGESTATETYPE tÎÆÀíÍ¼²ã×´Ì¬ÀàĞÍ;
-//D3DTEXTUREOPÃ¶¾Ù
-enum EÎÆÀí²Ù×÷
+typedef _D3DTEXTURESTAGESTATETYPE tçº¹ç†å›¾å±‚çŠ¶æ€ç±»å‹;
+//D3DTEXTUREOPæšä¸¾
+enum Eçº¹ç†æ“ä½œ
 {
-	cÎÆÀí²Ù×÷_½ûÖ¹ = D3DTOP_DISABLE,
-	cÎÆÀí²Ù×÷_Ñ¡Ôñ1 = D3DTOP_SELECTARG1,
-	cÎÆÀí²Ù×÷_Ñ¡Ôñ2 = D3DTOP_SELECTARG2,
-	cÎÆÀí²Ù×÷_Ïà³Ë = D3DTOP_MODULATE
+	cçº¹ç†æ“ä½œ_ç¦æ­¢ = D3DTOP_DISABLE,
+	cçº¹ç†æ“ä½œ_é€‰æ‹©1 = D3DTOP_SELECTARG1,
+	cçº¹ç†æ“ä½œ_é€‰æ‹©2 = D3DTOP_SELECTARG2,
+	cçº¹ç†æ“ä½œ_ç›¸ä¹˜ = D3DTOP_MODULATE
 };
-typedef _D3DTEXTUREOP tÎÆÀí²Ù×÷;
-//D3DLIGHTTYPE Ã¶¾Ù
-enum E¹âÀàĞÍ
+typedef _D3DTEXTUREOP tçº¹ç†æ“ä½œ;
+//D3DLIGHTTYPE æšä¸¾
+enum Eå…‰ç±»å‹
 {
-	c¹âÀàĞÍ_µã¹âÔ´ = D3DLIGHT_POINT,
-	c¹âÀàĞÍ_¾Û¹âµÆ = D3DLIGHT_SPOT,
-	c¹âÀàĞÍ_Æ½ĞĞ¹â = D3DLIGHT_DIRECTIONAL
+	cå…‰ç±»å‹_ç‚¹å…‰æº = D3DLIGHT_POINT,
+	cå…‰ç±»å‹_èšå…‰ç¯ = D3DLIGHT_SPOT,
+	cå…‰ç±»å‹_å¹³è¡Œå…‰ = D3DLIGHT_DIRECTIONAL
 };
-typedef _D3DLIGHTTYPE t¹âÀàĞÍ;
-//D3DRENDERSTATETYPEÃ¶¾Ù
-enum EäÖÈ¾×´Ì¬
+typedef _D3DLIGHTTYPE tå…‰ç±»å‹;
+//D3DRENDERSTATETYPEæšä¸¾
+enum Eæ¸²æŸ“çŠ¶æ€
 {
-	cäÖÈ¾×´Ì¬_Ô´»ìºÏ = D3DRS_SRCBLEND,
-	cäÖÈ¾×´Ì¬_Ä¿±ê»ìºÏ = D3DRS_DESTBLEND
+	cæ¸²æŸ“çŠ¶æ€_æºæ··åˆ = D3DRS_SRCBLEND,
+	cæ¸²æŸ“çŠ¶æ€_ç›®æ ‡æ··åˆ = D3DRS_DESTBLEND
 };
-typedef _D3DRENDERSTATETYPE täÖÈ¾×´Ì¬;
-//D3DBLENDÃ¶¾Ù
-enum E»ìºÏ
+typedef _D3DRENDERSTATETYPE tæ¸²æŸ“çŠ¶æ€;
+//D3DBLENDæšä¸¾
+enum Eæ··åˆ
 {
-	c»ìºÏ_Ô´ÑÕÉ« = D3DBLEND_SRCCOLOR,
-	c»ìºÏ_Ô´ÑÕÉ«·´ = D3DBLEND_INVSRCCOLOR,
-	c»ìºÏ_Ô´°¢¶û·¨ = D3DBLEND_SRCALPHA,
-	c»ìºÏ_Ô´°¢¶û·¨·´ = D3DBLEND_INVSRCALPHA,
-	c»ìºÏ_Ä¿±ê°¢¶û·¨ = D3DBLEND_DESTALPHA,
-	c»ìºÏ_Ä¿±ê°¢¶û·¨·´ = D3DBLEND_INVDESTALPHA,
-	c»ìºÏ_Ä¿±êÑÕÉ« = D3DBLEND_DESTCOLOR,
-	c»ìºÏ_Ä¿±êÑÕÉ«·´ = D3DBLEND_INVDESTCOLOR
+	cæ··åˆ_æºé¢œè‰² = D3DBLEND_SRCCOLOR,
+	cæ··åˆ_æºé¢œè‰²å = D3DBLEND_INVSRCCOLOR,
+	cæ··åˆ_æºé˜¿å°”æ³• = D3DBLEND_SRCALPHA,
+	cæ··åˆ_æºé˜¿å°”æ³•å = D3DBLEND_INVSRCALPHA,
+	cæ··åˆ_ç›®æ ‡é˜¿å°”æ³• = D3DBLEND_DESTALPHA,
+	cæ··åˆ_ç›®æ ‡é˜¿å°”æ³•å = D3DBLEND_INVDESTALPHA,
+	cæ··åˆ_ç›®æ ‡é¢œè‰² = D3DBLEND_DESTCOLOR,
+	cæ··åˆ_ç›®æ ‡é¢œè‰²å = D3DBLEND_INVDESTCOLOR
 };
-typedef _D3DBLEND t»ìºÏ;
-enum E»ìºÏÄ£Ê½
+typedef _D3DBLEND tæ··åˆ;
+enum Eæ··åˆæ¨¡å¼
 {
-	e»ìºÏ_Õı³£,
-	e»ìºÏ_µş¼Ó
+	eæ··åˆ_æ­£å¸¸,
+	eæ··åˆ_å åŠ 
 };
 //--------------------------------------------------------------------------------
-//È«¾Ö±äÁ¿ÉùÃ÷
+//å…¨å±€å˜é‡å£°æ˜
 //--------------------------------------------------------------------------------
-extern t½Ó¿ÚÖ¸Õë vÍ¼ĞÎ½Ó¿Ú;
-extern tÉè±¸Ö¸Õë vÍ¼ĞÎÉè±¸;
-extern const tÑÕÉ« c°×É«;
-extern const tÑÕÉ« cºìÉ«;
-extern const tÑÕÉ« cÂÌÉ«;
-extern const tÑÕÉ« cÀ¶É«;
-extern const tÑÕÉ« cÎŞÉ«;
-extern const t²ÄÖÊ c°×É«²ÄÖÊ;
-extern const t²ÄÖÊ cĞ¡Í¸Ã÷°×É«²ÄÖÊ;
-extern const t²ÄÖÊ c°ëÍ¸Ã÷°×É«²ÄÖÊ;
-extern const t²ÄÖÊ c´óÍ¸Ã÷°×É«²ÄÖÊ;
-extern const t²ÄÖÊ cÍ¸Ã÷²ÄÖÊ;
-extern const t²ÄÖÊ cºìÉ«²ÄÖÊ;
-extern const t²ÄÖÊ cÂÌÉ«²ÄÖÊ;
-extern const t²ÄÖÊ cÀ¶É«²ÄÖÊ;
-extern DWORD fvfÈıÎ¬¶¥µã;
-extern t¹â vÆÁÄ»¹â;
-extern tÏà»ú vÆÁÄ»Ïà»ú;	//¶Ô×¼Õû¸öÆÁÄ»
-extern t²ÄÖÊ vÁÙÊ±²ÄÖÊ;
-extern EÍ¼ÔªÀàĞÍ v»­³öÄ£Ê½;
-extern CÍ¶Ó°¾ØÕó vÄ¬ÈÏÍ¶Ó°;
-extern tÏòÁ¿2 vÆÁÄ»³ß´ç;
-extern CÊÓ¿Ú vÆÁÄ»ÊÓ¿Ú;
-extern ÊÓ´°::C¹Ø¼ü¶Î v¹Ø¼ü¶Î;
-extern t²ÄÖÊ v2d²ÄÖÊ;
-//¸¨ÖúÍ¼ĞÎ
-extern t¶¥µã v¾ØĞÎ;
+extern tæ¥å£æŒ‡é’ˆ vå›¾å½¢æ¥å£;
+extern tè®¾å¤‡æŒ‡é’ˆ vå›¾å½¢è®¾å¤‡;
+extern const té¢œè‰² cç™½è‰²;
+extern const té¢œè‰² cçº¢è‰²;
+extern const té¢œè‰² cç»¿è‰²;
+extern const té¢œè‰² cè“è‰²;
+extern const té¢œè‰² cæ— è‰²;
+extern const tæè´¨ cç™½è‰²æè´¨;
+extern const tæè´¨ cå°é€æ˜ç™½è‰²æè´¨;
+extern const tæè´¨ cåŠé€æ˜ç™½è‰²æè´¨;
+extern const tæè´¨ cå¤§é€æ˜ç™½è‰²æè´¨;
+extern const tæè´¨ cé€æ˜æè´¨;
+extern const tæè´¨ cçº¢è‰²æè´¨;
+extern const tæè´¨ cç»¿è‰²æè´¨;
+extern const tæè´¨ cè“è‰²æè´¨;
+extern DWORD fvfä¸‰ç»´é¡¶ç‚¹;
+extern tå…‰ vå±å¹•å…‰;
+extern tç›¸æœº vå±å¹•ç›¸æœº;	//å¯¹å‡†æ•´ä¸ªå±å¹•
+extern tæè´¨ vä¸´æ—¶æè´¨;
+extern Eå›¾å…ƒç±»å‹ vç”»å‡ºæ¨¡å¼;
+extern CæŠ•å½±çŸ©é˜µ vé»˜è®¤æŠ•å½±;
+extern tå‘é‡2 vå±å¹•å°ºå¯¸;
+extern Cè§†å£ vå±å¹•è§†å£;
+extern è§†çª—::Cå…³é”®æ®µ vå…³é”®æ®µ;
+extern tæè´¨ v2dæè´¨;
+//è¾…åŠ©å›¾å½¢
+extern té¡¶ç‚¹ vçŸ©å½¢;
 //--------------------------------------------------------------------------------
-//º¯Êı
+//å‡½æ•°
 //--------------------------------------------------------------------------------
-//Éè±¸
-bool f´´½¨Éè±¸ (const HWND &´°¿Ú¾ä±ú);
-void f¿ìËÙ³õÊ¼»¯ ();
-void fÍ¼ĞÎ¸´Î» ();
-void fÏú»ÙÉè±¸ ();
-void fÔØÈë¸½¼ÓÍ¼ĞÎ ();
-//¸¨Öúº¯Êı
-void f»­_¾ØĞÎ (const t¾ØĞÎ &);
-//ÆäËû
-inline tÏòÁ¿2 fn±¶Ëõ·Å2 (const float &pËõ·Å±¶Êı)
+//è®¾å¤‡
+bool fåˆ›å»ºè®¾å¤‡ (const HWND &çª—å£å¥æŸ„);
+void få¿«é€Ÿåˆå§‹åŒ– ();
+void få›¾å½¢å¤ä½ ();
+void fé”€æ¯è®¾å¤‡ ();
+void fè½½å…¥é™„åŠ å›¾å½¢ ();
+//è¾…åŠ©å‡½æ•°
+void fç”»_çŸ©å½¢ (const tçŸ©å½¢ &);
+//å…¶ä»–
+inline tå‘é‡2 fnå€ç¼©æ”¾2 (const float &pç¼©æ”¾å€æ•°)
 {
-	return tÏòÁ¿2 (pËõ·Å±¶Êı, pËõ·Å±¶Êı);
+	return tå‘é‡2 (pç¼©æ”¾å€æ•°, pç¼©æ”¾å€æ•°);
 };
-inline tÏòÁ¿3 fn±¶Ëõ·Å3 (const float &pËõ·Å±¶Êı)
+inline tå‘é‡3 fnå€ç¼©æ”¾3 (const float &pç¼©æ”¾å€æ•°)
 {
-	return tÏòÁ¿3 (pËõ·Å±¶Êı, pËõ·Å±¶Êı, pËõ·Å±¶Êı);
+	return tå‘é‡3 (pç¼©æ”¾å€æ•°, pç¼©æ”¾å€æ•°, pç¼©æ”¾å€æ•°);
 };
-ÊÓ´°::t¾ØĞÎ fµ½´°¿Ú×ø±ê (const ÊÓ´°::t¾ØĞÎ &);
-ÊÓ´°::t¾ØĞÎ f¾ØĞÎ (const tÏòÁ¿2 &ÖĞĞÄ×ø±ê, const tÏòÁ¿2 &°ë³ß´ç);
-inline ÊÓ´°::t¾ØĞÎ f¾ØĞÎ (const t¾ØĞÎ &p¾ØĞÎ)
+è§†çª—::tçŸ©å½¢ fåˆ°çª—å£åæ ‡ (const è§†çª—::tçŸ©å½¢ &);
+è§†çª—::tçŸ©å½¢ fçŸ©å½¢ (const tå‘é‡2 &ä¸­å¿ƒåæ ‡, const tå‘é‡2 &åŠå°ºå¯¸);
+inline è§†çª—::tçŸ©å½¢ fçŸ©å½¢ (const tçŸ©å½¢ &pçŸ©å½¢)
 {
-	return f¾ØĞÎ (p¾ØĞÎ.v×ø±ê, p¾ØĞÎ.v°ë³ß´ç);
+	return fçŸ©å½¢ (pçŸ©å½¢.våæ ‡, pçŸ©å½¢.våŠå°ºå¯¸);
 };
-t²ÄÖÊ f²ÄÖÊÑÕÉ«½¥±ä (const t²ÄÖÊ &, const tÑÕÉ« &, const float &);
-t¾ØĞÎ f¾ØĞÎĞÎ×´½¥±ä (const t¾ØĞÎ &, const t¾ØĞÎ &, const float & = 0.4f, const float & = 999.f);
-//Éè±¸×´Ì¬
-inline HRESULT fÉèÖÃäÖÈ¾×´Ì¬(const _D3DRENDERSTATETYPE &×´Ì¬, const DWORD &Öµ)
+tæè´¨ fæè´¨é¢œè‰²æ¸å˜ (const tæè´¨ &, const té¢œè‰² &, const float &);
+tçŸ©å½¢ fçŸ©å½¢å½¢çŠ¶æ¸å˜ (const tçŸ©å½¢ &, const tçŸ©å½¢ &, const float & = 0.4f, const float & = 999.f);
+//è®¾å¤‡çŠ¶æ€
+inline HRESULT fè®¾ç½®æ¸²æŸ“çŠ¶æ€(const _D3DRENDERSTATETYPE &çŠ¶æ€, const DWORD &å€¼)
 {
-	return vÍ¼ĞÎÉè±¸->SetRenderState(×´Ì¬,Öµ);
+	return vå›¾å½¢è®¾å¤‡->SetRenderState(çŠ¶æ€,å€¼);
 };
-//»æÖÆ
-inline void fÉèÖÃ»­³öÄ£Ê½ (const EÍ¼ÔªÀàĞÍ &p»­³öÄ£Ê½)
+//ç»˜åˆ¶
+inline void fè®¾ç½®ç”»å‡ºæ¨¡å¼ (const Eå›¾å…ƒç±»å‹ &pç”»å‡ºæ¨¡å¼)
 {
-	v»­³öÄ£Ê½ = p»­³öÄ£Ê½;
+	vç”»å‡ºæ¨¡å¼ = pç”»å‡ºæ¨¡å¼;
 };
-inline void f»æÖÆÍ¼Ôª (const unsigned int &p¶¥µãÆğµã, const unsigned int &pÍ¼ĞÎÊıÁ¿)
+inline void fç»˜åˆ¶å›¾å…ƒ (const unsigned int &pé¡¶ç‚¹èµ·ç‚¹, const unsigned int &på›¾å½¢æ•°é‡)
 {
-	vÍ¼ĞÎÉè±¸->DrawPrimitive((tÍ¼ÔªÀàĞÍ)(int)v»­³öÄ£Ê½, p¶¥µãÆğµã, pÍ¼ĞÎÊıÁ¿);
+	vå›¾å½¢è®¾å¤‡->DrawPrimitive((tå›¾å…ƒç±»å‹)(int)vç”»å‡ºæ¨¡å¼, pé¡¶ç‚¹èµ·ç‚¹, på›¾å½¢æ•°é‡);
 };
-inline void f»æÖÆÍ¼Ôª (const unsigned int &pÍ¼ĞÎÊıÁ¿)
+inline void fç»˜åˆ¶å›¾å…ƒ (const unsigned int &på›¾å½¢æ•°é‡)
 {
-	vÍ¼ĞÎÉè±¸->DrawPrimitive((tÍ¼ÔªÀàĞÍ)(int)v»­³öÄ£Ê½, 0, pÍ¼ĞÎÊıÁ¿);
+	vå›¾å½¢è®¾å¤‡->DrawPrimitive((tå›¾å…ƒç±»å‹)(int)vç”»å‡ºæ¨¡å¼, 0, på›¾å½¢æ•°é‡);
 };
-inline void f»æÖÆÍ¼Ôª ()
+inline void fç»˜åˆ¶å›¾å…ƒ ()
 {
-	vÍ¼ĞÎÉè±¸->DrawPrimitive((tÍ¼ÔªÀàĞÍ)(int)v»­³öÄ£Ê½, 0, 2);
+	vå›¾å½¢è®¾å¤‡->DrawPrimitive((tå›¾å…ƒç±»å‹)(int)vç”»å‡ºæ¨¡å¼, 0, 2);
 };
-//¶¥µã
-HRESULT f´´½¨¶¥µã»º³å (t¶¥µã *½ÓÊÜ»º³åÇøµÄ¶¥µãÖ¸Õë, const int &¶¥µãÊıÁ¿);	//Ê¹ÓÃÇ°ĞèÒªÉèÖÃºÃ¶¥µã´óĞ¡ºÍfvf¸ñÊ½
-inline void fÉèÖÃÁ÷Ô´(const t¶¥µã ¶¥µã)
+//é¡¶ç‚¹
+HRESULT fåˆ›å»ºé¡¶ç‚¹ç¼“å†² (té¡¶ç‚¹ *æ¥å—ç¼“å†²åŒºçš„é¡¶ç‚¹æŒ‡é’ˆ, const int &é¡¶ç‚¹æ•°é‡);	//ä½¿ç”¨å‰éœ€è¦è®¾ç½®å¥½é¡¶ç‚¹å¤§å°å’Œfvfæ ¼å¼
+inline void fè®¾ç½®æµæº(const té¡¶ç‚¹ é¡¶ç‚¹)
 {
-	vÍ¼ĞÎÉè±¸->SetStreamSource (0, ¶¥µã, 0, sizeof(SÈıÎ¬¶¥µã));
+	vå›¾å½¢è®¾å¤‡->SetStreamSource (0, é¡¶ç‚¹, 0, sizeof(Sä¸‰ç»´é¡¶ç‚¹));
 };
-inline void fÉèÖÃ¶¥µã(const t¶¥µã ¶¥µã)
+inline void fè®¾ç½®é¡¶ç‚¹(const té¡¶ç‚¹ é¡¶ç‚¹)
 {
-	vÍ¼ĞÎÉè±¸->SetStreamSource (0, ¶¥µã, 0, sizeof(SÈıÎ¬¶¥µã));
+	vå›¾å½¢è®¾å¤‡->SetStreamSource (0, é¡¶ç‚¹, 0, sizeof(Sä¸‰ç»´é¡¶ç‚¹));
 };
-//¹âºÍ²ÄÖÊ
-#define fÉèÖÃ¹â(Ë÷Òı,¹â) vÍ¼ĞÎÉè±¸->SetLight(Ë÷Òı,¹â)
-#define f¹â¿ª¹Ø(Ë÷Òı,¿ª¹Ø) vÍ¼ĞÎÉè±¸->LightEnable(Ë÷Òı,¿ª¹Ø)
-inline void fÉèÖÃ²ÄÖÊ(const t²ÄÖÊ &p²ÄÖÊ)
+//å…‰å’Œæè´¨
+#define fè®¾ç½®å…‰(ç´¢å¼•,å…‰) vå›¾å½¢è®¾å¤‡->SetLight(ç´¢å¼•,å…‰)
+#define få…‰å¼€å…³(ç´¢å¼•,å¼€å…³) vå›¾å½¢è®¾å¤‡->LightEnable(ç´¢å¼•,å¼€å…³)
+inline void fè®¾ç½®æè´¨(const tæè´¨ &pæè´¨)
 {
-	vÍ¼ĞÎÉè±¸->SetMaterial(&p²ÄÖÊ);
+	vå›¾å½¢è®¾å¤‡->SetMaterial(&pæè´¨);
 };
-inline void fÉèÖÃÑÕÉ«(const tÑÕÉ« &pÑÕÉ«) {
-	v2d²ÄÖÊ.Diffuse.a = pÑÕÉ«.a;
-	v2d²ÄÖÊ.Emissive.r = pÑÕÉ«.r;
-	v2d²ÄÖÊ.Emissive.g = pÑÕÉ«.g;
-	v2d²ÄÖÊ.Emissive.b = pÑÕÉ«.b;
-	vÍ¼ĞÎÉè±¸->SetMaterial(&v2d²ÄÖÊ);
+inline void fè®¾ç½®é¢œè‰²(const té¢œè‰² &pé¢œè‰²) {
+	v2dæè´¨.Diffuse.a = pé¢œè‰².a;
+	v2dæè´¨.Emissive.r = pé¢œè‰².r;
+	v2dæè´¨.Emissive.g = pé¢œè‰².g;
+	v2dæè´¨.Emissive.b = pé¢œè‰².b;
+	vå›¾å½¢è®¾å¤‡->SetMaterial(&v2dæè´¨);
 };
-inline void fÉèÖÃÍ¸Ã÷¶È(const float &a) {
-	fÉèÖÃÑÕÉ«(tÑÕÉ«(1,1,1,a));
+inline void fè®¾ç½®é€æ˜åº¦(const float &a) {
+	fè®¾ç½®é¢œè‰²(té¢œè‰²(1,1,1,a));
 };
-t²ÄÖÊ fÌî³ä²ÄÖÊ (const tÑÕÉ« &ÂşÉäÑÕÉ«, const tÑÕÉ« &»·¾³ÑÕÉ«, const tÑÕÉ« &¾µÃæÑÕÉ«, const tÑÕÉ« &·ÅÉäÑÕÉ«, const float &¾µÃæ¸ß¹â);
-t²ÄÖÊ fÌî³ä²ÄÖÊ (const tÑÕÉ« &ÑÕÉ«, const bool &»·¾³Ä£Ê½ = false);
-//ÎÆÀí
-inline bool fÌí¼ÓÎÆÀí (tÎÆÀí &½ÓÊÜÎÆÀíµØÖ·µÄÖ¸Õë, const wchar_t *ÎÆÀíµÄÎÄ¼şÃû)
+tæè´¨ få¡«å……æè´¨ (const té¢œè‰² &æ¼«å°„é¢œè‰², const té¢œè‰² &ç¯å¢ƒé¢œè‰², const té¢œè‰² &é•œé¢é¢œè‰², const té¢œè‰² &æ”¾å°„é¢œè‰², const float &é•œé¢é«˜å…‰);
+tæè´¨ få¡«å……æè´¨ (const té¢œè‰² &é¢œè‰², const bool &ç¯å¢ƒæ¨¡å¼ = false);
+//çº¹ç†
+inline bool fæ·»åŠ çº¹ç† (tçº¹ç† &æ¥å—çº¹ç†åœ°å€çš„æŒ‡é’ˆ, const wchar_t *çº¹ç†çš„æ–‡ä»¶å)
 {
-	if (FAILED(D3DXCreateTextureFromFile (vÍ¼ĞÎÉè±¸, ÎÆÀíµÄÎÄ¼şÃû, &½ÓÊÜÎÆÀíµØÖ·µÄÖ¸Õë)))
+	if (FAILED(D3DXCreateTextureFromFile (vå›¾å½¢è®¾å¤‡, çº¹ç†çš„æ–‡ä»¶å, &æ¥å—çº¹ç†åœ°å€çš„æŒ‡é’ˆ)))
 		throw;
 	return true;
 };
-bool fÉèÖÃÎÆÀí (tÎÆÀí &ĞèÒª»­³öµÄÎÆÀí);
-inline void fÉèÖÃÎÆÀíÍ¼²ã×´Ì¬ (const tÎÆÀíÍ¼²ã×´Ì¬ÀàĞÍ &p²ÎÊı, const int &pÖµ)
+bool fè®¾ç½®çº¹ç† (tçº¹ç† &éœ€è¦ç”»å‡ºçš„çº¹ç†);
+inline void fè®¾ç½®çº¹ç†å›¾å±‚çŠ¶æ€ (const tçº¹ç†å›¾å±‚çŠ¶æ€ç±»å‹ &på‚æ•°, const int &på€¼)
 {
-	vÍ¼ĞÎÉè±¸->SetTextureStageState (0, p²ÎÊı, pÖµ);
+	vå›¾å½¢è®¾å¤‡->SetTextureStageState (0, på‚æ•°, på€¼);
 };
-void fÎÆÀí¿ª¹Ø (const bool &¿ª¹Ø);
-inline void fÎÆÀí¿ª¹Ø_¿ª()
+void fçº¹ç†å¼€å…³ (const bool &å¼€å…³);
+inline void fçº¹ç†å¼€å…³_å¼€()
 {
-	fÉèÖÃÎÆÀíÍ¼²ã×´Ì¬(D3DTSS_COLOROP, D3DTOP_MODULATE);
-	fÉèÖÃÎÆÀíÍ¼²ã×´Ì¬(D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+	fè®¾ç½®çº¹ç†å›¾å±‚çŠ¶æ€(D3DTSS_COLOROP, D3DTOP_MODULATE);
+	fè®¾ç½®çº¹ç†å›¾å±‚çŠ¶æ€(D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 };
-inline void fÎÆÀí¿ª¹Ø_¹Ø()
+inline void fçº¹ç†å¼€å…³_å…³()
 {
-	fÉèÖÃÎÆÀíÍ¼²ã×´Ì¬(D3DTSS_COLOROP, D3DTOP_SELECTARG2);
-	fÉèÖÃÎÆÀíÍ¼²ã×´Ì¬(D3DTSS_ALPHAOP, D3DTOP_SELECTARG2);
+	fè®¾ç½®çº¹ç†å›¾å±‚çŠ¶æ€(D3DTSS_COLOROP, D3DTOP_SELECTARG2);
+	fè®¾ç½®çº¹ç†å›¾å±‚çŠ¶æ€(D3DTSS_ALPHAOP, D3DTOP_SELECTARG2);
 };
-//ÊÀ½ç¾ØÕó
-#define fÉèÖÃÊÀ½ç¾ØÕó±ä»»(ÊÀ½ç¾ØÕó) vÍ¼ĞÎÉè±¸->SetTransform(D3DTS_WORLD,ÊÀ½ç¾ØÕó)
-void fÉèÖÃÊÀ½ç¾ØÕó (tÏòÁ¿3*const&Æ½ÒÆ, tÏòÁ¿3*const&Ğı×ª, tÏòÁ¿3*const&Ëõ·Å);
-void f¸´Î»ÊÀ½ç¾ØÕó ();
-//ÊÓÍ¼¾ØÕó
-void f¸´Î»ÊÓÍ¼¾ØÕó ();
-//»ìºÏ
-void f»ìºÏ (E»ìºÏÄ£Ê½);
-inline void f»ìºÏ_Õı³£ () {
-	fÉèÖÃäÖÈ¾×´Ì¬ (D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+//ä¸–ç•ŒçŸ©é˜µ
+#define fè®¾ç½®ä¸–ç•ŒçŸ©é˜µå˜æ¢(ä¸–ç•ŒçŸ©é˜µ) vå›¾å½¢è®¾å¤‡->SetTransform(D3DTS_WORLD,ä¸–ç•ŒçŸ©é˜µ)
+void fè®¾ç½®ä¸–ç•ŒçŸ©é˜µ (tå‘é‡3*const&å¹³ç§», tå‘é‡3*const&æ—‹è½¬, tå‘é‡3*const&ç¼©æ”¾);
+void få¤ä½ä¸–ç•ŒçŸ©é˜µ ();
+//è§†å›¾çŸ©é˜µ
+void få¤ä½è§†å›¾çŸ©é˜µ ();
+//æ··åˆ
+void fæ··åˆ (Eæ··åˆæ¨¡å¼);
+inline void fæ··åˆ_æ­£å¸¸ () {
+	fè®¾ç½®æ¸²æŸ“çŠ¶æ€ (D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 };
-inline void f»ìºÏ_µş¼Ó () {
-	fÉèÖÃäÖÈ¾×´Ì¬ (D3DRS_DESTBLEND, D3DBLEND_DESTALPHA);
+inline void fæ··åˆ_å åŠ  () {
+	fè®¾ç½®æ¸²æŸ“çŠ¶æ€ (D3DRS_DESTBLEND, D3DBLEND_DESTALPHA);
 };
-//³¬¼¶·Ö¸îÏß====================================================================================================
-}}}	//ÃüÃû¿Õ¼ä½áÊø
+//è¶…çº§åˆ†å‰²çº¿====================================================================================================
+}}}	//å‘½åç©ºé—´ç»“æŸ
 #endif

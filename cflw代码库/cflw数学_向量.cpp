@@ -21,7 +21,7 @@ template<> S向量4 f绝对值<S向量4>(const S向量4 &a) {
 const S向量2 S向量2::c零(0, 0);
 const S向量2 S向量2::c一(1, 1);
 //构造函数
-S向量2::S向量2(float X, float Y):
+S向量2::S向量2(float X, float Y) :
 	x(X), y(Y) {
 }
 S向量2 S向量2::fc方向r(const float &a大小, const float &a方向) {
@@ -44,22 +44,22 @@ S向量2 S向量2::fc矩形半尺寸(float a左, float a上, float a右, float a
 	return {(a右 - a左) / 2, (a上 - a下) / 2};
 }
 //赋值操作符
-S向量2& S向量2::operator +=(const S向量2 &_) {
+S向量2 &S向量2::operator +=(const S向量2 &_) {
 	x += _.x;
 	y += _.y;
 	return *this;
 }
-S向量2& S向量2::operator -=(const S向量2 &_) {
+S向量2 &S向量2::operator -=(const S向量2 &_) {
 	x -= _.x;
 	y -= _.y;
 	return *this;
 }
-S向量2& S向量2::operator *=(const float &_) {
+S向量2 &S向量2::operator *=(const float &_) {
 	x *= _;
 	y *= _;
 	return *this;
 }
-S向量2& S向量2::operator /=(const float &_) {
+S向量2 &S向量2::operator /=(const float &_) {
 	x /= _;
 	y /= _;
 	return *this;
@@ -215,7 +215,7 @@ S向量2 S向量2::f绕点旋转d(const S向量2 &a中心, const float &a角度)
 float S向量2::f到点距离(const S向量2 &a) const {
 	const float _x = a.x - x;
 	const float _y = a.y - y;
-	return sqrt(_x*_x + _y * _y);
+	return sqrt(_x * _x + _y * _y);
 }
 S向量2 S向量2::f到点向量(const S向量2 &a) const {
 	return S向量2{a.x - x, a.y - y};
@@ -309,6 +309,9 @@ S向量2 S向量2::f分量乘(const S向量2 &a) const {
 }
 bool S向量2::fi分量相等() const {
 	return x == y;
+}
+float S向量2::f平方() const {
+	return x * x + y * y;
 }
 //转换
 S向量3 S向量2::ft向量3(float z)const {

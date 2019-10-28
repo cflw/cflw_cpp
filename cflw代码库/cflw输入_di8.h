@@ -1,24 +1,24 @@
-#pragma once
+ï»¿#pragma once
 #define DIRECTINPUT_VERSION 0x0800
-//×Ô¶¯Á´½Ó
+//è‡ªåŠ¨é“¾æŽ¥
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
-//Í·ÎÄ¼þ
+//å¤´æ–‡ä»¶
 #include <memory>
 #include <dinput.h>
 #include <wrl.h>
-#include "cflwÊäÈë.h"
-#include "cflw¸¨Öú.h"
-//´úÂë¿ªÊ¼
+#include "cflwè¾“å…¥.h"
+#include "cflwè¾…åŠ©.h"
+//ä»£ç å¼€å§‹
 #define DINPUT_BUFFERSIZE 16
-namespace cflw::ÊäÈë::di8 {
-using namespace ÊäÈë;
+namespace cflw::è¾“å…¥::di8 {
+using namespace è¾“å…¥;
 using Microsoft::WRL::ComPtr;
 //==============================================================================
-// DirectInput¼üÅÌ°´¼üÃ¶¾Ù(Î»ÓÚdinput.h)
+// DirectInputé”®ç›˜æŒ‰é”®æžšä¸¾(ä½äºŽdinput.h)
 //==============================================================================
-enum class E¼üÅÌ°´¼ü {
-	eÌÓÍÑ			= 0x01,
+enum class Eé”®ç›˜æŒ‰é”® {
+	eé€ƒè„±			= 0x01,
 	e1				= 0x02,
 	e2				= 0x03,
 	e3				= 0x04,
@@ -29,10 +29,10 @@ enum class E¼üÅÌ°´¼ü {
 	e8				= 0x09,
 	e9				= 0x0A,
 	e0				= 0x0B,
-	e¼õºÅ			= 0x0C,	//Ö÷¼üÅÌµÄ¼õºÅ
-	eµÈºÅ			= 0x0D,	//Ö÷¼üÅÌµÄµÈÓÚºÅ
-	eÍË¸ñ			= 0x0E,	//ÍË¸ñ¼ü
-	eÖÆ±í			= 0x0F,
+	eå‡å·			= 0x0C,	//ä¸»é”®ç›˜çš„å‡å·
+	eç­‰å·			= 0x0D,	//ä¸»é”®ç›˜çš„ç­‰äºŽå·
+	eé€€æ ¼			= 0x0E,	//é€€æ ¼é”®
+	eåˆ¶è¡¨			= 0x0F,
 	q				= 0x10,
 	w				= 0x11,
 	e				= 0x12,
@@ -45,8 +45,8 @@ enum class E¼üÅÌ°´¼ü {
 	p				= 0x19,
 	eLBRACKET		= 0x1A,
 	eRBRACKET		= 0x1B,
-	e»Ø³µ			= 0x1C,	//Ö÷¼üÅÌµÄ»Ø³µ¼ü
-	e×ó¿ØÖÆ			= 0x1D,
+	eå›žè½¦			= 0x1C,	//ä¸»é”®ç›˜çš„å›žè½¦é”®
+	eå·¦æŽ§åˆ¶			= 0x1D,
 	a				= 0x1E,
 	s				= 0x1F,
 	d				= 0x20,
@@ -59,7 +59,7 @@ enum class E¼üÅÌ°´¼ü {
 	eSEMICOLON		= 0x27,
 	eAPOSTROPHE		= 0x28,
 	eGRAVE			= 0x29,	// accent grave 
-	e×óÉÏµµ			= 0x2A,
+	eå·¦ä¸Šæ¡£			= 0x2A,
 	eBACKSLASH		= 0x2B,
 	z				= 0x2C,
 	x				= 0x2D,
@@ -69,61 +69,61 @@ enum class E¼üÅÌ°´¼ü {
 	n				= 0x31,
 	m				= 0x32,
 	eCOMMA			= 0x33,
-	eµã				= 0x34,	// Ö÷¼üÅÌµÄ"."
-	eÐ±¸Ü			= 0x35,	// Ö÷¼üÅÌµÄ"/"
-	eÓÒÉÏµµ			= 0x36,
-	e³ËºÅ			= 0x37,	// Ö÷¼üÅÌµÄ"*"
-	e×ó½»Ìæ			= 0x38,	// ×óAlt 
-	e¿Õ¸ñ			= 0x39,
-	e´óÐ´Ëø			= 0x3A,	//capital
-	e¹¦ÄÜ1			= 0x3B,
-	e¹¦ÄÜ2			= 0x3C,
-	e¹¦ÄÜ3			= 0x3D,
-	e¹¦ÄÜ4			= 0x3E,
-	e¹¦ÄÜ5			= 0x3F,
-	e¹¦ÄÜ6			= 0x40,
-	e¹¦ÄÜ7			= 0x41,
-	e¹¦ÄÜ8			= 0x42,
-	e¹¦ÄÜ9			= 0x43,
-	e¹¦ÄÜ10			= 0x44,
-	eÊý×ÖËø			= 0x45,
-	e¹ö¶¯Ëø			= 0x46,	// ¹öÂÖËø¶¨
-	eÊý×Ö7			= 0x47,
-	eÊý×Ö8			= 0x48,
-	eÊý×Ö9			= 0x49,
-	eÊý×Ö¼õ			= 0x4A,	// Êý×Ö¼üÅÌµÄ"-"
-	eÊý×Ö4			= 0x4B,
-	eÊý×Ö5			= 0x4C,
-	eÊý×Ö6			= 0x4D,
-	eÊý×Ö¼Ó			= 0x4E,	// Êý×Ö¼üÅÌµÄ"+"
-	eÊý×Ö1			= 0x4F,
-	eÊý×Ö2			= 0x50,
-	eÊý×Ö3			= 0x51,
-	eÊý×Ö0			= 0x52,
-	eDECIMAL		= 0x53,	// Êý×Ö¼üÅÌµÄ"."
+	eç‚¹				= 0x34,	// ä¸»é”®ç›˜çš„"."
+	eæ–œæ 			= 0x35,	// ä¸»é”®ç›˜çš„"/"
+	eå³ä¸Šæ¡£			= 0x36,
+	eä¹˜å·			= 0x37,	// ä¸»é”®ç›˜çš„"*"
+	eå·¦äº¤æ›¿			= 0x38,	// å·¦Alt 
+	eç©ºæ ¼			= 0x39,
+	eå¤§å†™é”			= 0x3A,	//capital
+	eåŠŸèƒ½1			= 0x3B,
+	eåŠŸèƒ½2			= 0x3C,
+	eåŠŸèƒ½3			= 0x3D,
+	eåŠŸèƒ½4			= 0x3E,
+	eåŠŸèƒ½5			= 0x3F,
+	eåŠŸèƒ½6			= 0x40,
+	eåŠŸèƒ½7			= 0x41,
+	eåŠŸèƒ½8			= 0x42,
+	eåŠŸèƒ½9			= 0x43,
+	eåŠŸèƒ½10			= 0x44,
+	eæ•°å­—é”			= 0x45,
+	eæ»šåŠ¨é”			= 0x46,	// æ»šè½®é”å®š
+	eæ•°å­—7			= 0x47,
+	eæ•°å­—8			= 0x48,
+	eæ•°å­—9			= 0x49,
+	eæ•°å­—å‡			= 0x4A,	// æ•°å­—é”®ç›˜çš„"-"
+	eæ•°å­—4			= 0x4B,
+	eæ•°å­—5			= 0x4C,
+	eæ•°å­—6			= 0x4D,
+	eæ•°å­—åŠ 			= 0x4E,	// æ•°å­—é”®ç›˜çš„"+"
+	eæ•°å­—1			= 0x4F,
+	eæ•°å­—2			= 0x50,
+	eæ•°å­—3			= 0x51,
+	eæ•°å­—0			= 0x52,
+	eDECIMAL		= 0x53,	// æ•°å­—é”®ç›˜çš„"."
 	eOEM_102		= 0x56,	// <> or \| on RT 102-key keyboard (Non-U.S.) 
-	e¹¦ÄÜ11			= 0x57,
-	e¹¦ÄÜ12			= 0x58,
-	e¹¦ÄÜ13			= 0x64,	// 						 (NEC PC98) 
-	e¹¦ÄÜ14			= 0x65,	// 						 (NEC PC98) 
-	e¹¦ÄÜ15			= 0x66,	// 						 (NEC PC98) 
-	eKANA			= 0x70,	// (ÈÕ±¾¼üÅÌ) 
-	eABNT_C1		= 0x73,	// °ÍÎ÷¼üÅÌµÄ"/?"
-	eCONVERT		= 0x79,	// (ÈÕ±¾¼üÅÌ) 
-	eNOCONVERT		= 0x7B,	// (ÈÕ±¾¼üÅÌ) 
-	eYEN			= 0x7D,	// (ÈÕ±¾¼üÅÌ) 
-	eABNT_C2		= 0x7E,	// °ÍÎ÷Êý×Ö¼üÅÌµÄ"."
-	eNUMPADEQUALS	= 0x8D,	// Êý×Ö¼üÅÌµÄ"=" (NEC PC98) 
+	eåŠŸèƒ½11			= 0x57,
+	eåŠŸèƒ½12			= 0x58,
+	eåŠŸèƒ½13			= 0x64,	// 						 (NEC PC98) 
+	eåŠŸèƒ½14			= 0x65,	// 						 (NEC PC98) 
+	eåŠŸèƒ½15			= 0x66,	// 						 (NEC PC98) 
+	eKANA			= 0x70,	// (æ—¥æœ¬é”®ç›˜) 
+	eABNT_C1		= 0x73,	// å·´è¥¿é”®ç›˜çš„"/?"
+	eCONVERT		= 0x79,	// (æ—¥æœ¬é”®ç›˜) 
+	eNOCONVERT		= 0x7B,	// (æ—¥æœ¬é”®ç›˜) 
+	eYEN			= 0x7D,	// (æ—¥æœ¬é”®ç›˜) 
+	eABNT_C2		= 0x7E,	// å·´è¥¿æ•°å­—é”®ç›˜çš„"."
+	eNUMPADEQUALS	= 0x8D,	// æ•°å­—é”®ç›˜çš„"=" (NEC PC98) 
 	ePREVTRACK		= 0x90,	// Previous Track (CIRCUMFLEX on Japanese keyboard) 
 	eAT				= 0x91,	// 						 (NEC PC98) ,
 	eCOLON			= 0x92,	// 						 (NEC PC98) 
 	eUNDERLINE		= 0x93,	// 						 (NEC PC98) 
-	eKANJI			= 0x94,	// (ÈÕ±¾¼üÅÌ) 
+	eKANJI			= 0x94,	// (æ—¥æœ¬é”®ç›˜) 
 	eSTOP			= 0x95,	// 						 (NEC PC98) 
 	eAX				= 0x96,	// 						 (Japan AX) 
 	eUNLABELED		= 0x97,	// 						 (J3100) 
 	eNEXTTRACK		= 0x99,	// Next Track 
-	eNUMPADENTER	= 0x9C,	// Êý×Ö¼üÅÌµÄ"»Ø³µ"
+	eNUMPADENTER	= 0x9C,	// æ•°å­—é”®ç›˜çš„"å›žè½¦"
 	eRCONTROL		= 0x9D,
 	eMUTE			= 0xA0,	// Mute 
 	eCALCULATOR		= 0xA1,	// Calculator 
@@ -133,70 +133,70 @@ enum class E¼üÅÌ°´¼ü {
 	eVOLUMEUP		= 0xB0,	// Volume + 
 	eWEBHOME		= 0xB2,	// Web home 
 	eNUMPADCOMMA	= 0xB3,	//  on numeric keypad (NEC PC98) 
-	eDIVIDE			= 0xB5,	// Êý×Ö¼üÅÌµÄ"/"
+	eDIVIDE			= 0xB5,	// æ•°å­—é”®ç›˜çš„"/"
 	eSYSRQ			= 0xB7,
-	eÓÒ½»Ìæ			= 0xB8,	// ÓÒAlt 
-	eÔÝÍ£			= 0xC5,	// ÔÝÍ£
-	eÖ÷Ò³			= 0xC7,	// ·½Ïò¼üÅÌÉÏµÄ"Home"
-	eÉÏ				= 0xC8,	// ·½Ïò¼üÅÌÉÏµÄ"¡ü"
-	eÉÏÒ³			= 0xC9,	// ·½Ïò¼üÅÌÉÏµÄ"PgUp"
-	e×ó				= 0xCB,	// ·½Ïò¼üÅÌÉÏµÄ"¡û"
-	eÓÒ				= 0xCD,	// ·½Ïò¼üÅÌÉÏµÄ"¡ú"
-	e½áÊø			= 0xCF,	// ·½Ïò¼üÅÌÉÏµÄ"End"
-	eÏÂ				= 0xD0,	// ·½Ïò¼üÅÌÉÏµÄ"¡ý"
-	eÏÂÒ³			= 0xD1,	// ·½Ïò¼üÅÌÉÏµÄ"PgDn"
-	e²åÈë			= 0xD2,	// ·½Ïò¼üÅÌÉÏµÄ"Insert'
-	eÉ¾³ý			= 0xD3,	// ·½Ïò¼üÅÌÉÏµÄ"Delete"
-	e×óÊÓ´°			= 0xDB,	// ×ówindows¼ü
-	eÓÒÊÓ´°			= 0xDC,	// ÓÒwindows¼ü
-	eÓ¦ÓÃ			= 0xDD,	// AppMenu key 
-	eµçÔ´			= 0xDE,	// System Power 
-	eË¯Ãß			= 0xDF,	// System Sleep 
-	e»½ÐÑ			= 0xE3,	// System Wake 
-	eÍøÂçËÑË÷		= 0xE5,	// Web Search 
-	eÍøÂçÊÕ²Ø¼Ð		= 0xE6,	// Web Favorites 
-	eÍøÂçË¢ÐÂ		= 0xE7,	// Web Refresh 
-	eÍøÂçÔÝÍ£		= 0xE8,	// Web Stop 
-	eÍøÂçÇ°½ø		= 0xE9,	// Web Forward 
-	eÍøÂçºóÍË		= 0xEA,	// Web Back 
-	eÎÒµÄµçÄÔ		= 0xEB,	// My Computer 
-	eÓÊÏä			= 0xEC,	// Mail 
-	eÃ½ÌåÑ¡Ôñ		= 0xED,	// Media Select
+	eå³äº¤æ›¿			= 0xB8,	// å³Alt 
+	eæš‚åœ			= 0xC5,	// æš‚åœ
+	eä¸»é¡µ			= 0xC7,	// æ–¹å‘é”®ç›˜ä¸Šçš„"Home"
+	eä¸Š				= 0xC8,	// æ–¹å‘é”®ç›˜ä¸Šçš„"â†‘"
+	eä¸Šé¡µ			= 0xC9,	// æ–¹å‘é”®ç›˜ä¸Šçš„"PgUp"
+	eå·¦				= 0xCB,	// æ–¹å‘é”®ç›˜ä¸Šçš„"â†"
+	eå³				= 0xCD,	// æ–¹å‘é”®ç›˜ä¸Šçš„"â†’"
+	eç»“æŸ			= 0xCF,	// æ–¹å‘é”®ç›˜ä¸Šçš„"End"
+	eä¸‹				= 0xD0,	// æ–¹å‘é”®ç›˜ä¸Šçš„"â†“"
+	eä¸‹é¡µ			= 0xD1,	// æ–¹å‘é”®ç›˜ä¸Šçš„"PgDn"
+	eæ’å…¥			= 0xD2,	// æ–¹å‘é”®ç›˜ä¸Šçš„"Insert'
+	eåˆ é™¤			= 0xD3,	// æ–¹å‘é”®ç›˜ä¸Šçš„"Delete"
+	eå·¦è§†çª—			= 0xDB,	// å·¦windowsé”®
+	eå³è§†çª—			= 0xDC,	// å³windowsé”®
+	eåº”ç”¨			= 0xDD,	// AppMenu key 
+	eç”µæº			= 0xDE,	// System Power 
+	eç¡çœ 			= 0xDF,	// System Sleep 
+	eå”¤é†’			= 0xE3,	// System Wake 
+	eç½‘ç»œæœç´¢		= 0xE5,	// Web Search 
+	eç½‘ç»œæ”¶è—å¤¹		= 0xE6,	// Web Favorites 
+	eç½‘ç»œåˆ·æ–°		= 0xE7,	// Web Refresh 
+	eç½‘ç»œæš‚åœ		= 0xE8,	// Web Stop 
+	eç½‘ç»œå‰è¿›		= 0xE9,	// Web Forward 
+	eç½‘ç»œåŽé€€		= 0xEA,	// Web Back 
+	eæˆ‘çš„ç”µè„‘		= 0xEB,	// My Computer 
+	eé‚®ç®±			= 0xEC,	// Mail 
+	eåª’ä½“é€‰æ‹©		= 0xED,	// Media Select
 };
-enum class EÊÖ±ú·½Ïò {
-	e·½Ïò¼ü,
-	e×óÒ¡¸Ë = e·½Ïò¼ü,
-	eÓÒÒ¡¸Ë,
+enum class Eæ‰‹æŸ„æ–¹å‘ {
+	eæ–¹å‘é”®,
+	eå·¦æ‘‡æ† = eæ–¹å‘é”®,
+	eå³æ‘‡æ†,
 };
-class CÊäÈë;
-class C¼üÅÌ;
-class CÊó±ê;
-class CÊÖ±ú;
+class Cè¾“å…¥;
+class Cé”®ç›˜;
+class Cé¼ æ ‡;
+class Cæ‰‹æŸ„;
 //==============================================================================
-// ÊäÈëÒýÇæ
+// è¾“å…¥å¼•æ“Ž
 //==============================================================================
-class CÊäÈë {
+class Cè¾“å…¥ {
 public:
-	HWND m´°¿Ú;
-	ComPtr<IDirectInput8W> m½Ó¿Ú;
-	std::shared_ptr<C¼üÅÌ> m¼üÅÌ;
-	std::shared_ptr<CÊó±ê> mÊó±ê;
-	std::shared_ptr<CÊÖ±ú> mÊÖ±ú;
-	static CÊäÈë *gÕâ;
-	//¹¹Ôì/Îö¹¹º¯Êý
-	CÊäÈë();
-	~CÊäÈë();
-	//ÒýÇæ¿ØÖÆ
-	HRESULT f³õÊ¼»¯(HINSTANCE, HWND);
-	void f´°¿ÚÏûÏ¢(UINT ÏûÏ¢, WPARAM °´¼ü);
-	void f¸üÐÂ();
-	//Éè±¸¿ØÖÆ
-	HRESULT f´´½¨¼üÅÌ(tp¼üÅÌ &);
-	HRESULT f´´½¨Êó±ê(tpÊó±ê &);
-	HRESULT f´´½¨ÊÖ±ú(tpÊÖ±ú &);
+	HWND mçª—å£;
+	ComPtr<IDirectInput8W> mæŽ¥å£;
+	std::shared_ptr<Cé”®ç›˜> mé”®ç›˜;
+	std::shared_ptr<Cé¼ æ ‡> mé¼ æ ‡;
+	std::shared_ptr<Cæ‰‹æŸ„> mæ‰‹æŸ„;
+	static Cè¾“å…¥ *gè¿™;
+	//æž„é€ /æžæž„å‡½æ•°
+	Cè¾“å…¥();
+	~Cè¾“å…¥();
+	//å¼•æ“ŽæŽ§åˆ¶
+	HRESULT fåˆå§‹åŒ–(HINSTANCE, HWND);
+	void fçª—å£æ¶ˆæ¯(UINT æ¶ˆæ¯, WPARAM æŒ‰é”®);
+	void fæ›´æ–°();
+	//è®¾å¤‡æŽ§åˆ¶
+	HRESULT fåˆ›å»ºé”®ç›˜(tpé”®ç›˜ &);
+	HRESULT fåˆ›å»ºé¼ æ ‡(tpé¼ æ ‡ &);
+	HRESULT fåˆ›å»ºæ‰‹æŸ„(tpæ‰‹æŸ„ &);
 private:
-	void f»ñµÃ½¹µã();
-	void fÊÍ·Å½¹µã();
-	static BOOL CALLBACK f»Øµ÷ÊÖ±ú(LPCDIDEVICEINSTANCE, LPVOID);
+	void fèŽ·å¾—ç„¦ç‚¹();
+	void fé‡Šæ”¾ç„¦ç‚¹();
+	static BOOL CALLBACK få›žè°ƒæ‰‹æŸ„(LPCDIDEVICEINSTANCE, LPVOID);
 };
 }

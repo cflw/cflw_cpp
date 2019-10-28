@@ -1,32 +1,32 @@
-#pragma once
-namespace cflw::¹¤¾ß {
+ï»¿#pragma once
+namespace cflw::å·¥å…· {
 //==============================================================================
-// ÊôĞÔ
+// å±æ€§
 //==============================================================================
-template<typename tÔ­, typename tÊôĞÔ, typename tfÔ­g = typename tÊôĞÔ(tÔ­::*)() const, typename tfÔ­s = typename tÔ­&(tÔ­::*)(const tÊôĞÔ &)>
-class CÊôĞÔ {
+template<typename tåŸ, typename tå±æ€§, typename tfåŸg = typename tå±æ€§(tåŸ::*)() const, typename tfåŸs = typename tåŸ&(tåŸ::*)(const tå±æ€§ &)>
+class Cå±æ€§ {
 public:
-	CÊôĞÔ(tÔ­ &aÔ­, tfÔ­g afÔ­g, tfÔ­s afÔ­s):
-		mÔ­(&aÔ­), mfÔ­g(afÔ­g), mfÔ­s(afÔ­s) {
+	Cå±æ€§(tåŸ &aåŸ, tfåŸg afåŸg, tfåŸs afåŸs):
+		måŸ(&aåŸ), mfåŸg(afåŸg), mfåŸs(afåŸs) {
 	}
-	tÊôĞÔ fg() const {
-		return (mÔ­->*mfÔ­g)();
+	tå±æ€§ fg() const {
+		return (måŸ->*mfåŸg)();
 	}
-	CÊôĞÔ &fs(const tÊôĞÔ &) const {
-		(mÔ­->*mfÔ­s)(a);
+	Cå±æ€§ &fs(const tå±æ€§ &) const {
+		(måŸ->*mfåŸs)(a);
 		return *this;
 	}
-	operator tÊôĞÔ() const {
+	operator tå±æ€§() const {
 		return fg();
 	}
-	CÊôĞÔ &operator =(const tÊôĞÔ &a) const {
+	Cå±æ€§ &operator =(const tå±æ€§ &a) const {
 		return fs(a);
 	}
-	tÊôĞÔ operator ->() const {
+	tå±æ€§ operator ->() const {
 		return fg();
 	}
-	template<typename...t²ÎÊı> auto operator ()(t²ÎÊı &&...a²ÎÊı) const {
-		return (mÔ­->*mfÔ­g)()(a²ÎÊı...);
+	template<typename...tå‚æ•°> auto operator ()(tå‚æ•° &&...aå‚æ•°) const {
+		return (måŸ->*mfåŸg)()(aå‚æ•°...);
 	}
 	template<typename t> auto operator +(const t &a) const {
 		return fg() + a;
@@ -43,23 +43,23 @@ public:
 	template<typename t> auto operator %(const t &a) const {
 		return fg() % a;
 	}
-	template<typename t> CÊôĞÔ &operator +=(const t &a) const {
+	template<typename t> Cå±æ€§ &operator +=(const t &a) const {
 		return fs(fg() + a);
 	}
-	template<typename t> CÊôĞÔ &operator -=(const t &a) const {
+	template<typename t> Cå±æ€§ &operator -=(const t &a) const {
 		return fs(fg() - a);
 	}
-	template<typename t> CÊôĞÔ &operator *=(const t &a) const {
+	template<typename t> Cå±æ€§ &operator *=(const t &a) const {
 		return fs(fg() * a);
 	}
-	template<typename t> CÊôĞÔ &operator /=(const t &a) const {
+	template<typename t> Cå±æ€§ &operator /=(const t &a) const {
 		return fs(fg() / a);
 	}
-	template<typename t> CÊôĞÔ &operator %=(const t &a) const {
+	template<typename t> Cå±æ€§ &operator %=(const t &a) const {
 		return fs(fg() % a);
 	}
-	tÔ­ *mÔ­ = nullptr;
-	tfÔ­g mfÔ­g = nullptr;
-	tfÔ­s mfÔ­s = nullptr;
+	tåŸ *måŸ = nullptr;
+	tfåŸg mfåŸg = nullptr;
+	tfåŸs mfåŸs = nullptr;
 };
-}	//namespace cflw::¹¤¾ß
+}	//namespace cflw::å·¥å…·

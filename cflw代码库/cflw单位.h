@@ -1,25 +1,25 @@
-#pragma once
+ï»¿#pragma once
 #include <ratio>
-//module cflw.µ¥Î»
+//module cflw.å•ä½
 //export
-namespace cflw::µ¥Î» {
-enum EÎïÀíÁ¿ {
-	e³¤¶È,
-	eÖÊÁ¿,
-	eÊ±¼ä,
-	eµçÁ÷,
-	eÎÂ¶È,
-	eÎïÖÊµÄÁ¿,
-	e·¢¹âÇ¿¶È,
-	e½Ç¶È
+namespace cflw::å•ä½ {
+enum Eç‰©ç†é‡ {
+	eé•¿åº¦,
+	eè´¨é‡,
+	eæ—¶é—´,
+	eç”µæµ,
+	eæ¸©åº¦,
+	eç‰©è´¨çš„é‡,
+	eå‘å…‰å¼ºåº¦,
+	eè§’åº¦
 };
 
-template<EÎïÀíÁ¿ tÎïÀíÁ¿, typename t±ÈÂÊ = typename std::ratio<1, 1>::type, typename t´æ´¢ÀàĞÍ = double> class Cµ¥Î» {
+template<Eç‰©ç†é‡ tç‰©ç†é‡, typename tæ¯”ç‡ = typename std::ratio<1, 1>::type, typename tå­˜å‚¨ç±»å‹ = double> class Cå•ä½ {
 public:
-	operator t´æ´¢ÀàĞÍ() const {
-		return mÖµ * (t´æ´¢ÀàĞÍ)t±ÈÂÊ::num / (t´æ´¢ÀàĞÍ)t±ÈÂÊ::den;
+	operator tå­˜å‚¨ç±»å‹() const {
+		return må€¼ * (tå­˜å‚¨ç±»å‹)tæ¯”ç‡::num / (tå­˜å‚¨ç±»å‹)tæ¯”ç‡::den;
 	}
-	t´æ´¢ÀàĞÍ mÖµ = 0;
+	tå­˜å‚¨ç±»å‹ må€¼ = 0;
 };
 
 

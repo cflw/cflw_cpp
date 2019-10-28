@@ -1,27 +1,27 @@
-#include <boost/program_options/detail/convert.hpp>
+ï»¿#include <boost/program_options/detail/convert.hpp>
 #include <boost/program_options/detail/utf8_codecvt_facet.hpp>
-#include "cflwÎÄ¼ş_json.h"
-namespace cflw::ÎÄ¼ş::json {
-const std::locale CÎÄ¼ş::utf8{std::locale(), new boost::program_options::detail::utf8_codecvt_facet()};
-CÎÄ¼ş::CÎÄ¼ş() {
-	mÁ÷.imbue(utf8);
+#include "cflwæ–‡ä»¶_json.h"
+namespace cflw::æ–‡ä»¶::json {
+const std::locale Cæ–‡ä»¶::utf8{std::locale(), new boost::program_options::detail::utf8_codecvt_facet()};
+Cæ–‡ä»¶::Cæ–‡ä»¶() {
+	mæµ.imbue(utf8);
 }
-bool CÎÄ¼ş::f´ò¿ª(const wchar_t *aÎÄ¼şÃû, int aÄ£Ê½) {
-	mÁ÷.open(aÎÄ¼şÃû, aÄ£Ê½);
-	return fiºÃ();
+bool Cæ–‡ä»¶::fæ‰“å¼€(const wchar_t *aæ–‡ä»¶å, int aæ¨¡å¼) {
+	mæµ.open(aæ–‡ä»¶å, aæ¨¡å¼);
+	return fiå¥½();
 }
-void CÎÄ¼ş::f¶ÁÈ¡(tÊ÷ &aÊ÷) {
-	assert(fiºÃ());
-	boost::property_tree::read_json(mÁ÷, aÊ÷);
+void Cæ–‡ä»¶::fè¯»å–(tæ ‘ &aæ ‘) {
+	assert(fiå¥½());
+	boost::property_tree::read_json(mæµ, aæ ‘);
 }
-void CÎÄ¼ş::fĞ´Èë(const tÊ÷ &aÊ÷) {
-	assert(fiºÃ());
-	boost::property_tree::write_json(mÁ÷, aÊ÷);
+void Cæ–‡ä»¶::få†™å…¥(const tæ ‘ &aæ ‘) {
+	assert(fiå¥½());
+	boost::property_tree::write_json(mæµ, aæ ‘);
 }
-bool CÎÄ¼ş::fiºÃ() const {
-	return mÁ÷.good();
+bool Cæ–‡ä»¶::fiå¥½() const {
+	return mæµ.good();
 }
-}	//namespace cflw::ÎÄ¼ş::json
+}	//namespace cflw::æ–‡ä»¶::json
 namespace boost::property_tree::json_parser {
 std::wstring create_escapes(const std::wstring &s) {
 	using Ch = wchar_t;

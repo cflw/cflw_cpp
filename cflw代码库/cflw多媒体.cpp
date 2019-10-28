@@ -1,10 +1,10 @@
-#include "cflw¶àÃ½Ìå.h"
-#include "cflw¸¨Öú.h"
+ï»¿#include "cflwå¤šåª’ä½“.h"
+#include "cflwè¾…åŠ©.h"
 namespace cflw {
-namespace ¶àÃ½Ìå{
+namespace å¤šåª’ä½“{
 //--------------------------------------------------------------------------------
-// ÒÔÏÂÄÚÈİÀ´×ÔDirectX SDK
-// cflw°æÈ¨Ã»ÓĞ
+// ä»¥ä¸‹å†…å®¹æ¥è‡ªDirectX SDK
+// cflwç‰ˆæƒæ²¡æœ‰
 //--------------------------------------------------------------------------------
 //ReadMMIO
 HRESULT ReadMMIO(HMMIO hmmioIn, MMCKINFO* pckInRIFF, WAVEFORMATEX** ppwfxInfo) {
@@ -129,7 +129,7 @@ HRESULT FindChunk(HANDLE hFile, DWORD fourcc, DWORD &dwChunkSize, DWORD &dwChunk
 		if( 0 == ReadFile( hFile, &dwChunkDataSize, sizeof(DWORD), &dwRead, NULL ) )
 			hr = HRESULT_FROM_WIN32( GetLastError() );
 		switch (dwChunkType) {
-		case c¿éRIFF:
+		case cå—RIFF:
 			dwRIFFDataSize = dwChunkDataSize;
 			dwChunkDataSize = 4;
 			if( 0 == ReadFile( hFile, &dwFileType, sizeof(DWORD), &dwRead, NULL ) )
@@ -161,4 +161,4 @@ HRESULT ReadChunkData(HANDLE hFile, void * buffer, DWORD buffersize, DWORD buffe
 		hr = HRESULT_FROM_WIN32( GetLastError() );
 	return hr;
 }
-}}	//ÃüÃû¿Õ¼ä½áÊø
+}}	//å‘½åç©ºé—´ç»“æŸ

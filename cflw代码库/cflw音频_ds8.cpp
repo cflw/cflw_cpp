@@ -1,168 +1,168 @@
-#include "cflwÒôÆµ_ds8.h"
-#include "cflw¸¨Öú.h"
-#include "cflw¸¨Öú_win.h"
-namespace cflw::ÒôÆµ::ds8 {
+ï»¿#include "cflwéŸ³é¢‘_ds8.h"
+#include "cflwè¾…åŠ©.h"
+#include "cflwè¾…åŠ©_win.h"
+namespace cflw::éŸ³é¢‘::ds8 {
 //--------------------------------------------------------------------------------
-// ÒôÆµÒýÇæ
+// éŸ³é¢‘å¼•æ“Ž
 //--------------------------------------------------------------------------------
-//¹¹Ôìº¯Êý
-CÒôÆµÒýÇæ::CÒôÆµÒýÇæ() {
-	¸¨Öú::fÇåÁã(*this);
+//æž„é€ å‡½æ•°
+CéŸ³é¢‘å¼•æ“Ž::CéŸ³é¢‘å¼•æ“Ž() {
+	è¾…åŠ©::fæ¸…é›¶(*this);
 };
-//Îö¹¹º¯Êý
-CÒôÆµÒýÇæ::~CÒôÆµÒýÇæ() {
-	if (vÉè±¸)
-		fÊÍ·Å();
+//æžæž„å‡½æ•°
+CéŸ³é¢‘å¼•æ“Ž::~CéŸ³é¢‘å¼•æ“Ž() {
+	if (vè®¾å¤‡)
+		fé‡Šæ”¾();
 };
-//³õÊ¼»¯
-HRESULT CÒôÆµÒýÇæ::f³õÊ¼»¯ (HWND p´°¿Ú) {
-	if (vÉè±¸)
+//åˆå§‹åŒ–
+HRESULT CéŸ³é¢‘å¼•æ“Ž::fåˆå§‹åŒ– (HWND açª—å£) {
+	if (vè®¾å¤‡)
 		return S_FALSE;
-	vÖ÷Òª = nullptr;
+	vä¸»è¦ = nullptr;
 	HRESULT hr;
-	LPDIRECTSOUNDBUFFER vÖ÷»º´æ = nullptr;
-	hr = DirectSoundCreate8(nullptr, &vÉè±¸, nullptr);
+	LPDIRECTSOUNDBUFFER vä¸»ç¼“å­˜ = nullptr;
+	hr = DirectSoundCreate8(nullptr, &vè®¾å¤‡, nullptr);
 	if(FAILED(hr))
 		return hr;
-	hr = vÉè±¸->SetCooperativeLevel(p´°¿Ú, DSSCL_PRIORITY);
-	DSBUFFERDESC v»º´æÃèÊö;
-	v»º´æÃèÊö.dwFlags = DSBCAPS_PRIMARYBUFFER;
-	v»º´æÃèÊö.dwBufferBytes = 0;
-	v»º´æÃèÊö.lpwfxFormat = nullptr;
-	hr = vÉè±¸->CreateSoundBuffer(&v»º´æÃèÊö, &vÖ÷»º´æ, nullptr);
-	WAVEFORMATEX v²¨ÐÎ¸ñÊ½;
-	¸¨Öú::fÇåÁã(v²¨ÐÎ¸ñÊ½); 
-	v²¨ÐÎ¸ñÊ½.wFormatTag = WAVE_FORMAT_PCM; 
-	v²¨ÐÎ¸ñÊ½.nChannels = 2; 
-	v²¨ÐÎ¸ñÊ½.nSamplesPerSec = 22050; 
-	v²¨ÐÎ¸ñÊ½.wBitsPerSample = 16; 
-	v²¨ÐÎ¸ñÊ½.nBlockAlign = v²¨ÐÎ¸ñÊ½.wBitsPerSample / 8 * v²¨ÐÎ¸ñÊ½.nChannels;
-	v²¨ÐÎ¸ñÊ½.nAvgBytesPerSec = v²¨ÐÎ¸ñÊ½.nSamplesPerSec * v²¨ÐÎ¸ñÊ½.nBlockAlign;
-	hr = vÖ÷»º´æ->SetFormat(&v²¨ÐÎ¸ñÊ½);
+	hr = vè®¾å¤‡->SetCooperativeLevel(açª—å£, DSSCL_PRIORITY);
+	DSBUFFERDESC vç¼“å­˜æè¿°;
+	vç¼“å­˜æè¿°.dwFlags = DSBCAPS_PRIMARYBUFFER;
+	vç¼“å­˜æè¿°.dwBufferBytes = 0;
+	vç¼“å­˜æè¿°.lpwfxFormat = nullptr;
+	hr = vè®¾å¤‡->CreateSoundBuffer(&vç¼“å­˜æè¿°, &vä¸»ç¼“å­˜, nullptr);
+	WAVEFORMATEX væ³¢å½¢æ ¼å¼;
+	è¾…åŠ©::fæ¸…é›¶(væ³¢å½¢æ ¼å¼); 
+	væ³¢å½¢æ ¼å¼.wFormatTag = WAVE_FORMAT_PCM; 
+	væ³¢å½¢æ ¼å¼.nChannels = 2; 
+	væ³¢å½¢æ ¼å¼.nSamplesPerSec = 22050; 
+	væ³¢å½¢æ ¼å¼.wBitsPerSample = 16; 
+	væ³¢å½¢æ ¼å¼.nBlockAlign = væ³¢å½¢æ ¼å¼.wBitsPerSample / 8 * væ³¢å½¢æ ¼å¼.nChannels;
+	væ³¢å½¢æ ¼å¼.nAvgBytesPerSec = væ³¢å½¢æ ¼å¼.nSamplesPerSec * væ³¢å½¢æ ¼å¼.nBlockAlign;
+	hr = vä¸»ç¼“å­˜->SetFormat(&væ³¢å½¢æ ¼å¼);
 	if(FAILED(hr))
 	   return hr;
-	¸¨Öú::fÊÍ·Å(vÖ÷»º´æ);
+	è¾…åŠ©::fé‡Šæ”¾(vä¸»ç¼“å­˜);
 	return S_OK;
 }
-//ÊÍ·Å
-void CÒôÆµÒýÇæ::fÊÍ·Å () {
-	¸¨Öú::fÊÍ·Å(vÖ÷Òª);
-	¸¨Öú::fÊÍ·Å(vÉè±¸);
+//é‡Šæ”¾
+void CéŸ³é¢‘å¼•æ“Ž::fé‡Šæ”¾ () {
+	è¾…åŠ©::fé‡Šæ”¾(vä¸»è¦);
+	è¾…åŠ©::fé‡Šæ”¾(vè®¾å¤‡);
 }
-//ÔØÈëÒôÀÖ
-HRESULT CÒôÆµÒýÇæ::fÔØÈëÒôÀÖ (SÉùÒô &pÉùÒô, WCHAR *pÎÄ¼þÃû, WCHAR *pÎÄ¼þÃû2) {
-	if (pÉùÒô.v»º´æ)
-		pÉùÒô.fÊÍ·Å();
-	C²¨ÐÎÎÄ¼þ vÎÄ¼þ[2];
-	vÎÄ¼þ[0].f´ò¿ª(pÎÄ¼þÃû);
-	vÎÄ¼þ[1].f´ò¿ª(pÎÄ¼þÃû2);
+//è½½å…¥éŸ³ä¹
+HRESULT CéŸ³é¢‘å¼•æ“Ž::fè½½å…¥éŸ³ä¹ (Så£°éŸ³ &aå£°éŸ³, WCHAR *aæ–‡ä»¶å, WCHAR *aæ–‡ä»¶å2) {
+	if (aå£°éŸ³.vç¼“å­˜)
+		aå£°éŸ³.fé‡Šæ”¾();
+	Cæ³¢å½¢æ–‡ä»¶ væ–‡ä»¶[2];
+	væ–‡ä»¶[0].fæ‰“å¼€(aæ–‡ä»¶å);
+	væ–‡ä»¶[1].fæ‰“å¼€(aæ–‡ä»¶å2);
 	return S_OK;
 }
-//ÔØÈëÒôÐ§
-HRESULT CÒôÆµÒýÇæ::fÔØÈëÒôÐ§ (SÉùÒô &pÉùÒô, WCHAR *pÎÄ¼þÃû) {
-	if (pÉùÒô.v»º´æ)
-		pÉùÒô.fÊÍ·Å();
-	C²¨ÐÎÎÄ¼þ vÎÄ¼þ;
+//è½½å…¥éŸ³æ•ˆ
+HRESULT CéŸ³é¢‘å¼•æ“Ž::fè½½å…¥éŸ³æ•ˆ (Så£°éŸ³ &aå£°éŸ³, WCHAR *aæ–‡ä»¶å) {
+	if (aå£°éŸ³.vç¼“å­˜)
+		aå£°éŸ³.fé‡Šæ”¾();
+	Cæ³¢å½¢æ–‡ä»¶ væ–‡ä»¶;
 	HRESULT hr;
-	hr = vÎÄ¼þ.f´ò¿ª(pÎÄ¼þÃû);
+	hr = væ–‡ä»¶.fæ‰“å¼€(aæ–‡ä»¶å);
 	if (FAILED(hr))
-		return hr;	//ÎÞ·¨´ò¿ªÎÄ¼þ
-	f×¢²á»º´æ(pÉùÒô, vÎÄ¼þ);
+		return hr;	//æ— æ³•æ‰“å¼€æ–‡ä»¶
+	fæ³¨å†Œç¼“å­˜(aå£°éŸ³, væ–‡ä»¶);
 	return S_OK;
 }
-void CÒôÆµÒýÇæ::f²¥·ÅÒôÀÖ () {
+void CéŸ³é¢‘å¼•æ“Ž::fæ’­æ”¾éŸ³ä¹ () {
 
 }
-void CÒôÆµÒýÇæ::f²¥·ÅÒôÐ§ () {
+void CéŸ³é¢‘å¼•æ“Ž::fæ’­æ”¾éŸ³æ•ˆ () {
 
 }
-HRESULT CÒôÆµÒýÇæ::f×¢²á»º´æ (SÉùÒô &pÉùÒô, C²¨ÐÎÎÄ¼þ &pÎÄ¼þ) {
-	DSBUFFERDESC v»º´æÃèÊö;
-	v»º´æÃèÊö.dwFlags = DSBCAPS_STATIC;
-	v»º´æÃèÊö.dwBufferBytes = pÎÄ¼þ.v¿éÐÅÏ¢.cksize;
-	v»º´æÃèÊö.lpwfxFormat = pÎÄ¼þ.v¸ñÊ½;
-	LPDIRECTSOUNDBUFFER vÁÙÊ± = nullptr;
+HRESULT CéŸ³é¢‘å¼•æ“Ž::fæ³¨å†Œç¼“å­˜ (Så£°éŸ³ &aå£°éŸ³, Cæ³¢å½¢æ–‡ä»¶ &aæ–‡ä»¶) {
+	DSBUFFERDESC vç¼“å­˜æè¿°;
+	vç¼“å­˜æè¿°.dwFlags = DSBCAPS_STATIC;
+	vç¼“å­˜æè¿°.dwBufferBytes = aæ–‡ä»¶.vå—ä¿¡æ¯.cksize;
+	vç¼“å­˜æè¿°.lpwfxFormat = aæ–‡ä»¶.væ ¼å¼;
+	LPDIRECTSOUNDBUFFER vä¸´æ—¶ = nullptr;
 	HRESULT hr;
-	hr = vÉè±¸->CreateSoundBuffer(&v»º´æÃèÊö, &vÁÙÊ±, nullptr);
+	hr = vè®¾å¤‡->CreateSoundBuffer(&vç¼“å­˜æè¿°, &vä¸´æ—¶, nullptr);
 	if (FAILED(hr))
 		return hr;
-	vÁÙÊ±->QueryInterface(IID_IDirectSoundBuffer8, (void**)&pÉùÒô.v»º´æ);
+	vä¸´æ—¶->QueryInterface(IID_IDirectSoundBuffer8, (void**)&aå£°éŸ³.vç¼“å­˜);
 	if (FAILED(hr))
 		return hr;
-	vÁÙÊ±->Release();
-	pÉùÒô.v´óÐ¡ = v»º´æÃèÊö.dwBufferBytes;
+	vä¸´æ—¶->Release();
+	aå£°éŸ³.vå¤§å° = vç¼“å­˜æè¿°.dwBufferBytes;
 	return S_OK;
 }
-HRESULT CÒôÆµÒýÇæ::fÌî³äÉùÒô (SÉùÒô &pÉùÒô, C²¨ÐÎÎÄ¼þ &pÎÄ¼þ) {
+HRESULT CéŸ³é¢‘å¼•æ“Ž::få¡«å……å£°éŸ³ (Så£°éŸ³ &aå£°éŸ³, Cæ³¢å½¢æ–‡ä»¶ &aæ–‡ä»¶) {
 	HRESULT hr;
-	BYTE* v²¨ÐÎÊý¾Ý;
-	UINT v²¨ÐÎ´óÐ¡;
-	void* vÊý¾Ý[2] = {nullptr, nullptr};
-	ULONG v³¤¶È[2];
-	const UINT vÎÄ¼þ´óÐ¡ = pÎÄ¼þ.v¿éÐÅÏ¢.cksize;
-	v²¨ÐÎÊý¾Ý = new BYTE[vÎÄ¼þ´óÐ¡];
-	if (v²¨ÐÎÊý¾Ý == nullptr) {
-		delete[] v²¨ÐÎÊý¾Ý;
-		return S_FALSE;	//ÄÚ´æ²»×ã
+	BYTE* væ³¢å½¢æ•°æ®;
+	UINT væ³¢å½¢å¤§å°;
+	void* væ•°æ®[2] = {nullptr, nullptr};
+	ULONG vé•¿åº¦[2];
+	const UINT væ–‡ä»¶å¤§å° = aæ–‡ä»¶.vå—ä¿¡æ¯.cksize;
+	væ³¢å½¢æ•°æ® = new BYTE[væ–‡ä»¶å¤§å°];
+	if (væ³¢å½¢æ•°æ® == nullptr) {
+		delete[] væ³¢å½¢æ•°æ®;
+		return S_FALSE;	//å†…å­˜ä¸è¶³
 	}
-	hr = pÎÄ¼þ.f¶ÁÈ¡(vÎÄ¼þ´óÐ¡, v²¨ÐÎÊý¾Ý, &v²¨ÐÎ´óÐ¡);
+	hr = aæ–‡ä»¶.fè¯»å–(væ–‡ä»¶å¤§å°, væ³¢å½¢æ•°æ®, &væ³¢å½¢å¤§å°);
 	if (FAILED(hr)) {
-		delete[] v²¨ÐÎÊý¾Ý;
-		return hr;	//¶ÁÈ¡Ê§°Ü
+		delete[] væ³¢å½¢æ•°æ®;
+		return hr;	//è¯»å–å¤±è´¥
 	}
-	pÎÄ¼þ.fÖØÖÃ();
-	hr = pÉùÒô.v»º´æ->Lock(0, pÉùÒô.v´óÐ¡, &vÊý¾Ý[0], &v³¤¶È[0], &vÊý¾Ý[1], &v³¤¶È[1], 0);
+	aæ–‡ä»¶.fé‡ç½®();
+	hr = aå£°éŸ³.vç¼“å­˜->Lock(0, aå£°éŸ³.vå¤§å°, &væ•°æ®[0], &vé•¿åº¦[0], &væ•°æ®[1], &vé•¿åº¦[1], 0);
 	if (FAILED(hr)) {
-		delete[] v²¨ÐÎÊý¾Ý;
-		return hr;	//Ëø¶¨Ê§°Ü
+		delete[] væ³¢å½¢æ•°æ®;
+		return hr;	//é”å®šå¤±è´¥
 	}
-	memcpy(vÊý¾Ý[0], v²¨ÐÎÊý¾Ý, pÉùÒô.v´óÐ¡);
-	pÉùÒô.v»º´æ->Unlock(vÊý¾Ý[0], pÉùÒô.v´óÐ¡, nullptr, 0);
-	delete[] v²¨ÐÎÊý¾Ý;
+	memcpy(væ•°æ®[0], væ³¢å½¢æ•°æ®, aå£°éŸ³.vå¤§å°);
+	aå£°éŸ³.vç¼“å­˜->Unlock(væ•°æ®[0], aå£°éŸ³.vå¤§å°, nullptr, 0);
+	delete[] væ³¢å½¢æ•°æ®;
 	return S_OK;
 }
 //==============================================================================
-// ÉùÒô
+// å£°éŸ³
 //==============================================================================
-SÉùÒô::SÉùÒô () {
-	¸¨Öú::fÇåÁã(*this);
+Så£°éŸ³::Så£°éŸ³ () {
+	è¾…åŠ©::fæ¸…é›¶(*this);
 }
-SÉùÒô::~SÉùÒô () {
-	fÊÍ·Å();
+Så£°éŸ³::~Så£°éŸ³ () {
+	fé‡Šæ”¾();
 }
-void SÉùÒô::fÊÍ·Å () {
-	¸¨Öú::fÊÍ·Å(v»º´æ);
+void Så£°éŸ³::fé‡Šæ”¾ () {
+	è¾…åŠ©::fé‡Šæ”¾(vç¼“å­˜);
 };
 //==============================================================================
-// ²¨ÐÎÎÄ¼þ
+// æ³¢å½¢æ–‡ä»¶
 //==============================================================================
-C²¨ÐÎÎÄ¼þ::C²¨ÐÎÎÄ¼þ() {
-	m¸ñÊ½ = nullptr;
+Cæ³¢å½¢æ–‡ä»¶::Cæ³¢å½¢æ–‡ä»¶() {
+	mæ ¼å¼ = nullptr;
 }
-C²¨ÐÎÎÄ¼þ::~C²¨ÐÎÎÄ¼þ() {
-	f¹Ø±Õ();
-	¸¨Öú::fÉ¾³ý(m¸ñÊ½);
+Cæ³¢å½¢æ–‡ä»¶::~Cæ³¢å½¢æ–‡ä»¶() {
+	få…³é—­();
+	è¾…åŠ©::fåˆ é™¤(mæ ¼å¼);
 };
-HRESULT C²¨ÐÎÎÄ¼þ::f´ò¿ª(WCHAR *aÎÄ¼þÃû) {
-	¸¨Öú::fÉ¾³ý(m¸ñÊ½);
+HRESULT Cæ³¢å½¢æ–‡ä»¶::fæ‰“å¼€(WCHAR *aæ–‡ä»¶å) {
+	è¾…åŠ©::fåˆ é™¤(mæ ¼å¼);
 	HRESULT  hr;
-	hr = WaveOpenFile(aÎÄ¼þÃû, &m¶àÃ½Ìåio, &m¸ñÊ½, &m¿éÐÅÏ¢riff);
+	hr = WaveOpenFile(aæ–‡ä»¶å, &må¤šåª’ä½“io, &mæ ¼å¼, &må—ä¿¡æ¯riff);
 	if(FAILED(hr))
 		return hr;
-	hr = fÖØÖÃ();
+	hr = fé‡ç½®();
 	if(FAILED(hr))
 		return hr;
 	return hr;
 }
-HRESULT C²¨ÐÎÎÄ¼þ::fÖØÖÃ() {
-	return WaveStartDataRead(&m¶àÃ½Ìåio, &m¿éÐÅÏ¢, &m¿éÐÅÏ¢riff);
+HRESULT Cæ³¢å½¢æ–‡ä»¶::fé‡ç½®() {
+	return WaveStartDataRead(&må¤šåª’ä½“io, &må—ä¿¡æ¯, &må—ä¿¡æ¯riff);
 }
-HRESULT C²¨ÐÎÎÄ¼þ::f¶ÁÈ¡(UINT pÒª¶ÁÈ¡´óÐ¡, BYTE* aÊý¾Ý, UINT* p¶ÁÈ¡´óÐ¡) {
-	return WaveReadFile(m¶àÃ½Ìåio, pÒª¶ÁÈ¡´óÐ¡, aÊý¾Ý, &m¿éÐÅÏ¢, p¶ÁÈ¡´óÐ¡);
+HRESULT Cæ³¢å½¢æ–‡ä»¶::fè¯»å–(UINT aè¦è¯»å–å¤§å°, BYTE* aæ•°æ®, UINT* aè¯»å–å¤§å°) {
+	return WaveReadFile(må¤šåª’ä½“io, aè¦è¯»å–å¤§å°, aæ•°æ®, &må—ä¿¡æ¯, aè¯»å–å¤§å°);
 }
-HRESULT C²¨ÐÎÎÄ¼þ::f¹Ø±Õ() {
-	mmioClose(m¶àÃ½Ìåio, 0);
+HRESULT Cæ³¢å½¢æ–‡ä»¶::få…³é—­() {
+	mmioClose(må¤šåª’ä½“io, 0);
 	return S_OK;
 }
 
-}	//ÃüÃû¿Õ¼ä½áÊø
+}	//å‘½åç©ºé—´ç»“æŸ

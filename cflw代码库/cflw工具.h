@@ -1,130 +1,130 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include <chrono>
 #include <string>
 #include <tuple>
 #include <memory>
-namespace cflw::¹¤¾ß {
+namespace cflw::å·¥å…· {
 //==============================================================================
-// ¼Æ´ÎÆ÷,¼ÆËã´ÎÊı
+// è®¡æ¬¡å™¨,è®¡ç®—æ¬¡æ•°
 //==============================================================================
-class C¼Æ´ÎÆ÷ {
+class Cè®¡æ¬¡å™¨ {
 public:
-	C¼Æ´ÎÆ÷() = default;
-	void fÖØÖÃ(int);
-	bool fµÎ´ğ();
+	Cè®¡æ¬¡å™¨() = default;
+	void fé‡ç½®(int);
+	bool fæ»´ç­”();
 private:
-	int m¼ä¸ô = 0;
-	int m´ÎÊı = 0;
+	int mé—´éš” = 0;
+	int mæ¬¡æ•° = 0;
 };
 template<typename t>
-class C¼ÆÖµÆ÷ {
+class Cè®¡å€¼å™¨ {
 public:
-	void fÇåÁã();
-	void fÖØÖÃ(t ¼ä¸ô);
-	bool fµÎ´ğ(t);
+	void fæ¸…é›¶();
+	void fé‡ç½®(t é—´éš”);
+	bool fæ»´ç­”(t);
 private:
-	t mÖµÊı = 0;
-	t m¼ä¸ô = 0;
+	t må€¼æ•° = 0;
+	t mé—´éš” = 0;
 };
 //==============================================================================
-// ÎÄ±¾±à¼©
+// æ–‡æœ¬ç¼–ç¼‰
 //==============================================================================
-class CÎÄ±¾ {
+class Cæ–‡æœ¬ {
 public:
-	typedef std::wstring t×Ö·û´®;
-	template<typename t1, typename t2> static inline t2 f×ª»»(t1);
-	template<typename t> static t×Ö·û´® fÕûÊı_ÎÄ±¾(t);
-	template<typename t> static t×Ö·û´® f¸¡µãÊı_ÎÄ±¾(t);
-	template<typename t> static t fÎÄ±¾_ÕûÊı(const t×Ö·û´® &);
-	template<typename t> static t fÎÄ±¾_¸¡µãÊı(const t×Ö·û´® &);
-	static t×Ö·û´® fÊı¾İ_Ê®Áù½øÖÆ(const void *, size_t);
-	static std::tuple<std::byte*, size_t> fÊ®Áù½øÖÆ_Êı¾İ(const t×Ö·û´® &);	//¼ÇµÃÉ¾³ıÖ¸Õë,»òÕßÓÃÖÇÄÜÖ¸Õë
-	static bool fwÊı×Ö(const t×Ö·û´® &);
-	static int f²éÕÒ(const t×Ö·û´® &, const t×Ö·û´® &, int);
-	static t×Ö·û´® fÓĞĞ§Êı×Ö(const t×Ö·û´® &, int);
-	static t×Ö·û´® fĞ¡ÊıÎ»Êı(const t×Ö·û´® &, int);
+	typedef std::wstring tå­—ç¬¦ä¸²;
+	template<typename t1, typename t2> static inline t2 fè½¬æ¢(t1);
+	template<typename t> static tå­—ç¬¦ä¸² fæ•´æ•°_æ–‡æœ¬(t);
+	template<typename t> static tå­—ç¬¦ä¸² fæµ®ç‚¹æ•°_æ–‡æœ¬(t);
+	template<typename t> static t fæ–‡æœ¬_æ•´æ•°(const tå­—ç¬¦ä¸² &);
+	template<typename t> static t fæ–‡æœ¬_æµ®ç‚¹æ•°(const tå­—ç¬¦ä¸² &);
+	static tå­—ç¬¦ä¸² fæ•°æ®_åå…­è¿›åˆ¶(const void *, size_t);
+	static std::tuple<std::byte*, size_t> fåå…­è¿›åˆ¶_æ•°æ®(const tå­—ç¬¦ä¸² &);	//è®°å¾—åˆ é™¤æŒ‡é’ˆ,æˆ–è€…ç”¨æ™ºèƒ½æŒ‡é’ˆ
+	static bool fwæ•°å­—(const tå­—ç¬¦ä¸² &);
+	static int fæŸ¥æ‰¾(const tå­—ç¬¦ä¸² &, const tå­—ç¬¦ä¸² &, int);
+	static tå­—ç¬¦ä¸² fæœ‰æ•ˆæ•°å­—(const tå­—ç¬¦ä¸² &, int);
+	static tå­—ç¬¦ä¸² få°æ•°ä½æ•°(const tå­—ç¬¦ä¸² &, int);
 };
 //==============================================================================
-// ´æ·ÅÒ»¶ÑÊı¾İµÄ×Ö½ÚÊı×é
+// å­˜æ”¾ä¸€å †æ•°æ®çš„å­—èŠ‚æ•°ç»„
 //==============================================================================
-//ÈÎÒâÊıÁ¿
-class CÊı¾İ {
+//ä»»æ„æ•°é‡
+class Cæ•°æ® {
 public:
-	unsigned char *mÖ¸Õë = nullptr;
-	unsigned int m´óĞ¡ = 0;
-	CÊı¾İ() = default;
-	CÊı¾İ(const CÊı¾İ &);
-	CÊı¾İ(unsigned int a´óĞ¡);
-	~CÊı¾İ();
-	bool fĞÂ½¨(unsigned int a´óĞ¡);
-	void fÉ¾³ı();
-	void f¸´ÖÆ(void *pÖ¸Õë, unsigned int a´óĞ¡);
-	void f¸´ÖÆ(const CÊı¾İ &aÊı¾İ);
-	unsigned char *&fgÊı¾İ();
-	unsigned int fg´óĞ¡();
+	unsigned char *mæŒ‡é’ˆ = nullptr;
+	unsigned int må¤§å° = 0;
+	Cæ•°æ®() = default;
+	Cæ•°æ®(const Cæ•°æ® &);
+	Cæ•°æ®(unsigned int aå¤§å°);
+	~Cæ•°æ®();
+	bool fæ–°å»º(unsigned int aå¤§å°);
+	void fåˆ é™¤();
+	void få¤åˆ¶(void *pæŒ‡é’ˆ, unsigned int aå¤§å°);
+	void få¤åˆ¶(const Cæ•°æ® &aæ•°æ®);
+	unsigned char *&fgæ•°æ®();
+	unsigned int fgå¤§å°();
 };
-//ÁÙÊ±¿Õ¼ä,´ÓÄÚ´æµÃµ½µÄ¿Õ¼ä×ÜÊÇ¡İĞèÒª¿Õ¼ä
-template<typename t> class C¿Õ¼ä {
+//ä¸´æ—¶ç©ºé—´,ä»å†…å­˜å¾—åˆ°çš„ç©ºé—´æ€»æ˜¯â‰¥éœ€è¦ç©ºé—´
+template<typename t> class Cç©ºé—´ {
 public:
-	t *mÖ¸Õë = nullptr;
-	unsigned int m·ÖÅäÊıÁ¿ = 0;
-	unsigned int mĞèÒªÊıÁ¿ = 0;
-	C¿Õ¼ä() = default;
-	~C¿Õ¼ä();
-	t *f·ÖÅä(unsigned int);
-	//½ûÓÃ
-	C¿Õ¼ä(const C¿Õ¼ä &) = delete;
-	C¿Õ¼ä(C¿Õ¼ä &&) = delete;
-	C¿Õ¼ä &operator =(const C¿Õ¼ä &) = delete;
-	C¿Õ¼ä &operator =(C¿Õ¼ä &&) = delete;
+	t *mæŒ‡é’ˆ = nullptr;
+	unsigned int måˆ†é…æ•°é‡ = 0;
+	unsigned int méœ€è¦æ•°é‡ = 0;
+	Cç©ºé—´() = default;
+	~Cç©ºé—´();
+	t *fåˆ†é…(unsigned int);
+	//ç¦ç”¨
+	Cç©ºé—´(const Cç©ºé—´ &) = delete;
+	Cç©ºé—´(Cç©ºé—´ &&) = delete;
+	Cç©ºé—´ &operator =(const Cç©ºé—´ &) = delete;
+	Cç©ºé—´ &operator =(Cç©ºé—´ &&) = delete;
 };
 //==============================================================================
-// Î»´óĞ¡,Î»Ö¸Õë ¾«È·µ½Î»µÄÊı¾İ²Ù×÷
+// ä½å¤§å°,ä½æŒ‡é’ˆ ç²¾ç¡®åˆ°ä½çš„æ•°æ®æ“ä½œ
 //==============================================================================
-struct SÎ»´óĞ¡ {
-	int v×Ö½Ú;
-	int vÎ»;
-	SÎ»´óĞ¡(int, int = 0);
-	SÎ»´óĞ¡ &operator +=(const SÎ»´óĞ¡ &);
-	SÎ»´óĞ¡ operator +(const SÎ»´óĞ¡ &) const;
+struct Sä½å¤§å° {
+	int vå­—èŠ‚;
+	int vä½;
+	Sä½å¤§å°(int, int = 0);
+	Sä½å¤§å° &operator +=(const Sä½å¤§å° &);
+	Sä½å¤§å° operator +(const Sä½å¤§å° &) const;
 	operator int() const;
 };
-class CÎ»Ö¸Õë {
+class Cä½æŒ‡é’ˆ {
 private:
-	void *vÖ¸Õë;
-	SÎ»´óĞ¡ vÆ«ÒÆ;
+	void *væŒ‡é’ˆ;
+	Sä½å¤§å° våç§»;
 public:
-	CÎ»Ö¸Õë();
-	CÎ»Ö¸Õë(void *);
-	CÎ»Ö¸Õë(void *, int);
-	CÎ»Ö¸Õë &fsÖ¸Õë(void *, int);
-	void f¶Á(void *, const SÎ»´óĞ¡ &);
-	void f¶Á(const CÎ»Ö¸Õë &, const SÎ»´óĞ¡ &);
-	void fĞ´(void *, const SÎ»´óĞ¡ &);
-	void fĞ´(const CÎ»Ö¸Õë &, const SÎ»´óĞ¡ &);
-	CÎ»Ö¸Õë &fÆ«ÒÆ(const SÎ»´óĞ¡ &);
-	static void fÄÚ´æ¸´ÖÆ(const CÎ»Ö¸Õë &, const CÎ»Ö¸Õë &, const SÎ»´óĞ¡ &);
-	static void fÄÚ´æ¸´ÖÆ(void *, int, void *, int, int);
-	static unsigned long fÈ¡Êı¾İ(void *, int, int);
-	static void f¸³Êı¾İ(void *, int, unsigned long);
+	Cä½æŒ‡é’ˆ();
+	Cä½æŒ‡é’ˆ(void *);
+	Cä½æŒ‡é’ˆ(void *, int);
+	Cä½æŒ‡é’ˆ &fsæŒ‡é’ˆ(void *, int);
+	void fè¯»(void *, const Sä½å¤§å° &);
+	void fè¯»(const Cä½æŒ‡é’ˆ &, const Sä½å¤§å° &);
+	void få†™(void *, const Sä½å¤§å° &);
+	void få†™(const Cä½æŒ‡é’ˆ &, const Sä½å¤§å° &);
+	Cä½æŒ‡é’ˆ &fåç§»(const Sä½å¤§å° &);
+	static void få†…å­˜å¤åˆ¶(const Cä½æŒ‡é’ˆ &, const Cä½æŒ‡é’ˆ &, const Sä½å¤§å° &);
+	static void få†…å­˜å¤åˆ¶(void *, int, void *, int, int);
+	static unsigned long få–æ•°æ®(void *, int, int);
+	static void fèµ‹æ•°æ®(void *, int, unsigned long);
 };
 //==============================================================================
-// Ê÷
+// æ ‘
 //==============================================================================
 template<typename t>
-class CÊ÷ {
+class Cæ ‘ {
 public:
-	class C½Úµã {
+	class CèŠ‚ç‚¹ {
 	public:
-		t mÖµ = {};
-		std::unique_ptr<std::vector<C½Úµã>> mÒ¶;
-		C½Úµã() = default;
-		C½Úµã(const t &, std::unique_ptr<std::vector<C½Úµã>> && = nullptr);
+		t må€¼ = {};
+		std::unique_ptr<std::vector<CèŠ‚ç‚¹>> må¶;
+		CèŠ‚ç‚¹() = default;
+		CèŠ‚ç‚¹(const t &, std::unique_ptr<std::vector<CèŠ‚ç‚¹>> && = nullptr);
 	};
-	typedef std::vector<C½Úµã> tÒ¶;
-	std::vector<C½Úµã> mÒ¶;
-	CÊ÷() = default;
+	typedef std::vector<CèŠ‚ç‚¹> tå¶;
+	std::vector<CèŠ‚ç‚¹> må¶;
+	Cæ ‘() = default;
 };
-}	//namespace cflw::¹¤¾ß
-#include "cflw¹¤¾ß.inl"
+}	//namespace cflw::å·¥å…·
+#include "cflwå·¥å…·.inl"

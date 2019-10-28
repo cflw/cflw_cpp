@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 #include <span>
 #include <wrl.h>
@@ -6,28 +6,28 @@
 #ifdef _WINDOWS
 #pragma comment(lib, "dxcompiler.lib")
 #endif
-namespace cflw::Í¼ĞÎ::dx×ÅÉ«Æ÷ {
+namespace cflw::å›¾å½¢::dxç€è‰²å™¨ {
 using Microsoft::WRL::ComPtr;
-using tp×ÅÉ«Æ÷ = ComPtr<IDxcBlob>;
-class C×ÅÉ«Æ÷¹¤³§ {
+using tpç€è‰²å™¨ = ComPtr<IDxcBlob>;
+class Cç€è‰²å™¨å·¥å‚ {
 public:
-	HRESULT f³õÊ¼»¯(const wchar_t *×ÅÉ«Ä£ĞÍ = L"6_0");
-	//±àÒë×ÅÉ«Æ÷
-	HRESULT f±àÒë¶¥µã×ÅÉ«Æ÷(ComPtr<IDxcBlob> &, const wchar_t *ÎÄ¼şÃû, const wchar_t *º¯ÊıÃû);
-	HRESULT f±àÒëÏñËØ×ÅÉ«Æ÷(ComPtr<IDxcBlob> &, const wchar_t *ÎÄ¼şÃû, const wchar_t *º¯ÊıÃû);
-	HRESULT f±àÒë¼¸ºÎ×ÅÉ«Æ÷(ComPtr<IDxcBlob> &, const wchar_t *ÎÄ¼şÃû, const wchar_t *º¯ÊıÃû);
-	HRESULT f±àÒëÍâ¿Ç×ÅÉ«Æ÷(ComPtr<IDxcBlob> &, const wchar_t *ÎÄ¼şÃû, const wchar_t *º¯ÊıÃû);
-	HRESULT f±àÒëÓò×ÅÉ«Æ÷(ComPtr<IDxcBlob> &, const wchar_t *ÎÄ¼şÃû, const wchar_t *º¯ÊıÃû);
-	HRESULT f±àÒë¼ÆËã×ÅÉ«Æ÷(ComPtr<IDxcBlob> &, const wchar_t *ÎÄ¼şÃû, const wchar_t *º¯ÊıÃû);
-	//ÆäËüº¯Êı
-	HRESULT f±àÒë×ÅÉ«Æ÷(ComPtr<IDxcBlob> &, const wchar_t *ÎÄ¼şÃû, const wchar_t *Èë¿Ú, const wchar_t *×ÅÉ«Ä£ĞÍ);
-	HRESULT f¶ÁÈ¡×ÅÉ«Æ÷(ComPtr<IDxcBlob> &, const wchar_t *ÎÄ¼şÃû);
+	HRESULT fåˆå§‹åŒ–(const wchar_t *ç€è‰²æ¨¡å‹ = L"6_0");
+	//ç¼–è¯‘ç€è‰²å™¨
+	HRESULT fç¼–è¯‘é¡¶ç‚¹ç€è‰²å™¨(ComPtr<IDxcBlob> &, const wchar_t *æ–‡ä»¶å, const wchar_t *å‡½æ•°å);
+	HRESULT fç¼–è¯‘åƒç´ ç€è‰²å™¨(ComPtr<IDxcBlob> &, const wchar_t *æ–‡ä»¶å, const wchar_t *å‡½æ•°å);
+	HRESULT fç¼–è¯‘å‡ ä½•ç€è‰²å™¨(ComPtr<IDxcBlob> &, const wchar_t *æ–‡ä»¶å, const wchar_t *å‡½æ•°å);
+	HRESULT fç¼–è¯‘å¤–å£³ç€è‰²å™¨(ComPtr<IDxcBlob> &, const wchar_t *æ–‡ä»¶å, const wchar_t *å‡½æ•°å);
+	HRESULT fç¼–è¯‘åŸŸç€è‰²å™¨(ComPtr<IDxcBlob> &, const wchar_t *æ–‡ä»¶å, const wchar_t *å‡½æ•°å);
+	HRESULT fç¼–è¯‘è®¡ç®—ç€è‰²å™¨(ComPtr<IDxcBlob> &, const wchar_t *æ–‡ä»¶å, const wchar_t *å‡½æ•°å);
+	//å…¶å®ƒå‡½æ•°
+	HRESULT fç¼–è¯‘ç€è‰²å™¨(ComPtr<IDxcBlob> &, const wchar_t *æ–‡ä»¶å, const wchar_t *å…¥å£, const wchar_t *ç€è‰²æ¨¡å‹);
+	HRESULT fè¯»å–ç€è‰²å™¨(ComPtr<IDxcBlob> &, const wchar_t *æ–‡ä»¶å);
 public:
-	std::wstring m¶¥µã×ÅÉ«Ä£ĞÍ, mÏñËØ×ÅÉ«Ä£ĞÍ, m¼¸ºÎ×ÅÉ«Ä£ĞÍ, mÍâ¿Ç×ÅÉ«Ä£ĞÍ, mÓò×ÅÉ«Ä£ĞÍ, m¼ÆËã×ÅÉ«Ä£ĞÍ;
-	ComPtr<IDxcCompiler> m±àÒëÆ÷;
-	ComPtr<IDxcLibrary> m¿â;
+	std::wstring mé¡¶ç‚¹ç€è‰²æ¨¡å‹, måƒç´ ç€è‰²æ¨¡å‹, må‡ ä½•ç€è‰²æ¨¡å‹, må¤–å£³ç€è‰²æ¨¡å‹, måŸŸç€è‰²æ¨¡å‹, mè®¡ç®—ç€è‰²æ¨¡å‹;
+	ComPtr<IDxcCompiler> mç¼–è¯‘å™¨;
+	ComPtr<IDxcLibrary> måº“;
 };
-inline std::span<std::byte> fc¿ç¶È(const ComPtr<IDxcBlob> &a) {
+inline std::span<std::byte> fcè·¨åº¦(const ComPtr<IDxcBlob> &a) {
 	return {(std::byte*)a->GetBufferPointer(), (std::span<std::byte>::index_type)a->GetBufferSize()};
 }
-}	//namespace cflw::Í¼ĞÎ::dx×ÅÉ«Æ÷
+}	//namespace cflw::å›¾å½¢::dxç€è‰²å™¨

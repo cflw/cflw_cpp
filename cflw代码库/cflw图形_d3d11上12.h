@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include <wrl.h>
 #include <d3d11on12.h>
@@ -6,25 +6,25 @@
 #pragma comment(lib, "d3d11.lib")
 #endif
 //12
-namespace cflw::Í¼ĞÎ::d3d12 {
-class CÈıÎ¬;
+namespace cflw::å›¾å½¢::d3d12 {
+class Cä¸‰ç»´;
 }
-//ÉÏ
-namespace cflw::Í¼ĞÎ::d3d11ÉÏ12 {
+//ä¸Š
+namespace cflw::å›¾å½¢::d3d11ä¸Š12 {
 using Microsoft::WRL::ComPtr;
-class CÈıÎ¬ {
+class Cä¸‰ç»´ {
 public:
-	HRESULT f³õÊ¼»¯(d3d12::CÈıÎ¬ &);
-	HRESULT f´´½¨äÖÈ¾Ä¿±ê×ÊÔ´(ID3D12Resource *);
-	void f¿ªÊ¼(UINT Ö¡Ë÷Òı);
-	void f½áÊø();
-	std::vector<ComPtr<ID3D11Resource>> &feäÖÈ¾Ä¿±ê×ÊÔ´();
-	//¶ÔÏó
-	ComPtr<IDXGIDevice> fg»ù´¡Éè±¸() const;
+	HRESULT fåˆå§‹åŒ–(d3d12::Cä¸‰ç»´ &);
+	HRESULT fåˆ›å»ºæ¸²æŸ“ç›®æ ‡èµ„æº(ID3D12Resource *);
+	void få¼€å§‹(UINT å¸§ç´¢å¼•);
+	void fç»“æŸ();
+	std::vector<ComPtr<ID3D11Resource>> &feæ¸²æŸ“ç›®æ ‡èµ„æº();
+	//å¯¹è±¡
+	ComPtr<IDXGIDevice> fgåŸºç¡€è®¾å¤‡() const;
 private:
-	ComPtr<ID3D11On12Device> mÉè±¸;
-	ComPtr<ID3D11DeviceContext> mÉÏÏÂÎÄ;
-	std::vector<ComPtr<ID3D11Resource>> maäÖÈ¾Ä¿±ê×ÊÔ´;
-	UINT mÖ¡Ë÷Òı;
+	ComPtr<ID3D11On12Device> mè®¾å¤‡;
+	ComPtr<ID3D11DeviceContext> mä¸Šä¸‹æ–‡;
+	std::vector<ComPtr<ID3D11Resource>> maæ¸²æŸ“ç›®æ ‡èµ„æº;
+	UINT må¸§ç´¢å¼•;
 };
 }

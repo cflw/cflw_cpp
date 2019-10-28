@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 #include <Windows.h>
 #include <mmstream.h>
@@ -9,280 +9,280 @@
 #pragma comment(lib, "imm32.lib")
 #undef min
 #undef max
-namespace cflw::ÊÓ´° {
+namespace cflw::è§†çª— {
 using Microsoft::WRL::ComPtr;
 //==============================================================================
 // windef.h
 //==============================================================================
-typedef DWORD tË«×Ö;	//ĞĞ:152
-typedef BYTE t×Ö½Ú;	//ĞĞ:154
-typedef WORD t×Ö;	//ĞĞ:155
-typedef UINT tÕıÕûÊı;//ĞĞ:173
-typedef HWND t´°¿Ú¾ä±ú, tp´°¿Ú;	//ĞĞ:208
-typedef HHOOK t¹Ò¹³¾ä±ú, tp¹Ò¹³;	//ĞĞ:209
-typedef HBITMAP tÎ»Í¼¾ä±ú, tpÎ»Í¼;	//ĞĞ:260
-typedef HBRUSH t»­Ë¢¾ä±ú, tp»­Ë¢;	//ĞĞ:261
-typedef HFONT t×ÖÌå¾ä±ú, tp×ÖÌå;	//ĞĞ:273
-typedef HICON tÍ¼±ê¾ä±ú, tpÍ¼±ê;	//ĞĞ:275
-typedef HMENU t²Ëµ¥¾ä±ú, tp²Ëµ¥;	//ĞĞ:277
-typedef HINSTANCE tÊµÀı¾ä±ú, tpÊµÀı;//ĞĞ:280
-typedef HPEN t±Ê¾ä±ú, tp±Ê;	//ĞĞ:284
-typedef HCURSOR t¹â±ê¾ä±ú, tp¹â±ê;	//ĞĞ:308
-typedef tagRECT t¾ØĞÎ;	//ĞĞ:319-325
-typedef tagPOINT tµã;	//ĞĞ:339-343
-typedef tagSIZE t´óĞ¡;	//ĞĞ:351-355
+typedef DWORD tåŒå­—;	//è¡Œ:152
+typedef BYTE tå­—èŠ‚;	//è¡Œ:154
+typedef WORD tå­—;	//è¡Œ:155
+typedef UINT tæ­£æ•´æ•°;//è¡Œ:173
+typedef HWND tçª—å£å¥æŸ„, tpçª—å£;	//è¡Œ:208
+typedef HHOOK tæŒ‚é’©å¥æŸ„, tpæŒ‚é’©;	//è¡Œ:209
+typedef HBITMAP tä½å›¾å¥æŸ„, tpä½å›¾;	//è¡Œ:260
+typedef HBRUSH tç”»åˆ·å¥æŸ„, tpç”»åˆ·;	//è¡Œ:261
+typedef HFONT tå­—ä½“å¥æŸ„, tpå­—ä½“;	//è¡Œ:273
+typedef HICON tå›¾æ ‡å¥æŸ„, tpå›¾æ ‡;	//è¡Œ:275
+typedef HMENU tèœå•å¥æŸ„, tpèœå•;	//è¡Œ:277
+typedef HINSTANCE tå®ä¾‹å¥æŸ„, tpå®ä¾‹;//è¡Œ:280
+typedef HPEN tç¬”å¥æŸ„, tpç¬”;	//è¡Œ:284
+typedef HCURSOR tå…‰æ ‡å¥æŸ„, tpå…‰æ ‡;	//è¡Œ:308
+typedef tagRECT tçŸ©å½¢;	//è¡Œ:319-325
+typedef tagPOINT tç‚¹;	//è¡Œ:339-343
+typedef tagSIZE tå¤§å°;	//è¡Œ:351-355
 //==============================================================================
 // winnt.h
 //==============================================================================
-typedef HANDLE t¾ä±ú, th;	//ĞĞ:515
-typedef HRESULT t½á¹û;	//ĞĞ:542
-typedef LARGE_INTEGER t´óÕûÊı;	//ĞĞ:674-688
-typedef ULARGE_INTEGER tÎŞ·ûºÅ´óÕûÊı;	//ĞĞ:692-706
-enum class EÍ¨ÓÃÈ¨ÏŞ: unsigned long {	//ĞĞ:6510-6513
-	e¶Á = GENERIC_READ,
-	eĞ´ = GENERIC_WRITE,
-	eÖ´ĞĞ = GENERIC_EXECUTE,
-	eÈ«²¿ = GENERIC_ALL
+typedef HANDLE tå¥æŸ„, th;	//è¡Œ:515
+typedef HRESULT tç»“æœ;	//è¡Œ:542
+typedef LARGE_INTEGER tå¤§æ•´æ•°;	//è¡Œ:674-688
+typedef ULARGE_INTEGER tæ— ç¬¦å·å¤§æ•´æ•°;	//è¡Œ:692-706
+enum class Eé€šç”¨æƒé™: unsigned long {	//è¡Œ:6510-6513
+	eè¯» = GENERIC_READ,
+	eå†™ = GENERIC_WRITE,
+	eæ‰§è¡Œ = GENERIC_EXECUTE,
+	eå…¨éƒ¨ = GENERIC_ALL
 };
 //==============================================================================
 // winbase.h
 //==============================================================================
-inline void *fÄÚ´æÒÆ¶¯(void *aÄ¿±ê, void *aÔ´, size_t a´óĞ¡) {
-	return MoveMemory(aÄ¿±ê, aÔ´, a´óĞ¡);
-};	//ĞĞ:103
-inline void *fÄÚ´æ¸´ÖÆ(void *aÄ¿±ê, void *aÔ´, size_t a´óĞ¡) {
-	return CopyMemory(aÄ¿±ê, aÔ´, a´óĞ¡);
-};	//ĞĞ:104
-inline void *fÄÚ´æÌî³ä(void *aÄ¿±ê, int aÖµ, size_t a´óĞ¡) {
-	return FillMemory(aÄ¿±ê, aÖµ, a´óĞ¡);
-};	//ĞĞ:105
-inline void *fÄÚ´æÇå¿Õ(void *aÄ¿±ê, size_t a´óĞ¡) {
-	return ZeroMemory(aÄ¿±ê, a´óĞ¡);
-};	//ĞĞ:106
-inline DWORD fÉèÖÃÎÄ¼şÖ¸Õë(HANDLE aÎÄ¼ş, LONG aÒÆ¶¯¾àÀë, PLONG aÒÆ¶¯¸ß¶È¾àÀë, DWORD aÒÆ¶¯·½Ê½) {
-	return SetFilePointer(aÎÄ¼ş, aÒÆ¶¯¾àÀë, aÒÆ¶¯¸ß¶È¾àÀë, aÒÆ¶¯·½Ê½);
-};	//ĞĞ:4984-4992
-inline BOOL f¹Ø±Õ¾ä±ú(HANDLE a¾ä±ú) {
-	return CloseHandle(a¾ä±ú);
-};	//ĞĞ:5068
+inline void *få†…å­˜ç§»åŠ¨(void *aç›®æ ‡, void *aæº, size_t aå¤§å°) {
+	return MoveMemory(aç›®æ ‡, aæº, aå¤§å°);
+};	//è¡Œ:103
+inline void *få†…å­˜å¤åˆ¶(void *aç›®æ ‡, void *aæº, size_t aå¤§å°) {
+	return CopyMemory(aç›®æ ‡, aæº, aå¤§å°);
+};	//è¡Œ:104
+inline void *få†…å­˜å¡«å……(void *aç›®æ ‡, int aå€¼, size_t aå¤§å°) {
+	return FillMemory(aç›®æ ‡, aå€¼, aå¤§å°);
+};	//è¡Œ:105
+inline void *få†…å­˜æ¸…ç©º(void *aç›®æ ‡, size_t aå¤§å°) {
+	return ZeroMemory(aç›®æ ‡, aå¤§å°);
+};	//è¡Œ:106
+inline DWORD fè®¾ç½®æ–‡ä»¶æŒ‡é’ˆ(HANDLE aæ–‡ä»¶, LONG aç§»åŠ¨è·ç¦», PLONG aç§»åŠ¨é«˜åº¦è·ç¦», DWORD aç§»åŠ¨æ–¹å¼) {
+	return SetFilePointer(aæ–‡ä»¶, aç§»åŠ¨è·ç¦», aç§»åŠ¨é«˜åº¦è·ç¦», aç§»åŠ¨æ–¹å¼);
+};	//è¡Œ:4984-4992
+inline BOOL få…³é—­å¥æŸ„(HANDLE aå¥æŸ„) {
+	return CloseHandle(aå¥æŸ„);
+};	//è¡Œ:5068
 //==============================================================================
 // winuser.h
 //==============================================================================
-typedef WNDPROC tf´°¿Ú¹ı³Ì;//ĞĞ:62
-enum class E´°¿ÚÏûÏ¢ : unsigned int {	//ĞĞ:1723
-	eÎŞ = WM_NULL,
-	e´´½¨ = WM_CREATE,
-	eÏú»Ù = WM_DESTROY,
-	eÒÆ¶¯ = WM_MOVE,
-	e´óĞ¡ = WM_SIZE,
-	e»î¶¯ = WM_ACTIVATE,
-	eÉèÖÃ½¹µã = WM_SETFOCUS,
-	e×Ô¶¨Òå = WM_USER
+typedef WNDPROC tfçª—å£è¿‡ç¨‹;//è¡Œ:62
+enum class Eçª—å£æ¶ˆæ¯ : unsigned int {	//è¡Œ:1723
+	eæ—  = WM_NULL,
+	eåˆ›å»º = WM_CREATE,
+	eé”€æ¯ = WM_DESTROY,
+	eç§»åŠ¨ = WM_MOVE,
+	eå¤§å° = WM_SIZE,
+	eæ´»åŠ¨ = WM_ACTIVATE,
+	eè®¾ç½®ç„¦ç‚¹ = WM_SETFOCUS,
+	eè‡ªå®šä¹‰ = WM_USER
 };
-enum class E´°¿ÚÑùÊ½ : unsigned long {
-	e²ãµş = WS_OVERLAPPED,	//²úÉúÒ»¸ö²ãµşµÄ´°¿Ú¡£Ò»¸ö²ãµşµÄ´°¿ÚÓĞÒ»¸ö±êÌâÌõºÍÒ»¸ö±ß¿ò¡£ÓëWS_TILEDÑùÊ½ÏàÍ¬
-	eµ¯³ö = WS_POPUP,	//´´½¨Ò»¸öµ¯³öÊ½´°¿Ú¡£¸ÃÑùÊ½²»ÄÜÓëWS_CHLDÑùÊ½Í¬Ê±Ê¹ÓÃ
-	e×Ó = WS_CHILD,	//´´½¨Ò»¸ö×Ó´°¿Ú¡£Õâ¸öÑùÊ½²»ÄÜÓëWS_POPUPÑùÊ½ºÏÓÃ
-	e×î´ó»¯ = WS_MINIMIZE,	//´´½¨Ò»¸ö³õÊ¼×´Ì¬Îª×î´ó»¯×´Ì¬µÄ´°¿Ú
-	e¿É¼û = WS_VISIBLE,	//´´½¨Ò»¸ö³õÊ¼×´Ì¬Îª¿É¼ûµÄ´°¿Ú
-	e½ûÖ¹ = WS_DISABLED	//´´½¨Ò»¸ö³õÊ¼×´Ì¬Îª½ûÖ¹µÄ×Ó´°¿Ú
+enum class Eçª—å£æ ·å¼ : unsigned long {
+	eå±‚å  = WS_OVERLAPPED,	//äº§ç”Ÿä¸€ä¸ªå±‚å çš„çª—å£ã€‚ä¸€ä¸ªå±‚å çš„çª—å£æœ‰ä¸€ä¸ªæ ‡é¢˜æ¡å’Œä¸€ä¸ªè¾¹æ¡†ã€‚ä¸WS_TILEDæ ·å¼ç›¸åŒ
+	eå¼¹å‡º = WS_POPUP,	//åˆ›å»ºä¸€ä¸ªå¼¹å‡ºå¼çª—å£ã€‚è¯¥æ ·å¼ä¸èƒ½ä¸WS_CHLDæ ·å¼åŒæ—¶ä½¿ç”¨
+	eå­ = WS_CHILD,	//åˆ›å»ºä¸€ä¸ªå­çª—å£ã€‚è¿™ä¸ªæ ·å¼ä¸èƒ½ä¸WS_POPUPæ ·å¼åˆç”¨
+	eæœ€å¤§åŒ– = WS_MINIMIZE,	//åˆ›å»ºä¸€ä¸ªåˆå§‹çŠ¶æ€ä¸ºæœ€å¤§åŒ–çŠ¶æ€çš„çª—å£
+	eå¯è§ = WS_VISIBLE,	//åˆ›å»ºä¸€ä¸ªåˆå§‹çŠ¶æ€ä¸ºå¯è§çš„çª—å£
+	eç¦æ­¢ = WS_DISABLED	//åˆ›å»ºä¸€ä¸ªåˆå§‹çŠ¶æ€ä¸ºç¦æ­¢çš„å­çª—å£
 };
-enum class EÎÄ±¾¸ñÊ½ : unsigned long {	//ĞĞ:6594
-	e¶¥²¿ = DT_TOP,
-	e¾Ó×ó = DT_LEFT,
-	eË®Æ½¾ÓÖĞ = DT_CENTER,
-	e¾ÓÓÒ = DT_RIGHT,
-	e´¹Ö±¾ÓÖĞ = DT_VCENTER,
-	eµ×²¿ = DT_BOTTOM,
-	e×Ô¶¯»»ĞĞ = DT_WORDBREAK,
-	eµ¥ĞĞ = DT_SINGLELINE,
-	eÀ©Õ¹ÖÆ±í·û = DT_EXPANDTABS,
-	eÉèÖÃÖÆ±í = DT_TABSTOP,
-	e²»²Ã¼ô = DT_NOCLIP,
-	e°üº¬Íâ²¿±êÍ· = DT_EXTERNALLEADING,
-	eÈ·¶¨¾ØĞÎ = DT_CALCRECT,
-	e¹Ø±ÕÇ°×º = DT_NOPREFIX,
-	eÏµÍ³×ÖÌå¼ÆËã = DT_INTERNAL
+enum class Eæ–‡æœ¬æ ¼å¼ : unsigned long {	//è¡Œ:6594
+	eé¡¶éƒ¨ = DT_TOP,
+	eå±…å·¦ = DT_LEFT,
+	eæ°´å¹³å±…ä¸­ = DT_CENTER,
+	eå±…å³ = DT_RIGHT,
+	eå‚ç›´å±…ä¸­ = DT_VCENTER,
+	eåº•éƒ¨ = DT_BOTTOM,
+	eè‡ªåŠ¨æ¢è¡Œ = DT_WORDBREAK,
+	eå•è¡Œ = DT_SINGLELINE,
+	eæ‰©å±•åˆ¶è¡¨ç¬¦ = DT_EXPANDTABS,
+	eè®¾ç½®åˆ¶è¡¨ = DT_TABSTOP,
+	eä¸è£å‰ª = DT_NOCLIP,
+	eåŒ…å«å¤–éƒ¨æ ‡å¤´ = DT_EXTERNALLEADING,
+	eç¡®å®šçŸ©å½¢ = DT_CALCRECT,
+	eå…³é—­å‰ç¼€ = DT_NOPREFIX,
+	eç³»ç»Ÿå­—ä½“è®¡ç®— = DT_INTERNAL
 };
 //==============================================================================
-// ´°¿Ú¿ØÖÆ&¼ÆËã
+// çª—å£æ§åˆ¶&è®¡ç®—
 //==============================================================================
-void fs´°¿Ú´óĞ¡(HWND, int ¿í, int ¸ß);
-constexpr auto fs´°¿Ú±êÌâ = SetWindowTextW;
-std::pair<DWORD, DWORD> fg´°¿ÚÑùÊ½(HWND);
+void fsçª—å£å¤§å°(HWND, int å®½, int é«˜);
+constexpr auto fsçª—å£æ ‡é¢˜ = SetWindowTextW;
+std::pair<DWORD, DWORD> fgçª—å£æ ·å¼(HWND);
 //==============================================================================
 // winerror.h
 //==============================================================================
-inline void fÊ§°ÜÔòÅ×³ö(HRESULT hr) {
+inline void få¤±è´¥åˆ™æŠ›å‡º(HRESULT hr) {
 	if (FAILED(hr)) {
 		__debugbreak();
 		throw hr;
 	}
 }
-inline bool fi³É¹¦(HRESULT hr) {
+inline bool fiæˆåŠŸ(HRESULT hr) {
 	return SUCCEEDED(hr);
 }
-inline bool fiÊ§°Ü(HRESULT hr) {
+inline bool fiå¤±è´¥(HRESULT hr) {
 	return FAILED(hr);
 }
 //==============================================================================
-// COM×é¼ş¶ÔÏóÄ£ĞÍ
+// COMç»„ä»¶å¯¹è±¡æ¨¡å‹
 //==============================================================================
 /*
-template<typename t> concept TÎ´Öª = std::is_base_of<IUnknown, std::remove_pointer<t>::type>::value;
+template<typename t> concept TæœªçŸ¥ = std::is_base_of<IUnknown, std::remove_pointer<t>::type>::value;
 */
-template<typename t> void fÊÍ·Å(t &a¶ÔÏó) {
-	static_assert(std::is_base_of<IUnknown, std::remove_pointer<t>::type>::value, "±ØĞèÊÇIUnknownµÄÅÉÉúÀà");
-	if (a¶ÔÏó) {
-		a¶ÔÏó->Release();
-		a¶ÔÏó = nullptr;
+template<typename t> void fé‡Šæ”¾(t &aå¯¹è±¡) {
+	static_assert(std::is_base_of<IUnknown, std::remove_pointer<t>::type>::value, "å¿…éœ€æ˜¯IUnknownçš„æ´¾ç”Ÿç±»");
+	if (aå¯¹è±¡) {
+		aå¯¹è±¡->Release();
+		aå¯¹è±¡ = nullptr;
 	}
 }
-template<typename t> void fÊÍ·Å1(t *a¶ÔÏó, int a1) {
+template<typename t> void fé‡Šæ”¾1(t *aå¯¹è±¡, int a1) {
 	for (int i = 0; i < a1; ++i) {
-		fÊÍ·Å(a¶ÔÏó[i]);
+		fé‡Šæ”¾(aå¯¹è±¡[i]);
 	}
 }
-template<typename t> void fÊÍ·Å2(t *a¶ÔÏó, int a1, int a2) {
+template<typename t> void fé‡Šæ”¾2(t *aå¯¹è±¡, int a1, int a2) {
 	for (int i1 = 0; i1 < a1; ++i1) {
-		fÊÍ·Å1(a¶ÔÏó[i1], a2);
+		fé‡Šæ”¾1(aå¯¹è±¡[i1], a2);
 	}
 }
 //==============================================================================
-// Ê¹ÓÃÀà/½á¹¹
+// ä½¿ç”¨ç±»/ç»“æ„
 //==============================================================================
-//¼ÆÊ±Æ÷
-class C¼ÆÊ±Æ÷ {
+//è®¡æ—¶å™¨
+class Cè®¡æ—¶å™¨ {
 public:
-	C¼ÆÊ±Æ÷();
-	void fÖØÖÃ(float);	//µ¥Î»:Ãë
-	int fµÎ´ğ();
-	int fµ¥´ÎµÎ´ğ();
-	int fÓÎÏ·µÎ´ğ();	//Èç¹û¼ÆÊı´óÓÚ1Ôò±£Áô1´Îµ½ÏÂ´ÎµÎ´ğ
-	int fg´ÎÊı();		//µÃµ½ÉÏ´ÎµÎ´ğµÄ´ÎÊı
-	float fgÓÃÊ±();	//µ±Ç°³É¹¦µÎ´ğµÄÊµ¼Ê¹ıÈ¥Ê±¼ä
+	Cè®¡æ—¶å™¨();
+	void fé‡ç½®(float);	//å•ä½:ç§’
+	int fæ»´ç­”();
+	int få•æ¬¡æ»´ç­”();
+	int fæ¸¸æˆæ»´ç­”();	//å¦‚æœè®¡æ•°å¤§äº1åˆ™ä¿ç•™1æ¬¡åˆ°ä¸‹æ¬¡æ»´ç­”
+	int fgæ¬¡æ•°();		//å¾—åˆ°ä¸Šæ¬¡æ»´ç­”çš„æ¬¡æ•°
+	float fgç”¨æ—¶();	//å½“å‰æˆåŠŸæ»´ç­”çš„å®é™…è¿‡å»æ—¶é—´
 private:
-	void f¼ÆÊ±();
-	float mÊ±¼ä;
-	float m¼ÆÊ±;
-	float m¼ä¸ô;	//µÎ´ğ¼ä¸ô
-	float mÉÏ´ÎµÎ´ğ;	//ÉÏ´Î³É¹¦µÎ´ğµÄÊ±¼ä
-	float mÕâ´ÎµÎ´ğ;
-	int m´ÎÊı;
+	void fè®¡æ—¶();
+	float mæ—¶é—´;
+	float mè®¡æ—¶;
+	float mé—´éš”;	//æ»´ç­”é—´éš”
+	float mä¸Šæ¬¡æ»´ç­”;	//ä¸Šæ¬¡æˆåŠŸæ»´ç­”çš„æ—¶é—´
+	float mè¿™æ¬¡æ»´ç­”;
+	int mæ¬¡æ•°;
 };
-//¹Ø¼ü¶Î
-class C¹Ø¼ü¶Î {
+//å…³é”®æ®µ
+class Cå…³é”®æ®µ {
 public:
-	C¹Ø¼ü¶Î();
-	~C¹Ø¼ü¶Î();
-	void f½øÈë();
-	void fÀë¿ª();
+	Cå…³é”®æ®µ();
+	~Cå…³é”®æ®µ();
+	void fè¿›å…¥();
+	void fç¦»å¼€();
 private:
-	CRITICAL_SECTION m¹Ø¼ü¶Î;
+	CRITICAL_SECTION må…³é”®æ®µ;
 };
 //==============================================================================
-// ÑùÊ½&³ß´ç&×ø±ê
+// æ ·å¼&å°ºå¯¸&åæ ‡
 //==============================================================================
-//´°¿ÚÑùÊ½
-struct S´°¿ÚÑùÊ½ {
-	DWORD mÒ»°ã, mÀ©Õ¹;
-	static const S´°¿ÚÑùÊ½ c²ãµş´°¿Ú, cµ¯³ö´°¿Ú, c×Ó´°¿Ú, cÓÎÏ·´°¿Ú;
-	//Ò»°ãÑùÊ½
-	void fs²ãµş(bool);	//ÓĞÒ»¸ö±êÌâÀ¸ºÍ±ß¿ò
-	void fs±êÌâ(bool);
-	void fs²Ëµ¥(bool);
-	void fs×î°´Å¥(bool ´ó, bool Ğ¡);	//×î´ó»¯×îĞ¡»¯°´Å¥
-	void fs¹ö¶¯Ìõ(bool ´¹Ö±, bool Ë®Æ½);
-	//À©Õ¹ÑùÊ½
+//çª—å£æ ·å¼
+struct Sçª—å£æ ·å¼ {
+	DWORD mä¸€èˆ¬, mæ‰©å±•;
+	static const Sçª—å£æ ·å¼ cå±‚å çª—å£, cå¼¹å‡ºçª—å£, cå­çª—å£, cæ¸¸æˆçª—å£;
+	//ä¸€èˆ¬æ ·å¼
+	void fså±‚å (bool);	//æœ‰ä¸€ä¸ªæ ‡é¢˜æ å’Œè¾¹æ¡†
+	void fsæ ‡é¢˜(bool);
+	void fsèœå•(bool);
+	void fsæœ€æŒ‰é’®(bool å¤§, bool å°);	//æœ€å¤§åŒ–æœ€å°åŒ–æŒ‰é’®
+	void fsæ»šåŠ¨æ¡(bool å‚ç›´, bool æ°´å¹³);
+	//æ‰©å±•æ ·å¼
 };
-//¿Í»§Çø³ß´ç
-struct S¿Í»§Çø³ß´ç {
-	RECT m¾ØĞÎ;
-	S¿Í»§Çø³ß´ç(long, long);
-	S¿Í»§Çø³ß´ç(RECT);
-	static S¿Í»§Çø³ß´ç fc´°¿Ú(HWND);
-	static S¿Í»§Çø³ß´ç fc³ß´çÑùÊ½(long x, long y, DWORD ÑùÊ½, DWORD ÑùÊ½ex = 0);//¼ÆËã¿Í»§Çø³ß´ç,±äÁ¿ÓÃ×÷CreateWindowµÄ²ÎÊı
-	long fg¿í() const;
-	long fg¸ß() const;
-	float f³ıÒÔ³ß´ç(long, long) const;	//Ô­¿íºÍ¸ß³ıÒÔ²ÎÊıµÄ¿íºÍ¸ß,È¡×îĞ¡Öµ
+//å®¢æˆ·åŒºå°ºå¯¸
+struct Så®¢æˆ·åŒºå°ºå¯¸ {
+	RECT mçŸ©å½¢;
+	Så®¢æˆ·åŒºå°ºå¯¸(long, long);
+	Så®¢æˆ·åŒºå°ºå¯¸(RECT);
+	static Så®¢æˆ·åŒºå°ºå¯¸ fcçª—å£(HWND);
+	static Så®¢æˆ·åŒºå°ºå¯¸ fcå°ºå¯¸æ ·å¼(long x, long y, DWORD æ ·å¼, DWORD æ ·å¼ex = 0);//è®¡ç®—å®¢æˆ·åŒºå°ºå¯¸,å˜é‡ç”¨ä½œCreateWindowçš„å‚æ•°
+	long fgå®½() const;
+	long fgé«˜() const;
+	float fé™¤ä»¥å°ºå¯¸(long, long) const;	//åŸå®½å’Œé«˜é™¤ä»¥å‚æ•°çš„å®½å’Œé«˜,å–æœ€å°å€¼
 };
-//×ø±ê¼ÆËã
-class CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã {
+//åæ ‡è®¡ç®—
+class Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®— {
 public:
-	CÆÁÄ»×ø±êµ½¿Í»§Çø×ø±ê¼ÆËã(HWND);
-	long f´°¿Ú×ø±êxl(long) const;
-	long f´°¿Ú×ø±êyl(long) const;
-	float f´°¿Ú×ø±êxf(float) const;
-	float f´°¿Ú×ø±êyf(float) const;
-	long fÖ±½Ç×ø±êxl(long) const;
-	long fÖ±½Ç×ø±êyl(long) const;
-	float fÖ±½Ç×ø±êxf(float) const;
-	float fÖ±½Ç×ø±êyf(float) const;
-	RECT m¿Í»§Çø, m´°¿ÚÇø;
-	long m±ß¿ò;
+	Cå±å¹•åæ ‡åˆ°å®¢æˆ·åŒºåæ ‡è®¡ç®—(HWND);
+	long fçª—å£åæ ‡xl(long) const;
+	long fçª—å£åæ ‡yl(long) const;
+	float fçª—å£åæ ‡xf(float) const;
+	float fçª—å£åæ ‡yf(float) const;
+	long fç›´è§’åæ ‡xl(long) const;
+	long fç›´è§’åæ ‡yl(long) const;
+	float fç›´è§’åæ ‡xf(float) const;
+	float fç›´è§’åæ ‡yf(float) const;
+	RECT må®¢æˆ·åŒº, mçª—å£åŒº;
+	long mè¾¹æ¡†;
 };
 //==============================================================================
-// ÈÎÎñÀ¸°´Å¥
+// ä»»åŠ¡æ æŒ‰é’®
 //==============================================================================
-class CÈÎÎñÀ¸°´Å¥ {
+class Cä»»åŠ¡æ æŒ‰é’® {
 public:
-	enum E×´Ì¬ {
-		eÎŞ,
-		e²»È·¶¨,
-		eÕı³£,
-		e´íÎó,
-		eÔİÍ£,
+	enum EçŠ¶æ€ {
+		eæ— ,
+		eä¸ç¡®å®š,
+		eæ­£å¸¸,
+		eé”™è¯¯,
+		eæš‚åœ,
 	};
-	static const TBPFLAG c×´Ì¬Ó³Éä[];
-	void f³õÊ¼»¯(HWND);
-	void fs×´Ì¬(int);
-	void fs½ø¶È(double);
-	TBPFLAG fg×´Ì¬±ê¼Ç() const;
-	void fË¢ĞÂ();
-	static UINT f×¢²áÏûÏ¢();
+	static const TBPFLAG cçŠ¶æ€æ˜ å°„[];
+	void fåˆå§‹åŒ–(HWND);
+	void fsçŠ¶æ€(int);
+	void fsè¿›åº¦(double);
+	TBPFLAG fgçŠ¶æ€æ ‡è®°() const;
+	void fåˆ·æ–°();
+	static UINT fæ³¨å†Œæ¶ˆæ¯();
 private:
-	HWND m´°¿Ú = nullptr;
-	ComPtr<ITaskbarList3> mÈÎÎñÀ¸;
-	int m×´Ì¬ = 0;
-	double m½ø¶È = 0;
+	HWND mçª—å£ = nullptr;
+	ComPtr<ITaskbarList3> mä»»åŠ¡æ ;
+	int mçŠ¶æ€ = 0;
+	double mè¿›åº¦ = 0;
 };
 //==============================================================================
-// »·¾³
+// ç¯å¢ƒ
 //==============================================================================
-class C»·¾³ {
+class Cç¯å¢ƒ {
 public:
-	static SYSTEM_INFO &fgÏµÍ³ĞÅÏ¢();
-	static std::wstring fg¼ÆËã»úÃû³Æ();
-	static std::wstring fgÓÃ»§Ãû³Æ();
-	static std::wstring fgÖ´ĞĞ³ÌĞòÄ¿Â¼();
-	static std::wstring fgÖ´ĞĞ³ÌĞòÂ·¾¶();
-	static std::wstring fg¹¤×÷Ä¿Â¼();
-	static int fg´¦ÀíÆ÷ÊıÁ¿();
-	static UINT fgÃ¿Ó¢´çµãÊı();
-	static float fgËõ·Å();
+	static SYSTEM_INFO &fgç³»ç»Ÿä¿¡æ¯();
+	static std::wstring fgè®¡ç®—æœºåç§°();
+	static std::wstring fgç”¨æˆ·åç§°();
+	static std::wstring fgæ‰§è¡Œç¨‹åºç›®å½•();
+	static std::wstring fgæ‰§è¡Œç¨‹åºè·¯å¾„();
+	static std::wstring fgå·¥ä½œç›®å½•();
+	static int fgå¤„ç†å™¨æ•°é‡();
+	static UINT fgæ¯è‹±å¯¸ç‚¹æ•°();
+	static float fgç¼©æ”¾();
 };
 //==============================================================================
-// ÊäÈë·¨
+// è¾“å…¥æ³•
 //==============================================================================
-class CÊäÈë·¨¿ª¹Ø {
+class Cè¾“å…¥æ³•å¼€å…³ {
 public:
-	void f³õÊ¼»¯(HWND);
-	void f¿ª¹Ø(bool);
-	void f¿ªÆô();
-	void f¹Ø±Õ();
+	void fåˆå§‹åŒ–(HWND);
+	void få¼€å…³(bool);
+	void få¼€å¯();
+	void få…³é—­();
 private:
-	HWND m´°¿Ú = nullptr;
-	HIMC mÊäÈë·¨ = nullptr;
+	HWND mçª—å£ = nullptr;
+	HIMC mè¾“å…¥æ³• = nullptr;
 };
 //==============================================================================
-// ÇøÓò
+// åŒºåŸŸ
 //==============================================================================
-class CÓïÑÔÇøÓò {
+class Cè¯­è¨€åŒºåŸŸ {
 public:
-	static LANGID fÌáÈ¡Ö÷ÓïÑÔ±êÊ¶(LANGID);
-	static LANGID fÌáÈ¡×ÓÓïÑÔ±êÊ¶(LANGID);
-	static LANGID fºÏ²¢ÓïÑÔ±êÊ¶(LANGID Ö÷, LANGID ×Ó);
-	static LANGID fgÓïÑÔ±êÊ¶();
-	static std::wstring fgÓïÑÔÃû³Æ();
+	static LANGID fæå–ä¸»è¯­è¨€æ ‡è¯†(LANGID);
+	static LANGID fæå–å­è¯­è¨€æ ‡è¯†(LANGID);
+	static LANGID fåˆå¹¶è¯­è¨€æ ‡è¯†(LANGID ä¸», LANGID å­);
+	static LANGID fgè¯­è¨€æ ‡è¯†();
+	static std::wstring fgè¯­è¨€åç§°();
 };
-}	//namespace cflw::ÊÓ´°
+}	//namespace cflw::è§†çª—

@@ -549,7 +549,7 @@ C修改路径几何::~C修改路径几何() {
 }
 void C修改路径几何::f结束() {
 	if (m几何槽) {
-		if (mw开始) {
+		if (mi开始) {
 			m几何槽->EndFigure(D2D1_FIGURE_END_OPEN);
 		}
 		m几何槽->Close();
@@ -557,10 +557,10 @@ void C修改路径几何::f结束() {
 	}
 }
 void C修改路径几何::f点(const 数学::S向量2 &a) {
-	if (!mw开始) {
+	if (!mi开始) {
 		m几何槽->BeginFigure(m坐标计算->f点(a), D2D1_FIGURE_BEGIN_HOLLOW);
 		m当前点 = a;
-		mw开始 = true;
+		mi开始 = true;
 	}
 	if (m当前点 != a) {
 		m几何槽->AddLine(m坐标计算->f点(a));
@@ -587,9 +587,9 @@ void C修改路径几何::f圆弧(const 数学::S向量2 &a圆心, float a半径
 	m当前点 = v结束点;
 }
 void C修改路径几何::f连续直线(const std::vector<数学::S向量2> &a) {
-	if (!mw开始) {
+	if (!mi开始) {
 		m几何槽->BeginFigure(m坐标计算->f点(a[0]), D2D1_FIGURE_BEGIN_HOLLOW);
-		mw开始 = true;
+		mi开始 = true;
 	} else {
 		m几何槽->AddLine(m坐标计算->f点(a[0]));
 	}
@@ -605,29 +605,29 @@ void C修改路径几何::f平滑曲线(const std::vector<数学::S向量2> &a) 
 	for (const 数学::S向量2 &v : a) {
 		v点.push_back(m坐标计算->f点(v));
 	}
-	const int n = v点.size();
+	const size_t n = v点.size();
 	std::vector<D2D1_POINT_2F> v控制点1(n - 1);
 	std::vector<D2D1_POINT_2F> v控制点2(n - 1);
 	GetCurveControlPoints(v点, v控制点1, v控制点2);
-	if (!mw开始) {
+	if (!mi开始) {
 		m几何槽->BeginFigure(v点[0], D2D1_FIGURE_BEGIN_HOLLOW);
-		mw开始 = true;
+		mi开始 = true;
 	} else {
 		m几何槽->AddLine(v点[0]);
 	}
-	for (int i = 1; i != n; ++i) {
+	for (size_t i = 1; i != n; ++i) {
 		m几何槽->AddBezier(D2D1::BezierSegment(v控制点1[i - 1], v控制点2[i - 1], v点[i]));
 	}
 }
 void C修改路径几何::f闭合() {
-	assert(mw开始);
+	assert(mi开始);
 	m几何槽->EndFigure(D2D1_FIGURE_END_CLOSED);
-	mw开始 = false;
+	mi开始 = false;
 }
 void C修改路径几何::f断开() {
-	assert(mw开始);
+	assert(mi开始);
 	m几何槽->EndFigure(D2D1_FIGURE_END_OPEN);
-	mw开始 = false;
+	mi开始 = false;
 }
 
 //==============================================================================

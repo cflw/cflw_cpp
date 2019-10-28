@@ -1,57 +1,57 @@
-#pragma once
+ï»¿#pragma once
 #include <assert.h>
 #include <memory>
 #include <utility>
 #ifdef _DEBUG
-constexpr bool cµ÷ÊÔ = true;
+constexpr bool cè°ƒè¯• = true;
 #else
-constexpr bool cµ÷ÊÔ = false;
+constexpr bool cè°ƒè¯• = false;
 #endif
-namespace cflw::¸¨Öú {
-//É¾³ıÖ¸Õë
-template<typename t> inline void fÉ¾³ı(t *&p) {
-	if (p) {
-		delete p;
-		p = nullptr;
+namespace cflw::è¾…åŠ© {
+//åˆ é™¤æŒ‡é’ˆ
+template<typename t> inline void fåˆ é™¤(t *&a) {
+	if (a) {
+		delete a;
+		a = nullptr;
 	}
 }
-//É¾³ıÊı×é
-template<typename t> inline void fÉ¾³ıÊı×é(t *&p) {
-	if(p) {
-		delete[] p;
-		p = nullptr;
+//åˆ é™¤æ•°ç»„
+template<typename t> inline void fåˆ é™¤æ•°ç»„(t *&a) {
+	if(a) {
+		delete[] a;
+		a = nullptr;
 	}
 }
-//Ç¿ÖÆÉ¾³ı
-template<typename t> inline void fÇ¿ÖÆÉ¾³ı(t *&p) {
-	delete p;
-	p = nullptr;
+//å¼ºåˆ¶åˆ é™¤
+template<typename t> inline void få¼ºåˆ¶åˆ é™¤(t *&a) {
+	delete a;
+	a = nullptr;
 }
-//È¡Êı×éÔªËØÊıÁ¿
-template<typename t> inline size_t fÊı×éÊıÁ¿(const t &) {
+//å–æ•°ç»„å…ƒç´ æ•°é‡
+template<typename t> inline size_t fæ•°ç»„æ•°é‡(const t &) {
 	return sizeof(t) / sizeof(**(t*)nullptr);
 }
-//ÊÇ·ñÎŞ·ûºÅÀàĞÍ
-template<typename t> inline bool fiÎŞ·ûºÅ(const t&) {
+//æ˜¯å¦æ— ç¬¦å·ç±»å‹
+template<typename t> inline bool fiæ— ç¬¦å·(const t&) {
 	return (t)-1 > 0;
 }
-//Î»¼ÆËã
-template <typename t> inline t fÎ»¸³Öµ(const t &Ô´Öµ, const t &ĞŞ¸ÄÎ», const unsigned char &Öµ) {
-	return (Öµ) ? (Ô´Öµ | ĞŞ¸ÄÎ») : (Ô´Öµ & (~ĞŞ¸ÄÎ»));
+//ä½è®¡ç®—
+template <typename t> inline t fä½èµ‹å€¼(const t &æºå€¼, const t &ä¿®æ”¹ä½, const unsigned char &å€¼) {
+	return (å€¼) ? (æºå€¼ | ä¿®æ”¹ä½) : (æºå€¼ & (~ä¿®æ”¹ä½));
 }
-template <typename t> inline t fÎ»ÅĞ¶Ï(const t &Ô´Öµ, const t &ÅĞ¶ÏÎ») {
-	return Ô´Öµ & ÅĞ¶ÏÎ»;
+template <typename t> inline t fä½åˆ¤æ–­(const t &æºå€¼, const t &åˆ¤æ–­ä½) {
+	return æºå€¼ & åˆ¤æ–­ä½;
 }
-//ÄÚ´æÇå¿Õ
-template<typename t> inline void fÇåÁã(t &p) {
-	memset((void*)&p, 0, sizeof(p));
+//å†…å­˜æ¸…ç©º
+template<typename t> inline void fæ¸…é›¶(t &a) {
+	memset((void*)&a, 0, sizeof(a));
 }
-//±È½Ï2¸öÖµ£¬Èç¹û²»ÏàµÈÔò°ÑºóÃæ¸³¸øÇ°Ãæ
-template<typename t> inline bool f²»µÈÔò¸³Öµ(t &p0, const t &p1) {
+//æ¯”è¾ƒ2ä¸ªå€¼ï¼Œå¦‚æœä¸ç›¸ç­‰åˆ™æŠŠåé¢èµ‹ç»™å‰é¢
+template<typename t> inline bool fä¸ç­‰åˆ™èµ‹å€¼(t &p0, const t &p1) {
 	if (p0 != p1) {
 		p0 = p1;
 		return true;
 	}
 	return false;
 }
-}	//namespace cflw::¸¨Öú
+}	//namespace cflw::è¾…åŠ©

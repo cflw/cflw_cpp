@@ -1,18 +1,18 @@
-#pragma once
+ï»¿#pragma once
 #include <exception>
 #include <stdexcept>
-namespace cflw::Òì³£ {
-//±ê×¼¿âÒì³£±ğÃû
-using X²ÎÊı = std::invalid_argument;
-//Î´ÊµÏÖ
-class XÎ´ÊµÏÖ : public std::runtime_error {
+namespace cflw::å¼‚å¸¸ {
+//æ ‡å‡†åº“å¼‚å¸¸åˆ«å
+using Xå‚æ•° = std::invalid_argument;
+//æœªå®ç°
+class Xæœªå®ç° : public std::runtime_error {
 public:
-	XÎ´ÊµÏÖ();
+	Xæœªå®ç°();
 };
 //HRESULT
-class XÊÓ´° : public std::runtime_error {
+class Xè§†çª— : public std::runtime_error {
 public:
-	XÊÓ´°(long);
-	long mÖµ;
+	Xè§†çª—(long);
+	long må€¼;
 };
-}	//namespace cflw::Òì³£
+}	//namespace cflw::å¼‚å¸¸

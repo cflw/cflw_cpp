@@ -1,219 +1,219 @@
-#include <assert.h>
-#include "cflwÊäÈë_di8.h"
-#include "cflwÊıÑ§.h"
-namespace cflw::ÊäÈë::di8 {
+ï»¿#include <assert.h>
+#include "cflwè¾“å…¥_di8.h"
+#include "cflwæ•°å­¦.h"
+namespace cflw::è¾“å…¥::di8 {
 //==============================================================================
-// º¯Êı
+// å‡½æ•°
 //==============================================================================
-void f°´¼üÅĞ¶Ï(bool *aÊı×é, BYTE *aÊı¾İ, int pÊıÁ¿) {
-	for (int i = 0; i != pÊıÁ¿; ++i) {
-		aÊı×é[i] = (bool)(aÊı¾İ[i] & 0x80);
+void fæŒ‰é”®åˆ¤æ–­(bool *aæ•°ç»„, BYTE *aæ•°æ®, int pæ•°é‡) {
+	for (int i = 0; i != pæ•°é‡; ++i) {
+		aæ•°ç»„[i] = (bool)(aæ•°æ®[i] & 0x80);
 	}
 }
 //==============================================================================
-// Àà¶¨Òå
+// ç±»å®šä¹‰
 //==============================================================================
-// ¼üÅÌ
-class C¼üÅÌ : public I¼üÅÌ {
-	friend class CÊäÈë;
+// é”®ç›˜
+class Cé”®ç›˜ : public Ié”®ç›˜ {
+	friend class Cè¾“å…¥;
 public:
-	S°´¼ü f°´¼ü(tË÷Òı i) const override;
-	void f¸üĞÂ() override;
+	SæŒ‰é”® fæŒ‰é”®(tç´¢å¼• i) const override;
+	void fæ›´æ–°() override;
 private:
-	ComPtr<IDirectInputDevice8W> mÉè±¸;
-	C°´¼ü×é m°´¼ü{c°´¼üÊıÁ¿};
+	ComPtr<IDirectInputDevice8W> mè®¾å¤‡;
+	CæŒ‰é”®ç»„ mæŒ‰é”®{cæŒ‰é”®æ•°é‡};
 };
-// Êó±ê
-class CÊó±ê : public IÊó±ê {
-	friend class CÊäÈë;
+// é¼ æ ‡
+class Cé¼ æ ‡ : public Ié¼ æ ‡ {
+	friend class Cè¾“å…¥;
 public:
-	static const size_t c°´¼üÊıÁ¿ = 4;
-	CÊó±ê();
-	S°´¼ü f°´¼ü(tË÷Òı i) const override;
-	S·½Ïò f×ø±ê() const override;
-	S·½Ïò fÒÆ¶¯() const override;
-	S·½Ïò f¹öÂÖ() const override;
-	void f¸üĞÂ() override;
+	static const size_t cæŒ‰é”®æ•°é‡ = 4;
+	Cé¼ æ ‡();
+	SæŒ‰é”® fæŒ‰é”®(tç´¢å¼• i) const override;
+	Sæ–¹å‘ fåæ ‡() const override;
+	Sæ–¹å‘ fç§»åŠ¨() const override;
+	Sæ–¹å‘ fæ»šè½®() const override;
+	void fæ›´æ–°() override;
 private:
-	ComPtr<IDirectInputDevice8W> mÉè±¸;
-	C°´¼ü×é m°´¼ü{c°´¼üÊıÁ¿};
-	float mÒÆ¶¯[3];
+	ComPtr<IDirectInputDevice8W> mè®¾å¤‡;
+	CæŒ‰é”®ç»„ mæŒ‰é”®{cæŒ‰é”®æ•°é‡};
+	float mç§»åŠ¨[3];
 };
-// ÊÖ±ú
-class CÊÖ±ú : public IÊÖ±ú {
-	friend class CÊäÈë;
+// æ‰‹æŸ„
+class Cæ‰‹æŸ„ : public Iæ‰‹æŸ„ {
+	friend class Cè¾“å…¥;
 public:
-	static const size_t c°´¼üÊıÁ¿ = 32;
-	S°´¼ü f°´¼ü(tË÷Òı) const override;
-	S·½Ïò f·½Ïò(tË÷Òı) const override;
-	float f´¥·¢(tË÷Òı) const override;
-	void f¸üĞÂ() override;
+	static const size_t cæŒ‰é”®æ•°é‡ = 32;
+	SæŒ‰é”® fæŒ‰é”®(tç´¢å¼•) const override;
+	Sæ–¹å‘ fæ–¹å‘(tç´¢å¼•) const override;
+	float fè§¦å‘(tç´¢å¼•) const override;
+	void fæ›´æ–°() override;
 private:
-	ComPtr<IDirectInputDevice8W> mÉè±¸;
-	C°´¼ü×é m°´¼ü{c°´¼üÊıÁ¿};
-	C·½Ïò3 mÒ¡¸Ë, mÓÒÒ¡¸Ë;
+	ComPtr<IDirectInputDevice8W> mè®¾å¤‡;
+	CæŒ‰é”®ç»„ mæŒ‰é”®{cæŒ‰é”®æ•°é‡};
+	Cæ–¹å‘3 mæ‘‡æ†, må³æ‘‡æ†;
 };
 //==============================================================================
-// ÊäÈëÒıÇæ
+// è¾“å…¥å¼•æ“
 //==============================================================================
-CÊäÈë *CÊäÈë::gÕâ = nullptr;
-CÊäÈë::CÊäÈë() {
-	gÕâ = this;
+Cè¾“å…¥ *Cè¾“å…¥::gè¿™ = nullptr;
+Cè¾“å…¥::Cè¾“å…¥() {
+	gè¿™ = this;
 }
-CÊäÈë::~CÊäÈë() {
-	fÊÍ·Å½¹µã();
+Cè¾“å…¥::~Cè¾“å…¥() {
+	fé‡Šæ”¾ç„¦ç‚¹();
 }
-HRESULT CÊäÈë::f³õÊ¼»¯(HINSTANCE aÊµÀı, HWND a´°¿Ú) {
+HRESULT Cè¾“å…¥::fåˆå§‹åŒ–(HINSTANCE aå®ä¾‹, HWND açª—å£) {
 	HRESULT hr;
-	hr = DirectInput8Create(aÊµÀı, DIRECTINPUT_VERSION, IID_IDirectInput8W, (void**)&m½Ó¿Ú, nullptr);
+	hr = DirectInput8Create(aå®ä¾‹, DIRECTINPUT_VERSION, IID_IDirectInput8W, (void**)&mæ¥å£, nullptr);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	m´°¿Ú = a´°¿Ú;
+	mçª—å£ = açª—å£;
 	return S_OK;
 }
-void CÊäÈë::f´°¿ÚÏûÏ¢(UINT aÏûÏ¢, WPARAM w) {
-	switch (aÏûÏ¢) {
+void Cè¾“å…¥::fçª—å£æ¶ˆæ¯(UINT aæ¶ˆæ¯, WPARAM w) {
+	switch (aæ¶ˆæ¯) {
 	case WM_ACTIVATE:
-		if (w == WA_INACTIVE) {//ÊÍ·Å½¹µã
-			fÊÍ·Å½¹µã();
-		} else {//»ñµÃ½¹µã
-			f»ñµÃ½¹µã();
+		if (w == WA_INACTIVE) {//é‡Šæ”¾ç„¦ç‚¹
+			fé‡Šæ”¾ç„¦ç‚¹();
+		} else {//è·å¾—ç„¦ç‚¹
+			fè·å¾—ç„¦ç‚¹();
 		}
 		break;
 	}
 }
-void CÊäÈë::f»ñµÃ½¹µã() {
-	if(m¼üÅÌ) m¼üÅÌ->mÉè±¸->Acquire();
-	if(mÊó±ê) mÊó±ê->mÉè±¸->Acquire();
-	if(mÊÖ±ú) mÊÖ±ú->mÉè±¸->Acquire();
+void Cè¾“å…¥::fè·å¾—ç„¦ç‚¹() {
+	if(mé”®ç›˜) mé”®ç›˜->mè®¾å¤‡->Acquire();
+	if(mé¼ æ ‡) mé¼ æ ‡->mè®¾å¤‡->Acquire();
+	if(mæ‰‹æŸ„) mæ‰‹æŸ„->mè®¾å¤‡->Acquire();
 }
-void CÊäÈë::fÊÍ·Å½¹µã() {
-	if(m¼üÅÌ) m¼üÅÌ->mÉè±¸->Unacquire();
-	if(mÊó±ê) mÊó±ê->mÉè±¸->Unacquire();
-	if(mÊÖ±ú) mÊÖ±ú->mÉè±¸->Unacquire();
+void Cè¾“å…¥::fé‡Šæ”¾ç„¦ç‚¹() {
+	if(mé”®ç›˜) mé”®ç›˜->mè®¾å¤‡->Unacquire();
+	if(mé¼ æ ‡) mé¼ æ ‡->mè®¾å¤‡->Unacquire();
+	if(mæ‰‹æŸ„) mæ‰‹æŸ„->mè®¾å¤‡->Unacquire();
 }
-void CÊäÈë::f¸üĞÂ () {
-	if (m¼üÅÌ) {
-		m¼üÅÌ->f¸üĞÂ();
+void Cè¾“å…¥::fæ›´æ–° () {
+	if (mé”®ç›˜) {
+		mé”®ç›˜->fæ›´æ–°();
 	}
-	if (mÊó±ê) {
-		mÊó±ê->f¸üĞÂ();
+	if (mé¼ æ ‡) {
+		mé¼ æ ‡->fæ›´æ–°();
 	}
-	if (mÊÖ±ú) {
-		mÊÖ±ú->f¸üĞÂ();
+	if (mæ‰‹æŸ„) {
+		mæ‰‹æŸ„->fæ›´æ–°();
 	}
 }
-HRESULT CÊäÈë::f´´½¨¼üÅÌ(tp¼üÅÌ &a¼üÅÌ) {
-	if (m¼üÅÌ) {
-		a¼üÅÌ = m¼üÅÌ;	//¼üÅÌÒÑ´æÔÚ
+HRESULT Cè¾“å…¥::fåˆ›å»ºé”®ç›˜(tpé”®ç›˜ &aé”®ç›˜) {
+	if (mé”®ç›˜) {
+		aé”®ç›˜ = mé”®ç›˜;	//é”®ç›˜å·²å­˜åœ¨
 		return S_OK;
 	}
-	std::shared_ptr<C¼üÅÌ> vĞÂ¼üÅÌ = std::make_shared<C¼üÅÌ>();
+	std::shared_ptr<Cé”®ç›˜> væ–°é”®ç›˜ = std::make_shared<Cé”®ç›˜>();
 	HRESULT hr;
-	hr = m½Ó¿Ú->CreateDevice(GUID_SysKeyboard, &m¼üÅÌ->mÉè±¸, nullptr);
+	hr = mæ¥å£->CreateDevice(GUID_SysKeyboard, &mé”®ç›˜->mè®¾å¤‡, nullptr);
 	if(FAILED(hr)) {
 		return hr;
 	}
-	hr = m¼üÅÌ->mÉè±¸->SetDataFormat(&c_dfDIKeyboard);
+	hr = mé”®ç›˜->mè®¾å¤‡->SetDataFormat(&c_dfDIKeyboard);
 	if(FAILED(hr)){
 		return hr;
 	}
-	const DWORD cĞ­×÷Ä£Ê½ = DISCL_NONEXCLUSIVE | DISCL_FOREGROUND;
-	hr = m¼üÅÌ->mÉè±¸->SetCooperativeLevel(m´°¿Ú, cĞ­×÷Ä£Ê½);
+	const DWORD cåä½œæ¨¡å¼ = DISCL_NONEXCLUSIVE | DISCL_FOREGROUND;
+	hr = mé”®ç›˜->mè®¾å¤‡->SetCooperativeLevel(mçª—å£, cåä½œæ¨¡å¼);
 	if(FAILED(hr)) {
 		return hr;
 	}
-	DIPROPDWORD vÊôĞÔ;
-	vÊôĞÔ.diph.dwSize = sizeof(DIPROPDWORD); 
-	vÊôĞÔ.diph.dwHeaderSize = sizeof(DIPROPHEADER); 
-	vÊôĞÔ.diph.dwObj = 0; 
-	vÊôĞÔ.diph.dwHow = DIPH_DEVICE; 
-	vÊôĞÔ.dwData = DINPUT_BUFFERSIZE; 
-	hr = m¼üÅÌ->mÉè±¸->SetProperty(DIPROP_BUFFERSIZE, &vÊôĞÔ.diph);
+	DIPROPDWORD vå±æ€§;
+	vå±æ€§.diph.dwSize = sizeof(DIPROPDWORD); 
+	vå±æ€§.diph.dwHeaderSize = sizeof(DIPROPHEADER); 
+	vå±æ€§.diph.dwObj = 0; 
+	vå±æ€§.diph.dwHow = DIPH_DEVICE; 
+	vå±æ€§.dwData = DINPUT_BUFFERSIZE; 
+	hr = mé”®ç›˜->mè®¾å¤‡->SetProperty(DIPROP_BUFFERSIZE, &vå±æ€§.diph);
 	if(FAILED(hr)) {
 		return hr;
 	}
-	vĞÂ¼üÅÌ->mÉè±¸->Acquire();
-	m¼üÅÌ = std::move(vĞÂ¼üÅÌ);
-	a¼üÅÌ = m¼üÅÌ;
+	væ–°é”®ç›˜->mè®¾å¤‡->Acquire();
+	mé”®ç›˜ = std::move(væ–°é”®ç›˜);
+	aé”®ç›˜ = mé”®ç›˜;
 	return S_OK;
 }
-HRESULT CÊäÈë::f´´½¨Êó±ê(tpÊó±ê &aÊó±ê) {
-	if (mÊó±ê) {
-		aÊó±ê = mÊó±ê;	//Êó±êÒÑ´æÔÚ
+HRESULT Cè¾“å…¥::fåˆ›å»ºé¼ æ ‡(tpé¼ æ ‡ &aé¼ æ ‡) {
+	if (mé¼ æ ‡) {
+		aé¼ æ ‡ = mé¼ æ ‡;	//é¼ æ ‡å·²å­˜åœ¨
 		return S_OK;
 	}
-	std::shared_ptr<CÊó±ê> vĞÂÊó±ê = std::make_shared<CÊó±ê>();
+	std::shared_ptr<Cé¼ æ ‡> væ–°é¼ æ ‡ = std::make_shared<Cé¼ æ ‡>();
 	HRESULT hr;
-	hr = m½Ó¿Ú->CreateDevice(GUID_SysMouse, &vĞÂÊó±ê->mÉè±¸, nullptr);
+	hr = mæ¥å£->CreateDevice(GUID_SysMouse, &væ–°é¼ æ ‡->mè®¾å¤‡, nullptr);
 	if (FAILED(hr)) {
-		return hr;	//´´½¨Ê§°Ü
+		return hr;	//åˆ›å»ºå¤±è´¥
 	}
-	const DWORD cĞ­×÷Ä£Ê½ = DISCL_NONEXCLUSIVE | DISCL_FOREGROUND;
-	hr = vĞÂÊó±ê->mÉè±¸->SetCooperativeLevel(m´°¿Ú, cĞ­×÷Ä£Ê½);
+	const DWORD cåä½œæ¨¡å¼ = DISCL_NONEXCLUSIVE | DISCL_FOREGROUND;
+	hr = væ–°é¼ æ ‡->mè®¾å¤‡->SetCooperativeLevel(mçª—å£, cåä½œæ¨¡å¼);
 	if(FAILED(hr)) {
 		return hr;
 	}
-	hr = vĞÂÊó±ê->mÉè±¸->SetDataFormat(&c_dfDIMouse)!=DI_OK;
+	hr = væ–°é¼ æ ‡->mè®¾å¤‡->SetDataFormat(&c_dfDIMouse)!=DI_OK;
 	if(FAILED(hr)) {
 		return hr;
 	}
-	vĞÂÊó±ê->mÉè±¸->Acquire();
-	mÊó±ê = std::move(vĞÂÊó±ê);
-	aÊó±ê = mÊó±ê;
+	væ–°é¼ æ ‡->mè®¾å¤‡->Acquire();
+	mé¼ æ ‡ = std::move(væ–°é¼ æ ‡);
+	aé¼ æ ‡ = mé¼ æ ‡;
 	return S_OK;
 }
-HRESULT CÊäÈë::f´´½¨ÊÖ±ú(tpÊÖ±ú &aÊÖ±ú) {
-	if (mÊÖ±ú) {
-		aÊÖ±ú = mÊÖ±ú;	//ÊÖ±úÒÑ´æÔÚ
+HRESULT Cè¾“å…¥::fåˆ›å»ºæ‰‹æŸ„(tpæ‰‹æŸ„ &aæ‰‹æŸ„) {
+	if (mæ‰‹æŸ„) {
+		aæ‰‹æŸ„ = mæ‰‹æŸ„;	//æ‰‹æŸ„å·²å­˜åœ¨
 		return S_OK;
 	}
-	std::shared_ptr<CÊÖ±ú> vĞÂÊÖ±ú = std::make_shared<CÊÖ±ú>();
+	std::shared_ptr<Cæ‰‹æŸ„> væ–°æ‰‹æŸ„ = std::make_shared<Cæ‰‹æŸ„>();
 	HRESULT hr;
-	hr = m½Ó¿Ú->EnumDevices(DI8DEVCLASS_GAMECTRL, f»Øµ÷ÊÖ±ú, vĞÂÊÖ±ú->mÉè±¸.GetAddressOf(), DIEDFL_ATTACHEDONLY);
-	if (FAILED(hr)) {	//´´½¨Ê§°Ü
+	hr = mæ¥å£->EnumDevices(DI8DEVCLASS_GAMECTRL, få›è°ƒæ‰‹æŸ„, væ–°æ‰‹æŸ„->mè®¾å¤‡.GetAddressOf(), DIEDFL_ATTACHEDONLY);
+	if (FAILED(hr)) {	//åˆ›å»ºå¤±è´¥
 		return hr;
 	}
-	if (vĞÂÊÖ±ú->mÉè±¸ == nullptr) {	//Ã»ÓĞ°²×°ÊÖ±ú
+	if (væ–°æ‰‹æŸ„->mè®¾å¤‡ == nullptr) {	//æ²¡æœ‰å®‰è£…æ‰‹æŸ„
 		return S_FALSE;
 	}
-	//ÉèÖÃÊı¾İ¸ñÊ½
-	hr = vĞÂÊÖ±ú->mÉè±¸->SetDataFormat(&c_dfDIJoystick);
+	//è®¾ç½®æ•°æ®æ ¼å¼
+	hr = væ–°æ‰‹æŸ„->mè®¾å¤‡->SetDataFormat(&c_dfDIJoystick);
 	if(FAILED(hr)) {
 		return hr;
 	}
-	//ÉèÖÃĞ­×÷Ä£Ê½
-	const DWORD cĞ­×÷Ä£Ê½ = DISCL_NONEXCLUSIVE | DISCL_FOREGROUND;
-	hr = vĞÂÊÖ±ú->mÉè±¸->SetCooperativeLevel(m´°¿Ú, cĞ­×÷Ä£Ê½);
+	//è®¾ç½®åä½œæ¨¡å¼
+	const DWORD cåä½œæ¨¡å¼ = DISCL_NONEXCLUSIVE | DISCL_FOREGROUND;
+	hr = væ–°æ‰‹æŸ„->mè®¾å¤‡->SetCooperativeLevel(mçª—å£, cåä½œæ¨¡å¼);
 	if(FAILED(hr)) {
 		return hr;
 	}
-	//ÉèÖÃÒ¡¸Ë
-	DIPROPRANGE vÒ¡¸Ë·¶Î§;
-	vÒ¡¸Ë·¶Î§.diph.dwSize = sizeof(DIPROPRANGE);
-	vÒ¡¸Ë·¶Î§.diph.dwHeaderSize = sizeof(DIPROPHEADER);
-	vÒ¡¸Ë·¶Î§.diph.dwObj = DIJOFS_X;
-	vÒ¡¸Ë·¶Î§.diph.dwHow = DIPH_BYOFFSET;
-	vÒ¡¸Ë·¶Î§.lMin = -256;
-	vÒ¡¸Ë·¶Î§.lMax = 256;
-	hr = vĞÂÊÖ±ú->mÉè±¸->SetProperty(DIPROP_RANGE,&vÒ¡¸Ë·¶Î§.diph);
+	//è®¾ç½®æ‘‡æ†
+	DIPROPRANGE væ‘‡æ†èŒƒå›´;
+	væ‘‡æ†èŒƒå›´.diph.dwSize = sizeof(DIPROPRANGE);
+	væ‘‡æ†èŒƒå›´.diph.dwHeaderSize = sizeof(DIPROPHEADER);
+	væ‘‡æ†èŒƒå›´.diph.dwObj = DIJOFS_X;
+	væ‘‡æ†èŒƒå›´.diph.dwHow = DIPH_BYOFFSET;
+	væ‘‡æ†èŒƒå›´.lMin = -256;
+	væ‘‡æ†èŒƒå›´.lMax = 256;
+	hr = væ–°æ‰‹æŸ„->mè®¾å¤‡->SetProperty(DIPROP_RANGE,&væ‘‡æ†èŒƒå›´.diph);
 	if(FAILED(hr)) {
 		return hr;
 	}
-	vÒ¡¸Ë·¶Î§.diph.dwObj = DIJOFS_Y;
-	hr = vĞÂÊÖ±ú->mÉè±¸->SetProperty(DIPROP_RANGE,&vÒ¡¸Ë·¶Î§.diph);
+	væ‘‡æ†èŒƒå›´.diph.dwObj = DIJOFS_Y;
+	hr = væ–°æ‰‹æŸ„->mè®¾å¤‡->SetProperty(DIPROP_RANGE,&væ‘‡æ†èŒƒå›´.diph);
 	if(FAILED(hr)) {
 		return hr;
 	}
-	//´´½¨ÊÖ±ú³É¹¦
-	vĞÂÊÖ±ú->mÉè±¸->Acquire();
-	mÊÖ±ú = std::move(vĞÂÊÖ±ú);
-	aÊÖ±ú = mÊÖ±ú;
+	//åˆ›å»ºæ‰‹æŸ„æˆåŠŸ
+	væ–°æ‰‹æŸ„->mè®¾å¤‡->Acquire();
+	mæ‰‹æŸ„ = std::move(væ–°æ‰‹æŸ„);
+	aæ‰‹æŸ„ = mæ‰‹æŸ„;
 	return S_OK;
 }
-BOOL CALLBACK CÊäÈë::f»Øµ÷ÊÖ±ú(LPCDIDEVICEINSTANCE aÉè±¸, LPVOID aÒıÓÃ) {
-	HRESULT hr = gÕâ->m½Ó¿Ú->CreateDevice(aÉè±¸->guidInstance, (IDirectInputDevice8**)aÒıÓÃ, nullptr);
+BOOL CALLBACK Cè¾“å…¥::få›è°ƒæ‰‹æŸ„(LPCDIDEVICEINSTANCE aè®¾å¤‡, LPVOID aå¼•ç”¨) {
+	HRESULT hr = gè¿™->mæ¥å£->CreateDevice(aè®¾å¤‡->guidInstance, (IDirectInputDevice8**)aå¼•ç”¨, nullptr);
 	if (FAILED(hr)) {
 		return DIENUM_CONTINUE;
 	} else {
@@ -221,79 +221,79 @@ BOOL CALLBACK CÊäÈë::f»Øµ÷ÊÖ±ú(LPCDIDEVICEINSTANCE aÉè±¸, LPVOID aÒıÓÃ) {
 	}
 }
 //==============================================================================
-// ¼üÅÌ
+// é”®ç›˜
 //==============================================================================
-S°´¼ü C¼üÅÌ::f°´¼ü(tË÷Òı i) const {
-	return m°´¼ü.f°´¼ü(i);
+SæŒ‰é”® Cé”®ç›˜::fæŒ‰é”®(tç´¢å¼• i) const {
+	return mæŒ‰é”®.fæŒ‰é”®(i);
 }
-void C¼üÅÌ::f¸üĞÂ() {
-	assert(mÉè±¸);
-	BYTE vÊı¾İ[c°´¼üÊıÁ¿];
-	m°´¼ü.f¸²¸ÇÉÏ´Î();
-	HRESULT hr = mÉè±¸->GetDeviceState(sizeof(vÊı¾İ), vÊı¾İ);
+void Cé”®ç›˜::fæ›´æ–°() {
+	assert(mè®¾å¤‡);
+	BYTE væ•°æ®[cæŒ‰é”®æ•°é‡];
+	mæŒ‰é”®.fè¦†ç›–ä¸Šæ¬¡();
+	HRESULT hr = mè®¾å¤‡->GetDeviceState(sizeof(væ•°æ®), væ•°æ®);
 	if (SUCCEEDED(hr)) {
-		f°´¼üÅĞ¶Ï(m°´¼ü.mÕâ´Î, vÊı¾İ, c°´¼üÊıÁ¿);
+		fæŒ‰é”®åˆ¤æ–­(mæŒ‰é”®.mè¿™æ¬¡, væ•°æ®, cæŒ‰é”®æ•°é‡);
 	}
 }
 //==============================================================================
-// Êó±ê
+// é¼ æ ‡
 //==============================================================================
-CÊó±ê::CÊó±ê() {
+Cé¼ æ ‡::Cé¼ æ ‡() {
 }
-S°´¼ü CÊó±ê::f°´¼ü(tË÷Òı i) const {
-	return m°´¼ü.f°´¼ü(i);
+SæŒ‰é”® Cé¼ æ ‡::fæŒ‰é”®(tç´¢å¼• i) const {
+	return mæŒ‰é”®.fæŒ‰é”®(i);
 }
-S·½Ïò CÊó±ê::f×ø±ê() const {
-	return S·½Ïò{};
+Sæ–¹å‘ Cé¼ æ ‡::fåæ ‡() const {
+	return Sæ–¹å‘{};
 }
-S·½Ïò CÊó±ê::fÒÆ¶¯() const {
-	return S·½Ïò{mÒÆ¶¯[0], mÒÆ¶¯[1], mÒÆ¶¯[2]};
+Sæ–¹å‘ Cé¼ æ ‡::fç§»åŠ¨() const {
+	return Sæ–¹å‘{mç§»åŠ¨[0], mç§»åŠ¨[1], mç§»åŠ¨[2]};
 }
-S·½Ïò CÊó±ê::f¹öÂÖ() const {
-	return S·½Ïò{};
+Sæ–¹å‘ Cé¼ æ ‡::fæ»šè½®() const {
+	return Sæ–¹å‘{};
 }
-void CÊó±ê::f¸üĞÂ() {
-	assert(mÉè±¸);
-	m°´¼ü.f¸²¸ÇÉÏ´Î();
-	DIMOUSESTATE vÊı¾İ;
-	HRESULT hr = mÉè±¸->GetDeviceState(sizeof(vÊı¾İ), &vÊı¾İ);
+void Cé¼ æ ‡::fæ›´æ–°() {
+	assert(mè®¾å¤‡);
+	mæŒ‰é”®.fè¦†ç›–ä¸Šæ¬¡();
+	DIMOUSESTATE væ•°æ®;
+	HRESULT hr = mè®¾å¤‡->GetDeviceState(sizeof(væ•°æ®), &væ•°æ®);
 	if (SUCCEEDED(hr)) {
-		//ÒÆ¶¯
-		mÒÆ¶¯[0] = (float)vÊı¾İ.lX;
-		mÒÆ¶¯[1] = (float)-vÊı¾İ.lY;
-		mÒÆ¶¯[2] = (float)vÊı¾İ.lZ;
-		//°´¼ü
-		f°´¼üÅĞ¶Ï(m°´¼ü.mÕâ´Î, vÊı¾İ.rgbButtons, c°´¼üÊıÁ¿);
+		//ç§»åŠ¨
+		mç§»åŠ¨[0] = (float)væ•°æ®.lX;
+		mç§»åŠ¨[1] = (float)-væ•°æ®.lY;
+		mç§»åŠ¨[2] = (float)væ•°æ®.lZ;
+		//æŒ‰é”®
+		fæŒ‰é”®åˆ¤æ–­(mæŒ‰é”®.mè¿™æ¬¡, væ•°æ®.rgbButtons, cæŒ‰é”®æ•°é‡);
 	}
 }
 //==============================================================================
-// ÊÖ±ú
+// æ‰‹æŸ„
 //==============================================================================
-S°´¼ü CÊÖ±ú::f°´¼ü(tË÷Òı i) const {
-	return m°´¼ü.f°´¼ü(i);
+SæŒ‰é”® Cæ‰‹æŸ„::fæŒ‰é”®(tç´¢å¼• i) const {
+	return mæŒ‰é”®.fæŒ‰é”®(i);
 }
-S·½Ïò CÊÖ±ú::f·½Ïò(tË÷Òı i) const {
+Sæ–¹å‘ Cæ‰‹æŸ„::fæ–¹å‘(tç´¢å¼• i) const {
 	switch (i) {
-	case (tË÷Òı)EÊÖ±ú·½Ïò::e·½Ïò¼ü:
-		return mÒ¡¸Ë.f·½Ïò();
-	case (tË÷Òı)EÊÖ±ú·½Ïò::eÓÒÒ¡¸Ë:
-		return mÓÒÒ¡¸Ë.f·½Ïò();
+	case (tç´¢å¼•)Eæ‰‹æŸ„æ–¹å‘::eæ–¹å‘é”®:
+		return mæ‘‡æ†.fæ–¹å‘();
+	case (tç´¢å¼•)Eæ‰‹æŸ„æ–¹å‘::eå³æ‘‡æ†:
+		return må³æ‘‡æ†.fæ–¹å‘();
 	default:
-		return mÒ¡¸Ë.f·½Ïò();
+		return mæ‘‡æ†.fæ–¹å‘();
 	}
 }
-float CÊÖ±ú::f´¥·¢(tË÷Òı) const {
-	return 0;	//²»Ö§³Ö
+float Cæ‰‹æŸ„::fè§¦å‘(tç´¢å¼•) const {
+	return 0;	//ä¸æ”¯æŒ
 }
-void CÊÖ±ú::f¸üĞÂ() {
-	assert(mÉè±¸);
-	DIJOYSTATE vÊı¾İ;
-	m°´¼ü.f¸²¸ÇÉÏ´Î();
-	HRESULT hr = mÉè±¸->GetDeviceState(sizeof(vÊı¾İ), &vÊı¾İ);
+void Cæ‰‹æŸ„::fæ›´æ–°() {
+	assert(mè®¾å¤‡);
+	DIJOYSTATE væ•°æ®;
+	mæŒ‰é”®.fè¦†ç›–ä¸Šæ¬¡();
+	HRESULT hr = mè®¾å¤‡->GetDeviceState(sizeof(væ•°æ®), &væ•°æ®);
 	if (FAILED(hr)) {
-		hr = mÉè±¸->Poll();
+		hr = mè®¾å¤‡->Poll();
 		if (FAILED(hr)) {
-			hr = mÉè±¸->Acquire();
+			hr = mè®¾å¤‡->Acquire();
 		}
 	}
 	auto f = [](float (&p)[3], long x, long y, long z) {
@@ -313,8 +313,8 @@ void CÊÖ±ú::f¸üĞÂ() {
 			p[2] = (float)z / 256.f;
 		}
 	};
-	f(mÒ¡¸Ë.m·½Ïò, vÊı¾İ.lX, vÊı¾İ.lY, vÊı¾İ.lZ);
-	f(mÓÒÒ¡¸Ë.m·½Ïò, vÊı¾İ.lRx, vÊı¾İ.lRy, vÊı¾İ.lRz);
-	f°´¼üÅĞ¶Ï(m°´¼ü.mÕâ´Î, vÊı¾İ.rgbButtons, c°´¼üÊıÁ¿);
+	f(mæ‘‡æ†.mæ–¹å‘, væ•°æ®.lX, væ•°æ®.lY, væ•°æ®.lZ);
+	f(må³æ‘‡æ†.mæ–¹å‘, væ•°æ®.lRx, væ•°æ®.lRy, væ•°æ®.lRz);
+	fæŒ‰é”®åˆ¤æ–­(mæŒ‰é”®.mè¿™æ¬¡, væ•°æ®.rgbButtons, cæŒ‰é”®æ•°é‡);
 }
-}	//namespace cflw::ÊäÈë::di8
+}	//namespace cflw::è¾“å…¥::di8

@@ -1,65 +1,65 @@
-#include "cflwÊıÑ§.h"
-#include "cflwÊıÑ§_Ëæ»ú.h"
+ï»¿#include "cflwæ•°å­¦.h"
+#include "cflwæ•°å­¦_éšæœº.h"
 namespace cflw {
-namespace ÊıÑ§ {
+namespace æ•°å­¦ {
 //==============================================================================
-// Ëæ»úÊı
+// éšæœºæ•°
 //==============================================================================
-CÏßĞÔÍ¬Óà::CÏßĞÔÍ¬Óà() :a(0), b(0), r(0) {};
-void CÏßĞÔÍ¬Óà::fÖÃÖÖ×Ó(const unsigned long &ÖÖ×Ó) {
+Cçº¿æ€§åŒä½™::Cçº¿æ€§åŒä½™() :a(0), b(0), r(0) {};
+void Cçº¿æ€§åŒä½™::fç½®ç§å­(const unsigned long &ç§å­) {
 	r = 0;
-	b = ÖÖ×Ó;
+	b = ç§å­;
 	while (b > 0xffff)
 		b /= 2;
 	a = b;
 	while (a > 0xff)
 		a /= 2;
 }
-void CÏßĞÔÍ¬Óà::f¼ÆËã() {	//¼ÆËãÒ»¸öËæ»úÊı
-	r = (a * r + b) % c×î´óÖµ;
+void Cçº¿æ€§åŒä½™::fè®¡ç®—() {	//è®¡ç®—ä¸€ä¸ªéšæœºæ•°
+	r = (a * r + b) % cæœ€å¤§å€¼;
 }
-unsigned long CÏßĞÔÍ¬Óà::fÉú³É() {
-	f¼ÆËã();
+unsigned long Cçº¿æ€§åŒä½™::fç”Ÿæˆ() {
+	fè®¡ç®—();
 	return r;
 }
-bool CÏßĞÔÍ¬Óà::fÉú³É(const float &p) {
-	return fÉú³É<float>(0, 1) <= p;
+bool Cçº¿æ€§åŒä½™::fç”Ÿæˆ(const float &p) {
+	return fç”Ÿæˆ<float>(0, 1) <= p;
 }
 //==============================================================================
-// ·Ö²¼
+// åˆ†å¸ƒ
 //==============================================================================
-class C·Ö²¼¹¤¾ß {
+class Cåˆ†å¸ƒå·¥å…· {
 public:
-	static const unsigned int cÎ» = sizeof(unsigned int) * 4;
-	static const unsigned int c×î´ó = 1 << cÎ»;
-	static std::tuple<float, float> f·Ö¸î2(unsigned int p) {
-		const unsigned int v0 = p >> cÎ»;	//¸ßÎ»²¿·Ö
-		const unsigned int v1 = p % c×î´ó;	//µÍÎ»²¿·Ö
-		return std::make_tuple<float, float>((float)v0 / c×î´ó, (float)v1 / c×î´ó);
+	static const unsigned int cä½ = sizeof(unsigned int) * 4;
+	static const unsigned int cæœ€å¤§ = 1 << cä½;
+	static std::tuple<float, float> fåˆ†å‰²2(unsigned int p) {
+		const unsigned int v0 = p >> cä½;	//é«˜ä½éƒ¨åˆ†
+		const unsigned int v1 = p % cæœ€å¤§;	//ä½ä½éƒ¨åˆ†
+		return std::make_tuple<float, float>((float)v0 / cæœ€å¤§, (float)v1 / cæœ€å¤§);
 	}
 };
-//Ô²ĞÎ·Ö²¼=========================================================================
-CÔ²ĞÎ·Ö²¼::CÔ²ĞÎ·Ö²¼(const SÔ²ĞÎ &pÔ²ĞÎ):
-	mÔ²ĞÎ{pÔ²ĞÎ} {
+//åœ†å½¢åˆ†å¸ƒ=========================================================================
+Cåœ†å½¢åˆ†å¸ƒ::Cåœ†å½¢åˆ†å¸ƒ(const Såœ†å½¢ &påœ†å½¢):
+	måœ†å½¢{påœ†å½¢} {
 }
-SÏòÁ¿2 CÔ²ĞÎ·Ö²¼::fÉú³É(unsigned int p) const {
-	const auto v·Ö¸î = C·Ö²¼¹¤¾ß::f·Ö¸î2(p);
-	SÏòÁ¿2 vÏòÁ¿ = SÏòÁ¿2::fc·½Ïòr(std::get<0>(v·Ö¸î) * mÔ²ĞÎ.m°ë¾¶, std::get<1>(v·Ö¸î) * c¦Ğ<float>);
-	return vÏòÁ¿ + mÔ²ĞÎ.m×ø±ê;
+Så‘é‡2 Cåœ†å½¢åˆ†å¸ƒ::fç”Ÿæˆ(unsigned int p) const {
+	const auto våˆ†å‰² = Cåˆ†å¸ƒå·¥å…·::fåˆ†å‰²2(p);
+	Så‘é‡2 vå‘é‡ = Så‘é‡2::fcæ–¹å‘r(std::get<0>(våˆ†å‰²) * måœ†å½¢.måŠå¾„, std::get<1>(våˆ†å‰²) * cÏ€<float>);
+	return vå‘é‡ + måœ†å½¢.måæ ‡;
 }
-//¾ØĞÎ·Ö²¼=========================================================================
-C¾ØĞÎ·Ö²¼::C¾ØĞÎ·Ö²¼(const SĞı×ª¾ØĞÎ &p¾ØĞÎ):
-	m¾ØĞÎ{p¾ØĞÎ} {
+//çŸ©å½¢åˆ†å¸ƒ=========================================================================
+CçŸ©å½¢åˆ†å¸ƒ::CçŸ©å½¢åˆ†å¸ƒ(const Sæ—‹è½¬çŸ©å½¢ &pçŸ©å½¢):
+	mçŸ©å½¢{pçŸ©å½¢} {
 }
-SÏòÁ¿2 C¾ØĞÎ·Ö²¼::fÉú³É(unsigned int p) const {
-	const auto v·Ö¸î = C·Ö²¼¹¤¾ß::f·Ö¸î2(p);
-	SÏòÁ¿2 vÏòÁ¿ = SÏòÁ¿2{
-		f²åÖµ<float>(-m¾ØĞÎ.m°ë³ß´ç.x, m¾ØĞÎ.m°ë³ß´ç.x, std::get<0>(v·Ö¸î)),
-		f²åÖµ<float>(-m¾ØĞÎ.m°ë³ß´ç.y, m¾ØĞÎ.m°ë³ß´ç.y, std::get<1>(v·Ö¸î))
+Så‘é‡2 CçŸ©å½¢åˆ†å¸ƒ::fç”Ÿæˆ(unsigned int p) const {
+	const auto våˆ†å‰² = Cåˆ†å¸ƒå·¥å…·::fåˆ†å‰²2(p);
+	Så‘é‡2 vå‘é‡ = Så‘é‡2{
+		fæ’å€¼<float>(-mçŸ©å½¢.måŠå°ºå¯¸.x, mçŸ©å½¢.måŠå°ºå¯¸.x, std::get<0>(våˆ†å‰²)),
+		fæ’å€¼<float>(-mçŸ©å½¢.måŠå°ºå¯¸.y, mçŸ©å½¢.måŠå°ºå¯¸.y, std::get<1>(våˆ†å‰²))
 	};
-	vÏòÁ¿.fsĞı×ªr(m¾ØĞÎ.m·½Ïò);
-	return vÏòÁ¿ + m¾ØĞÎ.m×ø±ê;
+	vå‘é‡.fsæ—‹è½¬r(mçŸ©å½¢.mæ–¹å‘);
+	return vå‘é‡ + mçŸ©å½¢.måæ ‡;
 }
 
-}	//namespace ÊıÑ§
+}	//namespace æ•°å­¦
 }	//namespace cflw

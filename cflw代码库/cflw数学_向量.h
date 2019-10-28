@@ -91,6 +91,7 @@ struct S向量2 {
 	S向量2 f分量乘(float, float) const;
 	S向量2 f分量乘(const S向量2 &) const;
 	bool fi分量相等() const;
+	float f平方() const;
 	//转换
 	S向量3 ft向量3(float = 0) const;
 	S向量4 ft向量4(float = 0, float = 0) const;

@@ -1,56 +1,56 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 #include <fstream>
 #include <vector>
-#include "cflw¹¤¾ß_Ñ­»·.h"
+#include "cflwå·¥å…·_å¾ªç¯.h"
 namespace cflw {
-namespace ÎÄ¼ş {
+namespace æ–‡ä»¶ {
 namespace csv {
-class C¶Á;
-class CĞ´;
+class Cè¯»;
+class Cå†™;
 //=============================================================================
-// ¶Á
+// è¯»
 //=============================================================================
-struct SĞĞ {
-	SĞĞ(std::vector<std::wstring> &);
+struct Sè¡Œ {
+	Sè¡Œ(std::vector<std::wstring> &);
 	const std::wstring &operator[](size_t i) const;
 	std::vector<std::wstring> &fe() const;
-	std::vector<std::wstring> *mÊı×é;
+	std::vector<std::wstring> *mæ•°ç»„;
 };
-class CĞĞÑ­»· : public ¹¤¾ß::Ñ­»·::IÑ­»·<CĞĞÑ­»·> {
+class Cè¡Œå¾ªç¯ : public å·¥å…·::å¾ªç¯::Iå¾ªç¯<Cè¡Œå¾ªç¯> {
 public:
-	CĞĞÑ­»·(std::wifstream &);
-	bool fÑ­»·¿ØÖÆ_i¼ÌĞø();
-	SĞĞ fÑ­»·¿ØÖÆ_½âÒıÓÃ();
+	Cè¡Œå¾ªç¯(std::wifstream &);
+	bool få¾ªç¯æ§åˆ¶_iç»§ç»­();
+	Sè¡Œ få¾ªç¯æ§åˆ¶_è§£å¼•ç”¨();
 private:
-	std::vector<std::wstring> mÊı×é;
-	std::wifstream *mÎÄ¼ş;
+	std::vector<std::wstring> mæ•°ç»„;
+	std::wifstream *mæ–‡ä»¶;
 };
-class C¶Á {
+class Cè¯» {
 public:
-	void f´ò¿ª(const std::wstring &);
-	CĞĞÑ­»· feĞĞ();
-	void fs±êÌâĞĞ(bool);	//Èç¹ûÓĞ,feĞĞ()²»»á³öÏÖ±êÌâĞĞ
+	void fæ‰“å¼€(const std::wstring &);
+	Cè¡Œå¾ªç¯ feè¡Œ();
+	void fsæ ‡é¢˜è¡Œ(bool);	//å¦‚æœæœ‰,feè¡Œ()ä¸ä¼šå‡ºç°æ ‡é¢˜è¡Œ
 private:
-	bool m±êÌâĞĞ = false;
-	int mµÚ¶şĞĞ¿ªÊ¼Î»ÖÃ = 0;
-	std::wifstream mÎÄ¼ş;
+	bool mæ ‡é¢˜è¡Œ = false;
+	int mç¬¬äºŒè¡Œå¼€å§‹ä½ç½® = 0;
+	std::wifstream mæ–‡ä»¶;
 };
 //=============================================================================
-// Ğ´
+// å†™
 //=============================================================================
-class CĞ´ {
+class Cå†™ {
 public:
-	void f´ò¿ª(const std::wstring &, int pÄ£Ê½ = std::ios::out);
-	void fsÁĞÊı(int);
-	template<typename t> CĞ´ &operator <<(const t &);
+	void fæ‰“å¼€(const std::wstring &, int pæ¨¡å¼ = std::ios::out);
+	void fsåˆ—æ•°(int);
+	template<typename t> Cå†™ &operator <<(const t &);
 private:
-	void fĞ´(const std::wstring &);
+	void få†™(const std::wstring &);
 };
-template<typename t> CĞ´ &CĞ´::operator <<(const t &p) {
-	fĞ´(std::to_wstring(p));
+template<typename t> Cå†™ &Cå†™::operator <<(const t &p) {
+	få†™(std::to_wstring(p));
 	return *this;
 }
 }	//namespace csv
-}	//namespace ÎÄ¼ş
+}	//namespace æ–‡ä»¶
 }	//namespace cflw

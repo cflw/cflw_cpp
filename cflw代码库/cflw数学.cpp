@@ -1,12 +1,12 @@
-#include <assert.h>
-#include "cflwÊıÑ§.h"
-#include "cflwÊıÑ§_ÏòÁ¿.h"
+ï»¿#include <assert.h>
+#include "cflwæ•°å­¦.h"
+#include "cflwæ•°å­¦_å‘é‡.h"
 namespace cflw {
-namespace ÊıÑ§ {
+namespace æ•°å­¦ {
 //==============================================================================
-// »ù±¾ÊıÑ§º¯Êı
+// åŸºæœ¬æ•°å­¦å‡½æ•°
 //==============================================================================
-int fÈ¡ÕûÊıÎ»Êı(const int &x) {
+int få–æ•´æ•°ä½æ•°(const int &x) {
 	int v = x;
 	int i = 0;
 	while (v != 0) {
@@ -15,61 +15,61 @@ int fÈ¡ÕûÊıÎ»Êı(const int &x) {
 	}
 	return i;
 }
-int f10µÄ´Î·½(const int &x) {
+int f10çš„æ¬¡æ–¹(const int &x) {
 	return (int)pow(10.0, x);
 }
-//ÆäËû
-float fÇóÓà(const float &x, const float &y) {
+//å…¶ä»–
+float fæ±‚ä½™(const float &x, const float &y) {
 	return sqrt(x * x + y * y);
 }
-float f·­ÕÛ(float pµã, float p·­ÕÛ) {
-	return 2 * p·­ÕÛ - pµã;
+float fç¿»æŠ˜(float pç‚¹, float pç¿»æŠ˜) {
+	return 2 * pç¿»æŠ˜ - pç‚¹;
 }
-float fÎ»ÖÃ(float x, float y) {
+float fä½ç½®(float x, float y) {
 	return y - x;
 }
-//´°¿Ú×ø±êÓëÖ±½Ç×ø±ê±ä»»
-float f´°¿Ú×ø±êx(float x, float s) {
+//çª—å£åæ ‡ä¸ç›´è§’åæ ‡å˜æ¢
+float fçª—å£åæ ‡x(float x, float s) {
 	return x + s / 2;
 }
-float f´°¿Ú×ø±êy(float y, float s) {
+float fçª—å£åæ ‡y(float y, float s) {
 	return s / 2 - y;
 }
-float fÖ±½Ç×ø±êx(float x, float s) {
+float fç›´è§’åæ ‡x(float x, float s) {
 	return x - s / 2;
 }
-float fÖ±½Ç×ø±êy(float y, float s) {
+float fç›´è§’åæ ‡y(float y, float s) {
 	return s / 2 - y;
 }
-float f´°¿Ú×ø±êx(float x, float s, float d) {
-	return f´°¿Ú×ø±êx(x * f´°¿ÚËõ·Å(s, d), d);
+float fçª—å£åæ ‡x(float x, float s, float d) {
+	return fçª—å£åæ ‡x(x * fçª—å£ç¼©æ”¾(s, d), d);
 }
-float f´°¿Ú×ø±êy(float y, float s, float d) {
-	return f´°¿Ú×ø±êy(y * f´°¿ÚËõ·Å(s, d), d);
+float fçª—å£åæ ‡y(float y, float s, float d) {
+	return fçª—å£åæ ‡y(y * fçª—å£ç¼©æ”¾(s, d), d);
 }
-float fÖ±½Ç×ø±êx(float x, float s, float d) {
-	return fÖ±½Ç×ø±êx(x * fÖ±½ÇËõ·Å(s, d), d);
+float fç›´è§’åæ ‡x(float x, float s, float d) {
+	return fç›´è§’åæ ‡x(x * fç›´è§’ç¼©æ”¾(s, d), d);
 }
-float fÖ±½Ç×ø±êy(float y, float s, float d) {
-	return fÖ±½Ç×ø±êy(y * fÖ±½ÇËõ·Å(s, d), d);
+float fç›´è§’åæ ‡y(float y, float s, float d) {
+	return fç›´è§’åæ ‡y(y * fç›´è§’ç¼©æ”¾(s, d), d);
 }
-float f´°¿ÚËõ·Å(float s, float d) {
+float fçª—å£ç¼©æ”¾(float s, float d) {
 	return d / s;
 }
-float fÖ±½ÇËõ·Å(float s, float d) {
+float fç›´è§’ç¼©æ”¾(float s, float d) {
 	return d / s;
 }
-//Ä£°åÊµÁĞ»¯
-template<> int fÈ¡·ûºÅ<bool>(const bool &x) {
+//æ¨¡æ¿å®åˆ—åŒ–
+template<> int få–ç¬¦å·<bool>(const bool &x) {
 	return x ? 1 : -1;
 }
-//Î»ÖÃ¹ØÏµ
+//ä½ç½®å…³ç³»
 /*
-std::weak_equality operator <=>(EÎ»ÖÃ¹ØÏµ p, int n) {
+std::weak_equality operator <=>(Eä½ç½®å…³ç³» p, int n) {
 	assert(n == 0);
-	if (p < EÎ»ÖÃ¹ØÏµ::eÄÚÇĞ) {
+	if (p < Eä½ç½®å…³ç³»::eå†…åˆ‡) {
 		return std::weak_equality::less;
-	} else if (p0 > EÎ»ÖÃ¹ØÏµ::eÄÚÇĞ) {
+	} else if (p0 > Eä½ç½®å…³ç³»::eå†…åˆ‡) {
 		return std::weak_equality::greater;
 	} else {
 		return std::weak_equality::equivalent;
@@ -77,4 +77,4 @@ std::weak_equality operator <=>(EÎ»ÖÃ¹ØÏµ p, int n) {
 }
 */
 //==============================================================================
-}}	//ÃüÃû¿Õ¼ä½áÊø
+}}	//å‘½åç©ºé—´ç»“æŸ

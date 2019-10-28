@@ -1,42 +1,42 @@
-#include "cflwÍ¼ĞÎ_d3d11ÉÏ12.h"
-#include "cflwÍ¼ĞÎ_d3d12.h"
-#include "cflw¸¨Öú.h"
-namespace cflw::Í¼ĞÎ::d3d11ÉÏ12 {
-HRESULT CÈıÎ¬::f³õÊ¼»¯(d3d12::CÈıÎ¬ &aÈıÎ¬) {
-	constexpr UINT c´´½¨±êÖ¾ = D3D11_CREATE_DEVICE_BGRA_SUPPORT |
-		(cµ÷ÊÔ ? D3D11_CREATE_DEVICE_DEBUG : 0);
-	ComPtr<ID3D11Device> vÉè±¸;
-	HRESULT hr = D3D11On12CreateDevice(aÈıÎ¬.mÉè±¸.Get(), c´´½¨±êÖ¾, nullptr, 0, (IUnknown**)aÈıÎ¬. mÃüÁî¶ÓÁĞ.GetAddressOf(), 1, 0, &vÉè±¸, &mÉÏÏÂÎÄ, nullptr);
+ï»¿#include "cflwå›¾å½¢_d3d11ä¸Š12.h"
+#include "cflwå›¾å½¢_d3d12.h"
+#include "cflwè¾…åŠ©.h"
+namespace cflw::å›¾å½¢::d3d11ä¸Š12 {
+HRESULT Cä¸‰ç»´::fåˆå§‹åŒ–(d3d12::Cä¸‰ç»´ &aä¸‰ç»´) {
+	constexpr UINT cåˆ›å»ºæ ‡å¿— = D3D11_CREATE_DEVICE_BGRA_SUPPORT |
+		(cè°ƒè¯• ? D3D11_CREATE_DEVICE_DEBUG : 0);
+	ComPtr<ID3D11Device> vè®¾å¤‡;
+	HRESULT hr = D3D11On12CreateDevice(aä¸‰ç»´.mè®¾å¤‡.Get(), cåˆ›å»ºæ ‡å¿—, nullptr, 0, (IUnknown**)aä¸‰ç»´. må‘½ä»¤é˜Ÿåˆ—.GetAddressOf(), 1, 0, &vè®¾å¤‡, &mä¸Šä¸‹æ–‡, nullptr);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	vÉè±¸.As(&mÉè±¸);
+	vè®¾å¤‡.As(&mè®¾å¤‡);
 	return S_OK;
 }
-HRESULT CÈıÎ¬::f´´½¨äÖÈ¾Ä¿±ê×ÊÔ´(ID3D12Resource *a×ÊÔ´) {
-	static const D3D11_RESOURCE_FLAGS c×ÊÔ´±êÖ¾ = {D3D11_BIND_RENDER_TARGET};
-	ComPtr<ID3D11Resource> v×ÊÔ´;
-	HRESULT hr = mÉè±¸->CreateWrappedResource(a×ÊÔ´, &c×ÊÔ´±êÖ¾, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT, IID_PPV_ARGS(&v×ÊÔ´));
+HRESULT Cä¸‰ç»´::fåˆ›å»ºæ¸²æŸ“ç›®æ ‡èµ„æº(ID3D12Resource *aèµ„æº) {
+	static const D3D11_RESOURCE_FLAGS cèµ„æºæ ‡å¿— = {D3D11_BIND_RENDER_TARGET};
+	ComPtr<ID3D11Resource> vèµ„æº;
+	HRESULT hr = mè®¾å¤‡->CreateWrappedResource(aèµ„æº, &cèµ„æºæ ‡å¿—, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT, IID_PPV_ARGS(&vèµ„æº));
 	if (FAILED(hr)) {
 		return hr;
 	}
-	maäÖÈ¾Ä¿±ê×ÊÔ´.push_back(v×ÊÔ´);
+	maæ¸²æŸ“ç›®æ ‡èµ„æº.push_back(vèµ„æº);
 	return S_OK;
 }
-void CÈıÎ¬::f¿ªÊ¼(UINT aÖ¡Ë÷Òı) {
-	mÖ¡Ë÷Òı = aÖ¡Ë÷Òı;
-	mÉè±¸->AcquireWrappedResources(maäÖÈ¾Ä¿±ê×ÊÔ´[mÖ¡Ë÷Òı].GetAddressOf(), 1);
+void Cä¸‰ç»´::få¼€å§‹(UINT aå¸§ç´¢å¼•) {
+	må¸§ç´¢å¼• = aå¸§ç´¢å¼•;
+	mè®¾å¤‡->AcquireWrappedResources(maæ¸²æŸ“ç›®æ ‡èµ„æº[må¸§ç´¢å¼•].GetAddressOf(), 1);
 }
-void CÈıÎ¬::f½áÊø() {
-	mÉè±¸->ReleaseWrappedResources(maäÖÈ¾Ä¿±ê×ÊÔ´[mÖ¡Ë÷Òı].GetAddressOf(), 1);
-	mÉÏÏÂÎÄ->Flush();
+void Cä¸‰ç»´::fç»“æŸ() {
+	mè®¾å¤‡->ReleaseWrappedResources(maæ¸²æŸ“ç›®æ ‡èµ„æº[må¸§ç´¢å¼•].GetAddressOf(), 1);
+	mä¸Šä¸‹æ–‡->Flush();
 }
-ComPtr<IDXGIDevice> CÈıÎ¬::fg»ù´¡Éè±¸() const {
-	ComPtr<IDXGIDevice> vÉè±¸;
-	mÉè±¸.As(&vÉè±¸);
-	return vÉè±¸;
+ComPtr<IDXGIDevice> Cä¸‰ç»´::fgåŸºç¡€è®¾å¤‡() const {
+	ComPtr<IDXGIDevice> vè®¾å¤‡;
+	mè®¾å¤‡.As(&vè®¾å¤‡);
+	return vè®¾å¤‡;
 }
-std::vector<ComPtr<ID3D11Resource>> &CÈıÎ¬::feäÖÈ¾Ä¿±ê×ÊÔ´() {
-	return maäÖÈ¾Ä¿±ê×ÊÔ´;
+std::vector<ComPtr<ID3D11Resource>> &Cä¸‰ç»´::feæ¸²æŸ“ç›®æ ‡èµ„æº() {
+	return maæ¸²æŸ“ç›®æ ‡èµ„æº;
 }
 }

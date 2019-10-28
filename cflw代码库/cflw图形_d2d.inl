@@ -1,42 +1,42 @@
 #pragma once
-#include "cflwÍ¼ĞÎ_d2d.h"
-namespace cflw::Í¼ĞÎ::d2d {
-template<typename t> ComPtr<IDXGISurface> fÈ¡±íÃæ(const ComPtr<t> &a) {
-	ComPtr<IDXGISurface> v±íÃæ;
-	a.As(&v±íÃæ);
-	return v±íÃæ;
+#include "cflwå›¾å½¢_d2d.h"
+namespace cflw::å›¾å½¢::d2d {
+template<typename t> ComPtr<IDXGISurface> få–è¡¨é¢(const ComPtr<t> &a) {
+	ComPtr<IDXGISurface> vè¡¨é¢;
+	a.As(&vè¡¨é¢);
+	return vè¡¨é¢;
 }
-template<typename t> ComPtr<IDXGISurface> fÈ¡±íÃæ(t *a) {
+template<typename t> ComPtr<IDXGISurface> få–è¡¨é¢(t *a) {
 	static_assert(std::is_base_of<IUnknown, t>::value);
-	ComPtr<IDXGISurface> v±íÃæ;
-	a->QueryInterface(IID_PPV_ARGS(&v±íÃæ));
-	return v±íÃæ;
+	ComPtr<IDXGISurface> vè¡¨é¢;
+	a->QueryInterface(IID_PPV_ARGS(&vè¡¨é¢));
+	return vè¡¨é¢;
 }
-template<typename t·¶Î§>
-HRESULT C¶şÎ¬::f³õÊ¼»¯_¶à¸öÎ»Í¼(const t·¶Î§ &a·¶Î§, float aËõ·Å) {
-	maÎ»Í¼Ä¿±ê.clear();
-	const ÊıÑ§::SÏòÁ¿2 dpi = fgÃ¿Ó¢´çµãÊı(aËõ·Å);
-	const D2D1_BITMAP_PROPERTIES1 vÎ»Í¼ÊôĞÔ = D2D1::BitmapProperties1(
+template<typename tèŒƒå›´>
+HRESULT CäºŒç»´::fåˆå§‹åŒ–_å¤šä¸ªä½å›¾(const tèŒƒå›´ &aèŒƒå›´, float aç¼©æ”¾) {
+	maä½å›¾ç›®æ ‡.clear();
+	const æ•°å­¦::Så‘é‡2 dpi = fgæ¯è‹±å¯¸ç‚¹æ•°(aç¼©æ”¾);
+	const D2D1_BITMAP_PROPERTIES1 vä½å›¾å±æ€§ = D2D1::BitmapProperties1(
 		D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
 		D2D1::PixelFormat(DXGI_FORMAT_UNKNOWN, D2D1_ALPHA_MODE_PREMULTIPLIED),
 		dpi.x, dpi.y
 	);
-	mÉÏÏÂÎÄ->SetDpi(dpi.x, dpi.y);
-	auto v¿ªÊ¼ = std::begin(a·¶Î§);
-	auto v½áÊø = std::end(a·¶Î§);
-	for (auto i = v¿ªÊ¼; i != v½áÊø; ++i) {
-		ComPtr<IDXGISurface> v±íÃæ = fÈ¡±íÃæ(*i);
-		ComPtr<ID2D1Bitmap1> vÎ»Í¼Ä¿±ê;
-		HRESULT hr = mÉÏÏÂÎÄ->CreateBitmapFromDxgiSurface(v±íÃæ.Get(), &vÎ»Í¼ÊôĞÔ, &vÎ»Í¼Ä¿±ê);
+	mä¸Šä¸‹æ–‡->SetDpi(dpi.x, dpi.y);
+	auto vå¼€å§‹ = std::begin(aèŒƒå›´);
+	auto vç»“æŸ = std::end(aèŒƒå›´);
+	for (auto i = vå¼€å§‹; i != vç»“æŸ; ++i) {
+		ComPtr<IDXGISurface> vè¡¨é¢ = få–è¡¨é¢(*i);
+		ComPtr<ID2D1Bitmap1> vä½å›¾ç›®æ ‡;
+		HRESULT hr = mä¸Šä¸‹æ–‡->CreateBitmapFromDxgiSurface(vè¡¨é¢.Get(), &vä½å›¾å±æ€§, &vä½å›¾ç›®æ ‡);
 		if (FAILED(hr)) {
 			return hr;
 		}
-		maÎ»Í¼Ä¿±ê.push_back(vÎ»Í¼Ä¿±ê);
+		maä½å›¾ç›®æ ‡.push_back(vä½å›¾ç›®æ ‡);
 	}
-	const ComPtr<ID2D1Bitmap1> &vÎ»Í¼Ä¿±ê0 = maÎ»Í¼Ä¿±ê.front();
-	mÉÏÏÂÎÄ->SetTarget(vÎ»Í¼Ä¿±ê0.Get());
-	const auto v´óĞ¡ = vÎ»Í¼Ä¿±ê0->GetSize();
-	f³õÊ¼»¯_´°¿Ú´óĞ¡(v´óĞ¡.width, v´óĞ¡.height);
+	const ComPtr<ID2D1Bitmap1> &vä½å›¾ç›®æ ‡0 = maä½å›¾ç›®æ ‡.front();
+	mä¸Šä¸‹æ–‡->SetTarget(vä½å›¾ç›®æ ‡0.Get());
+	const auto vå¤§å° = vä½å›¾ç›®æ ‡0->GetSize();
+	fåˆå§‹åŒ–_çª—å£å¤§å°(vå¤§å°.width, vå¤§å°.height);
 	return S_OK;
 }
 

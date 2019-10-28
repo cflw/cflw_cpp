@@ -1,25 +1,25 @@
-#pragma once
+ï»¿#pragma once
 #include <mmstream.h>
 #pragma comment(lib, "winmm.lib")
-namespace cflw::¶àÃ½Ìå {
+namespace cflw::å¤šåª’ä½“ {
 //==============================================================================
 //mmsystem.h
 //==============================================================================
-typedef WAVEFORMATEX t²¨ĞÎ¸ñÊ½;	//ĞĞ:782-792
-inline DWORD fÈ¡¿ª»úÊ±¼ä() {
+typedef WAVEFORMATEX tæ³¢å½¢æ ¼å¼;	//è¡Œ:782-792
+inline DWORD få–å¼€æœºæ—¶é—´() {
 	return timeGetTime();
-};	//ĞĞ:2205
+};	//è¡Œ:2205
 //==============================================================================
-//¸¨Öú
+//è¾…åŠ©
 //==============================================================================
-//¿é¸ñÊ½
-constexpr DWORD c¿éRIFF = mmioFOURCC('R', 'I', 'F', 'F');
-constexpr DWORD c¿édata = mmioFOURCC('d', 'a', 't', 'a');
-constexpr DWORD c¿éfmt = mmioFOURCC('f', 'm', 't', ' ');
-constexpr DWORD c¿éWAVE = mmioFOURCC('W', 'A', 'V', 'E');
-constexpr DWORD c¿éXWMA = mmioFOURCC('X', 'W', 'M', 'A');
-constexpr DWORD c¿édpds = mmioFOURCC('d', 'p', 'd', 's');
-//º¯Êı
+//å—æ ¼å¼
+constexpr DWORD cå—RIFF = mmioFOURCC('R', 'I', 'F', 'F');
+constexpr DWORD cå—data = mmioFOURCC('d', 'a', 't', 'a');
+constexpr DWORD cå—fmt = mmioFOURCC('f', 'm', 't', ' ');
+constexpr DWORD cå—WAVE = mmioFOURCC('W', 'A', 'V', 'E');
+constexpr DWORD cå—XWMA = mmioFOURCC('X', 'W', 'M', 'A');
+constexpr DWORD cå—dpds = mmioFOURCC('d', 'p', 'd', 's');
+//å‡½æ•°
 HRESULT FindChunk(HANDLE hFile, DWORD fourcc, DWORD &dwChunkSize, DWORD &dwChunkDataPosition);
 HRESULT ReadChunkData(HANDLE hFile, void *buffer, DWORD buffersize, DWORD bufferoffset);
-}	//namespace cflw::¶àÃ½Ìå
+}	//namespace cflw::å¤šåª’ä½“

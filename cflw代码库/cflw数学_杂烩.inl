@@ -1,191 +1,191 @@
-#pragma once
+ï»¿#pragma once
 #include <algorithm>
-#include "cflwÊıÑ§_ÔÓ»â.h"
-#include "cflwÊıÑ§.h"
-namespace cflw::ÊıÑ§ {
+#include "cflwæ•°å­¦_æ‚çƒ©.h"
+#include "cflwæ•°å­¦.h"
+namespace cflw::æ•°å­¦ {
 //==============================================================================
-// Î»ÖÃ¼ÆËã
+// ä½ç½®è®¡ç®—
 //==============================================================================
-template<typename t> t CÎ»ÖÃ¼ÆËã<t>::f×óµ½ÖĞ(const t &pÎ»ÖÃ, const t &p³¤¶È) {
-	return pÎ»ÖÃ + p³¤¶È / 2;
+template<typename t> t Cä½ç½®è®¡ç®—<t>::få·¦åˆ°ä¸­(const t &aä½ç½®, const t &aé•¿åº¦) {
+	return aä½ç½® + aé•¿åº¦ / 2;
 }
-template<typename t> t CÎ»ÖÃ¼ÆËã<t>::fÖĞµ½×ó(const t &pÎ»ÖÃ, const t &p³¤¶È) {
-	return pÎ»ÖÃ - p³¤¶È / 2;
+template<typename t> t Cä½ç½®è®¡ç®—<t>::fä¸­åˆ°å·¦(const t &aä½ç½®, const t &aé•¿åº¦) {
+	return aä½ç½® - aé•¿åº¦ / 2;
 }
-template<typename t> t CÎ»ÖÃ¼ÆËã<t>::fÓÒµ½ÖĞ(const t &pÎ»ÖÃ, const t &p³¤¶È) {
-	return pÎ»ÖÃ - p³¤¶È / 2;
+template<typename t> t Cä½ç½®è®¡ç®—<t>::få³åˆ°ä¸­(const t &aä½ç½®, const t &aé•¿åº¦) {
+	return aä½ç½® - aé•¿åº¦ / 2;
 }
-template<typename t> t CÎ»ÖÃ¼ÆËã<t>::fÖĞµ½ÓÒ(const t &pÎ»ÖÃ, const t &p³¤¶È) {
-	return pÎ»ÖÃ + p³¤¶È / 2;
+template<typename t> t Cä½ç½®è®¡ç®—<t>::fä¸­åˆ°å³(const t &aä½ç½®, const t &aé•¿åº¦) {
+	return aä½ç½® + aé•¿åº¦ / 2;
 }
-template<typename t> t CÎ»ÖÃ¼ÆËã<t>::fÓÒµ½×ó(const t &pÎ»ÖÃ, const t &p³¤¶È) {
-	return pÎ»ÖÃ - p³¤¶È;
+template<typename t> t Cä½ç½®è®¡ç®—<t>::få³åˆ°å·¦(const t &aä½ç½®, const t &aé•¿åº¦) {
+	return aä½ç½® - aé•¿åº¦;
 }
-template<typename t> t CÎ»ÖÃ¼ÆËã<t>::f×óµ½ÓÒ(const t &pÎ»ÖÃ, const t &p³¤¶È) {
-	return pÎ»ÖÃ + p³¤¶È;
+template<typename t> t Cä½ç½®è®¡ç®—<t>::få·¦åˆ°å³(const t &aä½ç½®, const t &aé•¿åº¦) {
+	return aä½ç½® + aé•¿åº¦;
 }
-template<typename t> t CÎ»ÖÃ¼ÆËã<t>::fÏÂµ½ÖĞ(const t &pÎ»ÖÃ, const t &p³¤¶È) {
-	return pÎ»ÖÃ + p³¤¶È / 2;
+template<typename t> t Cä½ç½®è®¡ç®—<t>::fä¸‹åˆ°ä¸­(const t &aä½ç½®, const t &aé•¿åº¦) {
+	return aä½ç½® + aé•¿åº¦ / 2;
 }
-template<typename t> t CÎ»ÖÃ¼ÆËã<t>::fÏÂµ½ÉÏ(const t &pÎ»ÖÃ, const t &p³¤¶È) {
-	return pÎ»ÖÃ + p³¤¶È;
+template<typename t> t Cä½ç½®è®¡ç®—<t>::fä¸‹åˆ°ä¸Š(const t &aä½ç½®, const t &aé•¿åº¦) {
+	return aä½ç½® + aé•¿åº¦;
 }
-template<typename t> t CÎ»ÖÃ¼ÆËã<t>::fÖĞµ½ÏÂ(const t &pÎ»ÖÃ, const t &p³¤¶È) {
-	return pÎ»ÖÃ - p³¤¶È / 2;
+template<typename t> t Cä½ç½®è®¡ç®—<t>::fä¸­åˆ°ä¸‹(const t &aä½ç½®, const t &aé•¿åº¦) {
+	return aä½ç½® - aé•¿åº¦ / 2;
 }
-template<typename t> t CÎ»ÖÃ¼ÆËã<t>::fÖĞµ½ÉÏ(const t &pÎ»ÖÃ, const t &p³¤¶È) {
-	return pÎ»ÖÃ + p³¤¶È / 2;
+template<typename t> t Cä½ç½®è®¡ç®—<t>::fä¸­åˆ°ä¸Š(const t &aä½ç½®, const t &aé•¿åº¦) {
+	return aä½ç½® + aé•¿åº¦ / 2;
 }
-template<typename t> t CÎ»ÖÃ¼ÆËã<t>::fÉÏµ½ÖĞ(const t &pÎ»ÖÃ, const t &p³¤¶È) {
-	return pÎ»ÖÃ - p³¤¶È / 2;
+template<typename t> t Cä½ç½®è®¡ç®—<t>::fä¸Šåˆ°ä¸­(const t &aä½ç½®, const t &aé•¿åº¦) {
+	return aä½ç½® - aé•¿åº¦ / 2;
 }
-template<typename t> t CÎ»ÖÃ¼ÆËã<t>::fÉÏµ½ÏÂ(const t &pÎ»ÖÃ, const t &p³¤¶È) {
-	return pÎ»ÖÃ - p³¤¶È;
-}
-//==============================================================================
-// ÓĞÏŞÖµ
-//==============================================================================
-template<typename t> SÓĞÏŞÖµ<t>::SÓĞÏŞÖµ() :mµ±Ç°((t)-1), m×î´ó((t)-1) {}
-template<typename t> SÓĞÏŞÖµ<t>::SÓĞÏŞÖµ(const t &_) : mµ±Ç°(_), m×î´ó(_) {}
-template<typename t> void SÓĞÏŞÖµ<t>::f¼ì²é() {
-	if (mµ±Ç° > m×î´ó)
-		mµ±Ç° = m×î´ó;
-}
-template<typename t> void SÓĞÏŞÖµ<t>::fÖØÖÃ(const t &_) {
-	mµ±Ç° = _;
-	m×î´ó = _;
-}
-template<typename t> void SÓĞÏŞÖµ<t>::fÂú() {
-	mµ±Ç° = m×î´ó;
-}
-template<typename t> typename SÓĞÏŞÖµ<t>::tĞ¡Êı SÓĞÏŞÖµ<t>::fg°Ù·Ö±È() const {
-	return (tĞ¡Êı)mµ±Ç° / (tĞ¡Êı)m×î´ó;
+template<typename t> t Cä½ç½®è®¡ç®—<t>::fä¸Šåˆ°ä¸‹(const t &aä½ç½®, const t &aé•¿åº¦) {
+	return aä½ç½® - aé•¿åº¦;
 }
 //==============================================================================
-// ·¶Î§
+// æœ‰é™å€¼
 //==============================================================================
-template<typename t> S·¶Î§<t>::S·¶Î§() : mĞ¡(), m´ó() {
+template<typename t> Sæœ‰é™å€¼<t>::Sæœ‰é™å€¼() :må½“å‰((t)-1), mæœ€å¤§((t)-1) {}
+template<typename t> Sæœ‰é™å€¼<t>::Sæœ‰é™å€¼(const t &_) : må½“å‰(_), mæœ€å¤§(_) {}
+template<typename t> void Sæœ‰é™å€¼<t>::fæ£€æŸ¥() {
+	if (må½“å‰ > mæœ€å¤§)
+		må½“å‰ = mæœ€å¤§;
 }
-template<typename t> S·¶Î§<t>::S·¶Î§(const t &aĞ¡, const t &a´ó) : mĞ¡(aĞ¡), m´ó(a´ó) {
+template<typename t> void Sæœ‰é™å€¼<t>::fé‡ç½®(const t &_) {
+	må½“å‰ = _;
+	mæœ€å¤§ = _;
 }
-template<typename t> S·¶Î§<t> S·¶Î§<t>::fcÖĞĞÄ°ë¾¶(const t &aÖĞĞÄ, const t &a°ë¾¶) {
-	S·¶Î§ v;
-	v.mĞ¡ = aÖĞĞÄ - a°ë¾¶;
-	v.m´ó = aÖĞĞÄ + a°ë¾¶;
+template<typename t> void Sæœ‰é™å€¼<t>::fæ»¡() {
+	må½“å‰ = mæœ€å¤§;
+}
+template<typename t> typename Sæœ‰é™å€¼<t>::tå°æ•° Sæœ‰é™å€¼<t>::fgç™¾åˆ†æ¯”() const {
+	return (tå°æ•°)må½“å‰ / (tå°æ•°)mæœ€å¤§;
+}
+//==============================================================================
+// èŒƒå›´
+//==============================================================================
+template<typename t> SèŒƒå›´<t>::SèŒƒå›´() : må°(), må¤§() {
+}
+template<typename t> SèŒƒå›´<t>::SèŒƒå›´(const t &aå°, const t &aå¤§) : må°(aå°), må¤§(aå¤§) {
+}
+template<typename t> SèŒƒå›´<t> SèŒƒå›´<t>::fcä¸­å¿ƒåŠå¾„(const t &aä¸­å¿ƒ, const t &aåŠå¾„) {
+	SèŒƒå›´ v;
+	v.må° = aä¸­å¿ƒ - aåŠå¾„;
+	v.må¤§ = aä¸­å¿ƒ + aåŠå¾„;
 	return v;
 }
-template<typename t> t S·¶Î§<t>::fgĞ¡() const {
-	return mĞ¡;
+template<typename t> t SèŒƒå›´<t>::fgå°() const {
+	return må°;
 }
-template<typename t> t S·¶Î§<t>::fg´ó() const {
-	return m´ó;
+template<typename t> t SèŒƒå›´<t>::fgå¤§() const {
+	return må¤§;
 }
-template<typename t> t S·¶Î§<t>::fgÖĞĞÄ() const {
-	return (mĞ¡ + m´ó) / 2;
+template<typename t> t SèŒƒå›´<t>::fgä¸­å¿ƒ() const {
+	return (må° + må¤§) / 2;
 }
-template<typename t> t S·¶Î§<t>::fgÖ±¾¶() const {
-	return m´ó - mĞ¡;
+template<typename t> t SèŒƒå›´<t>::fgç›´å¾„() const {
+	return må¤§ - må°;
 }
-template<typename t> t S·¶Î§<t>::fg°ë¾¶() const {
-	return fgÖ±¾¶() / 2;
+template<typename t> t SèŒƒå›´<t>::fgåŠå¾„() const {
+	return fgç›´å¾„() / 2;
 }
-template<typename t> S·¶Î§<t> &S·¶Î§<t>::fs´ó(const t &a´ó) {
-	m´ó = a´ó;
+template<typename t> SèŒƒå›´<t> &SèŒƒå›´<t>::fså¤§(const t &aå¤§) {
+	må¤§ = aå¤§;
 }
-template<typename t> S·¶Î§<t> &S·¶Î§<t>::fsĞ¡(const t &aĞ¡) {
-	mĞ¡ = aĞ¡;
+template<typename t> SèŒƒå›´<t> &SèŒƒå›´<t>::fså°(const t &aå°) {
+	må° = aå°;
 }
-template<typename t> S·¶Î§<t> &S·¶Î§<t>::fsÖĞĞÄ°ë¾¶(const t &aÖĞĞÄ, const t &a°ë¾¶) {
-	mĞ¡ = aÖĞĞÄ - a°ë¾¶;
-	m´ó = aÖĞĞÄ + a°ë¾¶;
+template<typename t> SèŒƒå›´<t> &SèŒƒå›´<t>::fsä¸­å¿ƒåŠå¾„(const t &aä¸­å¿ƒ, const t &aåŠå¾„) {
+	må° = aä¸­å¿ƒ - aåŠå¾„;
+	må¤§ = aä¸­å¿ƒ + aåŠå¾„;
 	return *this;
 }
-template<typename t> S·¶Î§<t> &S·¶Î§<t>::fsÖĞĞÄ(const t &aÖĞĞÄ) {
-	const t v°ë¾¶ = fg°ë¾¶();
-	mĞ¡ = aÖĞĞÄ - v°ë¾¶;
-	m´ó = aÖĞĞÄ + v°ë¾¶;
+template<typename t> SèŒƒå›´<t> &SèŒƒå›´<t>::fsä¸­å¿ƒ(const t &aä¸­å¿ƒ) {
+	const t våŠå¾„ = fgåŠå¾„();
+	må° = aä¸­å¿ƒ - våŠå¾„;
+	må¤§ = aä¸­å¿ƒ + våŠå¾„;
 	return *this;
 }
-template<typename t> S·¶Î§<t> &S·¶Î§<t>::fsÖ±¾¶(const t &aÖ±¾¶) {
-	return fs°ë¾¶(aÖ±¾¶ / 2);
+template<typename t> SèŒƒå›´<t> &SèŒƒå›´<t>::fsç›´å¾„(const t &aç›´å¾„) {
+	return fsåŠå¾„(aç›´å¾„ / 2);
 }
-template<typename t> S·¶Î§<t> &S·¶Î§<t>::fs°ë¾¶(const t &a°ë¾¶) {
-	const t vÖĞĞÄ = fgÖĞĞÄ();
-	mĞ¡ = vÖĞĞÄ - a°ë¾¶;
-	m´ó = vÖĞĞÄ + a°ë¾¶;
+template<typename t> SèŒƒå›´<t> &SèŒƒå›´<t>::fsåŠå¾„(const t &aåŠå¾„) {
+	const t vä¸­å¿ƒ = fgä¸­å¿ƒ();
+	må° = vä¸­å¿ƒ - aåŠå¾„;
+	må¤§ = vä¸­å¿ƒ + aåŠå¾„;
 	return *this;
 }
-template<typename t> S·¶Î§<t> &S·¶Î§<t>::fsÒÆ¶¯(const t &aÒÆ¶¯) {
-	mĞ¡ += aÒÆ¶¯;
-	m´ó += aÒÆ¶¯;
+template<typename t> SèŒƒå›´<t> &SèŒƒå›´<t>::fsç§»åŠ¨(const t &aç§»åŠ¨) {
+	må° += aç§»åŠ¨;
+	må¤§ += aç§»åŠ¨;
 	return *this;
 }
-template<typename t> S·¶Î§<t> &S·¶Î§<t>::fsºÏ²¢(const S·¶Î§ &a·¶Î§) {
-	mĞ¡ = std::min<t>(mĞ¡, a·¶Î§.mĞ¡);
-	m´ó = std::max<t>(m´ó, a·¶Î§.m´ó);
+template<typename t> SèŒƒå›´<t> &SèŒƒå›´<t>::fsåˆå¹¶(const SèŒƒå›´ &aèŒƒå›´) {
+	må° = std::min<t>(må°, aèŒƒå›´.må°);
+	må¤§ = std::max<t>(må¤§, aèŒƒå›´.må¤§);
 	return *this;
 }
-template<typename t> bool S·¶Î§<t>::fi·¶Î§ÄÚ(const t &aµã) const {
-	return mĞ¡ <= aµã && aµã <= m´ó;
+template<typename t> bool SèŒƒå›´<t>::fièŒƒå›´å†…(const t &aç‚¹) const {
+	return må° <= aç‚¹ && aç‚¹ <= må¤§;
 }
-template<typename t> bool S·¶Î§<t>::fiÏà½»(const S·¶Î§ &a·¶Î§) const {
-	const t vÖĞĞÄ = a·¶Î§.fgÖĞĞÄ() - fgÖĞĞÄ();
-	return vÖĞĞÄ <= a·¶Î§.fg°ë¾¶() + fg°ë¾¶();
+template<typename t> bool SèŒƒå›´<t>::fiç›¸äº¤(const SèŒƒå›´ &aèŒƒå›´) const {
+	const t vä¸­å¿ƒ = aèŒƒå›´.fgä¸­å¿ƒ() - fgä¸­å¿ƒ();
+	return vä¸­å¿ƒ <= aèŒƒå›´.fgåŠå¾„() + fgåŠå¾„();
 }
-template<typename t> S·¶Î§<t> S·¶Î§<t>::fºÏ²¢(const S·¶Î§ &a·¶Î§) const {
-	return{std::min<t>(mĞ¡, a·¶Î§.mĞ¡), std::max<t>(m´ó, a·¶Î§.m´ó)};
-}
-//==============================================================================
-// ·¶Î§±ä»»¼ÆËã
-//==============================================================================
-template<typename t> C·¶Î§±ä»»¼ÆËã<t>::C·¶Î§±ä»»¼ÆËã() :
-	mÇ°(), mºó() {
-}
-template<typename t> C·¶Î§±ä»»¼ÆËã<t>::C·¶Î§±ä»»¼ÆËã(const S·¶Î§<t> &aÇ°, const S·¶Î§<t> &aºó) :
-	mÇ°(aÇ°), mºó(aºó) {
-}
-template<typename t>  t C·¶Î§±ä»»¼ÆËã<t>::f±ä»»¼ÆËã(const S·¶Î§<t> &aÇ°, const S·¶Î§<t> &aºó, const t &aÖµ) {
-	return (aÖµ - aÇ°.mĞ¡) / aÇ°.fgÖ±¾¶() * aºó.fgÖ±¾¶() + aºó.mĞ¡;
-}
-template<typename t> t C·¶Î§±ä»»¼ÆËã<t>::operator ()(const t &a) const {
-	return f±ä»»¼ÆËã(mÇ°, mºó, a);
-}
-template<typename t> t C·¶Î§±ä»»¼ÆËã<t>::f¼ÆËã(const t &a) const {
-	return f±ä»»¼ÆËã(mÇ°, mºó, a);
-}
-template<typename t> t C·¶Î§±ä»»¼ÆËã<t>::fÄæ¼ÆËã(const t &a) const {
-	return f±ä»»¼ÆËã(mºó, mÇ°, a);
+template<typename t> SèŒƒå›´<t> SèŒƒå›´<t>::fåˆå¹¶(const SèŒƒå›´ &aèŒƒå›´) const {
+	return{std::min<t>(må°, aèŒƒå›´.må°), std::max<t>(må¤§, aèŒƒå›´.må¤§)};
 }
 //==============================================================================
-// ¶şÎ¬ĞòºÅ¼ÆËã
+// èŒƒå›´å˜æ¢è®¡ç®—
 //==============================================================================
-template<typename t> C¶şÎ¬ĞòºÅ¼ÆËã<t>::C¶şÎ¬ĞòºÅ¼ÆËã():
-	mÁĞ() {
+template<typename t> CèŒƒå›´å˜æ¢è®¡ç®—<t>::CèŒƒå›´å˜æ¢è®¡ç®—() :
+	må‰(), må() {
 }
-template<typename t> C¶şÎ¬ĞòºÅ¼ÆËã<t>::C¶şÎ¬ĞòºÅ¼ÆËã(const t &aÁĞ):
-	mÁĞ(aÁĞ) {
+template<typename t> CèŒƒå›´å˜æ¢è®¡ç®—<t>::CèŒƒå›´å˜æ¢è®¡ç®—(const SèŒƒå›´<t> &aå‰, const SèŒƒå›´<t> &aå) :
+	må‰(aå‰), må(aå) {
 }
-template<typename t> t C¶şÎ¬ĞòºÅ¼ÆËã<t>::operator()(const t &aĞĞ, const t &aÁĞ) const {
-	return f¶şµ½Ò»(mÁĞ, aĞĞ, aÁĞ);
+template<typename t>  t CèŒƒå›´å˜æ¢è®¡ç®—<t>::få˜æ¢è®¡ç®—(const SèŒƒå›´<t> &aå‰, const SèŒƒå›´<t> &aå, const t &aå€¼) {
+	return (aå€¼ - aå‰.må°) / aå‰.fgç›´å¾„() * aå.fgç›´å¾„() + aå.må°;
 }
-template<typename t> std::pair<t, t> C¶şÎ¬ĞòºÅ¼ÆËã<t>::operator()(const t &aÒ»Î¬) const {
-	return fÒ»µ½¶ş(mÁĞ, aÒ»Î¬);
+template<typename t> t CèŒƒå›´å˜æ¢è®¡ç®—<t>::operator ()(const t &a) const {
+	return få˜æ¢è®¡ç®—(må‰, må, a);
 }
-template<typename t> t C¶şÎ¬ĞòºÅ¼ÆËã<t>::f¶şµ½Ò»(const t &aÔ­ÁĞ, const t &aÖ¸¶¨ĞĞ, const t &aÖ¸¶¨ÁĞ) {
-	return aÔ­ÁĞ * aÖ¸¶¨ĞĞ + aÖ¸¶¨ÁĞ;
+template<typename t> t CèŒƒå›´å˜æ¢è®¡ç®—<t>::fè®¡ç®—(const t &a) const {
+	return få˜æ¢è®¡ç®—(må‰, må, a);
 }
-template<typename t> std::pair<t, t> C¶şÎ¬ĞòºÅ¼ÆËã<t>::fÒ»µ½¶ş(const t &aÔ­ÁĞ, const t &aÖ¸¶¨Ò»Î¬) {
-	return std::pair<t, t>{aÖ¸¶¨Ò»Î¬ / aÔ­ÁĞ, aÖ¸¶¨Ò»Î¬ % aÔ­ÁĞ};
+template<typename t> t CèŒƒå›´å˜æ¢è®¡ç®—<t>::fé€†è®¡ç®—(const t &a) const {
+	return få˜æ¢è®¡ç®—(må, må‰, a);
 }
 //==============================================================================
-// ¶şÎ¬ĞòºÅ¼ÆËã
+// äºŒç»´åºå·è®¡ç®—
 //==============================================================================
-template<typename t> t S½¥±äÖµ<t>::fÏßĞÔ½¥±ä(t aÖµ) {
-	mµ±Ç° = ÊıÑ§::fÏßĞÔ½¥±ä<t>(mµ±Ç°, mÄ¿±ê, aÖµ);
-	return mµ±Ç°;
+template<typename t> CäºŒç»´åºå·è®¡ç®—<t>::CäºŒç»´åºå·è®¡ç®—():
+	måˆ—() {
 }
-template<typename t> t S½¥±äÖµ<t>::f±¶Êı½¥±ä(float a±¶Êı, t a×îĞ¡, t a×î´ó) {
-	mµ±Ç° = ÊıÑ§::f±¶Êı½¥±ä<t>(mµ±Ç°, mÄ¿±ê, a±¶Êı, a×îĞ¡, a×î´ó);
-	return mµ±Ç°;
+template<typename t> CäºŒç»´åºå·è®¡ç®—<t>::CäºŒç»´åºå·è®¡ç®—(const t &aåˆ—):
+	måˆ—(aåˆ—) {
 }
-}	//namespace cflw::ÊıÑ§
+template<typename t> t CäºŒç»´åºå·è®¡ç®—<t>::operator()(const t &aè¡Œ, const t &aåˆ—) const {
+	return fäºŒåˆ°ä¸€(måˆ—, aè¡Œ, aåˆ—);
+}
+template<typename t> std::pair<t, t> CäºŒç»´åºå·è®¡ç®—<t>::operator()(const t &aä¸€ç»´) const {
+	return fä¸€åˆ°äºŒ(måˆ—, aä¸€ç»´);
+}
+template<typename t> t CäºŒç»´åºå·è®¡ç®—<t>::fäºŒåˆ°ä¸€(const t &aåŸåˆ—, const t &aæŒ‡å®šè¡Œ, const t &aæŒ‡å®šåˆ—) {
+	return aåŸåˆ— * aæŒ‡å®šè¡Œ + aæŒ‡å®šåˆ—;
+}
+template<typename t> std::pair<t, t> CäºŒç»´åºå·è®¡ç®—<t>::fä¸€åˆ°äºŒ(const t &aåŸåˆ—, const t &aæŒ‡å®šä¸€ç»´) {
+	return std::pair<t, t>{aæŒ‡å®šä¸€ç»´ / aåŸåˆ—, aæŒ‡å®šä¸€ç»´ % aåŸåˆ—};
+}
+//==============================================================================
+// äºŒç»´åºå·è®¡ç®—
+//==============================================================================
+template<typename t> t Sæ¸å˜å€¼<t>::fçº¿æ€§æ¸å˜(t aå€¼) {
+	må½“å‰ = æ•°å­¦::fçº¿æ€§æ¸å˜<t>(må½“å‰, mç›®æ ‡, aå€¼);
+	return må½“å‰;
+}
+template<typename t> t Sæ¸å˜å€¼<t>::få€æ•°æ¸å˜(float aå€æ•°, t aæœ€å°, t aæœ€å¤§) {
+	må½“å‰ = æ•°å­¦::få€æ•°æ¸å˜<t>(må½“å‰, mç›®æ ‡, aå€æ•°, aæœ€å°, aæœ€å¤§);
+	return må½“å‰;
+}
+}	//namespace cflw::æ•°å­¦

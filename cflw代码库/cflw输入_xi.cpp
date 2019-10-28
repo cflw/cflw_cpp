@@ -1,16 +1,16 @@
-#include <string>
+ï»¿#include <string>
 #include <wbemidl.h>
 #include <oleauto.h>
 #include <wrl.h>
 #include <xinput.h>
-#include "cflwÊäÈë_xi.h"
-#include "cflwÊ±¼ä.h"
-#include "cflwÊıÑ§.h"
-namespace cflw::ÊäÈë::xi {
+#include "cflwè¾“å…¥_xi.h"
+#include "cflwæ—¶é—´.h"
+#include "cflwæ•°å­¦.h"
+namespace cflw::è¾“å…¥::xi {
 using Microsoft::WRL::ComPtr;
-constexpr float cËÀÇø = 1.f / 256.f;
+constexpr float cæ­»åŒº = 1.f / 256.f;
 //=============================================================================
-// º¯Êı
+// å‡½æ•°
 //=============================================================================
 bool IsXInputDevice(const GUID *pGuidProductFromDirectInput) {
 	auto SAFE_RELEASE = [](IUnknown *p) {
@@ -111,149 +111,149 @@ LCleanup:
 		CoUninitialize();
 	return bIsXinputDevice;
 }
-float f¼ÆËã·½ÏòÎŞËÀÇø(SHORT aµ¥Ïò) {
-	if (aµ¥Ïò == 0) {
+float fè®¡ç®—æ–¹å‘æ— æ­»åŒº(SHORT aå•å‘) {
+	if (aå•å‘ == 0) {
 		return 0;
 	}
-	constexpr float c·¶Î§ = ((float)SHORT_MAX - (float)SHORT_MIN);
-	return ((float)aµ¥Ïò - (float)SHORT_MIN) / (c·¶Î§ / 2) - 1;
+	constexpr float cèŒƒå›´ = ((float)SHORT_MAX - (float)SHORT_MIN);
+	return ((float)aå•å‘ - (float)SHORT_MIN) / (cèŒƒå›´ / 2) - 1;
 }
-float f¼ÆËã·½ÏòÓĞËÀÇø(SHORT aµ¥Ïò, float aËÀÇø = cËÀÇø) {
-	const float v = f¼ÆËã·½ÏòÎŞËÀÇø(aµ¥Ïò);
-	if (abs(v) <= aËÀÇø) {
+float fè®¡ç®—æ–¹å‘æœ‰æ­»åŒº(SHORT aå•å‘, float aæ­»åŒº = cæ­»åŒº) {
+	const float v = fè®¡ç®—æ–¹å‘æ— æ­»åŒº(aå•å‘);
+	if (abs(v) <= aæ­»åŒº) {
 		return 0;
 	} else {
 		return v;
 	}
 }
-void f´¦Àí·½ÏòÏòÁ¿ËÀÇø(C·½Ïò3 &a·½Ïò, SHORT x, SHORT y, float aËÀÇø = cËÀÇø) {
-	const float vx = f¼ÆËã·½ÏòÎŞËÀÇø(x);
-	const float vy = f¼ÆËã·½ÏòÎŞËÀÇø(y);
-	if (hypotf(vx, vy) <= aËÀÇø) {
-		a·½Ïò.m·½Ïò[0] = 0;
-		a·½Ïò.m·½Ïò[1] = 0;
+void få¤„ç†æ–¹å‘å‘é‡æ­»åŒº(Cæ–¹å‘3 &aæ–¹å‘, SHORT x, SHORT y, float aæ­»åŒº = cæ­»åŒº) {
+	const float vx = fè®¡ç®—æ–¹å‘æ— æ­»åŒº(x);
+	const float vy = fè®¡ç®—æ–¹å‘æ— æ­»åŒº(y);
+	if (hypotf(vx, vy) <= aæ­»åŒº) {
+		aæ–¹å‘.mæ–¹å‘[0] = 0;
+		aæ–¹å‘.mæ–¹å‘[1] = 0;
 	} else {
-		a·½Ïò.m·½Ïò[0] = vx;
-		a·½Ïò.m·½Ïò[1] = vy;
+		aæ–¹å‘.mæ–¹å‘[0] = vx;
+		aæ–¹å‘.mæ–¹å‘[1] = vy;
 	}
 }
 //=============================================================================
-// Éè±¸
+// è®¾å¤‡
 //=============================================================================
-class CÊÖ±ú : public IÊÖ±ú {
+class Cæ‰‹æŸ„ : public Iæ‰‹æŸ„ {
 public:
-	enum class EÒ¡¸Ë {
-		e×ó, eÓÒ
+	enum class Eæ‘‡æ† {
+		eå·¦, eå³
 	};
-	enum class E·½Ïò¼ü {
+	enum class Eæ–¹å‘é”® {
 		x, y
 	};
-	CÊÖ±ú(DWORD);
-	void f¸üĞÂ() override;
-	S°´¼ü f°´¼ü(tË÷Òı) const override;
-	S·½Ïò f·½Ïò(tË÷Òı) const override;
-	float f´¥·¢(tË÷Òı) const override;
+	Cæ‰‹æŸ„(DWORD);
+	void fæ›´æ–°() override;
+	SæŒ‰é”® fæŒ‰é”®(tç´¢å¼•) const override;
+	Sæ–¹å‘ fæ–¹å‘(tç´¢å¼•) const override;
+	float fè§¦å‘(tç´¢å¼•) const override;
 private:
-	DWORD mĞòºÅ, m°üÊı = 0, mÉÏ´Î×´Ì¬ = 0;
-	C°´¼ü×é m°´¼ü{16};
-	C·½Ïò3 mÒ¡¸Ë[2] = {};
-	C·½Ïò¼ü m·½Ïò¼ü[2] = {
-		{(int)EÊÖ±ú°´¼ü::eÓÒ, (int)EÊÖ±ú°´¼ü::e×ó}, 
-		{(int)EÊÖ±ú°´¼ü::eÉÏ, (int)EÊÖ±ú°´¼ü::eÏÂ}
+	DWORD måºå·, måŒ…æ•° = 0, mä¸Šæ¬¡çŠ¶æ€ = 0;
+	CæŒ‰é”®ç»„ mæŒ‰é”®{16};
+	Cæ–¹å‘3 mæ‘‡æ†[2] = {};
+	Cæ–¹å‘é”® mæ–¹å‘é”®[2] = {
+		{(int)Eæ‰‹æŸ„æŒ‰é”®::eå³, (int)Eæ‰‹æŸ„æŒ‰é”®::eå·¦}, 
+		{(int)Eæ‰‹æŸ„æŒ‰é”®::eä¸Š, (int)Eæ‰‹æŸ„æŒ‰é”®::eä¸‹}
 	};
-	float m´¥·¢[2] = {};
-	Ê±¼ä::C¼ÆÊ±Æ÷ m¼ÆÊ±Æ÷;	//ÊÖ±úÊ§Ğ§Ê±ÑÓ³¤È¡×´Ì¬Ê±¼ä
+	float mè§¦å‘[2] = {};
+	æ—¶é—´::Cè®¡æ—¶å™¨ mè®¡æ—¶å™¨;	//æ‰‹æŸ„å¤±æ•ˆæ—¶å»¶é•¿å–çŠ¶æ€æ—¶é—´
 };
 //=============================================================================
-// ÊäÈë
+// è¾“å…¥
 //=============================================================================
-CÊäÈë::CÊäÈë() {
+Cè¾“å…¥::Cè¾“å…¥() {
 }
-CÊäÈë::~CÊäÈë() {
+Cè¾“å…¥::~Cè¾“å…¥() {
 }
-void CÊäÈë::f´´½¨ÊÖ±ú(tpÊÖ±ú &aÊä³ö, DWORD aĞòºÅ) {
-	if (aĞòºÅ >= 4) {
-		aÊä³ö = nullptr;
+void Cè¾“å…¥::fåˆ›å»ºæ‰‹æŸ„(tpæ‰‹æŸ„ &aè¾“å‡º, DWORD aåºå·) {
+	if (aåºå· >= 4) {
+		aè¾“å‡º = nullptr;
 	}
-	std::shared_ptr<CÊÖ±ú> &vÊÖ±ú = maÊÖ±ú[aĞòºÅ];
-	if (vÊÖ±ú == nullptr) {
-		vÊÖ±ú = std::make_shared<CÊÖ±ú>(aĞòºÅ);
+	std::shared_ptr<Cæ‰‹æŸ„> &væ‰‹æŸ„ = maæ‰‹æŸ„[aåºå·];
+	if (væ‰‹æŸ„ == nullptr) {
+		væ‰‹æŸ„ = std::make_shared<Cæ‰‹æŸ„>(aåºå·);
 	}
-	aÊä³ö = vÊÖ±ú;
+	aè¾“å‡º = væ‰‹æŸ„;
 }
-void CÊäÈë::f¸üĞÂ() {
-	for (const std::shared_ptr<CÊÖ±ú> &v : maÊÖ±ú) {
+void Cè¾“å…¥::fæ›´æ–°() {
+	for (const std::shared_ptr<Cæ‰‹æŸ„> &v : maæ‰‹æŸ„) {
 		if (v) {
-			v->f¸üĞÂ();
+			v->fæ›´æ–°();
 		}
 	}
 }
 //=============================================================================
-// ÊÖ±ú
+// æ‰‹æŸ„
 //=============================================================================
-CÊÖ±ú::CÊÖ±ú(DWORD pĞòºÅ) :
-	mĞòºÅ{pĞòºÅ} {
+Cæ‰‹æŸ„::Cæ‰‹æŸ„(DWORD påºå·) :
+	måºå·{påºå·} {
 }
-S°´¼ü CÊÖ±ú::f°´¼ü(tË÷Òı i) const {
-	return m°´¼ü.f°´¼ü(i);
+SæŒ‰é”® Cæ‰‹æŸ„::fæŒ‰é”®(tç´¢å¼• i) const {
+	return mæŒ‰é”®.fæŒ‰é”®(i);
 }
-S·½Ïò CÊÖ±ú::f·½Ïò(tË÷Òı i) const {
+Sæ–¹å‘ Cæ‰‹æŸ„::fæ–¹å‘(tç´¢å¼• i) const {
 	switch (i) {
-	case (int)EÊÖ±ú·½Ïò::e·½Ïò¼ü:
-		return {m·½Ïò¼ü[(int)E·½Ïò¼ü::x].m·½Ïò, m·½Ïò¼ü[(int)E·½Ïò¼ü::y].m·½Ïò, 0};
-	case (int)EÊÖ±ú·½Ïò::e×óÒ¡¸Ë:
-		return mÒ¡¸Ë[(int)EÒ¡¸Ë::e×ó].f·½Ïò();
-	case (int)EÊÖ±ú·½Ïò::eÓÒÒ¡¸Ë:
-		return mÒ¡¸Ë[(int)EÒ¡¸Ë::eÓÒ].f·½Ïò();
+	case (int)Eæ‰‹æŸ„æ–¹å‘::eæ–¹å‘é”®:
+		return {mæ–¹å‘é”®[(int)Eæ–¹å‘é”®::x].mæ–¹å‘, mæ–¹å‘é”®[(int)Eæ–¹å‘é”®::y].mæ–¹å‘, 0};
+	case (int)Eæ‰‹æŸ„æ–¹å‘::eå·¦æ‘‡æ†:
+		return mæ‘‡æ†[(int)Eæ‘‡æ†::eå·¦].fæ–¹å‘();
+	case (int)Eæ‰‹æŸ„æ–¹å‘::eå³æ‘‡æ†:
+		return mæ‘‡æ†[(int)Eæ‘‡æ†::eå³].fæ–¹å‘();
 	default: {
-		const float v×î´óx = ÊıÑ§::f¾ø¶ÔÖµ×î´óÖµ(
-			m·½Ïò¼ü[(int)E·½Ïò¼ü::x].m·½Ïò, 
-			mÒ¡¸Ë[(int)EÒ¡¸Ë::e×ó].m·½Ïò[0], 
-			mÒ¡¸Ë[(int)EÒ¡¸Ë::eÓÒ].m·½Ïò[0]);
-		const float v×î´óy = ÊıÑ§::f¾ø¶ÔÖµ×î´óÖµ(
-			m·½Ïò¼ü[(int)E·½Ïò¼ü::y].m·½Ïò,
-			mÒ¡¸Ë[(int)EÒ¡¸Ë::e×ó].m·½Ïò[1],
-			mÒ¡¸Ë[(int)EÒ¡¸Ë::eÓÒ].m·½Ïò[1]);
-		return {v×î´óx, v×î´óy, 0};
+		const float væœ€å¤§x = æ•°å­¦::fç»å¯¹å€¼æœ€å¤§å€¼(
+			mæ–¹å‘é”®[(int)Eæ–¹å‘é”®::x].mæ–¹å‘, 
+			mæ‘‡æ†[(int)Eæ‘‡æ†::eå·¦].mæ–¹å‘[0], 
+			mæ‘‡æ†[(int)Eæ‘‡æ†::eå³].mæ–¹å‘[0]);
+		const float væœ€å¤§y = æ•°å­¦::fç»å¯¹å€¼æœ€å¤§å€¼(
+			mæ–¹å‘é”®[(int)Eæ–¹å‘é”®::y].mæ–¹å‘,
+			mæ‘‡æ†[(int)Eæ‘‡æ†::eå·¦].mæ–¹å‘[1],
+			mæ‘‡æ†[(int)Eæ‘‡æ†::eå³].mæ–¹å‘[1]);
+		return {væœ€å¤§x, væœ€å¤§y, 0};
 	}
 	}
 }
-float CÊÖ±ú::f´¥·¢(tË÷Òı i) const {
-	return m´¥·¢[i];
+float Cæ‰‹æŸ„::fè§¦å‘(tç´¢å¼• i) const {
+	return mè§¦å‘[i];
 }
-void CÊÖ±ú::f¸üĞÂ() {
-	m°´¼ü.f¸²¸ÇÉÏ´Î();
-	if (m¼ÆÊ±Æ÷.fµÎ´ğ()) {
-		XINPUT_STATE v×´Ì¬ = {};
-		DWORD dr = XInputGetState(mĞòºÅ, &v×´Ì¬);
+void Cæ‰‹æŸ„::fæ›´æ–°() {
+	mæŒ‰é”®.fè¦†ç›–ä¸Šæ¬¡();
+	if (mè®¡æ—¶å™¨.fæ»´ç­”()) {
+		XINPUT_STATE vçŠ¶æ€ = {};
+		DWORD dr = XInputGetState(måºå·, &vçŠ¶æ€);
 		if (dr == ERROR_SUCCESS) {
-			if (m°üÊı != v×´Ì¬.dwPacketNumber) {
-				m°üÊı = v×´Ì¬.dwPacketNumber;
-				//°´¼ü
-				for (tË÷Òı i = 0; i != 16; ++i) {
-					m°´¼ü.mÕâ´Î[i] = v×´Ì¬.Gamepad.wButtons & (1 << i);
+			if (måŒ…æ•° != vçŠ¶æ€.dwPacketNumber) {
+				måŒ…æ•° = vçŠ¶æ€.dwPacketNumber;
+				//æŒ‰é”®
+				for (tç´¢å¼• i = 0; i != 16; ++i) {
+					mæŒ‰é”®.mè¿™æ¬¡[i] = vçŠ¶æ€.Gamepad.wButtons & (1 << i);
 				}
-				//·½Ïò¼ü
-				m·½Ïò¼ü[(int)E·½Ïò¼ü::x].f¸üĞÂ(m°´¼ü);
-				m·½Ïò¼ü[(int)E·½Ïò¼ü::y].f¸üĞÂ(m°´¼ü);
-				//Ò¡¸Ë
-				f´¦Àí·½ÏòÏòÁ¿ËÀÇø(mÒ¡¸Ë[(int)EÒ¡¸Ë::e×ó], v×´Ì¬.Gamepad.sThumbLX, v×´Ì¬.Gamepad.sThumbLY);
-				f´¦Àí·½ÏòÏòÁ¿ËÀÇø(mÒ¡¸Ë[(int)EÒ¡¸Ë::eÓÒ], v×´Ì¬.Gamepad.sThumbRX, v×´Ì¬.Gamepad.sThumbRY);
-				//´¥·¢
-				m´¥·¢[0] = v×´Ì¬.Gamepad.bLeftTrigger / 255.f;
-				m´¥·¢[1] = v×´Ì¬.Gamepad.bRightTrigger / 255.f;
+				//æ–¹å‘é”®
+				mæ–¹å‘é”®[(int)Eæ–¹å‘é”®::x].fæ›´æ–°(mæŒ‰é”®);
+				mæ–¹å‘é”®[(int)Eæ–¹å‘é”®::y].fæ›´æ–°(mæŒ‰é”®);
+				//æ‘‡æ†
+				få¤„ç†æ–¹å‘å‘é‡æ­»åŒº(mæ‘‡æ†[(int)Eæ‘‡æ†::eå·¦], vçŠ¶æ€.Gamepad.sThumbLX, vçŠ¶æ€.Gamepad.sThumbLY);
+				få¤„ç†æ–¹å‘å‘é‡æ­»åŒº(mæ‘‡æ†[(int)Eæ‘‡æ†::eå³], vçŠ¶æ€.Gamepad.sThumbRX, vçŠ¶æ€.Gamepad.sThumbRY);
+				//è§¦å‘
+				mè§¦å‘[0] = vçŠ¶æ€.Gamepad.bLeftTrigger / 255.f;
+				mè§¦å‘[1] = vçŠ¶æ€.Gamepad.bRightTrigger / 255.f;
 			}
-			if (mÉÏ´Î×´Ì¬ != dr) {
-				m¼ÆÊ±Æ÷.fs¼ä¸ô(0);
+			if (mä¸Šæ¬¡çŠ¶æ€ != dr) {
+				mè®¡æ—¶å™¨.fsé—´éš”(0);
 			}
 		} else {
-			m°´¼ü.fÇå¿ÕÕâ´Î();
-			if (mÉÏ´Î×´Ì¬ != dr) {
-				m¼ÆÊ±Æ÷.fs¼ä¸ô(2);
+			mæŒ‰é”®.fæ¸…ç©ºè¿™æ¬¡();
+			if (mä¸Šæ¬¡çŠ¶æ€ != dr) {
+				mè®¡æ—¶å™¨.fsé—´éš”(2);
 			}
 		}
-		mÉÏ´Î×´Ì¬ = dr;
+		mä¸Šæ¬¡çŠ¶æ€ = dr;
 	}
 }
 //=============================================================================
-}	//namespace cflw::ÊäÈë::xi
+}	//namespace cflw::è¾“å…¥::xi

@@ -1,124 +1,124 @@
-#pragma once
+ï»¿#pragma once
 #include <memory>
 #include <functional>
 #include <wincodec.h>
 #include <wrl.h>
 #include <dxgi.h>
-#include "cflwÊıÑ§_Í¼ĞÎ.h"
-namespace cflw::Í¼ĞÎ::dxÎÆÀí {
-//¸ñÊ½
-namespace ¸ñÊ½ {
-//³£Á¿
-const GUID cÍ¨ÓÃrgba = GUID_WICPixelFormat32bppRGBA;
-const GUID cÍ¨ÓÃbgra = GUID_WICPixelFormat32bppBGRA;
-const GUID cÍ¨ÓÃpbgra = GUID_WICPixelFormat32bppPBGRA;
-//º¯Êı
-bool f¼ì²ésrgb(IWICBitmapFrameDecode *);
-DXGI_FORMAT fµ½dxgi(const GUID &);
-GUID fµ½Í¨ÓÃ¸ñÊ½(const GUID &);
-DXGI_FORMAT fµ½srgb(DXGI_FORMAT);
-bool fiÍ¨ÓÃ¸ñÊ½(const GUID &);
-GUID f²»×ª»»(const GUID &);
-class FÇ¿ÖÆ×ª»» {
+#include "cflwæ•°å­¦_å›¾å½¢.h"
+namespace cflw::å›¾å½¢::dxçº¹ç† {
+//æ ¼å¼
+namespace æ ¼å¼ {
+//å¸¸é‡
+const GUID cé€šç”¨rgba = GUID_WICPixelFormat32bppRGBA;
+const GUID cé€šç”¨bgra = GUID_WICPixelFormat32bppBGRA;
+const GUID cé€šç”¨pbgra = GUID_WICPixelFormat32bppPBGRA;
+//å‡½æ•°
+bool fæ£€æŸ¥srgb(IWICBitmapFrameDecode *);
+DXGI_FORMAT fåˆ°dxgi(const GUID &);
+GUID fåˆ°é€šç”¨æ ¼å¼(const GUID &);
+DXGI_FORMAT fåˆ°srgb(DXGI_FORMAT);
+bool fié€šç”¨æ ¼å¼(const GUID &);
+GUID fä¸è½¬æ¢(const GUID &);
+class Få¼ºåˆ¶è½¬æ¢ {
 public:
-	FÇ¿ÖÆ×ª»»(const GUID &a):
-		mÖµ(a) {
+	Få¼ºåˆ¶è½¬æ¢(const GUID &a):
+		må€¼(a) {
 	}
 	GUID operator ()(const GUID &) const {
-		return mÖµ;
+		return må€¼;
 	}
-	GUID mÖµ;
+	GUID må€¼;
 };
 }
-//ÉùÃ÷
+//å£°æ˜
 using Microsoft::WRL::ComPtr;
-class CÖ»¶ÁÎÆÀí;
+class Cåªè¯»çº¹ç†;
 //==============================================================================
-// ¹¤³§
+// å·¥å‚
 //==============================================================================
-class CÍ¼Ïñ¹¤³§ {
+class Cå›¾åƒå·¥å‚ {
 public:
-	~CÍ¼Ïñ¹¤³§();
-	HRESULT f³õÊ¼»¯();
-	HRESULT f¶ÁÈ¡Í¼Ïñ(const wchar_t *, IWICBitmapFrameDecode **);
-	std::unique_ptr<std::byte[]> f¸´ÖÆÏñËØÊı¾İ(IWICBitmapSource *, size_t *ÏñËØ´óĞ¡ = nullptr, size_t *ĞĞ¾à = nullptr, size_t *Í¼Ïñ´óĞ¡ = nullptr);
-	size_t fÏñËØ´óĞ¡(const GUID &);
-	WICBitmapPlaneDescription fÈ¡Í¼ÏñÃèÊö(IWICBitmapSource *);
-	HRESULT fÍ¼Ïñ³ß´ç±ä»»(IWICBitmapSource *, size_t, size_t, IWICBitmapScaler **);
-	HRESULT fÍ¼Ïñ¸ñÊ½±ä»»(IWICBitmapSource *, const GUID &, IWICFormatConverter **);
-	ComPtr<IWICBitmapSource> f¸ß¼¶¶ÁÈ¡(const wchar_t *, const std::function<GUID(const GUID &)> &¸ñÊ½×ª»» = ¸ñÊ½::f²»×ª»»);
-	std::unique_ptr<CÖ»¶ÁÎÆÀí> fcÎÆÀí(IWICBitmapSource *);
-	std::unique_ptr<CÖ»¶ÁÎÆÀí> fÒ»¼ü¶ÁÈ¡(const wchar_t *);
+	~Cå›¾åƒå·¥å‚();
+	HRESULT fåˆå§‹åŒ–();
+	HRESULT fè¯»å–å›¾åƒ(const wchar_t *, IWICBitmapFrameDecode **);
+	std::unique_ptr<std::byte[]> få¤åˆ¶åƒç´ æ•°æ®(IWICBitmapSource *, size_t *åƒç´ å¤§å° = nullptr, size_t *è¡Œè· = nullptr, size_t *å›¾åƒå¤§å° = nullptr);
+	size_t fåƒç´ å¤§å°(const GUID &);
+	WICBitmapPlaneDescription få–å›¾åƒæè¿°(IWICBitmapSource *);
+	HRESULT få›¾åƒå°ºå¯¸å˜æ¢(IWICBitmapSource *, size_t, size_t, IWICBitmapScaler **);
+	HRESULT få›¾åƒæ ¼å¼å˜æ¢(IWICBitmapSource *, const GUID &, IWICFormatConverter **);
+	ComPtr<IWICBitmapSource> fé«˜çº§è¯»å–(const wchar_t *, const std::function<GUID(const GUID &)> &æ ¼å¼è½¬æ¢ = æ ¼å¼::fä¸è½¬æ¢);
+	std::unique_ptr<Cåªè¯»çº¹ç†> fcçº¹ç†(IWICBitmapSource *);
+	std::unique_ptr<Cåªè¯»çº¹ç†> fä¸€é”®è¯»å–(const wchar_t *);
 public:
-	ComPtr<IWICImagingFactory> m¹¤³§;
+	ComPtr<IWICImagingFactory> må·¥å‚;
 };
 //==============================================================================
-// ½á¹¹
+// ç»“æ„
 //==============================================================================
-struct SÎÆÀíÃèÊö {
-	size_t fg¿í() const { return m¿í; }
-	size_t fg¸ß() const { return m¸ß; }
-	size_t fgÃæ»ı() const { return m¿í * m¸ß; }
-	size_t fgÏñËØ´óĞ¡() const { return mÏñËØ´óĞ¡; }
-	size_t fgĞĞ¾à() const { return m¿í * mÏñËØ´óĞ¡; }
-	size_t fgÍ¼Ïñ´óĞ¡() const { return m¿í * m¸ß * mÏñËØ´óĞ¡; }
-	size_t fg¸ñÊ½() const { return m¸ñÊ½; }
-	size_t m¿í;
-	size_t m¸ß;
-	size_t mÏñËØ´óĞ¡;
-	DXGI_FORMAT m¸ñÊ½;
+struct Sçº¹ç†æè¿° {
+	size_t fgå®½() const { return må®½; }
+	size_t fgé«˜() const { return mé«˜; }
+	size_t fgé¢ç§¯() const { return må®½ * mé«˜; }
+	size_t fgåƒç´ å¤§å°() const { return måƒç´ å¤§å°; }
+	size_t fgè¡Œè·() const { return må®½ * måƒç´ å¤§å°; }
+	size_t fgå›¾åƒå¤§å°() const { return må®½ * mé«˜ * måƒç´ å¤§å°; }
+	size_t fgæ ¼å¼() const { return mæ ¼å¼; }
+	size_t må®½;
+	size_t mé«˜;
+	size_t måƒç´ å¤§å°;
+	DXGI_FORMAT mæ ¼å¼;
 };
 //==============================================================================
-// ¸÷ÖÖÎÆÀí
+// å„ç§çº¹ç†
 //==============================================================================
-class IÎÆÀí {
+class Içº¹ç† {
 public:
-	virtual size_t fg¿í() const = 0;
-	virtual size_t fg¸ß() const = 0;
-	virtual size_t fgÏñËØ´óĞ¡() const = 0;
-	virtual size_t fgÃæ»ı() const;
-	virtual size_t fgĞĞ¾à() const;
-	virtual size_t fgÍ¼Ïñ´óĞ¡() const;
-	virtual DXGI_FORMAT fg¸ñÊ½() const = 0;
-	virtual const std::byte *fgÊı¾İ() const = 0;
-	virtual SÎÆÀíÃèÊö fgÃèÊö() const;
+	virtual size_t fgå®½() const = 0;
+	virtual size_t fgé«˜() const = 0;
+	virtual size_t fgåƒç´ å¤§å°() const = 0;
+	virtual size_t fgé¢ç§¯() const;
+	virtual size_t fgè¡Œè·() const;
+	virtual size_t fgå›¾åƒå¤§å°() const;
+	virtual DXGI_FORMAT fgæ ¼å¼() const = 0;
+	virtual const std::byte *fgæ•°æ®() const = 0;
+	virtual Sçº¹ç†æè¿° fgæè¿°() const;
 };
-class CÖ»¶ÁÎÆÀí : public IÎÆÀí {
-	friend class CÍ¼Ïñ¹¤³§;
+class Cåªè¯»çº¹ç† : public Içº¹ç† {
+	friend class Cå›¾åƒå·¥å‚;
 public:
-	size_t fg¿í() const override;
-	size_t fg¸ß() const override;
-	size_t fgÏñËØ´óĞ¡() const override;
-	size_t fgÃæ»ı() const override;
-	size_t fgĞĞ¾à() const override;
-	size_t fgÍ¼Ïñ´óĞ¡() const override;
-	DXGI_FORMAT fg¸ñÊ½() const override;
-	const std::byte *fgÊı¾İ() const override;
+	size_t fgå®½() const override;
+	size_t fgé«˜() const override;
+	size_t fgåƒç´ å¤§å°() const override;
+	size_t fgé¢ç§¯() const override;
+	size_t fgè¡Œè·() const override;
+	size_t fgå›¾åƒå¤§å°() const override;
+	DXGI_FORMAT fgæ ¼å¼() const override;
+	const std::byte *fgæ•°æ®() const override;
 private:
-	std::unique_ptr<std::byte[]> mpÊı¾İ;
-	DXGI_FORMAT m¸ñÊ½ = DXGI_FORMAT_UNKNOWN;
-	size_t m¿í = 0, m¸ß = 0, mĞĞ¾à = 0, m´óĞ¡ = 0, mÏñËØ´óĞ¡ = 0;
+	std::unique_ptr<std::byte[]> mpæ•°æ®;
+	DXGI_FORMAT mæ ¼å¼ = DXGI_FORMAT_UNKNOWN;
+	size_t må®½ = 0, mé«˜ = 0, mè¡Œè· = 0, må¤§å° = 0, måƒç´ å¤§å° = 0;
 };
-//×Ô¶¨ÒåÎÆÀí
-class C×Ô¶¨ÒåÎÆÀí : public IÎÆÀí {
+//è‡ªå®šä¹‰çº¹ç†
+class Cè‡ªå®šä¹‰çº¹ç† : public Içº¹ç† {
 public:
-	static constexpr DXGI_FORMAT c¸ñÊ½ = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	static constexpr size_t cÏñËØ´óĞ¡ = sizeof(ÊıÑ§::SÑÕÉ«);
-	void f³õÊ¼»¯(size_t, size_t);
-	size_t fg¿í() const override;
-	size_t fg¸ß() const override;
-	size_t fgÏñËØ´óĞ¡() const override;
-	size_t fgÃæ»ı() const override;
-	size_t fgĞĞ¾à() const override;
-	size_t fgÍ¼Ïñ´óĞ¡() const override;
-	DXGI_FORMAT fg¸ñÊ½() const override;
-	const std::byte *fgÊı¾İ() const override;
-	const ÊıÑ§::SÑÕÉ« *fgÑÕÉ«Êı¾İ() const;
-	ÊıÑ§::SÑÕÉ« &fgÏñËØ(size_t, size_t);
-	const ÊıÑ§::SÑÕÉ« &fgÏñËØ(size_t, size_t) const;
-	ÊıÑ§::SÑÕÉ« fÏßĞÔ²ÉÑù(float, float) const;
+	static constexpr DXGI_FORMAT cæ ¼å¼ = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	static constexpr size_t cåƒç´ å¤§å° = sizeof(æ•°å­¦::Sé¢œè‰²);
+	void fåˆå§‹åŒ–(size_t, size_t);
+	size_t fgå®½() const override;
+	size_t fgé«˜() const override;
+	size_t fgåƒç´ å¤§å°() const override;
+	size_t fgé¢ç§¯() const override;
+	size_t fgè¡Œè·() const override;
+	size_t fgå›¾åƒå¤§å°() const override;
+	DXGI_FORMAT fgæ ¼å¼() const override;
+	const std::byte *fgæ•°æ®() const override;
+	const æ•°å­¦::Sé¢œè‰² *fgé¢œè‰²æ•°æ®() const;
+	æ•°å­¦::Sé¢œè‰² &fgåƒç´ (size_t, size_t);
+	const æ•°å­¦::Sé¢œè‰² &fgåƒç´ (size_t, size_t) const;
+	æ•°å­¦::Sé¢œè‰² fçº¿æ€§é‡‡æ ·(float, float) const;
 private:
-	std::unique_ptr<ÊıÑ§::SÑÕÉ«[]> mpÏñËØ;
-	size_t m¿í = 0, m¸ß = 0;
+	std::unique_ptr<æ•°å­¦::Sé¢œè‰²[]> mpåƒç´ ;
+	size_t må®½ = 0, mé«˜ = 0;
 };
 }

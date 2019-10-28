@@ -1,57 +1,57 @@
-#pragma once
+ï»¿#pragma once
 #include <random>
-#include "cflwÊıÑ§.h"
-#include "cflwÊıÑ§_Æ½Ãæ¼¸ºÎ.h"
-#define ¶¨ÒåËæ»úÊı·Ö²¼¼ÆËãº¯Êı \
+#include "cflwæ•°å­¦.h"
+#include "cflwæ•°å­¦_å¹³é¢å‡ ä½•.h"
+#define å®šä¹‰éšæœºæ•°åˆ†å¸ƒè®¡ç®—å‡½æ•° \
 template<typename t>\
 auto operator()(t &p) {\
-	return fÉú³É(p());\
+	return fç”Ÿæˆ(p());\
 }
-namespace cflw::ÊıÑ§ {
+namespace cflw::æ•°å­¦ {
 //==============================================================================
-// Ëæ»úÒıÇæ
+// éšæœºå¼•æ“
 //==============================================================================
-class CÏßĞÔÍ¬Óà {
+class Cçº¿æ€§åŒä½™ {
 public:
-	unsigned long a;		//Ëæ»úÊıÖÖ×Óa
-	unsigned long b;		//Ëæ»úÊıÖÖ×Ób
-	unsigned long r;		//ÉÏ´Î¼ÆËã½á¹û
-	static constexpr unsigned long c×î´óÖµ = 0x00ffffff;	//Ëæ»úÊı×î´óÖµ
-	CÏßĞÔÍ¬Óà();		//¹¹Ôìº¯Êı
-	void fÖÃÖÖ×Ó(const unsigned long &);
-	void f¼ÆËã();	//¼ÆËãÒ»¸öËæ»úÊı
-	unsigned long fÉú³É();
-	template<class t> t fÉú³É(const t &, const t &);
-	bool fÉú³É(const float &);
+	unsigned long a;		//éšæœºæ•°ç§å­a
+	unsigned long b;		//éšæœºæ•°ç§å­b
+	unsigned long r;		//ä¸Šæ¬¡è®¡ç®—ç»“æœ
+	static constexpr unsigned long cæœ€å¤§å€¼ = 0x00ffffff;	//éšæœºæ•°æœ€å¤§å€¼
+	Cçº¿æ€§åŒä½™();		//æ„é€ å‡½æ•°
+	void fç½®ç§å­(const unsigned long &);
+	void fè®¡ç®—();	//è®¡ç®—ä¸€ä¸ªéšæœºæ•°
+	unsigned long fç”Ÿæˆ();
+	template<class t> t fç”Ÿæˆ(const t &, const t &);
+	bool fç”Ÿæˆ(const float &);
 };
-template<class t> t CÏßĞÔÍ¬Óà::fÉú³É(const t &aĞ¡, const t &a´ó) {
-	f¼ÆËã();
-	const t v²î = a´ó - aĞ¡;
-	return (t)(aĞ¡ + (t)r / (t)c×î´óÖµ * v²î);
+template<class t> t Cçº¿æ€§åŒä½™::fç”Ÿæˆ(const t &aå°, const t &aå¤§) {
+	fè®¡ç®—();
+	const t vå·® = aå¤§ - aå°;
+	return (t)(aå° + (t)r / (t)cæœ€å¤§å€¼ * vå·®);
 }
 //==============================================================================
-// ·Ö²¼
+// åˆ†å¸ƒ
 //==============================================================================
-template<typename t = double> std::uniform_real_distribution<t> fÔ²ÖÜ·Ö²¼r() {
-	return std::uniform_real_distribution<t>(0, c¶ş¦Ğ<t>);
+template<typename t = double> std::uniform_real_distribution<t> fåœ†å‘¨åˆ†å¸ƒr() {
+	return std::uniform_real_distribution<t>(0, cäºŒÏ€<t>);
 }
-template<typename t = double> std::uniform_real_distribution<t> fÔ²ÖÜ·Ö²¼d() {
+template<typename t = double> std::uniform_real_distribution<t> fåœ†å‘¨åˆ†å¸ƒd() {
 	return std::uniform_real_distribution<t>(0, (t)360);
 }
-class CÔ²ĞÎ·Ö²¼ {
+class Cåœ†å½¢åˆ†å¸ƒ {
 public:
-	CÔ²ĞÎ·Ö²¼(const SÔ²ĞÎ &);
-	¶¨ÒåËæ»úÊı·Ö²¼¼ÆËãº¯Êı
-	SÏòÁ¿2 fÉú³É(unsigned int) const;
+	Cåœ†å½¢åˆ†å¸ƒ(const Såœ†å½¢ &);
+	å®šä¹‰éšæœºæ•°åˆ†å¸ƒè®¡ç®—å‡½æ•°
+	Så‘é‡2 fç”Ÿæˆ(unsigned int) const;
 private:
-	SÔ²ĞÎ mÔ²ĞÎ;
+	Såœ†å½¢ måœ†å½¢;
 };
-class C¾ØĞÎ·Ö²¼ {
+class CçŸ©å½¢åˆ†å¸ƒ {
 public:
-	C¾ØĞÎ·Ö²¼(const SĞı×ª¾ØĞÎ &);
-	¶¨ÒåËæ»úÊı·Ö²¼¼ÆËãº¯Êı
-	SÏòÁ¿2 fÉú³É(unsigned int) const;
+	CçŸ©å½¢åˆ†å¸ƒ(const Sæ—‹è½¬çŸ©å½¢ &);
+	å®šä¹‰éšæœºæ•°åˆ†å¸ƒè®¡ç®—å‡½æ•°
+	Så‘é‡2 fç”Ÿæˆ(unsigned int) const;
 private:
-	SĞı×ª¾ØĞÎ m¾ØĞÎ;
+	Sæ—‹è½¬çŸ©å½¢ mçŸ©å½¢;
 };
-}	//namespace cflw::ÊıÑ§
+}	//namespace cflw::æ•°å­¦

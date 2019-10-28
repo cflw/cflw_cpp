@@ -1,7 +1,7 @@
-#include <cassert>
+ï»¿#include <cassert>
 #include <unordered_map>
 #include <unordered_set>
-#include "cflwÍ¼ĞÎ_dxÎÆÀí.h"
+#include "cflwå›¾å½¢_dxçº¹ç†.h"
 namespace std {
 template<> struct hash<GUID> {
 	size_t operator()(const GUID &a) const {
@@ -12,179 +12,179 @@ template<> struct hash<GUID> {
 	}
 };
 }
-namespace cflw::Í¼ĞÎ::dxÎÆÀí {
-CÍ¼Ïñ¹¤³§::~CÍ¼Ïñ¹¤³§() {
-	m¹¤³§.Reset();
+namespace cflw::å›¾å½¢::dxçº¹ç† {
+Cå›¾åƒå·¥å‚::~Cå›¾åƒå·¥å‚() {
+	må·¥å‚.Reset();
 	CoUninitialize();
 }
-HRESULT CÍ¼Ïñ¹¤³§::f³õÊ¼»¯() {
+HRESULT Cå›¾åƒå·¥å‚::fåˆå§‹åŒ–() {
 	CoInitializeEx(nullptr, COINIT_MULTITHREADED);
-	HRESULT hr = CoCreateInstance(CLSID_WICImagingFactory1, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&m¹¤³§));
+	HRESULT hr = CoCreateInstance(CLSID_WICImagingFactory1, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&må·¥å‚));
 	if (FAILED(hr)) {
 		return hr;
 	}
 	return S_OK;
 }
-HRESULT CÍ¼Ïñ¹¤³§::f¶ÁÈ¡Í¼Ïñ(const wchar_t *aÎÄ¼ş, IWICBitmapFrameDecode **aÖ¡) {
+HRESULT Cå›¾åƒå·¥å‚::fè¯»å–å›¾åƒ(const wchar_t *aæ–‡ä»¶, IWICBitmapFrameDecode **aå¸§) {
 	HRESULT hr;
-	ComPtr<IWICBitmapDecoder> v½âÂëÆ÷;
-	hr = m¹¤³§->CreateDecoderFromFilename(aÎÄ¼ş, 0, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &v½âÂëÆ÷);
+	ComPtr<IWICBitmapDecoder> vè§£ç å™¨;
+	hr = må·¥å‚->CreateDecoderFromFilename(aæ–‡ä»¶, 0, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &vè§£ç å™¨);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = v½âÂëÆ÷->GetFrame(0, aÖ¡);
+	hr = vè§£ç å™¨->GetFrame(0, aå¸§);
 	if (FAILED(hr)) {
 		return hr;
 	}
 	return S_OK;
 }
-std::unique_ptr<std::byte[]> CÍ¼Ïñ¹¤³§::f¸´ÖÆÏñËØÊı¾İ(IWICBitmapSource *aÖ¡, size_t *apÏñËØ´óĞ¡, size_t *apĞĞ¾à, size_t *apÍ¼Ïñ´óĞ¡) {
-	const WICBitmapPlaneDescription vÃèÊö = fÈ¡Í¼ÏñÃèÊö(aÖ¡);
-	const size_t vÏñËØ´óĞ¡ = fÏñËØ´óĞ¡(vÃèÊö.Format);
-	const size_t vÒ»ÅÅ´óĞ¡ = vÃèÊö.Width * vÏñËØ´óĞ¡;
-	const size_t vÊı¾İ´óĞ¡ = vÒ»ÅÅ´óĞ¡ * vÃèÊö.Height;
-	std::unique_ptr<std::byte[]> vÊı¾İ = std::make_unique<std::byte[]>(vÊı¾İ´óĞ¡);
-	aÖ¡->CopyPixels(0, vÒ»ÅÅ´óĞ¡, vÊı¾İ´óĞ¡, (BYTE*)vÊı¾İ.get());
-	if (apÏñËØ´óĞ¡) {
-		*apÏñËØ´óĞ¡ = vÏñËØ´óĞ¡;
+std::unique_ptr<std::byte[]> Cå›¾åƒå·¥å‚::få¤åˆ¶åƒç´ æ•°æ®(IWICBitmapSource *aå¸§, size_t *apåƒç´ å¤§å°, size_t *apè¡Œè·, size_t *apå›¾åƒå¤§å°) {
+	const WICBitmapPlaneDescription væè¿° = få–å›¾åƒæè¿°(aå¸§);
+	const size_t våƒç´ å¤§å° = fåƒç´ å¤§å°(væè¿°.Format);
+	const size_t vä¸€æ’å¤§å° = væè¿°.Width * våƒç´ å¤§å°;
+	const size_t væ•°æ®å¤§å° = vä¸€æ’å¤§å° * væè¿°.Height;
+	std::unique_ptr<std::byte[]> væ•°æ® = std::make_unique<std::byte[]>(væ•°æ®å¤§å°);
+	aå¸§->CopyPixels(0, vä¸€æ’å¤§å°, væ•°æ®å¤§å°, (BYTE*)væ•°æ®.get());
+	if (apåƒç´ å¤§å°) {
+		*apåƒç´ å¤§å° = våƒç´ å¤§å°;
 	}
-	if (apĞĞ¾à) {
-		*apĞĞ¾à = vÒ»ÅÅ´óĞ¡;
+	if (apè¡Œè·) {
+		*apè¡Œè· = vä¸€æ’å¤§å°;
 	}
-	if (apÍ¼Ïñ´óĞ¡) {
-		*apÍ¼Ïñ´óĞ¡ = vÊı¾İ´óĞ¡;
+	if (apå›¾åƒå¤§å°) {
+		*apå›¾åƒå¤§å° = væ•°æ®å¤§å°;
 	}
-	return vÊı¾İ;
+	return væ•°æ®;
 }
-WICBitmapPlaneDescription CÍ¼Ïñ¹¤³§::fÈ¡Í¼ÏñÃèÊö(IWICBitmapSource *aÖ¡) {
+WICBitmapPlaneDescription Cå›¾åƒå·¥å‚::få–å›¾åƒæè¿°(IWICBitmapSource *aå¸§) {
 	WICBitmapPlaneDescription v;
-	aÖ¡->GetPixelFormat(&v.Format);
-	aÖ¡->GetSize(&v.Width, &v.Height);
+	aå¸§->GetPixelFormat(&v.Format);
+	aå¸§->GetSize(&v.Width, &v.Height);
 	return v;
 }
-size_t CÍ¼Ïñ¹¤³§::fÏñËØ´óĞ¡(const GUID &guid) {
+size_t Cå›¾åƒå·¥å‚::fåƒç´ å¤§å°(const GUID &guid) {
 	HRESULT hr;
-	ComPtr<IWICComponentInfo> v×é¼şĞÅÏ¢;
-	hr = m¹¤³§->CreateComponentInfo(guid, &v×é¼şĞÅÏ¢);
+	ComPtr<IWICComponentInfo> vç»„ä»¶ä¿¡æ¯;
+	hr = må·¥å‚->CreateComponentInfo(guid, &vç»„ä»¶ä¿¡æ¯);
 	if (FAILED(hr)) {
 		return 0;
 	}
-	WICComponentType vÀàĞÍ;
-	v×é¼şĞÅÏ¢->GetComponentType(&vÀàĞÍ);
-	if (vÀàĞÍ != WICPixelFormat) {
+	WICComponentType vç±»å‹;
+	vç»„ä»¶ä¿¡æ¯->GetComponentType(&vç±»å‹);
+	if (vç±»å‹ != WICPixelFormat) {
 		return 0;
 	}
-	ComPtr<IWICPixelFormatInfo> v¸ñÊ½ĞÅÏ¢;
-	hr = v×é¼şĞÅÏ¢.As(&v¸ñÊ½ĞÅÏ¢);
+	ComPtr<IWICPixelFormatInfo> væ ¼å¼ä¿¡æ¯;
+	hr = vç»„ä»¶ä¿¡æ¯.As(&væ ¼å¼ä¿¡æ¯);
 	if (FAILED(hr)) {
 		return 0;
 	}
 	UINT bpp;
-	v¸ñÊ½ĞÅÏ¢->GetBitsPerPixel(&bpp);
+	væ ¼å¼ä¿¡æ¯->GetBitsPerPixel(&bpp);
 	return bpp;
 }
-HRESULT CÍ¼Ïñ¹¤³§::fÍ¼Ïñ³ß´ç±ä»»(IWICBitmapSource *aÖ¡, size_t a¿í, size_t a¸ß, IWICBitmapScaler **aÊä³ö) {
+HRESULT Cå›¾åƒå·¥å‚::få›¾åƒå°ºå¯¸å˜æ¢(IWICBitmapSource *aå¸§, size_t aå®½, size_t aé«˜, IWICBitmapScaler **aè¾“å‡º) {
 	HRESULT hr;
-	ComPtr<IWICBitmapScaler> vËõ·Å;
-	hr = m¹¤³§->CreateBitmapScaler(&vËõ·Å);
+	ComPtr<IWICBitmapScaler> vç¼©æ”¾;
+	hr = må·¥å‚->CreateBitmapScaler(&vç¼©æ”¾);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = vËõ·Å->Initialize(aÖ¡, a¿í, a¸ß, WICBitmapInterpolationModeFant);
+	hr = vç¼©æ”¾->Initialize(aå¸§, aå®½, aé«˜, WICBitmapInterpolationModeFant);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	*aÊä³ö = vËõ·Å.Detach();
+	*aè¾“å‡º = vç¼©æ”¾.Detach();
 	return S_OK;
 }
-HRESULT CÍ¼Ïñ¹¤³§::fÍ¼Ïñ¸ñÊ½±ä»»(IWICBitmapSource *aÍ¼Ïñ, const GUID &a¸ñÊ½, IWICFormatConverter **aÊä³ö) {
+HRESULT Cå›¾åƒå·¥å‚::få›¾åƒæ ¼å¼å˜æ¢(IWICBitmapSource *aå›¾åƒ, const GUID &aæ ¼å¼, IWICFormatConverter **aè¾“å‡º) {
 	HRESULT hr;
-	ComPtr<IWICFormatConverter> v×ª»»;
-	hr = m¹¤³§->CreateFormatConverter(&v×ª»»);
+	ComPtr<IWICFormatConverter> vè½¬æ¢;
+	hr = må·¥å‚->CreateFormatConverter(&vè½¬æ¢);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = v×ª»»->Initialize(aÍ¼Ïñ, a¸ñÊ½, WICBitmapDitherTypeErrorDiffusion, nullptr, 0, WICBitmapPaletteTypeCustom);
+	hr = vè½¬æ¢->Initialize(aå›¾åƒ, aæ ¼å¼, WICBitmapDitherTypeErrorDiffusion, nullptr, 0, WICBitmapPaletteTypeCustom);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	*aÊä³ö = v×ª»».Detach();
+	*aè¾“å‡º = vè½¬æ¢.Detach();
 	return S_OK;
 }
-ComPtr<IWICBitmapSource> CÍ¼Ïñ¹¤³§::f¸ß¼¶¶ÁÈ¡(const wchar_t *aÎÄ¼şÃû, const std::function<GUID(const GUID &)> &af¸ñÊ½) {
-	ComPtr<IWICBitmapFrameDecode> vÍ¼Ïñ;
-	HRESULT hr = f¶ÁÈ¡Í¼Ïñ(aÎÄ¼şÃû, &vÍ¼Ïñ);
+ComPtr<IWICBitmapSource> Cå›¾åƒå·¥å‚::fé«˜çº§è¯»å–(const wchar_t *aæ–‡ä»¶å, const std::function<GUID(const GUID &)> &afæ ¼å¼) {
+	ComPtr<IWICBitmapFrameDecode> vå›¾åƒ;
+	HRESULT hr = fè¯»å–å›¾åƒ(aæ–‡ä»¶å, &vå›¾åƒ);
 	if (FAILED(hr)) {
 		return nullptr;
 	}
-	//¸ñÊ½×ª»»²¢¸´ÖÆÊı¾İ
-	const WICBitmapPlaneDescription vÃèÊö = fÈ¡Í¼ÏñÃèÊö(vÍ¼Ïñ.Get());
-	const GUID vÍ¼Ïñ¸ñÊ½ = af¸ñÊ½(vÃèÊö.Format);
-	if (vÍ¼Ïñ¸ñÊ½ == vÃèÊö.Format) {
-		return vÍ¼Ïñ;
+	//æ ¼å¼è½¬æ¢å¹¶å¤åˆ¶æ•°æ®
+	const WICBitmapPlaneDescription væè¿° = få–å›¾åƒæè¿°(vå›¾åƒ.Get());
+	const GUID vå›¾åƒæ ¼å¼ = afæ ¼å¼(væè¿°.Format);
+	if (vå›¾åƒæ ¼å¼ == væè¿°.Format) {
+		return vå›¾åƒ;
 	}
-	ComPtr<IWICFormatConverter> v¸ñÊ½×ª»»;
-	hr = fÍ¼Ïñ¸ñÊ½±ä»»(vÍ¼Ïñ.Get(), vÍ¼Ïñ¸ñÊ½, &v¸ñÊ½×ª»»);
+	ComPtr<IWICFormatConverter> væ ¼å¼è½¬æ¢;
+	hr = få›¾åƒæ ¼å¼å˜æ¢(vå›¾åƒ.Get(), vå›¾åƒæ ¼å¼, &væ ¼å¼è½¬æ¢);
 	if (FAILED(hr)) {
 		return nullptr;
 	}
-	return v¸ñÊ½×ª»»;
+	return væ ¼å¼è½¬æ¢;
 }
-std::unique_ptr<CÖ»¶ÁÎÆÀí> CÍ¼Ïñ¹¤³§::fcÎÆÀí(IWICBitmapSource *aÔ´) {
-	std::unique_ptr<CÖ»¶ÁÎÆÀí> vÎÆÀí = std::make_unique<CÖ»¶ÁÎÆÀí>();
-	vÎÆÀí->mpÊı¾İ = f¸´ÖÆÏñËØÊı¾İ(aÔ´, &vÎÆÀí->mÏñËØ´óĞ¡, &vÎÆÀí->mĞĞ¾à, nullptr);
-	if (!vÎÆÀí->mpÊı¾İ) {
+std::unique_ptr<Cåªè¯»çº¹ç†> Cå›¾åƒå·¥å‚::fcçº¹ç†(IWICBitmapSource *aæº) {
+	std::unique_ptr<Cåªè¯»çº¹ç†> vçº¹ç† = std::make_unique<Cåªè¯»çº¹ç†>();
+	vçº¹ç†->mpæ•°æ® = få¤åˆ¶åƒç´ æ•°æ®(aæº, &vçº¹ç†->måƒç´ å¤§å°, &vçº¹ç†->mè¡Œè·, nullptr);
+	if (!vçº¹ç†->mpæ•°æ®) {
 		return nullptr;
 	}
-	const WICBitmapPlaneDescription vÃèÊö = fÈ¡Í¼ÏñÃèÊö(aÔ´);
-	vÎÆÀí->m¿í = vÃèÊö.Width;
-	vÎÆÀí->m¸ß = vÃèÊö.Height;
-	vÎÆÀí->m¸ñÊ½ = ¸ñÊ½::fµ½dxgi(vÃèÊö.Format);
-	return vÎÆÀí;
+	const WICBitmapPlaneDescription væè¿° = få–å›¾åƒæè¿°(aæº);
+	vçº¹ç†->må®½ = væè¿°.Width;
+	vçº¹ç†->mé«˜ = væè¿°.Height;
+	vçº¹ç†->mæ ¼å¼ = æ ¼å¼::fåˆ°dxgi(væè¿°.Format);
+	return vçº¹ç†;
 }
-std::unique_ptr<CÖ»¶ÁÎÆÀí> CÍ¼Ïñ¹¤³§::fÒ»¼ü¶ÁÈ¡(const wchar_t *aÎÄ¼şÃû) {
-	auto vÔ´ = f¸ß¼¶¶ÁÈ¡(aÎÄ¼şÃû, ¸ñÊ½::fµ½Í¨ÓÃ¸ñÊ½);
-	return fcÎÆÀí(vÔ´.Get());
+std::unique_ptr<Cåªè¯»çº¹ç†> Cå›¾åƒå·¥å‚::fä¸€é”®è¯»å–(const wchar_t *aæ–‡ä»¶å) {
+	auto væº = fé«˜çº§è¯»å–(aæ–‡ä»¶å, æ ¼å¼::fåˆ°é€šç”¨æ ¼å¼);
+	return fcçº¹ç†(væº.Get());
 }
 //=============================================================================
-// ¸ñÊ½
+// æ ¼å¼
 //=============================================================================
-namespace ¸ñÊ½ {
-bool f¼ì²ésrgb(IWICBitmapFrameDecode *aÍ¼Ïñ) {
+namespace æ ¼å¼ {
+bool fæ£€æŸ¥srgb(IWICBitmapFrameDecode *aå›¾åƒ) {
 	HRESULT hr;
-	ComPtr<IWICMetadataQueryReader> v¶ÁÔªÊı¾İ;
-	hr = aÍ¼Ïñ->GetMetadataQueryReader(&v¶ÁÔªÊı¾İ);
+	ComPtr<IWICMetadataQueryReader> vè¯»å…ƒæ•°æ®;
+	hr = aå›¾åƒ->GetMetadataQueryReader(&vè¯»å…ƒæ•°æ®);
 	if (FAILED(hr)) {
 		return false;
 	}
-	GUID v¸ñÊ½;
-	hr = v¶ÁÔªÊı¾İ->GetContainerFormat(&v¸ñÊ½);
+	GUID væ ¼å¼;
+	hr = vè¯»å…ƒæ•°æ®->GetContainerFormat(&væ ¼å¼);
 	if (FAILED(hr)) {
 		return false;
 	}
 	bool v = false;
-	PROPVARIANT vÖµ;
-	PropVariantInit(&vÖµ);
-	if (memcmp(&v¸ñÊ½, &GUID_ContainerFormatPng, sizeof(GUID)) == 0) {
-		hr = v¶ÁÔªÊı¾İ->GetMetadataByName(L"/sRGB/RenderingIntent", &vÖµ);
+	PROPVARIANT vå€¼;
+	PropVariantInit(&vå€¼);
+	if (memcmp(&væ ¼å¼, &GUID_ContainerFormatPng, sizeof(GUID)) == 0) {
+		hr = vè¯»å…ƒæ•°æ®->GetMetadataByName(L"/sRGB/RenderingIntent", &vå€¼);
 		if (SUCCEEDED(hr)) {
-			if (vÖµ.vt == VT_UI1) {
+			if (vå€¼.vt == VT_UI1) {
 				v = true;
 			}
 		}
 	} else {
-		hr = v¶ÁÔªÊı¾İ->GetMetadataByName(L"System.Image.ColorSpace", &vÖµ);
+		hr = vè¯»å…ƒæ•°æ®->GetMetadataByName(L"System.Image.ColorSpace", &vå€¼);
 		if (SUCCEEDED(hr)) {
-			if (vÖµ.vt == VT_UI2 && vÖµ.uiVal == 1) {
+			if (vå€¼.vt == VT_UI2 && vå€¼.uiVal == 1) {
 				v = true;
 			}
 		}
 	}
-	PropVariantClear(&vÖµ);
+	PropVariantClear(&vå€¼);
 	return v;
 }
-DXGI_FORMAT fµ½dxgi(const GUID &guid) {
-	static const std::unordered_map<GUID, DXGI_FORMAT> vÍ¼Ïñ¸ñÊ½ = {
+DXGI_FORMAT fåˆ°dxgi(const GUID &guid) {
+	static const std::unordered_map<GUID, DXGI_FORMAT> vå›¾åƒæ ¼å¼ = {
 		{GUID_WICPixelFormat128bppRGBAFloat, DXGI_FORMAT_R32G32B32A32_FLOAT},
 
 	{GUID_WICPixelFormat64bppRGBAHalf, DXGI_FORMAT_R16G16B16A16_FLOAT},
@@ -211,14 +211,14 @@ DXGI_FORMAT fµ½dxgi(const GUID &guid) {
 
 	{GUID_WICPixelFormat8bppAlpha, DXGI_FORMAT_A8_UNORM},
 	};
-	if (auto v¸ñÊ½ = vÍ¼Ïñ¸ñÊ½.find(guid); v¸ñÊ½ != vÍ¼Ïñ¸ñÊ½.end()) {
-		return v¸ñÊ½->second;
+	if (auto væ ¼å¼ = vå›¾åƒæ ¼å¼.find(guid); væ ¼å¼ != vå›¾åƒæ ¼å¼.end()) {
+		return væ ¼å¼->second;
 	}
 	return DXGI_FORMAT_UNKNOWN;
 }
-GUID fµ½Í¨ÓÃ¸ñÊ½(const GUID &guid) {
-	static const std::unordered_map<GUID, GUID> vÍ¼Ïñ×ª»» = {
-		// ×¢ÒâÄ¿±êGUIDÔÚÕâ¸ö×ª»»±í±ØĞëÊÇÄÇĞ©Ö±½ÓÖ§³ÖµÄ¸ñÊ½£¨¶Î£©ÖĞµÄÒ»¸ö¡£
+GUID fåˆ°é€šç”¨æ ¼å¼(const GUID &guid) {
+	static const std::unordered_map<GUID, GUID> vå›¾åƒè½¬æ¢ = {
+		// æ³¨æ„ç›®æ ‡GUIDåœ¨è¿™ä¸ªè½¬æ¢è¡¨å¿…é¡»æ˜¯é‚£äº›ç›´æ¥æ”¯æŒçš„æ ¼å¼ï¼ˆæ®µï¼‰ä¸­çš„ä¸€ä¸ªã€‚
 		{GUID_WICPixelFormatBlackWhite, GUID_WICPixelFormat8bppGray}, // DXGI_FORMAT_R8_UNORM
 	{GUID_WICPixelFormat1bppIndexed, GUID_WICPixelFormat32bppRGBA}, // DXGI_FORMAT_R8G8B8A8_UNORM
 	{GUID_WICPixelFormat2bppIndexed, GUID_WICPixelFormat32bppRGBA}, // DXGI_FORMAT_R8G8B8A8_UNORM
@@ -275,13 +275,13 @@ GUID fµ½Í¨ÓÃ¸ñÊ½(const GUID &guid) {
 	{GUID_WICPixelFormat64bppPRGBAHalf, GUID_WICPixelFormat64bppRGBAHalf}, // DXGI_FORMAT_R16G16B16A16_FLOAT 
 #endif
 	};
-	if (auto v¸ñÊ½ = vÍ¼Ïñ×ª»».find(guid); v¸ñÊ½ != vÍ¼Ïñ×ª»».end()) {
-		return v¸ñÊ½->second;
+	if (auto væ ¼å¼ = vå›¾åƒè½¬æ¢.find(guid); væ ¼å¼ != vå›¾åƒè½¬æ¢.end()) {
+		return væ ¼å¼->second;
 	}
 	return guid;
 }
-DXGI_FORMAT fµ½srgb(DXGI_FORMAT a¸ñÊ½) {
-	static const std::unordered_map<DXGI_FORMAT, DXGI_FORMAT> v×ª»»±í = {
+DXGI_FORMAT fåˆ°srgb(DXGI_FORMAT aæ ¼å¼) {
+	static const std::unordered_map<DXGI_FORMAT, DXGI_FORMAT> vè½¬æ¢è¡¨ = {
 		{DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_R8G8B8A8_UNORM_SRGB},
 	{DXGI_FORMAT_BC1_UNORM, DXGI_FORMAT_BC1_UNORM_SRGB},
 	{DXGI_FORMAT_BC2_UNORM, DXGI_FORMAT_BC2_UNORM_SRGB},
@@ -290,13 +290,13 @@ DXGI_FORMAT fµ½srgb(DXGI_FORMAT a¸ñÊ½) {
 	{DXGI_FORMAT_B8G8R8X8_UNORM, DXGI_FORMAT_B8G8R8X8_UNORM_SRGB},
 	{DXGI_FORMAT_BC7_UNORM, DXGI_FORMAT_BC7_UNORM_SRGB}
 	};
-	if (auto vÄ¿±ê¸ñÊ½ = v×ª»»±í.find(a¸ñÊ½); vÄ¿±ê¸ñÊ½ != v×ª»»±í.end()) {
-		return vÄ¿±ê¸ñÊ½->second;
+	if (auto vç›®æ ‡æ ¼å¼ = vè½¬æ¢è¡¨.find(aæ ¼å¼); vç›®æ ‡æ ¼å¼ != vè½¬æ¢è¡¨.end()) {
+		return vç›®æ ‡æ ¼å¼->second;
 	}
-	return a¸ñÊ½;
+	return aæ ¼å¼;
 }
-bool fiÍ¨ÓÃ¸ñÊ½(const GUID &a¸ñÊ½) {
-	static const std::unordered_set<GUID> v¸ñÊ½±í = {
+bool fié€šç”¨æ ¼å¼(const GUID &aæ ¼å¼) {
+	static const std::unordered_set<GUID> væ ¼å¼è¡¨ = {
 		GUID_WICPixelFormat128bppRGBAFloat,
 
 		GUID_WICPixelFormat64bppRGBAHalf,
@@ -323,108 +323,108 @@ bool fiÍ¨ÓÃ¸ñÊ½(const GUID &a¸ñÊ½) {
 
 		GUID_WICPixelFormat8bppAlpha,
 	};
-	return v¸ñÊ½±í.count(a¸ñÊ½) != 0;
+	return væ ¼å¼è¡¨.count(aæ ¼å¼) != 0;
 }
-GUID f²»×ª»»(const GUID &a) {
+GUID fä¸è½¬æ¢(const GUID &a) {
 	return a;
 }
-}	//namespace ¸ñÊ½
+}	//namespace æ ¼å¼
 //=============================================================================
-// ÎÆÀí½Ó¿Ú
+// çº¹ç†æ¥å£
 //=============================================================================
-size_t IÎÆÀí::fgÃæ»ı() const {
-	return this->fg¿í() * this->fg¸ß();
+size_t Içº¹ç†::fgé¢ç§¯() const {
+	return this->fgå®½() * this->fgé«˜();
 }
-size_t IÎÆÀí::fgĞĞ¾à() const {
-	return this->fg¿í() * this->fgÏñËØ´óĞ¡();
+size_t Içº¹ç†::fgè¡Œè·() const {
+	return this->fgå®½() * this->fgåƒç´ å¤§å°();
 }
-size_t IÎÆÀí::fgÍ¼Ïñ´óĞ¡() const {
-	return this->fgÃæ»ı() * this->fgÏñËØ´óĞ¡();
+size_t Içº¹ç†::fgå›¾åƒå¤§å°() const {
+	return this->fgé¢ç§¯() * this->fgåƒç´ å¤§å°();
 }
-SÎÆÀíÃèÊö IÎÆÀí::fgÃèÊö() const {
-	return SÎÆÀíÃèÊö{this->fg¿í(), this->fg¸ß(), this->fgÏñËØ´óĞ¡(), this->fg¸ñÊ½()};
-}
-//=============================================================================
-// ³£Á¿ÎÆÀí
-//=============================================================================
-size_t CÖ»¶ÁÎÆÀí::fg¿í() const {
-	return m¿í;
-}
-size_t CÖ»¶ÁÎÆÀí::fg¸ß() const {
-	return m¸ß;
-}
-size_t CÖ»¶ÁÎÆÀí::fgÏñËØ´óĞ¡() const {
-	return mÏñËØ´óĞ¡;
-}
-size_t CÖ»¶ÁÎÆÀí::fgÃæ»ı() const {
-	return m¿í * m¸ß;
-}
-size_t CÖ»¶ÁÎÆÀí::fgĞĞ¾à() const {
-	return m¿í * mÏñËØ´óĞ¡;
-}
-size_t CÖ»¶ÁÎÆÀí::fgÍ¼Ïñ´óĞ¡() const {
-	return fgÃæ»ı() * mÏñËØ´óĞ¡;
-}
-DXGI_FORMAT CÖ»¶ÁÎÆÀí::fg¸ñÊ½() const {
-	return m¸ñÊ½;
-}
-const std::byte *CÖ»¶ÁÎÆÀí::fgÊı¾İ() const {
-	return mpÊı¾İ.get();
+Sçº¹ç†æè¿° Içº¹ç†::fgæè¿°() const {
+	return Sçº¹ç†æè¿°{this->fgå®½(), this->fgé«˜(), this->fgåƒç´ å¤§å°(), this->fgæ ¼å¼()};
 }
 //=============================================================================
-// ×Ô¶¨ÒåÎÆÀí
+// å¸¸é‡çº¹ç†
 //=============================================================================
-void C×Ô¶¨ÒåÎÆÀí::f³õÊ¼»¯(size_t a¿í, size_t a¸ß) {
-	m¿í = a¿í;
-	m¸ß = a¸ß;
-	mpÏñËØ = std::make_unique<ÊıÑ§::SÑÕÉ«[]>(m¿í * a¸ß);
+size_t Cåªè¯»çº¹ç†::fgå®½() const {
+	return må®½;
 }
-size_t C×Ô¶¨ÒåÎÆÀí::fg¿í() const {
-	return m¿í;
+size_t Cåªè¯»çº¹ç†::fgé«˜() const {
+	return mé«˜;
 }
-size_t C×Ô¶¨ÒåÎÆÀí::fg¸ß() const {
-	return m¸ß;
+size_t Cåªè¯»çº¹ç†::fgåƒç´ å¤§å°() const {
+	return måƒç´ å¤§å°;
 }
-size_t C×Ô¶¨ÒåÎÆÀí::fgÏñËØ´óĞ¡() const {
-	return cÏñËØ´óĞ¡;
+size_t Cåªè¯»çº¹ç†::fgé¢ç§¯() const {
+	return må®½ * mé«˜;
 }
-size_t C×Ô¶¨ÒåÎÆÀí::fgÃæ»ı() const {
-	return m¿í * m¸ß;
+size_t Cåªè¯»çº¹ç†::fgè¡Œè·() const {
+	return må®½ * måƒç´ å¤§å°;
 }
-size_t C×Ô¶¨ÒåÎÆÀí::fgĞĞ¾à() const {
-	return m¿í * cÏñËØ´óĞ¡;
+size_t Cåªè¯»çº¹ç†::fgå›¾åƒå¤§å°() const {
+	return fgé¢ç§¯() * måƒç´ å¤§å°;
 }
-size_t C×Ô¶¨ÒåÎÆÀí::fgÍ¼Ïñ´óĞ¡() const {
-	return fgÃæ»ı() * cÏñËØ´óĞ¡;
+DXGI_FORMAT Cåªè¯»çº¹ç†::fgæ ¼å¼() const {
+	return mæ ¼å¼;
 }
-DXGI_FORMAT C×Ô¶¨ÒåÎÆÀí::fg¸ñÊ½() const {
-	return c¸ñÊ½;
+const std::byte *Cåªè¯»çº¹ç†::fgæ•°æ®() const {
+	return mpæ•°æ®.get();
 }
-const std::byte *C×Ô¶¨ÒåÎÆÀí::fgÊı¾İ() const {
-	return (std::byte*)fgÑÕÉ«Êı¾İ();
+//=============================================================================
+// è‡ªå®šä¹‰çº¹ç†
+//=============================================================================
+void Cè‡ªå®šä¹‰çº¹ç†::fåˆå§‹åŒ–(size_t aå®½, size_t aé«˜) {
+	må®½ = aå®½;
+	mé«˜ = aé«˜;
+	mpåƒç´  = std::make_unique<æ•°å­¦::Sé¢œè‰²[]>(må®½ * aé«˜);
 }
-const ÊıÑ§::SÑÕÉ« *C×Ô¶¨ÒåÎÆÀí::fgÑÕÉ«Êı¾İ() const {
-	return mpÏñËØ.get();
+size_t Cè‡ªå®šä¹‰çº¹ç†::fgå®½() const {
+	return må®½;
 }
-ÊıÑ§::SÑÕÉ« &C×Ô¶¨ÒåÎÆÀí::fgÏñËØ(size_t u, size_t v) {
-	return mpÏñËØ[v * m¿í + u];
+size_t Cè‡ªå®šä¹‰çº¹ç†::fgé«˜() const {
+	return mé«˜;
 }
-const ÊıÑ§::SÑÕÉ« &C×Ô¶¨ÒåÎÆÀí::fgÏñËØ(size_t u, size_t v) const {
-	return mpÏñËØ[v * m¿í + u];
+size_t Cè‡ªå®šä¹‰çº¹ç†::fgåƒç´ å¤§å°() const {
+	return cåƒç´ å¤§å°;
 }
-ÊıÑ§::SÑÕÉ« C×Ô¶¨ÒåÎÆÀí::fÏßĞÔ²ÉÑù(float u, float v) const {
-	const float vÏŞÖÆu = ÊıÑ§::fÇóÓà(u, m¿í);
-	const float vÏŞÖÆv = ÊıÑ§::fÇóÓà(v, m¸ß);
-	const float vµØ°åu = floor(u);
-	const float vµØ°åv = floor(v);
-	const size_t u0 = (size_t)vµØ°åu;
-	const size_t u1 = (size_t)(vµØ°åu + 1);
-	const size_t v0 = (size_t)vµØ°åv;
-	const size_t v1 = (size_t)(vµØ°åv + 1);
-	const float v²îÖµu = vÏŞÖÆu - vµØ°åu;
-	const ÊıÑ§::SÑÕÉ« vÑÕÉ«0 = ÊıÑ§::f²åÖµ<ÊıÑ§::SÑÕÉ«>(fgÏñËØ(u0, v0), fgÏñËØ(u0, v0), v²îÖµu);
-	const ÊıÑ§::SÑÕÉ« vÑÕÉ«1 = ÊıÑ§::f²åÖµ<ÊıÑ§::SÑÕÉ«>(fgÏñËØ(u0, v1), fgÏñËØ(u0, v1), v²îÖµu);
-	const float v²îÖµv = vÏŞÖÆv - vµØ°åv;
-	return ÊıÑ§::f²åÖµ<ÊıÑ§::SÑÕÉ«>(vÑÕÉ«0, vÑÕÉ«1, v²îÖµv);
+size_t Cè‡ªå®šä¹‰çº¹ç†::fgé¢ç§¯() const {
+	return må®½ * mé«˜;
 }
-}	//namespace cflw::Í¼ĞÎ
+size_t Cè‡ªå®šä¹‰çº¹ç†::fgè¡Œè·() const {
+	return må®½ * cåƒç´ å¤§å°;
+}
+size_t Cè‡ªå®šä¹‰çº¹ç†::fgå›¾åƒå¤§å°() const {
+	return fgé¢ç§¯() * cåƒç´ å¤§å°;
+}
+DXGI_FORMAT Cè‡ªå®šä¹‰çº¹ç†::fgæ ¼å¼() const {
+	return cæ ¼å¼;
+}
+const std::byte *Cè‡ªå®šä¹‰çº¹ç†::fgæ•°æ®() const {
+	return (std::byte*)fgé¢œè‰²æ•°æ®();
+}
+const æ•°å­¦::Sé¢œè‰² *Cè‡ªå®šä¹‰çº¹ç†::fgé¢œè‰²æ•°æ®() const {
+	return mpåƒç´ .get();
+}
+æ•°å­¦::Sé¢œè‰² &Cè‡ªå®šä¹‰çº¹ç†::fgåƒç´ (size_t u, size_t v) {
+	return mpåƒç´ [v * må®½ + u];
+}
+const æ•°å­¦::Sé¢œè‰² &Cè‡ªå®šä¹‰çº¹ç†::fgåƒç´ (size_t u, size_t v) const {
+	return mpåƒç´ [v * må®½ + u];
+}
+æ•°å­¦::Sé¢œè‰² Cè‡ªå®šä¹‰çº¹ç†::fçº¿æ€§é‡‡æ ·(float u, float v) const {
+	const float vé™åˆ¶u = æ•°å­¦::fæ±‚ä½™(u, må®½);
+	const float vé™åˆ¶v = æ•°å­¦::fæ±‚ä½™(v, mé«˜);
+	const float våœ°æ¿u = floor(u);
+	const float våœ°æ¿v = floor(v);
+	const size_t u0 = (size_t)våœ°æ¿u;
+	const size_t u1 = (size_t)(våœ°æ¿u + 1);
+	const size_t v0 = (size_t)våœ°æ¿v;
+	const size_t v1 = (size_t)(våœ°æ¿v + 1);
+	const float vå·®å€¼u = vé™åˆ¶u - våœ°æ¿u;
+	const æ•°å­¦::Sé¢œè‰² vé¢œè‰²0 = æ•°å­¦::fæ’å€¼<æ•°å­¦::Sé¢œè‰²>(fgåƒç´ (u0, v0), fgåƒç´ (u0, v0), vå·®å€¼u);
+	const æ•°å­¦::Sé¢œè‰² vé¢œè‰²1 = æ•°å­¦::fæ’å€¼<æ•°å­¦::Sé¢œè‰²>(fgåƒç´ (u0, v1), fgåƒç´ (u0, v1), vå·®å€¼u);
+	const float vå·®å€¼v = vé™åˆ¶v - våœ°æ¿v;
+	return æ•°å­¦::fæ’å€¼<æ•°å­¦::Sé¢œè‰²>(vé¢œè‰²0, vé¢œè‰²1, vå·®å€¼v);
+}
+}	//namespace cflw::å›¾å½¢

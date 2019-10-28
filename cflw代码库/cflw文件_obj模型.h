@@ -1,51 +1,51 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include <string_view>
 #include <optional>
-namespace cflw::ÎÄ¼ş::obj {
-struct S¶¥µã×ø±ê {
+namespace cflw::æ–‡ä»¶::obj {
+struct Sé¡¶ç‚¹åæ ‡ {
 	float x = 0, y = 0, z = 0, w = 0;
 };
-struct SÎÆÀí×ø±ê {
+struct Sçº¹ç†åæ ‡ {
 	float u = 0, v = 0, w = 0;
 };
-struct S·¨Ïß×ø±ê {
+struct Sæ³•çº¿åæ ‡ {
 	float x = 0, y = 0, z = 0;
 };
-struct SË÷Òı {
-	//×¢Òâ£ºobjµÄË÷Òı´Ó1¿ªÊ¼
-	int m¶¥µã = 0, mÎÆÀí = 0, m·¨Ïß = 0;
+struct Sç´¢å¼• {
+	//æ³¨æ„ï¼šobjçš„ç´¢å¼•ä»1å¼€å§‹
+	int mé¡¶ç‚¹ = 0, mçº¹ç† = 0, mæ³•çº¿ = 0;
 };
-struct SÃæ {
-	size_t m¿ªÊ¼Î»ÖÃ = 0, mÊıÁ¿ = 0;	//Ë÷Òı
-	size_t fg½áÊøÎ»ÖÃ() const;
+struct Sé¢ {
+	size_t må¼€å§‹ä½ç½® = 0, mæ•°é‡ = 0;	//ç´¢å¼•
+	size_t fgç»“æŸä½ç½®() const;
 };
-class C¶ÔÏóÄ£ĞÍ {
+class Cå¯¹è±¡æ¨¡å‹ {
 public:
-	static const S¶¥µã×ø±ê c¶¥µã×ø±ê;
-	static const SÎÆÀí×ø±ê cÎÆÀí×ø±ê;
-	static const S·¨Ïß×ø±ê c·¨Ïß×ø±ê;
-	bool f´ò¿ª(const std::wstring_view &);
-	bool f±£´æ(const std::wstring_view &);
-	void f¶ÁÈ¡_¶¥µã(std::wistringstream &);
-	void f¶ÁÈ¡_ÎÆÀí(std::wistringstream &);
-	void f¶ÁÈ¡_·¨Ïß(std::wistringstream &);
-	void f¶ÁÈ¡_Ãæ(std::wistringstream &);
-	static void f¶ÁÈ¡_Ë÷Òı(SË÷Òı &, const std::wstring &);
-	const S¶¥µã×ø±ê &fg¶¥µã(const SË÷Òı &) const;
-	const SÎÆÀí×ø±ê &fgÎÆÀí(const SË÷Òı &) const;
-	const S·¨Ïß×ø±ê &fg·¨Ïß(const SË÷Òı &) const;
-	static size_t ftË÷Òı0(int Ë÷Òı, size_t ÊıÁ¿);
-	std::vector<S¶¥µã×ø±ê> ma¶¥µã;
-	std::vector<SÎÆÀí×ø±ê> maÎÆÀí;
-	std::vector<S·¨Ïß×ø±ê> ma·¨Ïß;
-	std::vector<SË÷Òı> maË÷Òı;
-	std::vector<SÃæ> maÃæ;
+	static const Sé¡¶ç‚¹åæ ‡ cé¡¶ç‚¹åæ ‡;
+	static const Sçº¹ç†åæ ‡ cçº¹ç†åæ ‡;
+	static const Sæ³•çº¿åæ ‡ cæ³•çº¿åæ ‡;
+	bool fæ‰“å¼€(const std::wstring_view &);
+	bool fä¿å­˜(const std::wstring_view &);
+	void fè¯»å–_é¡¶ç‚¹(std::wistringstream &);
+	void fè¯»å–_çº¹ç†(std::wistringstream &);
+	void fè¯»å–_æ³•çº¿(std::wistringstream &);
+	void fè¯»å–_é¢(std::wistringstream &);
+	static void fè¯»å–_ç´¢å¼•(Sç´¢å¼• &, const std::wstring &);
+	const Sé¡¶ç‚¹åæ ‡ &fgé¡¶ç‚¹(const Sç´¢å¼• &) const;
+	const Sçº¹ç†åæ ‡ &fgçº¹ç†(const Sç´¢å¼• &) const;
+	const Sæ³•çº¿åæ ‡ &fgæ³•çº¿(const Sç´¢å¼• &) const;
+	static size_t ftç´¢å¼•0(int ç´¢å¼•, size_t æ•°é‡);
+	std::vector<Sé¡¶ç‚¹åæ ‡> maé¡¶ç‚¹;
+	std::vector<Sçº¹ç†åæ ‡> maçº¹ç†;
+	std::vector<Sæ³•çº¿åæ ‡> maæ³•çº¿;
+	std::vector<Sç´¢å¼•> maç´¢å¼•;
+	std::vector<Sé¢> maé¢;
 };
-}	//namespace cflw::ÎÄ¼ş::obj
+}	//namespace cflw::æ–‡ä»¶::obj
 namespace std {
 template<>
-struct hash<cflw::ÎÄ¼ş::obj::SË÷Òı> {
-	size_t operator()(const cflw::ÎÄ¼ş::obj::SË÷Òı &) const noexcept;
+struct hash<cflw::æ–‡ä»¶::obj::Sç´¢å¼•> {
+	size_t operator()(const cflw::æ–‡ä»¶::obj::Sç´¢å¼• &) const noexcept;
 };
 }

@@ -1,72 +1,72 @@
-#include "cflwÍ¼ĞÎ_d3d×ÅÉ«Æ÷.h"
-namespace cflw::Í¼ĞÎ::d3d×ÅÉ«Æ÷ {
-void C×ÅÉ«Æ÷¹¤³§::f³õÊ¼»¯(const char *a×ÅÉ«Ä£ĞÍ) {
-	const auto f×ÅÉ«Ä£ĞÍ¸³Öµ = [&](std::string &a×Ö·û´®, const char *a×ÅÉ«Æ÷) {
-		a×Ö·û´® = std::string(a×ÅÉ«Æ÷) + "_" + a×ÅÉ«Ä£ĞÍ;
+ï»¿#include "cflwå›¾å½¢_d3dç€è‰²å™¨.h"
+namespace cflw::å›¾å½¢::d3dç€è‰²å™¨ {
+void Cç€è‰²å™¨å·¥å‚::fåˆå§‹åŒ–(const char *aç€è‰²æ¨¡å‹) {
+	const auto fç€è‰²æ¨¡å‹èµ‹å€¼ = [&](std::string &aå­—ç¬¦ä¸², const char *aç€è‰²å™¨) {
+		aå­—ç¬¦ä¸² = std::string(aç€è‰²å™¨) + "_" + aç€è‰²æ¨¡å‹;
 	};
-	f×ÅÉ«Ä£ĞÍ¸³Öµ(m¶¥µã×ÅÉ«Ä£ĞÍ, "vs");
-	f×ÅÉ«Ä£ĞÍ¸³Öµ(mÏñËØ×ÅÉ«Ä£ĞÍ, "ps");
-	f×ÅÉ«Ä£ĞÍ¸³Öµ(m¼¸ºÎ×ÅÉ«Ä£ĞÍ, "gs");
-	f×ÅÉ«Ä£ĞÍ¸³Öµ(mÍâ¿Ç×ÅÉ«Ä£ĞÍ, "hs");
-	f×ÅÉ«Ä£ĞÍ¸³Öµ(mÓò×ÅÉ«Ä£ĞÍ, "ds");
-	f×ÅÉ«Ä£ĞÍ¸³Öµ(m¼ÆËã×ÅÉ«Ä£ĞÍ, "cs");
+	fç€è‰²æ¨¡å‹èµ‹å€¼(mé¡¶ç‚¹ç€è‰²æ¨¡å‹, "vs");
+	fç€è‰²æ¨¡å‹èµ‹å€¼(måƒç´ ç€è‰²æ¨¡å‹, "ps");
+	fç€è‰²æ¨¡å‹èµ‹å€¼(må‡ ä½•ç€è‰²æ¨¡å‹, "gs");
+	fç€è‰²æ¨¡å‹èµ‹å€¼(må¤–å£³ç€è‰²æ¨¡å‹, "hs");
+	fç€è‰²æ¨¡å‹èµ‹å€¼(måŸŸç€è‰²æ¨¡å‹, "ds");
+	fç€è‰²æ¨¡å‹èµ‹å€¼(mè®¡ç®—ç€è‰²æ¨¡å‹, "cs");
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒë¶¥µã×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû, const char *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, m¶¥µã×ÅÉ«Ä£ĞÍ.c_str());
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘é¡¶ç‚¹ç€è‰²å™¨(ComPtr<ID3DBlob> &a, const wchar_t *aæ–‡ä»¶å, const char *aå‡½æ•°å) {
+	return fç¼–è¯‘ç€è‰²å™¨(a, aæ–‡ä»¶å, aå‡½æ•°å, mé¡¶ç‚¹ç€è‰²æ¨¡å‹.c_str());
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒëÏñËØ×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû, const char *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, mÏñËØ×ÅÉ«Ä£ĞÍ.c_str());
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘åƒç´ ç€è‰²å™¨(ComPtr<ID3DBlob> &a, const wchar_t *aæ–‡ä»¶å, const char *aå‡½æ•°å) {
+	return fç¼–è¯‘ç€è‰²å™¨(a, aæ–‡ä»¶å, aå‡½æ•°å, måƒç´ ç€è‰²æ¨¡å‹.c_str());
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒë¼¸ºÎ×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû, const char *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, m¼¸ºÎ×ÅÉ«Ä£ĞÍ.c_str());
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘å‡ ä½•ç€è‰²å™¨(ComPtr<ID3DBlob> &a, const wchar_t *aæ–‡ä»¶å, const char *aå‡½æ•°å) {
+	return fç¼–è¯‘ç€è‰²å™¨(a, aæ–‡ä»¶å, aå‡½æ•°å, må‡ ä½•ç€è‰²æ¨¡å‹.c_str());
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒëÍâ¿Ç×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû, const char *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, mÍâ¿Ç×ÅÉ«Ä£ĞÍ.c_str());
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘å¤–å£³ç€è‰²å™¨(ComPtr<ID3DBlob> &a, const wchar_t *aæ–‡ä»¶å, const char *aå‡½æ•°å) {
+	return fç¼–è¯‘ç€è‰²å™¨(a, aæ–‡ä»¶å, aå‡½æ•°å, må¤–å£³ç€è‰²æ¨¡å‹.c_str());
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒëÓò×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû, const char *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, mÓò×ÅÉ«Ä£ĞÍ.c_str());
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘åŸŸç€è‰²å™¨(ComPtr<ID3DBlob> &a, const wchar_t *aæ–‡ä»¶å, const char *aå‡½æ•°å) {
+	return fç¼–è¯‘ç€è‰²å™¨(a, aæ–‡ä»¶å, aå‡½æ•°å, måŸŸç€è‰²æ¨¡å‹.c_str());
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒë¼ÆËã×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû, const char *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, m¼ÆËã×ÅÉ«Ä£ĞÍ.c_str());
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘è®¡ç®—ç€è‰²å™¨(ComPtr<ID3DBlob> &a, const wchar_t *aæ–‡ä»¶å, const char *aå‡½æ•°å) {
+	return fç¼–è¯‘ç€è‰²å™¨(a, aæ–‡ä»¶å, aå‡½æ•°å, mè®¡ç®—ç€è‰²æ¨¡å‹.c_str());
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒë×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû, const char *aÈë¿Ú, const char *a×ÅÉ«Ä£ĞÍ) {
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘ç€è‰²å™¨(ComPtr<ID3DBlob> &a, const wchar_t *aæ–‡ä»¶å, const char *aå…¥å£, const char *aç€è‰²æ¨¡å‹) {
 	HRESULT hr = S_OK;
-	DWORD v×ÅÉ«±êÖ¾ = D3DCOMPILE_ENABLE_STRICTNESS;
+	DWORD vç€è‰²æ ‡å¿— = D3DCOMPILE_ENABLE_STRICTNESS;
 #if defined( DEBUG ) || defined( _DEBUG )
-	v×ÅÉ«±êÖ¾ |= D3DCOMPILE_DEBUG;
+	vç€è‰²æ ‡å¿— |= D3DCOMPILE_DEBUG;
 #endif
-	ComPtr<ID3DBlob> v´íÎó;
-	hr = D3DCompileFromFile(aÎÄ¼şÃû, nullptr, nullptr, aÈë¿Ú, a×ÅÉ«Ä£ĞÍ, v×ÅÉ«±êÖ¾, 0, &a, &v´íÎó);
+	ComPtr<ID3DBlob> vé”™è¯¯;
+	hr = D3DCompileFromFile(aæ–‡ä»¶å, nullptr, nullptr, aå…¥å£, aç€è‰²æ¨¡å‹, vç€è‰²æ ‡å¿—, 0, &a, &vé”™è¯¯);
 	if (FAILED(hr)) {
-		if (v´íÎó != nullptr) {
-			OutputDebugStringA((char*)v´íÎó->GetBufferPointer());
+		if (vé”™è¯¯ != nullptr) {
+			OutputDebugStringA((char*)vé”™è¯¯->GetBufferPointer());
 		}
 		return hr;
 	}
 	return S_OK;
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f¶ÁÈ¡×ÅÉ«Æ÷(std::unique_ptr<std::byte[]> &aÊı¾İ, DWORD &a´óĞ¡, const wchar_t *aÎÄ¼şÃû) {
-	HANDLE vÎÄ¼ş = CreateFileW(aÎÄ¼şÃû, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_ALWAYS, 0, nullptr);
-	if (vÎÄ¼ş == INVALID_HANDLE_VALUE) {
+HRESULT Cç€è‰²å™¨å·¥å‚::fè¯»å–ç€è‰²å™¨(std::unique_ptr<std::byte[]> &aæ•°æ®, DWORD &aå¤§å°, const wchar_t *aæ–‡ä»¶å) {
+	HANDLE væ–‡ä»¶ = CreateFileW(aæ–‡ä»¶å, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_ALWAYS, 0, nullptr);
+	if (væ–‡ä»¶ == INVALID_HANDLE_VALUE) {
 		return ERROR_FILE_NOT_FOUND;
 	}
-	a´óĞ¡ = GetFileSize(vÎÄ¼ş, nullptr);
-	aÊı¾İ = std::make_unique<std::byte[]>(a´óĞ¡);
-	DWORD v¶Á´óĞ¡;
-	ReadFile(vÎÄ¼ş, aÊı¾İ.get(), a´óĞ¡, &v¶Á´óĞ¡, nullptr);
-	CloseHandle(vÎÄ¼ş);
+	aå¤§å° = GetFileSize(væ–‡ä»¶, nullptr);
+	aæ•°æ® = std::make_unique<std::byte[]>(aå¤§å°);
+	DWORD vè¯»å¤§å°;
+	ReadFile(væ–‡ä»¶, aæ•°æ®.get(), aå¤§å°, &vè¯»å¤§å°, nullptr);
+	CloseHandle(væ–‡ä»¶);
 	return S_OK;
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f¶ÁÈ¡×ÅÉ«Æ÷(ComPtr<ID3DBlob> &a, const wchar_t *aÎÄ¼şÃû) {
+HRESULT Cç€è‰²å™¨å·¥å‚::fè¯»å–ç€è‰²å™¨(ComPtr<ID3DBlob> &a, const wchar_t *aæ–‡ä»¶å) {
 	ComPtr<ID3DBlob> v;
-	HANDLE vÎÄ¼ş = CreateFileW(aÎÄ¼şÃû, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_ALWAYS, 0, nullptr);
-	if (vÎÄ¼ş == INVALID_HANDLE_VALUE) {
+	HANDLE væ–‡ä»¶ = CreateFileW(aæ–‡ä»¶å, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_ALWAYS, 0, nullptr);
+	if (væ–‡ä»¶ == INVALID_HANDLE_VALUE) {
 		return ERROR_FILE_NOT_FOUND;
 	}
-	const DWORD v´óĞ¡ = GetFileSize(vÎÄ¼ş, nullptr);
-	D3DCreateBlob(v´óĞ¡, &v);
-	ReadFile(vÎÄ¼ş, v->GetBufferPointer(), v´óĞ¡, nullptr, nullptr);
-	CloseHandle(vÎÄ¼ş);
+	const DWORD vå¤§å° = GetFileSize(væ–‡ä»¶, nullptr);
+	D3DCreateBlob(vå¤§å°, &v);
+	ReadFile(væ–‡ä»¶, v->GetBufferPointer(), vå¤§å°, nullptr, nullptr);
+	CloseHandle(væ–‡ä»¶);
 	a = std::move(v);
 	return S_OK;
 }

@@ -1,11 +1,11 @@
-#include <string>
-#include "cflwÒì³£.h"
-#include "cflw¹¤¾ß.h"
-namespace cflw::Òì³£ {
-XÎ´ÊµÏÖ::XÎ´ÊµÏÖ():
-	std::runtime_error("¸Ãº¯ÊıÎ´ÊµÏÖ") {
+ï»¿#include <string>
+#include "cflwå¼‚å¸¸.h"
+#include "cflwå·¥å…·.h"
+namespace cflw::å¼‚å¸¸ {
+Xæœªå®ç°::Xæœªå®ç°():
+	std::runtime_error("è¯¥å‡½æ•°æœªå®ç°") {
 }
-XÊÓ´°::XÊÓ´°(long a):
+Xè§†çª—::Xè§†çª—(long a):
 	std::runtime_error(std::string("HRESULT:") + std::to_string(a)) {
 }
-}	//namespace cflw::Òì³£
+}	//namespace cflw::å¼‚å¸¸

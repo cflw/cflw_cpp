@@ -1,72 +1,72 @@
-#include <boost\algorithm\string.hpp>
-#include "cflwÎÄ¼ş_csv.h"
+ï»¿#include <boost\algorithm\string.hpp>
+#include "cflwæ–‡ä»¶_csv.h"
 namespace cflw {
-namespace ÎÄ¼ş {
+namespace æ–‡ä»¶ {
 namespace csv {
 //=============================================================================
-// ĞĞ
+// è¡Œ
 //=============================================================================
-SĞĞ::SĞĞ(std::vector<std::wstring> &pÊı×é) :
-	mÊı×é{&pÊı×é} {
+Sè¡Œ::Sè¡Œ(std::vector<std::wstring> &pæ•°ç»„) :
+	mæ•°ç»„{&pæ•°ç»„} {
 }
-const std::wstring &SĞĞ::operator[](size_t i) const {
-	return mÊı×é->at(i);
+const std::wstring &Sè¡Œ::operator[](size_t i) const {
+	return mæ•°ç»„->at(i);
 }
-std::vector<std::wstring> &SĞĞ::fe() const {
-	return *mÊı×é;
-}
-//=============================================================================
-// Ñ­»·
-//=============================================================================
-CĞĞÑ­»·::CĞĞÑ­»·(std::wifstream &pÎÄ¼ş) :
-	mÎÄ¼ş{&pÎÄ¼ş} {
-}
-bool CĞĞÑ­»·::fÑ­»·¿ØÖÆ_i¼ÌĞø() {
-	return !mÎÄ¼ş->eof();
-}
-SĞĞ CĞĞÑ­»·::fÑ­»·¿ØÖÆ_½âÒıÓÃ() {
-	std::wstring vĞĞ;
-	std::getline(*mÎÄ¼ş, vĞĞ);
-	boost::split(mÊı×é, vĞĞ, boost::is_any_of(L","));
-	return SĞĞ(mÊı×é);
+std::vector<std::wstring> &Sè¡Œ::fe() const {
+	return *mæ•°ç»„;
 }
 //=============================================================================
-// ¶Á
+// å¾ªç¯
 //=============================================================================
-void C¶Á::f´ò¿ª(const std::wstring &aÎÄ¼şÃû) {
-	mÎÄ¼ş.open(aÎÄ¼şÃû);
-	if (!mÎÄ¼ş) {	//Ê§°Ü
+Cè¡Œå¾ªç¯::Cè¡Œå¾ªç¯(std::wifstream &pæ–‡ä»¶) :
+	mæ–‡ä»¶{&pæ–‡ä»¶} {
+}
+bool Cè¡Œå¾ªç¯::få¾ªç¯æ§åˆ¶_iç»§ç»­() {
+	return !mæ–‡ä»¶->eof();
+}
+Sè¡Œ Cè¡Œå¾ªç¯::få¾ªç¯æ§åˆ¶_è§£å¼•ç”¨() {
+	std::wstring vè¡Œ;
+	std::getline(*mæ–‡ä»¶, vè¡Œ);
+	boost::split(mæ•°ç»„, vè¡Œ, boost::is_any_of(L","));
+	return Sè¡Œ(mæ•°ç»„);
+}
+//=============================================================================
+// è¯»
+//=============================================================================
+void Cè¯»::fæ‰“å¼€(const std::wstring &aæ–‡ä»¶å) {
+	mæ–‡ä»¶.open(aæ–‡ä»¶å);
+	if (!mæ–‡ä»¶) {	//å¤±è´¥
 		throw;
 	}
-	//¶ÁµÚÒ»ĞĞ
-	std::wstring vĞĞ;
-	std::getline(mÎÄ¼ş, vĞĞ);
-	mµÚ¶şĞĞ¿ªÊ¼Î»ÖÃ = vĞĞ.size() + 1;
+	//è¯»ç¬¬ä¸€è¡Œ
+	std::wstring vè¡Œ;
+	std::getline(mæ–‡ä»¶, vè¡Œ);
+	mç¬¬äºŒè¡Œå¼€å§‹ä½ç½® = vè¡Œ.size() + 1;
 }
-CĞĞÑ­»· C¶Á::feĞĞ() {
-	if (m±êÌâĞĞ) {
-		mÎÄ¼ş.seekg(mµÚ¶şĞĞ¿ªÊ¼Î»ÖÃ, std::ios::beg);
+Cè¡Œå¾ªç¯ Cè¯»::feè¡Œ() {
+	if (mæ ‡é¢˜è¡Œ) {
+		mæ–‡ä»¶.seekg(mç¬¬äºŒè¡Œå¼€å§‹ä½ç½®, std::ios::beg);
 	} else {
-		mÎÄ¼ş.seekg(0, std::ios::beg);
+		mæ–‡ä»¶.seekg(0, std::ios::beg);
 	}
-	return CĞĞÑ­»·{mÎÄ¼ş};
+	return Cè¡Œå¾ªç¯{mæ–‡ä»¶};
 }
-void C¶Á::fs±êÌâĞĞ(bool p) {
-	m±êÌâĞĞ = p;
+void Cè¯»::fsæ ‡é¢˜è¡Œ(bool p) {
+	mæ ‡é¢˜è¡Œ = p;
 }
 //=============================================================================
-// Ğ´
+// å†™
 //=============================================================================
-void CĞ´::f´ò¿ª(const std::wstring &, int pÄ£Ê½) {
+void Cå†™::fæ‰“å¼€(const std::wstring &, int pæ¨¡å¼) {
 
 }
-void CĞ´::fsÁĞÊı(int) {
+void Cå†™::fsåˆ—æ•°(int) {
 
 }
-void CĞ´::fĞ´(const std::wstring &) {
+void Cå†™::få†™(const std::wstring &) {
 
 }
 //=============================================================================
 }	//namespace csv
-}	//namespace ÎÄ¼ş
+}	//namespace æ–‡ä»¶
 }	//namespace cflw

@@ -1,76 +1,76 @@
-#include "cflwÍ¼ĞÎ_dx×ÅÉ«Æ÷.h"
-namespace cflw::Í¼ĞÎ::dx×ÅÉ«Æ÷ {
-HRESULT C×ÅÉ«Æ÷¹¤³§::f³õÊ¼»¯(const wchar_t *a×ÅÉ«Ä£ĞÍ) {
+ï»¿#include "cflwå›¾å½¢_dxç€è‰²å™¨.h"
+namespace cflw::å›¾å½¢::dxç€è‰²å™¨ {
+HRESULT Cç€è‰²å™¨å·¥å‚::fåˆå§‹åŒ–(const wchar_t *aç€è‰²æ¨¡å‹) {
 	HRESULT hr;
-	hr = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&m±àÒëÆ÷));
+	hr = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&mç¼–è¯‘å™¨));
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = DxcCreateInstance(CLSID_DxcLibrary, IID_PPV_ARGS(&m¿â));
+	hr = DxcCreateInstance(CLSID_DxcLibrary, IID_PPV_ARGS(&måº“));
 	if (FAILED(hr)) {
 		return hr;
 	}
-	const auto f×ÅÉ«Ä£ĞÍ¸³Öµ = [&](std::wstring &a×Ö·û´®, const wchar_t *a×ÅÉ«Æ÷) {
-		a×Ö·û´® = std::wstring(a×ÅÉ«Æ÷) + L"_" + a×ÅÉ«Ä£ĞÍ;
+	const auto fç€è‰²æ¨¡å‹èµ‹å€¼ = [&](std::wstring &aå­—ç¬¦ä¸², const wchar_t *aç€è‰²å™¨) {
+		aå­—ç¬¦ä¸² = std::wstring(aç€è‰²å™¨) + L"_" + aç€è‰²æ¨¡å‹;
 	};
-	f×ÅÉ«Ä£ĞÍ¸³Öµ(m¶¥µã×ÅÉ«Ä£ĞÍ, L"vs");
-	f×ÅÉ«Ä£ĞÍ¸³Öµ(mÏñËØ×ÅÉ«Ä£ĞÍ, L"ps");
-	f×ÅÉ«Ä£ĞÍ¸³Öµ(m¼¸ºÎ×ÅÉ«Ä£ĞÍ, L"gs");
-	f×ÅÉ«Ä£ĞÍ¸³Öµ(mÍâ¿Ç×ÅÉ«Ä£ĞÍ, L"hs");
-	f×ÅÉ«Ä£ĞÍ¸³Öµ(mÓò×ÅÉ«Ä£ĞÍ, L"ds");
-	f×ÅÉ«Ä£ĞÍ¸³Öµ(m¼ÆËã×ÅÉ«Ä£ĞÍ, L"cs");
+	fç€è‰²æ¨¡å‹èµ‹å€¼(mé¡¶ç‚¹ç€è‰²æ¨¡å‹, L"vs");
+	fç€è‰²æ¨¡å‹èµ‹å€¼(måƒç´ ç€è‰²æ¨¡å‹, L"ps");
+	fç€è‰²æ¨¡å‹èµ‹å€¼(må‡ ä½•ç€è‰²æ¨¡å‹, L"gs");
+	fç€è‰²æ¨¡å‹èµ‹å€¼(må¤–å£³ç€è‰²æ¨¡å‹, L"hs");
+	fç€è‰²æ¨¡å‹èµ‹å€¼(måŸŸç€è‰²æ¨¡å‹, L"ds");
+	fç€è‰²æ¨¡å‹èµ‹å€¼(mè®¡ç®—ç€è‰²æ¨¡å‹, L"cs");
 	return S_OK;
 }
-//±àÒë×ÅÉ«Æ÷
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒë¶¥µã×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû, const wchar_t *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, m¶¥µã×ÅÉ«Ä£ĞÍ.c_str());
+//ç¼–è¯‘ç€è‰²å™¨
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘é¡¶ç‚¹ç€è‰²å™¨(ComPtr<IDxcBlob> &a, const wchar_t *aæ–‡ä»¶å, const wchar_t *aå‡½æ•°å) {
+	return fç¼–è¯‘ç€è‰²å™¨(a, aæ–‡ä»¶å, aå‡½æ•°å, mé¡¶ç‚¹ç€è‰²æ¨¡å‹.c_str());
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒëÏñËØ×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû, const wchar_t *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, mÏñËØ×ÅÉ«Ä£ĞÍ.c_str());
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘åƒç´ ç€è‰²å™¨(ComPtr<IDxcBlob> &a, const wchar_t *aæ–‡ä»¶å, const wchar_t *aå‡½æ•°å) {
+	return fç¼–è¯‘ç€è‰²å™¨(a, aæ–‡ä»¶å, aå‡½æ•°å, måƒç´ ç€è‰²æ¨¡å‹.c_str());
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒë¼¸ºÎ×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû, const wchar_t *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, m¼¸ºÎ×ÅÉ«Ä£ĞÍ.c_str());
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘å‡ ä½•ç€è‰²å™¨(ComPtr<IDxcBlob> &a, const wchar_t *aæ–‡ä»¶å, const wchar_t *aå‡½æ•°å) {
+	return fç¼–è¯‘ç€è‰²å™¨(a, aæ–‡ä»¶å, aå‡½æ•°å, må‡ ä½•ç€è‰²æ¨¡å‹.c_str());
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒëÍâ¿Ç×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû, const wchar_t *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, mÍâ¿Ç×ÅÉ«Ä£ĞÍ.c_str());
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘å¤–å£³ç€è‰²å™¨(ComPtr<IDxcBlob> &a, const wchar_t *aæ–‡ä»¶å, const wchar_t *aå‡½æ•°å) {
+	return fç¼–è¯‘ç€è‰²å™¨(a, aæ–‡ä»¶å, aå‡½æ•°å, må¤–å£³ç€è‰²æ¨¡å‹.c_str());
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒëÓò×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû, const wchar_t *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, mÓò×ÅÉ«Ä£ĞÍ.c_str());
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘åŸŸç€è‰²å™¨(ComPtr<IDxcBlob> &a, const wchar_t *aæ–‡ä»¶å, const wchar_t *aå‡½æ•°å) {
+	return fç¼–è¯‘ç€è‰²å™¨(a, aæ–‡ä»¶å, aå‡½æ•°å, måŸŸç€è‰²æ¨¡å‹.c_str());
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒë¼ÆËã×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû, const wchar_t *aº¯ÊıÃû) {
-	return f±àÒë×ÅÉ«Æ÷(a, aÎÄ¼şÃû, aº¯ÊıÃû, m¼ÆËã×ÅÉ«Ä£ĞÍ.c_str());
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘è®¡ç®—ç€è‰²å™¨(ComPtr<IDxcBlob> &a, const wchar_t *aæ–‡ä»¶å, const wchar_t *aå‡½æ•°å) {
+	return fç¼–è¯‘ç€è‰²å™¨(a, aæ–‡ä»¶å, aå‡½æ•°å, mè®¡ç®—ç€è‰²æ¨¡å‹.c_str());
 }
-//ºËĞÄº¯Êı
-HRESULT C×ÅÉ«Æ÷¹¤³§::f±àÒë×ÅÉ«Æ÷(ComPtr<IDxcBlob> &aÊä³ö, const wchar_t *aÎÄ¼şÃû, const wchar_t *aÈë¿Ú, const wchar_t *a×ÅÉ«Ä£ĞÍ) {
+//æ ¸å¿ƒå‡½æ•°
+HRESULT Cç€è‰²å™¨å·¥å‚::fç¼–è¯‘ç€è‰²å™¨(ComPtr<IDxcBlob> &aè¾“å‡º, const wchar_t *aæ–‡ä»¶å, const wchar_t *aå…¥å£, const wchar_t *aç€è‰²æ¨¡å‹) {
 	HRESULT hr;
-	ComPtr<IDxcBlobEncoding> vÔ´;
-	hr = m¿â->CreateBlobFromFile(aÎÄ¼şÃû, nullptr, &vÔ´);
+	ComPtr<IDxcBlobEncoding> væº;
+	hr = måº“->CreateBlobFromFile(aæ–‡ä»¶å, nullptr, &væº);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	ComPtr<IDxcOperationResult> v½á¹û;
-	hr = m±àÒëÆ÷->Compile(vÔ´.Get(), aÎÄ¼şÃû, aÈë¿Ú, a×ÅÉ«Ä£ĞÍ, nullptr, 0, nullptr, 0, nullptr, &v½á¹û);
+	ComPtr<IDxcOperationResult> vç»“æœ;
+	hr = mç¼–è¯‘å™¨->Compile(væº.Get(), aæ–‡ä»¶å, aå…¥å£, aç€è‰²æ¨¡å‹, nullptr, 0, nullptr, 0, nullptr, &vç»“æœ);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	v½á¹û->GetStatus(&hr);
+	vç»“æœ->GetStatus(&hr);
 	if (FAILED(hr)) {
-		ComPtr<IDxcBlobEncoding> v´íÎó;
-		v½á¹û->GetErrorBuffer(&v´íÎó);
-		OutputDebugStringA((char*)v´íÎó->GetBufferPointer());
+		ComPtr<IDxcBlobEncoding> vé”™è¯¯;
+		vç»“æœ->GetErrorBuffer(&vé”™è¯¯);
+		OutputDebugStringA((char*)vé”™è¯¯->GetBufferPointer());
 		return hr;
 	}
-	v½á¹û->GetResult(&aÊä³ö);
+	vç»“æœ->GetResult(&aè¾“å‡º);
 	return S_OK;
 }
-HRESULT C×ÅÉ«Æ÷¹¤³§::f¶ÁÈ¡×ÅÉ«Æ÷(ComPtr<IDxcBlob> &a, const wchar_t *aÎÄ¼şÃû) {
+HRESULT Cç€è‰²å™¨å·¥å‚::fè¯»å–ç€è‰²å™¨(ComPtr<IDxcBlob> &a, const wchar_t *aæ–‡ä»¶å) {
 	HRESULT hr;
-	ComPtr<IDxcBlobEncoding> vÔ´;
-	hr = m¿â->CreateBlobFromFile(aÎÄ¼şÃû, nullptr, &vÔ´);
+	ComPtr<IDxcBlobEncoding> væº;
+	hr = måº“->CreateBlobFromFile(aæ–‡ä»¶å, nullptr, &væº);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	vÔ´.As(&a);
+	væº.As(&a);
 	return S_OK;
 }
 }

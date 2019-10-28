@@ -1,30 +1,30 @@
-#pragma once
+ï»¿#pragma once
 #include <locale>
 #include <fstream>
 #include <boost/property_tree/json_parser.hpp>
 namespace boost::property_tree::json_parser {
-//¡ı·ÀÖ¹ÖĞÎÄ×ªÒåµÄÖØÔØº¯Êı£¬ĞèÒª°ÑÕâ¸öÉùÃ÷·Åµ½boost/property_tree/json_parser/detail/write.hppÎÄ¼şÖĞ
+//â†“é˜²æ­¢ä¸­æ–‡è½¬ä¹‰çš„é‡è½½å‡½æ•°ï¼Œéœ€è¦æŠŠè¿™ä¸ªå£°æ˜æ”¾åˆ°boost/property_tree/json_parser/detail/write.hppæ–‡ä»¶ä¸­
 std::wstring create_escapes(const std::wstring &);
 }	//namespace boost::property_tree::json_parser
-namespace cflw::ÎÄ¼ş::json {
-using tÊ÷ = boost::property_tree::wptree;
+namespace cflw::æ–‡ä»¶::json {
+using tæ ‘ = boost::property_tree::wptree;
 /*
-template<typename t> concept T×Ö·û´® = requires(t a) {
+template<typename t> concept Tå­—ç¬¦ä¸² = requires(t a) {
 	{a.c_str()}->const wchar_t *
 }
 */
-class CÎÄ¼ş {
+class Cæ–‡ä»¶ {
 public:
 	static const std::locale utf8;
-	CÎÄ¼ş();
-	bool f´ò¿ª(const wchar_t *, int Ä£Ê½ = std::ios::in);
-	template<typename t> bool f´ò¿ª(const t &, int Ä£Ê½ = std::ios::in);
-	void f¶ÁÈ¡(tÊ÷ &);
-	void fĞ´Èë(const tÊ÷ &);
-	bool fiºÃ() const;
-	std::wfstream mÁ÷;
+	Cæ–‡ä»¶();
+	bool fæ‰“å¼€(const wchar_t *, int æ¨¡å¼ = std::ios::in);
+	template<typename t> bool fæ‰“å¼€(const t &, int æ¨¡å¼ = std::ios::in);
+	void fè¯»å–(tæ ‘ &);
+	void få†™å…¥(const tæ ‘ &);
+	bool fiå¥½() const;
+	std::wfstream mæµ;
 };
-template<typename t> bool CÎÄ¼ş::f´ò¿ª(const t &aÂ·¾¶, int aÄ£Ê½) {
-	return f´ò¿ª(aÂ·¾¶.c_str(), aÄ£Ê½);
+template<typename t> bool Cæ–‡ä»¶::fæ‰“å¼€(const t &aè·¯å¾„, int aæ¨¡å¼) {
+	return fæ‰“å¼€(aè·¯å¾„.c_str(), aæ¨¡å¼);
 }
-}	//namespace cflw::ÎÄ¼ş::json
+}	//namespace cflw::æ–‡ä»¶::json
