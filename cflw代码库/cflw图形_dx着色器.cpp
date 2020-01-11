@@ -1,4 +1,5 @@
-﻿#include "cflw图形_dx着色器.h"
+﻿#include <sstream>
+#include "cflw图形_dx着色器.h"
 namespace cflw::图形::dx着色器 {
 HRESULT C着色器工厂::f初始化(const wchar_t *a着色模型) {
 	HRESULT hr;
@@ -48,8 +49,17 @@ HRESULT C着色器工厂::f编译着色器(ComPtr<IDxcBlob> &a输出, const wcha
 	if (FAILED(hr)) {
 		return hr;
 	}
+	static const wchar_t *va参数[] = {
+#ifdef _DEBUG
+		L"-Zi",	//DXC_ARG_DEBUG
+		L"-Od",	//DXC_ARG_SKIP_OPTIMIZATIONS
+#else
+		L"-O3",	//DXC_ARG_OPTIMIZATION_LEVEL3
+#endif
+		//L"-Vd",	//DXC_ARG_SKIP_VALIDATION
+	};
 	ComPtr<IDxcOperationResult> v结果;
-	hr = m编译器->Compile(v源.Get(), a文件名, a入口, a着色模型, nullptr, 0, nullptr, 0, nullptr, &v结果);
+	hr = m编译器->Compile(v源.Get(), a文件名, a入口, a着色模型, va参数, _countof(va参数), nullptr, 0, nullptr, &v结果);
 	if (FAILED(hr)) {
 		return hr;
 	}

@@ -1,4 +1,5 @@
-﻿#include "cflw时间.h"
+﻿#include <algorithm>
+#include "cflw时间.h"
 namespace cflw::时间 {
 //==============================================================================
 // 计算时间
@@ -9,8 +10,8 @@ t时间点 fg现在() {
 t时间段 fg零() {
 	return t时间段::zero();
 }
-t时间段 f间隔(const t时间点 &p0, const t时间点 &p1) {
-	return std::chrono::duration_cast<t时间段>(p1 - p0);
+t时间段 f间隔(const t时间点 &a0, const t时间点 &a1) {
+	return std::chrono::duration_cast<t时间段>(a1 - a0);
 }
 //==============================================================================
 // 时间间隔
@@ -101,7 +102,7 @@ double C计帧器::f计算() {
 	m帧数率 = (m帧数率 + v帧速率) / 2;
 	return m帧数率;
 }
-double C计帧器::fg帧数率() const {
+double C计帧器::fg帧速率() const {
 	return m帧数率;
 }
 //==============================================================================
@@ -124,4 +125,30 @@ double C秒表::f上次到现在() {
 	return v持续时间.count();
 }
 //==============================================================================
+// 自动跳帧
+//==============================================================================
+void C自动跳帧::f重置(double a正常, double a最小) {
+	m单帧间隔 = 1 / a正常;
+	m跳帧上限 = a正常 / a最小 - 1;
+	m跳帧计数 = 0;
+}
+bool C自动跳帧::f滴答() {
+	//跳帧
+	if (m跳帧计数 > 0) {
+		m跳帧计数 -= 1;
+		return false;
+	} 
+	//计时
+	const t时间点 v这次 = fg现在();
+	const t时间段 v间隔 = f间隔(m上次, v这次);
+	const double v耗时 = v间隔.count();
+	const double v跳帧 = std::min<double>(v耗时 / m单帧间隔 - 1, m跳帧上限);
+	m跳帧计数 += v跳帧;
+	m上次 = v这次;
+	if (m跳帧计数 > 0) {
+		m跳帧计数 -= 1;
+		return false;
+	}
+	return true;
+}
 }	//namespace cflw::时间

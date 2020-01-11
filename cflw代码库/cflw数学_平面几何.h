@@ -24,8 +24,8 @@ struct S圆形 {
 	S圆形(const S向量2 &, const float &);
 	static S圆形 fc坐标半径(const S向量2 &, float);
 	static S圆形 fc坐标直径(const S向量2 &, float);
-	S向量2 f取点r(const float &方向) const;
-	S向量2 f取点d(const float &方向) const;
+	S向量2 fg点r(const float &方向) const;
+	S向量2 fg点d(const float &方向) const;
 	S向量2 f离边最近点(const S圆形 &) const;
 	bool f包含判定(const S向量2 &) const;
 	float f中线切线夹角r(const S向量2 &) const;	//中线=过圆心与一点的直线
@@ -41,6 +41,7 @@ struct S矩形 {
 	static S矩形 fc坐标半尺寸(const S向量2 &, const S向量2 &);
 	static S矩形 fc正方形(const S向量2 &, float 边长);
 	static S矩形 fc对角点(const S向量2 &, const S向量2 &);
+	S向量2 fg点(float x, float y) const;
 	S向量2 fg中心() const;
 	S向量2 fg半尺寸() const;
 	S向量2 fg尺寸() const;
@@ -61,6 +62,7 @@ struct S旋转矩形 {
 	float m方向 = 0;
 	S旋转矩形() = default;
 	S旋转矩形(const S向量2 &, const S向量2 &, float);
+	S旋转矩形(const S矩形 &, float);
 	static S旋转矩形 fc线段(const S向量2 &, const S向量2 &, float 宽度 = 0);
 	static S旋转矩形 fc左上右下(float 左, float 上, float 右, float 下, float 方向 = 0);
 	static S旋转矩形 fc坐标尺寸(const S向量2 &, const S向量2 &, float 方向 = 0);

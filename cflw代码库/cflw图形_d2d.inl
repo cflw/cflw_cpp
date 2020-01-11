@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "cflw图形_d2d.h"
 namespace cflw::图形::d2d {
 template<typename t> ComPtr<IDXGISurface> f取表面(const ComPtr<t> &a) {

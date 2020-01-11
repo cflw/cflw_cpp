@@ -451,11 +451,12 @@ void C画文本::f绘制文本布局(IDWriteTextLayout *a布局) const {
 }
 void C画文本::f绘制文本布局(IDWriteTextLayout *a布局, IDWriteTextRenderer *a文本渲染) const {
 	assert(a文本渲染);
-	ComPtr<ID2D1Layer> v层;
-	m渲染目标->CreateLayer(&v层);
-	m渲染目标->PushLayer({D2D1::InfiniteRect(), nullptr, D2D1_ANTIALIAS_MODE_ALIASED, D2D1::IdentityMatrix(), 1, m画笔.Get(), D2D1_LAYER_OPTIONS_NONE}, v层.Get());
+	//注意：入层出层会大幅度降低效率
+	//ComPtr<ID2D1Layer> v层;
+	//m渲染目标->CreateLayer(&v层);
+	//m渲染目标->PushLayer({D2D1::InfiniteRect(), nullptr, D2D1_ANTIALIAS_MODE_ALIASED, D2D1::IdentityMatrix(), 1, m画笔.Get(), D2D1_LAYER_OPTIONS_NONE}, v层.Get());
 	a布局->Draw(nullptr, a文本渲染, m矩形.left, m矩形.top);
-	m渲染目标->PopLayer();
+	//m渲染目标->PopLayer();
 }
 void C画文本::f绘制文本布局(C修改文本布局 &a布局) const {
 	f绘制文本布局(a布局.m布局);
@@ -573,7 +574,7 @@ void C修改路径几何::f直线(const 数学::S向量2 &a0, const 数学::S向
 }
 void C修改路径几何::f圆弧(const 数学::S向量2 &a圆心, float a半径, float a始, float a弧度, bool a顺时针) {
 	assert(a弧度 <= 数学::c二π<float>);
-	const float v方向符号 = a顺时针 ? -1 : 1;
+	const float v方向符号 = a顺时针 ? -1.f : 1.f;
 	const 数学::S向量2 v开始点 = a圆心 + 数学::S向量2::fc方向r(a半径, a始);
 	const 数学::S向量2 v结束点 = a圆心 + 数学::S向量2::fc方向r(a半径, a始 + v方向符号 * a弧度);
 	const D2D1_SWEEP_DIRECTION v顺时针 = a顺时针 ? D2D1_SWEEP_DIRECTION_CLOCKWISE : D2D1_SWEEP_DIRECTION_COUNTER_CLOCKWISE;

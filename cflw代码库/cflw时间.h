@@ -39,7 +39,7 @@ public:
 	C计帧器();
 	void f重置();
 	double f计算();
-	double fg帧数率() const;
+	double fg帧速率() const;
 private:
 	std::deque<t时间点> m时间;
 	double m帧数率 = 1;	//平滑返回值
@@ -56,5 +56,17 @@ private:
 	t时间点 m开始时间{fg现在()};
 	t时间点 m上次时间{fg现在()};
 };
-//=============================================================================
+//自动跳帧
+class C自动跳帧 {
+public:
+	static constexpr double c间隔 = 1.0 / 60.0;
+	C自动跳帧() = default;
+	void f重置(double 帧速率, double 最小帧速率);
+	bool f滴答();
+	std::deque<int> m跳帧记录;
+	double m单帧间隔 = c间隔;
+	double m跳帧上限 = 1;
+	double m跳帧计数 = 0;	//跳帧:每n帧跳过n-1帧
+	t时间点 m上次{fg现在()};
+};
 }	//namespace cflw::时间

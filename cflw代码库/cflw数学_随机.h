@@ -3,9 +3,9 @@
 #include "cflw数学.h"
 #include "cflw数学_平面几何.h"
 #define 定义随机数分布计算函数 \
-template<typename t>\
-auto operator()(t &p) {\
-	return f生成(p());\
+template<typename t引擎>\
+auto operator()(t引擎 &a引擎) const {\
+	return f生成(a引擎());\
 }
 namespace cflw::数学 {
 //==============================================================================
@@ -32,12 +32,8 @@ template<class t> t C线性同余::f生成(const t &a小, const t &a大) {
 //==============================================================================
 // 分布
 //==============================================================================
-template<typename t = double> std::uniform_real_distribution<t> f圆周分布r() {
-	return std::uniform_real_distribution<t>(0, c二π<t>);
-}
-template<typename t = double> std::uniform_real_distribution<t> f圆周分布d() {
-	return std::uniform_real_distribution<t>(0, (t)360);
-}
+template<typename t = double> static const std::uniform_real_distribution<t> c圆周分布r = std::uniform_real_distribution<t>(0, c二π<t>);
+template<typename t = double> static const std::uniform_real_distribution<t> c圆周分布d = std::uniform_real_distribution<t>(0, (t)360);
 class C圆形分布 {
 public:
 	C圆形分布(const S圆形 &);
@@ -48,6 +44,7 @@ private:
 };
 class C矩形分布 {
 public:
+	C矩形分布(const S矩形 &);
 	C矩形分布(const S旋转矩形 &);
 	定义随机数分布计算函数
 	S向量2 f生成(unsigned int) const;

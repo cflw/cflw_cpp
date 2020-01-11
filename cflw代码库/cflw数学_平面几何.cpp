@@ -266,19 +266,18 @@ S圆形 S圆形::fc坐标半径(const S向量2 &a坐标, float a半径) {
 S圆形 S圆形::fc坐标直径(const S向量2 &a坐标, float a直径) {
 	return S圆形(a坐标, a直径 * 0.5f);
 }
-S向量2 S圆形::f取点r(const float &r) const {
+S向量2 S圆形::fg点r(const float &r) const {
 	S向量2 v = S向量2::fc方向r(m半径, r);
-	v += m坐标;
-	return v;
+	return v + m坐标;
 }
-S向量2 S圆形::f取点d(const float &d) const {
-	return f取点r(d * c度到弧度<float>);
+S向量2 S圆形::fg点d(const float &d) const {
+	return fg点r(d * c度到弧度<float>);
 }
 S向量2 S圆形::f离边最近点(const S圆形 &p圆) const {
 	const float m方向1 = m坐标.f到点方向r(p圆.m坐标);
-	const S向量2 m点1 = f取点r(m方向1);
+	const S向量2 m点1 = fg点r(m方向1);
 	const float m方向2 = p圆.m坐标.f到点方向r(m坐标);
-	const S向量2 m点2 = p圆.f取点r(m方向2);
+	const S向量2 m点2 = p圆.fg点r(m方向2);
 	return S向量2((m点1.x + m点2.x) / 2, (m点1.y + m点2.y) / 2);
 }
 bool S圆形::f包含判定(const S向量2 &p) const {
@@ -330,6 +329,12 @@ S矩形 S矩形::fc对角点(const S向量2 &a, const S向量2 &b) {
 	v.m半尺寸.x = std::abs(a.x - b.x) / 2;
 	v.m半尺寸.y = std::abs(a.y - b.y) / 2;
 	return v;
+}
+S向量2 S矩形::fg点(float X, float Y) const {
+	S向量2 v顶点;
+	v顶点.x = X * m半尺寸.x;
+	v顶点.y = Y * m半尺寸.y;
+	return v顶点 + m坐标;
 }
 S向量2 S矩形::fg中心() const {
 	return m坐标;
@@ -383,6 +388,9 @@ S矩形 S矩形::f下边移(float y) const {
 //==============================================================================
 S旋转矩形::S旋转矩形(const S向量2 &a坐标, const S向量2 &a半尺寸, float a方向):
 	m坐标(a坐标), m半尺寸(a半尺寸), m方向(a方向) {
+}
+S旋转矩形::S旋转矩形(const S矩形 &a矩形, float a方向):
+	m坐标(a矩形.m坐标), m半尺寸(a矩形.m半尺寸), m方向(a方向) {
 }
 S旋转矩形 S旋转矩形::fc线段(const S向量2 &a点0, const S向量2 &a点1, float a宽) {
 	S旋转矩形 v;
@@ -450,11 +458,9 @@ S窗口矩形 S旋转矩形::f到窗口矩形(float x, float y) {
 // 窗口矩形
 //=============================================================================
 S窗口矩形::S窗口矩形() :S窗口矩形{0, 0, 0, 0} {}
-S窗口矩形::S窗口矩形(float p左, float p上, float p右, float p下) :
-	m左(p左),
-	m上(p上),
-	m右(p右),
-	m下(p下) {}
+S窗口矩形::S窗口矩形(float a左, float a上, float a右, float a下) :
+	m左(a左), m上(a上), m右(a右), m下(a下) {
+}
 S窗口矩形::S窗口矩形(const S向量2 &a1, const S向量2 &a2) {
 	if (a1.x < a2.x) {
 		m左 = a1.x;
@@ -471,8 +477,8 @@ S窗口矩形::S窗口矩形(const S向量2 &a1, const S向量2 &a2) {
 		m下 = a1.x;
 	}
 }
-S窗口矩形 S窗口矩形::fc坐标半尺寸(const S向量2 &a坐标, const S向量2 &p半尺寸) {
-	return{a坐标.x - p半尺寸.x, a坐标.y - p半尺寸.y, a坐标.x + p半尺寸.x, a坐标.y + p半尺寸.y};
+S窗口矩形 S窗口矩形::fc坐标半尺寸(const S向量2 &a坐标, const S向量2 &a半尺寸) {
+	return{a坐标.x - a半尺寸.x, a坐标.y - a半尺寸.y, a坐标.x + a半尺寸.x, a坐标.y + a半尺寸.y};
 }
 float S窗口矩形::fg宽() {
 	return m右 - m左;
@@ -486,25 +492,25 @@ S向量2 S窗口矩形::fg中心() {
 S向量2 S窗口矩形::fg半尺寸() {
 	return{fg宽() / 2, fg高() / 2};
 }
-S窗口矩形 S窗口矩形::f对齐左边(float p) {
-	return{p, m上, p + fg宽(), m下};
+S窗口矩形 S窗口矩形::f对齐左边(float a左) {
+	return{a左, m上, a左 + fg宽(), m下};
 }
-S窗口矩形 S窗口矩形::f对齐上边(float p) {
-	return{m左, p, m右, p + fg高()};
+S窗口矩形 S窗口矩形::f对齐上边(float a上) {
+	return{m左, a上, m右, a上 + fg高()};
 }
-S窗口矩形 S窗口矩形::f对齐右边(float p) {
-	return{p - fg宽(), m上, p, m下};
+S窗口矩形 S窗口矩形::f对齐右边(float a右) {
+	return{a右 - fg宽(), m上, a右, m下};
 }
-S窗口矩形 S窗口矩形::f对齐下边(float p) {
-	return{m左, p - fg高(), m右, p};
+S窗口矩形 S窗口矩形::f对齐下边(float a下) {
+	return{m左, a下 - fg高(), m右, a下};
 }
-S窗口矩形 S窗口矩形::f对齐中心(const S向量2 &p) {
+S窗口矩形 S窗口矩形::f对齐中心(const S向量2 &a中心) {
 	const float m半宽 = fg宽() / 2;
 	const float m半高 = fg高() / 2;
-	return{p.x - m半宽, p.y - m半高, p.x + m半宽, p.y + m半高};
+	return{a中心.x - m半宽, a中心.y - m半高, a中心.x + m半宽, a中心.y + m半高};
 }
-S窗口矩形 S窗口矩形::f移动(const S向量2 &p) {
-	return{m左 + p.x, m上 + p.y, m右 + p.x, m下 + p.y};
+S窗口矩形 S窗口矩形::f移动(const S向量2 &a移动) {
+	return{m左 + a移动.x, m上 + a移动.y, m右 + a移动.x, m下 + a移动.y};
 }
 S旋转矩形 S窗口矩形::f到直角矩形(float x, float y) {
 	S向量2 m中心 = fg中心();
@@ -845,7 +851,7 @@ S向量2 S旋转椭圆::f取点(float t) const {
 // 圆角矩形
 //=============================================================================
 S圆角矩形::S圆角矩形() : m坐标(), m半尺寸(), m角半径() {}
-S圆角矩形::S圆角矩形(const S向量2 &a坐标, const S向量2 &p半尺寸, const S向量2 &p角半径) : m坐标(a坐标), m半尺寸(p半尺寸), m角半径(p角半径) {}
+S圆角矩形::S圆角矩形(const S向量2 &a坐标, const S向量2 &a半尺寸, const S向量2 &p角半径) : m坐标(a坐标), m半尺寸(a半尺寸), m角半径(p角半径) {}
 
 
 }

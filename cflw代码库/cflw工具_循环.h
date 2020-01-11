@@ -157,10 +157,10 @@ public:
 	typedef decltype(std::declval<t容器>().begin()) t迭代器;
 	struct S引用 {
 		t指针 m前, m这, m后;
-		bool fw前() const {
+		bool fi前() const {
 			return m前 == m这;
 		}
-		bool fw后() const {
+		bool fi后() const {
 			return m后 == m这;
 		}
 	};

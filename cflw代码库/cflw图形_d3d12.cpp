@@ -40,7 +40,7 @@ HRESULT C三维::f初始化设备(HRESULT(C创建设备::*af取显卡)(IDXGIAdap
 	HRESULT hr = S_OK;
 	ComPtr<IDXGIAdapter3> v显卡;
 	if (af取显卡 == nullptr) {
-		af取显卡 = &C创建设备::f取显卡_首选;
+		af取显卡 = &C创建设备::f取显卡_性能;
 	}
 	hr = (v创建设备.*af取显卡)(&v显卡);
 	if (FAILED(hr)) {
@@ -254,6 +254,7 @@ HRESULT C三维::f创建图形管线(tp图形管线 &a, const D3D12_GRAPHICS_PIP
 	}
 	assert(a描述.PrimitiveTopologyType != D3D12_PRIMITIVE_TOPOLOGY_TYPE_UNDEFINED);
 	//创建
+	//注意：I卡可能会报错D3D12 ERROR: ID3D12Device::CreateVertexShader: Shader is corrupt or in an unrecognized format. [ STATE_CREATION ERROR #67: CREATEVERTEXSHADER_INVALIDSHADERBYTECODE]。换成其他显卡则正常。
 	HRESULT hr = m设备->CreateGraphicsPipelineState(&a描述, IID_PPV_ARGS(&a));
 	if (FAILED(hr)) {
 		return hr;
@@ -505,7 +506,11 @@ HRESULT C创建设备::f取软件适配器(IDXGIAdapter3 **a显卡) {
 	return m工厂->EnumWarpAdapter(IID_PPV_ARGS(a显卡));
 }
 HRESULT C创建设备::f创建设备(IDXGIAdapter3 *a显卡, ID3D12Device **a设备) {
-	HRESULT hr = D3D12CreateDevice(a显卡, c最低功能级别, IID_PPV_ARGS(a设备));
+	HRESULT hr = D3D12EnableExperimentalFeatures(1, &D3D12ExperimentalShaderModels, nullptr, nullptr);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	hr = D3D12CreateDevice(a显卡, c最低功能级别, IID_PPV_ARGS(a设备));
 	return hr;
 }
 //==============================================================================
@@ -675,14 +680,6 @@ const D3D12_CPU_DESCRIPTOR_HANDLE &C深度模板管理::fg当前视图() const {
 ID3D12Resource *C深度模板管理::fg当前资源() const {
 	return m深度模板[*m帧索引].Get();
 }
-
-//==============================================================================
-// 资源
-//==============================================================================
-void C常量缓冲::f复制(void *a数据, size_t a大小) {
-	assert(m映射);
-	memcpy(m映射, a数据, a大小);
-}
 //==============================================================================
 // 渲染状态
 //==============================================================================
@@ -839,7 +836,7 @@ void C根签名参数::f清空() {
 }
 C根签名参数 &C根签名参数::f添加描述符(E类型 a类型, UINT a寄存器, UINT a空间, E着色器 a可见性) {
 	f实现_添加索引(E根参数类型::e描述符);
-	D3D12_ROOT_PARAMETER v参数;
+	D3D12_ROOT_PARAMETER v参数 = {};
 	v参数.ParameterType = f计算根参数类型(a类型);
 	v参数.Descriptor.ShaderRegister = a寄存器;
 	v参数.Descriptor.RegisterSpace = a空间;
@@ -964,13 +961,25 @@ D3D12_DESCRIPTOR_RANGE_TYPE C根签名参数::f计算描述范围类型(E类型 
 //==============================================================================
 C自动映射::C自动映射(ID3D12Resource *a):
 	m资源(a) {
-	HRESULT hr = m资源->Map(0, nullptr, &m指针);
+	HRESULT hr = m资源->Map(0, nullptr, (void**)&m数据);
 	if (FAILED(hr)) {
 		throw;
 	}
 }
 C自动映射::~C自动映射() {
 	m资源->Unmap(0, nullptr);
+}
+void C自动映射::f映射并复制(ID3D12Resource *a资源, const void *a数据, size_t a大小) {
+	void *v数据;
+	HRESULT hr = a资源->Map(0, nullptr, &v数据);
+	if (FAILED(hr)) {
+		throw;
+	}
+	memcpy(v数据, a数据, a大小);
+	a资源->Unmap(0, nullptr);
+}
+void C自动映射::f复制(const void *a数据, size_t a大小) {
+	memcpy(m数据, a数据, a大小);
 }
 //==============================================================================
 // 资源工厂
@@ -997,13 +1006,7 @@ HRESULT C缓冲工厂::f创建上传资源(ComPtr<ID3D12Resource> &a, const void
 	}
 	a->SetName(L"上传");
 	if (a数据) {
-		void *vp;
-		hr = a->Map(0, nullptr, &vp);
-		if (FAILED(hr)) {
-			return hr;
-		}
-		memcpy(vp, a数据, a数据大小);
-		a->Unmap(0, nullptr);
+		C自动映射::f映射并复制(a.Get(), a数据, a数据大小);
 	}
 	return S_OK;
 }
@@ -1071,9 +1074,7 @@ HRESULT C缓冲工厂::f创建常量(tp常量 &a, const void *a数据, UINT a类
 	if (FAILED(hr)) {
 		return hr;
 	}
-	const D3D12_RANGE v范围{0, 0};
-	v->m资源->Map(0, &v范围, (void**)&v->m映射);
-	memcpy(v->m映射, a数据, a数据大小);
+	C自动映射::f映射并复制(v->m资源.Get(), a数据, a数据大小);
 	//结束
 	a = std::move(v);
 	return S_OK;

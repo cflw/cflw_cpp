@@ -392,11 +392,8 @@ public:
 	operator D3D12_GPU_VIRTUAL_ADDRESS() const {
 		return m资源->GetGPUVirtualAddress();
 	}
-	void f复制(void *数据, size_t a大小);
 	ComPtr<ID3D12Resource> m资源;
 	ComPtr<ID3D12DescriptorHeap> m描述符堆;
-	std::byte *m映射;
-	const UINT *m帧索引;
 };
 class C顶点缓冲 {
 public:
@@ -458,8 +455,10 @@ class C自动映射 {
 public:
 	C自动映射(ID3D12Resource*);
 	~C自动映射();
+	static void f映射并复制(ID3D12Resource *资源, const void *数据, size_t 大小);
+	void f复制(const void *数据, size_t 大小);
 	ComPtr<ID3D12Resource> m资源;
-	void *m指针;
+	std::byte *m数据 = nullptr;
 };
 //==============================================================================
 // 工厂
