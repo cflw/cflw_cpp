@@ -28,6 +28,6 @@ public:
 	ComPtr<IDxcLibrary> m库;
 };
 inline std::span<std::byte> fc跨度(const ComPtr<IDxcBlob> &a) {
-	return {(std::byte*)a->GetBufferPointer(), (std::span<std::byte>::index_type)a->GetBufferSize()};
+	return {(std::byte*)a->GetBufferPointer(), (std::span<std::byte>::size_type)a->GetBufferSize()};
 }
 }	//namespace cflw::图形::dx着色器

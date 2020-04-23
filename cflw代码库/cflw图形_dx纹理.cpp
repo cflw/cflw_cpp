@@ -25,10 +25,10 @@ HRESULT C图像工厂::f初始化() {
 	}
 	return S_OK;
 }
-HRESULT C图像工厂::f读取图像(const wchar_t *a文件, IWICBitmapFrameDecode **a帧) {
+HRESULT C图像工厂::f读取图像(const std::wstring_view &a文件, IWICBitmapFrameDecode **a帧) const {
 	HRESULT hr;
 	ComPtr<IWICBitmapDecoder> v解码器;
-	hr = m工厂->CreateDecoderFromFilename(a文件, 0, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &v解码器);
+	hr = m工厂->CreateDecoderFromFilename(a文件.data(), 0, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &v解码器);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -38,13 +38,13 @@ HRESULT C图像工厂::f读取图像(const wchar_t *a文件, IWICBitmapFrameDeco
 	}
 	return S_OK;
 }
-std::unique_ptr<std::byte[]> C图像工厂::f复制像素数据(IWICBitmapSource *a帧, size_t *ap像素大小, size_t *ap行距, size_t *ap图像大小) {
+std::unique_ptr<std::byte[]> C图像工厂::f复制像素数据(IWICBitmapSource *a帧, size_t *ap像素大小, size_t *ap行距, size_t *ap图像大小) const {
 	const WICBitmapPlaneDescription v描述 = f取图像描述(a帧);
 	const size_t v像素大小 = f像素大小(v描述.Format);
 	const size_t v一排大小 = v描述.Width * v像素大小;
 	const size_t v数据大小 = v一排大小 * v描述.Height;
 	std::unique_ptr<std::byte[]> v数据 = std::make_unique<std::byte[]>(v数据大小);
-	a帧->CopyPixels(0, v一排大小, v数据大小, (BYTE*)v数据.get());
+	a帧->CopyPixels(0, (UINT)v一排大小, (UINT)v数据大小, (BYTE*)v数据.get());
 	if (ap像素大小) {
 		*ap像素大小 = v像素大小;
 	}
@@ -56,13 +56,13 @@ std::unique_ptr<std::byte[]> C图像工厂::f复制像素数据(IWICBitmapSource
 	}
 	return v数据;
 }
-WICBitmapPlaneDescription C图像工厂::f取图像描述(IWICBitmapSource *a帧) {
+WICBitmapPlaneDescription C图像工厂::f取图像描述(IWICBitmapSource *a帧) const {
 	WICBitmapPlaneDescription v;
 	a帧->GetPixelFormat(&v.Format);
 	a帧->GetSize(&v.Width, &v.Height);
 	return v;
 }
-size_t C图像工厂::f像素大小(const GUID &guid) {
+size_t C图像工厂::f像素大小(const GUID &guid) const {
 	HRESULT hr;
 	ComPtr<IWICComponentInfo> v组件信息;
 	hr = m工厂->CreateComponentInfo(guid, &v组件信息);
@@ -83,7 +83,7 @@ size_t C图像工厂::f像素大小(const GUID &guid) {
 	v格式信息->GetBitsPerPixel(&bpp);
 	return bpp;
 }
-HRESULT C图像工厂::f图像尺寸变换(IWICBitmapSource *a帧, size_t a宽, size_t a高, IWICBitmapScaler **a输出) {
+HRESULT C图像工厂::f图像尺寸变换(IWICBitmapSource *a帧, size_t a宽, size_t a高, IWICBitmapScaler **a输出) const {
 	HRESULT hr;
 	ComPtr<IWICBitmapScaler> v缩放;
 	hr = m工厂->CreateBitmapScaler(&v缩放);
@@ -97,7 +97,7 @@ HRESULT C图像工厂::f图像尺寸变换(IWICBitmapSource *a帧, size_t a宽, 
 	*a输出 = v缩放.Detach();
 	return S_OK;
 }
-HRESULT C图像工厂::f图像格式变换(IWICBitmapSource *a图像, const GUID &a格式, IWICFormatConverter **a输出) {
+HRESULT C图像工厂::f图像格式变换(IWICBitmapSource *a图像, const GUID &a格式, IWICFormatConverter **a输出) const {
 	HRESULT hr;
 	ComPtr<IWICFormatConverter> v转换;
 	hr = m工厂->CreateFormatConverter(&v转换);
@@ -111,7 +111,7 @@ HRESULT C图像工厂::f图像格式变换(IWICBitmapSource *a图像, const GUID
 	*a输出 = v转换.Detach();
 	return S_OK;
 }
-ComPtr<IWICBitmapSource> C图像工厂::f高级读取(const wchar_t *a文件名, const std::function<GUID(const GUID &)> &af格式) {
+ComPtr<IWICBitmapSource> C图像工厂::f高级读取(const std::wstring_view &a文件名, const std::function<GUID(const GUID &)> &af格式) const {
 	ComPtr<IWICBitmapFrameDecode> v图像;
 	HRESULT hr = f读取图像(a文件名, &v图像);
 	if (FAILED(hr)) {
@@ -130,7 +130,7 @@ ComPtr<IWICBitmapSource> C图像工厂::f高级读取(const wchar_t *a文件名,
 	}
 	return v格式转换;
 }
-std::unique_ptr<C只读纹理> C图像工厂::fc纹理(IWICBitmapSource *a源) {
+std::unique_ptr<C只读纹理> C图像工厂::fc纹理(IWICBitmapSource *a源) const {
 	std::unique_ptr<C只读纹理> v纹理 = std::make_unique<C只读纹理>();
 	v纹理->mp数据 = f复制像素数据(a源, &v纹理->m像素大小, &v纹理->m行距, nullptr);
 	if (!v纹理->mp数据) {
@@ -142,7 +142,7 @@ std::unique_ptr<C只读纹理> C图像工厂::fc纹理(IWICBitmapSource *a源) {
 	v纹理->m格式 = 格式::f到dxgi(v描述.Format);
 	return v纹理;
 }
-std::unique_ptr<C只读纹理> C图像工厂::f一键读取(const wchar_t *a文件名) {
+std::unique_ptr<C只读纹理> C图像工厂::f一键读取(const std::wstring_view &a文件名) const {
 	auto v源 = f高级读取(a文件名, 格式::f到通用格式);
 	return fc纹理(v源.Get());
 }
@@ -413,8 +413,8 @@ const 数学::S颜色 &C自定义纹理::fg像素(size_t u, size_t v) const {
 	return mp像素[v * m宽 + u];
 }
 数学::S颜色 C自定义纹理::f线性采样(float u, float v) const {
-	const float v限制u = 数学::f求余(u, m宽);
-	const float v限制v = 数学::f求余(v, m高);
+	const float v限制u = 数学::f求余(u, (float)m宽);
+	const float v限制v = 数学::f求余(v, (float)m高);
 	const float v地板u = floor(u);
 	const float v地板v = floor(v);
 	const size_t u0 = (size_t)v地板u;

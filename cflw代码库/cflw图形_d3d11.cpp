@@ -232,7 +232,7 @@ HRESULT C三维::f创建域着色器(tp域着色器 &a, const std::span<const st
 	return m设备->CreateDomainShader(a代码.data(), a代码.size(), nullptr, &a);
 }
 HRESULT C三维::f创建输入布局(tp输入布局 &a, const std::span<const std::byte> &a代码, const C顶点格式 &a顶点格式) {
-	return m设备->CreateInputLayout(a顶点格式.m数组.data(), a顶点格式.m数组.size(), a代码.data(), a代码.size(), &a);
+	return m设备->CreateInputLayout(a顶点格式.m数组.data(), (UINT)a顶点格式.m数组.size(), a代码.data(), a代码.size(), &a);
 }
 HRESULT C三维::f创建图形管线(tp图形管线 &a, const S图形管线参数 &a参数) {
 	HRESULT hr;

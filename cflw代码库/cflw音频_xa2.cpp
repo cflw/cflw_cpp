@@ -58,7 +58,7 @@ HRESULT C音频::f创建声音(tp声音 &a声音, const std::wstring_view &a文�
 	v声音->m数据 = std::unique_ptr<std::byte>(v数据);
 	v声音->m大小 = v数据大小;
 	//填充缓冲
-	v声音->m缓冲.AudioBytes = v数据大小;
+	v声音->m缓冲.AudioBytes = (UINT32)v数据大小;
 	v声音->m缓冲.pAudioData = (BYTE*)v数据;
 	v声音->m缓冲.Flags = XAUDIO2_END_OF_STREAM;
 	v声音->m缓冲.LoopBegin = XAUDIO2_NO_LOOP_REGION;

@@ -1,4 +1,4 @@
-#include <assert.h>
+ï»¿#include <assert.h>
 #include <vector>
 #include <d2d1.h>
 #include <wrl.h>
@@ -13,18 +13,18 @@ void GetFirstControlPoints(
 	__in const std::vector<FLOAT>& rhs,
 	__out std::vector<FLOAT>& x) {
 	assert(rhs.size() == x.size());
-	int n = rhs.size();
+	size_t n = rhs.size();
 	std::vector<FLOAT> tmp(n);    // Temp workspace.  
 
 	FLOAT b = 2.0f;
 	x[0] = rhs[0] / b;
-	for (int i = 1; i < n; i++) // Decomposition and forward substitution.  
+	for (size_t i = 1; i < n; i++) // Decomposition and forward substitution.  
 	{
 		tmp[i] = 1 / b;
 		b = (i < n - 1 ? 4.0f : 3.5f) - tmp[i];
 		x[i] = (rhs[i] - x[i - 1]) / b;
 	}
-	for (int i = 1; i < n; i++) {
+	for (size_t i = 1; i < n; i++) {
 		x[n - i - 1] -= tmp[n - i] * x[n - i]; // Back substitution.  
 	}
 }
@@ -43,7 +43,7 @@ void GetCurveControlPoints(
 	assert((firstCtrlPt.size() == secondCtrlPt.size())
 		&& (knots.size() == firstCtrlPt.size() + 1));
 
-	int n = knots.size() - 1;
+	size_t n = knots.size() - 1;
 	assert(n >= 1);
 
 	if (n == 1) {
@@ -52,7 +52,7 @@ void GetCurveControlPoints(
 		firstCtrlPt[0].x = (2 * knots[0].x + knots[1].x) / 3.0f;
 		firstCtrlPt[0].y = (2 * knots[0].y + knots[1].y) / 3.0f;
 
-		// P2 = 2P1 ¨C P0  
+		// P2 = 2P1 ï¿½C P0  
 		secondCtrlPt[0].x = 2 * firstCtrlPt[0].x - knots[0].x;
 		secondCtrlPt[0].y = 2 * firstCtrlPt[0].y - knots[0].y;
 		return;
@@ -63,7 +63,7 @@ void GetCurveControlPoints(
 	std::vector<FLOAT> rhs(n);
 
 	// Set right hand side X values  
-	for (int i = 1; i < (n - 1); ++i) {
+	for (size_t i = 1; i < (n - 1); ++i) {
 		rhs[i] = 4 * knots[i].x + 2 * knots[i + 1].x;
 	}
 	rhs[0] = knots[0].x + 2 * knots[1].x;
@@ -73,7 +73,7 @@ void GetCurveControlPoints(
 	GetFirstControlPoints(rhs, x);
 
 	// Set right hand side Y values  
-	for (int i = 1; i < (n - 1); ++i) {
+	for (size_t i = 1; i < (n - 1); ++i) {
 		rhs[i] = 4 * knots[i].y + 2 * knots[i + 1].y;
 	}
 	rhs[0] = knots[0].y + 2 * knots[1].y;
@@ -83,7 +83,7 @@ void GetCurveControlPoints(
 	GetFirstControlPoints(rhs, y);
 
 	// Fill output arrays.  
-	for (int i = 0; i < n; ++i) {
+	for (size_t i = 0; i < n; ++i) {
 		// First control point  
 		firstCtrlPt[i] = D2D1::Point2F(x[i], y[i]);
 		// Second control point  
@@ -103,7 +103,7 @@ HRESULT CreateBezierSpline(
 	assert(ppPathGeometry != nullptr);
 	assert(points.size()>1);
 
-	int n = points.size();
+	size_t n = points.size();
 	std::vector<D2D1_POINT_2F> firstCtrlPt(n - 1);
 	std::vector<D2D1_POINT_2F> secondCtrlPt(n - 1);
 	GetCurveControlPoints(points, firstCtrlPt, secondCtrlPt);
@@ -119,7 +119,7 @@ HRESULT CreateBezierSpline(
 	if (SUCCEEDED(hr)) {
 		spSink->SetFillMode(D2D1_FILL_MODE_WINDING);
 		spSink->BeginFigure(points[0], D2D1_FIGURE_BEGIN_FILLED);
-		for (int i = 1; i<n; i++)
+		for (size_t i = 1; i<n; i++)
 			spSink->AddBezier(D2D1::BezierSegment(firstCtrlPt[i - 1], secondCtrlPt[i - 1], points[i]));
 		spSink->EndFigure(D2D1_FIGURE_END_OPEN);
 		spSink->Close();

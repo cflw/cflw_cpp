@@ -97,9 +97,17 @@ bool f向量线段相交判定(const S向量2 &a点, const S线段2 &a线) {
 bool f向量圆形相交判定(const S向量2 &a向量, const S圆形 &a圆形) {
 	return (a向量 - a圆形.m坐标).fg大小() <= a圆形.m半径;
 }
+bool f向量矩形相交判定(const S向量2 &a向量, const S矩形 &a矩形) {
+	const S向量2 v相对坐标 = a向量 - a矩形.m坐标;
+	const bool x = abs(v相对坐标.x) <= a矩形.m半尺寸.x;
+	const bool y = abs(v相对坐标.y) <= a矩形.m半尺寸.y;
+	return x && y;
+}
 bool f向量旋转矩形相交判定(const S向量2 &a向量, const S旋转矩形 &a矩形) {
-	const S向量2 v = (a向量 - a矩形.m坐标).f旋转r(-a矩形.m方向);
-	return (abs(v.x) <= a矩形.m半尺寸.x && abs(v.y) <= a矩形.m半尺寸.y);
+	const S向量2 v相对坐标 = (a向量 - a矩形.m坐标).f旋转r(-a矩形.m方向);
+	const bool x = abs(v相对坐标.x) <= a矩形.m半尺寸.x;
+	const bool y = abs(v相对坐标.y) <= a矩形.m半尺寸.y;
+	return x && y;
 }
 bool f圆形相交判定(const S圆形 &a圆形1, const S圆形 &a圆形2) {
 	return f圆形相交判定(a圆形1.m坐标, a圆形1.m半径, a圆形2.m坐标, a圆形2.m半径);
@@ -273,25 +281,25 @@ S向量2 S圆形::fg点r(const float &r) const {
 S向量2 S圆形::fg点d(const float &d) const {
 	return fg点r(d * c度到弧度<float>);
 }
-S向量2 S圆形::f离边最近点(const S圆形 &p圆) const {
-	const float m方向1 = m坐标.f到点方向r(p圆.m坐标);
+S向量2 S圆形::f离边最近点(const S圆形 &a圆) const {
+	const float m方向1 = m坐标.f到点方向r(a圆.m坐标);
 	const S向量2 m点1 = fg点r(m方向1);
-	const float m方向2 = p圆.m坐标.f到点方向r(m坐标);
-	const S向量2 m点2 = p圆.fg点r(m方向2);
+	const float m方向2 = a圆.m坐标.f到点方向r(m坐标);
+	const S向量2 m点2 = a圆.fg点r(m方向2);
 	return S向量2((m点1.x + m点2.x) / 2, (m点1.y + m点2.y) / 2);
 }
-bool S圆形::f包含判定(const S向量2 &p) const {
+bool S圆形::fi包含点(const S向量2 &p) const {
 	return f向量圆形相交判定(p, *this);
 }
 float S圆形::f中线切线夹角r(const S向量2 &a点) const {
-	if (f包含判定(a点)) {
+	if (fi包含点(a点)) {
 		return 0;	//点不能在圆内
 	}
 	const float m中线 = m坐标.f到点距离(a点);
 	return asin(m半径 / m中线);
 }
 float S圆形::f垂直于中线到切线距离(const S向量2 &a点) const {
-	if (f包含判定(a点)) {
+	if (fi包含点(a点)) {
 		return m半径;	//点不能在圆内
 	}
 	const float m中线 = m坐标.f到点距离(a点);
@@ -383,6 +391,9 @@ S矩形 S矩形::f下边移(float y) const {
 	const float v半尺寸y = m半尺寸.y - y * 0.5f;
 	return S矩形::fc坐标半尺寸({m坐标.x, v坐标y}, {m半尺寸.x, v半尺寸y});
 }
+bool S矩形::fi包含点(const S向量2 &a点) const {
+	return f向量矩形相交判定(a点, *this);
+}
 //==============================================================================
 // 旋转矩形
 //==============================================================================
@@ -433,7 +444,7 @@ float S旋转矩形::fg短半轴长() const {
 S向量2 S旋转矩形::fg全尺寸() const {
 	return m半尺寸 * 2;
 }
-bool S旋转矩形::f包含判定(const S向量2 &p) const {
+bool S旋转矩形::fi包含点(const S向量2 &p) const {
 	return f向量旋转矩形相交判定(p, *this);
 }
 S向量2 S旋转矩形::fg点(float X, float Y) const {

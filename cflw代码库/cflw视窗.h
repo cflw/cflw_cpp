@@ -48,16 +48,16 @@ enum class E通用权限: unsigned long {	//行:6510-6513
 // winbase.h
 //==============================================================================
 inline void *f内存移动(void *a目标, void *a源, size_t a大小) {
-	return MoveMemory(a目标, a源, a大小);
+	return memmove(a目标, a源, a大小);
 };	//行:103
 inline void *f内存复制(void *a目标, void *a源, size_t a大小) {
-	return CopyMemory(a目标, a源, a大小);
+	return memcpy(a目标, a源, a大小);
 };	//行:104
 inline void *f内存填充(void *a目标, int a值, size_t a大小) {
-	return FillMemory(a目标, a值, a大小);
+	return memset(a目标, a值, a大小);
 };	//行:105
 inline void *f内存清空(void *a目标, size_t a大小) {
-	return ZeroMemory(a目标, a大小);
+	return memset(a目标, 0, a大小);
 };	//行:106
 inline DWORD f设置文件指针(HANDLE a文件, LONG a移动距离, PLONG a移动高度距离, DWORD a移动方式) {
 	return SetFilePointer(a文件, a移动距离, a移动高度距离, a移动方式);
@@ -251,7 +251,7 @@ private:
 //==============================================================================
 class C环境 {
 public:
-	static SYSTEM_INFO &fg系统信息();
+	static SYSTEM_INFO fg系统信息();
 	static std::wstring fg计算机名称();
 	static std::wstring fg用户名称();
 	static std::wstring fg执行程序目录();

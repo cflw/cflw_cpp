@@ -173,10 +173,10 @@ ComPtr<ID2D1SolidColorBrush> C二维::fc纯色画笔(const 数学::S颜色 &a颜
 	return v画笔;
 }
 ComPtr<ID2D1Bitmap> C二维::fc位图(const dx纹理::I纹理 &a纹理) {
-	const D2D1_SIZE_U v大小 = {a纹理.fg宽(), a纹理.fg宽()};
+	const D2D1_SIZE_U v大小 = {(UINT32)a纹理.fg宽(), (UINT32)a纹理.fg宽()};
 	const D2D1_BITMAP_PROPERTIES v属性 = {{a纹理.fg格式(), D2D1_ALPHA_MODE_STRAIGHT}, 96, 96};
 	ComPtr<ID2D1Bitmap> v位图;
-	HRESULT hr = m渲染目标->CreateBitmap(v大小, a纹理.fg数据(), a纹理.fg行距(), v属性, &v位图);
+	HRESULT hr = m渲染目标->CreateBitmap(v大小, a纹理.fg数据(), (UINT32)a纹理.fg行距(), v属性, &v位图);
 	return v位图;
 }
 ComPtr<ID2D1Bitmap> C二维::fc位图(const ComPtr<IWICBitmapSource> &a源) {
@@ -192,7 +192,7 @@ ComPtr<ID2D1BitmapBrush> C二维::fc位图画笔(const ComPtr<ID2D1Bitmap> &a位
 ComPtr<ID2D1GradientStopCollection> C二维::fc渐变点集(const std::vector<S渐变点> &a) const {
 	std::vector<D2D1_GRADIENT_STOP> va渐变点 = C类型转换::f渐变点(a);
 	ComPtr<ID2D1GradientStopCollection> v渐变点集;
-	m渲染目标->CreateGradientStopCollection(va渐变点.data(), va渐变点.size(), &v渐变点集);
+	m渲染目标->CreateGradientStopCollection(va渐变点.data(), (UINT32)va渐变点.size(), &v渐变点集);
 	return v渐变点集;
 }
 ComPtr<ID2D1LinearGradientBrush> C二维::fc线性渐变画笔(const std::vector<S渐变点> &a) const {
@@ -444,7 +444,7 @@ void C画文本::fs区域(const 数学::S矩形 &a) {
 	m矩形 = m坐标计算->f矩形_中心半径(a.m坐标, a.m半尺寸);
 }
 void C画文本::f绘制文本(const std::wstring_view &a文本) const {
-	m渲染目标->DrawTextW(a文本.data(), a文本.size(), m格式.Get(), m矩形, m画笔.Get());
+	m渲染目标->DrawTextW(a文本.data(), (UINT32)a文本.size(), m格式.Get(), m矩形, m画笔.Get());
 }
 void C画文本::f绘制文本布局(IDWriteTextLayout *a布局) const {
 	m渲染目标->DrawTextLayout({m矩形.left, m矩形.top}, a布局, m画笔.Get());
@@ -471,9 +471,9 @@ D2D1_COLOR_F C类型转换::f颜色(const 数学::S颜色 &a) {
 	return {a.r, a.g, a.b, a.a};
 }
 std::vector<D2D1_GRADIENT_STOP> C类型转换::f渐变点(const std::vector<S渐变点> &a) {
-	const int n = a.size();
+	const size_t n = a.size();
 	std::vector<D2D1_GRADIENT_STOP> v数组(n);
-	for (int i = 0; i != n; ++i) {
+	for (size_t i = 0; i != n; ++i) {
 		const S渐变点 &v0 = a[i];
 		D2D1_GRADIENT_STOP &v1 = v数组[i];
 		v1.position = v0.m位置;
@@ -594,8 +594,8 @@ void C修改路径几何::f连续直线(const std::vector<数学::S向量2> &a) 
 	} else {
 		m几何槽->AddLine(m坐标计算->f点(a[0]));
 	}
-	const int n = a.size();
-	for (int i = 1; i != n; ++i) {
+	const size_t n = a.size();
+	for (size_t i = 1; i != n; ++i) {
 		m几何槽->AddLine(m坐标计算->f点(a[i]));
 	}
 }
@@ -667,7 +667,7 @@ tp文本布局 C文本工厂::fc文本布局(const std::wstring_view &a文本, I
 		a格式 = C二维::g这->fg默认文本格式().Get();
 	}
 	ComPtr<IDWriteTextLayout> v布局;
-	HRESULT hr = m写字工厂->CreateTextLayout(a文本.data(), a文本.size(), a格式, 0, 0, &v布局);
+	HRESULT hr = m写字工厂->CreateTextLayout(a文本.data(), (UINT32)a文本.size(), a格式, 0, 0, &v布局);
 	return v布局;
 }
 tp文本布局 C文本工厂::fc文本布局(const std::wstring_view &a文本, const S文本格式参数 &a格式) const {

@@ -48,8 +48,9 @@ template<typename t> t C位置计算<t>::f上到下(const t &a位置, const t &a
 template<typename t> S有限值<t>::S有限值() :m当前((t)-1), m最大((t)-1) {}
 template<typename t> S有限值<t>::S有限值(const t &_) : m当前(_), m最大(_) {}
 template<typename t> void S有限值<t>::f检查() {
-	if (m当前 > m最大)
+	if (m当前 > m最大) {
 		m当前 = m最大;
+	}
 }
 template<typename t> void S有限值<t>::f重置(const t &_) {
 	m当前 = _;
@@ -64,7 +65,7 @@ template<typename t> typename S有限值<t>::t小数 S有限值<t>::fg百分比(
 //==============================================================================
 // 范围
 //==============================================================================
-template<typename t> S范围<t>::S范围() : m小(), m大() {
+template<typename t> S范围<t>::S范围() : m小(0), m大(1) {
 }
 template<typename t> S范围<t>::S范围(const t &a小, const t &a大) : m小(a小), m大(a大) {
 }
@@ -132,6 +133,9 @@ template<typename t> bool S范围<t>::fi相交(const S范围 &a范围) const {
 	const t v中心 = a范围.fg中心() - fg中心();
 	return v中心 <= a范围.fg半径() + fg半径();
 }
+template<typename t> bool S范围<t>::fi零() const {
+	return m小 == m大;
+}
 template<typename t> S范围<t> S范围<t>::f合并(const S范围 &a范围) const {
 	return{std::min<t>(m小, a范围.m小), std::max<t>(m大, a范围.m大)};
 }
@@ -145,6 +149,7 @@ template<typename t> C范围变换计算<t>::C范围变换计算(const S范围<t
 	m前(a前), m后(a后) {
 }
 template<typename t>  t C范围变换计算<t>::f变换计算(const S范围<t> &a前, const S范围<t> &a后, const t &a值) {
+	assert(!a前.fi零());	//不能是0,不然会出现除以0异常
 	return (a值 - a前.m小) / a前.fg直径() * a后.fg直径() + a后.m小;
 }
 template<typename t> t C范围变换计算<t>::operator ()(const t &a) const {

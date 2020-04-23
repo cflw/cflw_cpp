@@ -27,7 +27,7 @@ struct S圆形 {
 	S向量2 fg点r(const float &方向) const;
 	S向量2 fg点d(const float &方向) const;
 	S向量2 f离边最近点(const S圆形 &) const;
-	bool f包含判定(const S向量2 &) const;
+	bool fi包含点(const S向量2 &) const;
 	float f中线切线夹角r(const S向量2 &) const;	//中线=过圆心与一点的直线
 	float f垂直于中线到切线距离(const S向量2 &) const;	//切线=过圆外一点切圆的直线
 };
@@ -55,6 +55,7 @@ struct S矩形 {
 	S矩形 f右边移(float) const;
 	S矩形 f上边移(float) const;
 	S矩形 f下边移(float) const;
+	bool fi包含点(const S向量2 &) const;
 };
 struct S旋转矩形 {
 	S向量2 m坐标 = S向量2::c零;
@@ -75,7 +76,7 @@ struct S旋转矩形 {
 	float fg短半轴长() const;
 	S向量2 fg全尺寸() const;
 	bool f遍历顶点(std::function<bool(const S向量2 &)>) const;
-	bool f包含判定(const S向量2 &) const;
+	bool fi包含点(const S向量2 &) const;
 	S窗口矩形 f到窗口矩形(float, float);
 };
 struct S窗口矩形 {
@@ -215,6 +216,7 @@ bool f圆形旋转矩形相交判定(const S向量2 &, float, const S向量2 &, 
 bool f向量重叠判定(float *, float *, int);
 bool f向量线段相交判定(const S向量2 &, const S线段2 &);
 bool f向量圆形相交判定(const S向量2 &, const S圆形 &);
+bool f向量矩形相交判定(const S向量2 &, const S矩形 &);
 bool f向量旋转矩形相交判定(const S向量2 &, const S旋转矩形 &);
 bool f圆形相交判定(const S圆形 &, const S圆形 &);
 bool f圆形旋转矩形相交判定(const S圆形 &, const S旋转矩形 &);

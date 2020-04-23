@@ -28,6 +28,6 @@ public:
 	std::string m顶点着色模型, m像素着色模型, m几何着色模型, m外壳着色模型, m域着色模型, m计算着色模型;
 };
 inline std::span<std::byte> fc跨度(const ComPtr<ID3DBlob> &a) {
-	return {(std::byte*)a->GetBufferPointer(), (std::span<std::byte>::index_type)a->GetBufferSize()};
+	return {(std::byte*)a->GetBufferPointer(), (std::span<std::byte>::size_type)a->GetBufferSize()};
 }
 }	//namespace cflw::图形::d3d着色器

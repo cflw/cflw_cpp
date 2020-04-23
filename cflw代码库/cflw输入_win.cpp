@@ -100,24 +100,24 @@ void C输入::f窗口消息(UINT a消息, WPARAM w, LPARAM l) {
 		switch (a消息) {
 		case WM_KEYDOWN:
 		case WM_SYSKEYDOWN:
-			m键盘->m缓冲.f按下(w);
+			m键盘->m缓冲.f按下((t索引)w);
 			//区分左右键
 			for (const auto &v : ca对应左右键) {
 				if (std::get<0>(v) == w) {
 					const int &v左 = std::get<1>(v);
 					const int &v右 = std::get<2>(v);
 					if (GetKeyState(v左) & 0x8000) {
-						m键盘->m缓冲.f按下(v左);
+						m键盘->m缓冲.f按下((t索引)v左);
 					} 
 					if (GetKeyState(v右) & 0x8000) {
-						m键盘->m缓冲.f按下(v右);
+						m键盘->m缓冲.f按下((t索引)v右);
 					}
 				}
 			}
 			break;
 		case WM_KEYUP:
 		case WM_SYSKEYUP:
-			m键盘->m缓冲.f松开(w);
+			m键盘->m缓冲.f松开((t索引)w);
 			//区分左右键
 			for (const auto &v : ca对应左右键) {
 				if (std::get<0>(v) == w) {
@@ -141,22 +141,22 @@ void C输入::f窗口消息(UINT a消息, WPARAM w, LPARAM l) {
 	if (m鼠标) {
 		switch (a消息) {
 		case WM_LBUTTONDOWN:
-			m鼠标->m缓冲.f按下((int)E鼠标按键::e左键);
+			m鼠标->m缓冲.f按下((t索引)E鼠标按键::e左键);
 			break;
 		case WM_RBUTTONDOWN:
-			m鼠标->m缓冲.f按下((int)E鼠标按键::e右键);
+			m鼠标->m缓冲.f按下((t索引)E鼠标按键::e右键);
 			break;
 		case WM_MBUTTONDOWN:
-			m鼠标->m缓冲.f按下((int)E鼠标按键::e中键);
+			m鼠标->m缓冲.f按下((t索引)E鼠标按键::e中键);
 			break;
 		case WM_LBUTTONUP:
-			m鼠标->m缓冲.f松开((int)E鼠标按键::e左键);
+			m鼠标->m缓冲.f松开((t索引)E鼠标按键::e左键);
 			break;
 		case WM_RBUTTONUP:
-			m鼠标->m缓冲.f松开((int)E鼠标按键::e右键);
+			m鼠标->m缓冲.f松开((t索引)E鼠标按键::e右键);
 			break;
 		case WM_MBUTTONUP:
-			m鼠标->m缓冲.f松开((int)E鼠标按键::e中键);
+			m鼠标->m缓冲.f松开((t索引)E鼠标按键::e中键);
 			break;
 		case WM_MOUSEWHEEL:
 			m鼠标->m滚轮.m这次[0] = GET_WHEEL_DELTA_WPARAM(w) / 120.f;
@@ -256,8 +256,8 @@ void C鼠标::f更新() {
 	POINT v点;
 	GetCursorPos(&v点);
 	视窗::C屏幕坐标到客户区坐标计算 v计算(m窗口);
-	m坐标.m这次[0] = v计算.f直角坐标xf(v点.x) / m缩放;
-	m坐标.m这次[1] = v计算.f直角坐标yf(v点.y) / m缩放;
+	m坐标.m这次[0] = v计算.f直角坐标xf((float)v点.x) / m缩放;
+	m坐标.m这次[1] = v计算.f直角坐标yf((float)v点.y) / m缩放;
 	//滚轮
 	m滚轮.f覆盖上次();
 	m滚轮.f清空这次();

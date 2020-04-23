@@ -5,13 +5,13 @@
 namespace cflw::数学 {
 class C转换因子表 {
 public:
-	C转换因子表(const std::initializer_list<double> &p列表) :
-		v大小{p列表.size()},
-		v数据{new double[v大小 * v大小]} {
-		int i = 0;
-		for (const double &x : p列表) {
-			int j = 0;
-			for (const double &y : p列表) {
+	C转换因子表(const std::initializer_list<double> &a列表) :
+		v大小(a列表.size()),
+		v数据(new double[v大小 * v大小]) {
+		size_t i = 0;
+		for (const double &x : a列表) {
+			size_t j = 0;
+			for (const double &y : a列表) {
 				v数据[i + j] = y / x;
 				++j;
 			}
@@ -26,15 +26,15 @@ public:
 	template<typename t>
 	double operator()(const t &x, const t &y) const {
 		static_assert(std::is_enum<t>::value, "必需是枚举类型");
-		const int vx = static_cast<int>(x);
+		const size_t vx = static_cast<size_t>(x);
 		assert(vx < v大小);
-		const int vy = static_cast<int>(y);
+		const size_t vy = static_cast<size_t>(y);
 		assert(vy < v大小);
 		return v数据[vx * v大小 + vy];
 	}
 	template<typename t单位, typename t数值 = double>
-	t数值 operator()(const t单位 &x, const t单位 &y, const t数值 &p数值) const {
-		return static_cast<t数值>(operator()(x, y)) * p数值;
+	t数值 operator()(const t单位 &x, const t单位 &y, const t数值 &a数值) const {
+		return static_cast<t数值>(operator()(x, y)) * a数值;
 	}
 private:
 	size_t v大小 = 0;

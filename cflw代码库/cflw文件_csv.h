@@ -33,7 +33,7 @@ public:
 	void fs标题行(bool);	//如果有,fe行()不会出现标题行
 private:
 	bool m标题行 = false;
-	int m第二行开始位置 = 0;
+	size_t m第二行开始位置 = 0;
 	std::wifstream m文件;
 };
 //=============================================================================
@@ -41,7 +41,7 @@ private:
 //=============================================================================
 class C写 {
 public:
-	void f打开(const std::wstring &, int p模式 = std::ios::out);
+	void f打开(const std::wstring &, int 模式 = std::ios::out);
 	void fs列数(int);
 	template<typename t> C写 &operator <<(const t &);
 private:

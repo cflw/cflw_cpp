@@ -82,7 +82,7 @@ double C计帧器::f计算() {
 	const t时间点 v这次时间 = fg现在();
 	const double v这次间隔 = f间隔(m时间.back(), v这次时间).count();
 	const int v保留数量 = (int)(c取数范围 / v这次间隔);
-	const int v删除数量 = m时间.size() - v保留数量 - 1;
+	const int v删除数量 = (int)m时间.size() - v保留数量 - 1;
 	if (v删除数量 <= 0) {
 		++m删除计数;
 		if (m删除计数 >= 2) {

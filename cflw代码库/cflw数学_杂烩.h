@@ -55,6 +55,7 @@ template<typename t> struct S范围 {
 	S范围 &fs合并(const S范围 &);
 	bool fi范围内(const t &) const;
 	bool fi相交(const S范围 &) const;
+	bool fi零() const;	//小==大,范围为0
 	S范围 f合并(const S范围 &) const;
 };
 //范围变换计算
