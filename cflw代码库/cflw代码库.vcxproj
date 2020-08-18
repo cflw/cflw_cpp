@@ -202,6 +202,7 @@
     <ClInclude Include="cflw文件_obj模型.h" />
     <ClInclude Include="cflw时间.h" />
     <ClInclude Include="cflw工具_运算.h" />
+    <ClInclude Include="cflw物理_二维.h" />
     <ClInclude Include="cflw视窗.h" />
     <ClInclude Include="cflw辅助.h" />
     <ClInclude Include="cflw工具_循环.h" />
@@ -241,6 +242,7 @@
     <ClCompile Include="cflw文件_json.cpp" />
     <ClCompile Include="cflw文件_obj模型.cpp" />
     <ClCompile Include="cflw时间.cpp" />
+    <ClCompile Include="cflw物理_二维.cpp" />
     <ClCompile Include="cflw视窗.cpp" />
     <ClCompile Include="cflw辅助.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

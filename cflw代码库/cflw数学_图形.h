@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <functional>
 #include "cflw数学.h"
 #include "cflw数学_向量.h"
 namespace cflw::数学 {
@@ -17,6 +18,15 @@ struct S四元数;
 struct S欧拉角;
 template<> S颜色 f插值<S颜色>(const S颜色 &起始值, const S颜色 &终止值, float 中间值);
 template<> S四元数 f插值<S四元数>(const S四元数 &, const S四元数 &, float);
+constexpr float f单色校正(float a值) {
+	if (a值 >= 1) {
+		return 1;
+	} else if (a值 <= 0) {
+		return 0;
+	} else {
+		return a值;
+	}
+}
 //=============================================================================
 // 颜色
 //=============================================================================
@@ -40,28 +50,49 @@ struct S颜色 {
 		e提取绿,
 		e提取红
 	};
-	union {
-		struct {
-			float r, g, b, a;
-		};
-		float m值[4];
-	};
+	//分量
+	float r = 0, g = 0, b = 0, a = 0;
 	//常量
 	static const S颜色 c白, c黑, c灰, c红, c橙, c黄, c绿, c青, c蓝, c紫, c粉;
 	//构造函数
-	S颜色();
-	S颜色(E颜色值);
-	S颜色(float 红, float 绿, float 蓝, float 阿尔法 = 1);
+	constexpr S颜色() = default;
+	constexpr S颜色(E颜色值 a颜色) : 
+		r(f颜色值提取_红(a颜色)), g(f颜色值提取_绿(a颜色)), b(f颜色值提取_蓝(a颜色)), a(f颜色值提取_阿(a颜色)) {
+	}
+	constexpr S颜色(float R, float G, float B, float A = 1): 
+		r(R), g(G), b(B), a(A) {
+	}
 	operator unsigned long();
 	static S颜色 fc彩虹(float, float A = 1, float 亮度 = 1, float 饱和度 = 1);	//0~6:红橙黄绿青蓝紫,循环
 	static S颜色 fc三基色(float, float A = 1, float 亮度 = 1, float 饱和度 = 1);	//0~2:红绿蓝,循环
 	static S颜色 fc黑白(float, float A = 1);
-	static constexpr float f颜色值提取(E颜色值, E颜色值提取);
-	static constexpr float f颜色值提取_红(E颜色值);
-	static constexpr float f颜色值提取_绿(E颜色值);
-	static constexpr float f颜色值提取_蓝(E颜色值);
-	static constexpr float f颜色值提取_阿(E颜色值);
-	void f颜色校正();
+	static constexpr float f颜色值提取(E颜色值 a值, E颜色值提取 a提取) {
+		return static_cast<float>((static_cast<unsigned int>(a值) >> (static_cast<unsigned int>(a提取) * 8)) % 0x100) / 255.f;
+	}
+	static constexpr float f颜色值提取_红(E颜色值 a颜色) {
+		return f颜色值提取(a颜色, e提取红);
+	}
+	static constexpr float f颜色值提取_绿(E颜色值 a颜色) {
+		return f颜色值提取(a颜色, e提取绿);
+	}
+	static constexpr float f颜色值提取_蓝(E颜色值 a颜色) {
+		return f颜色值提取(a颜色, e提取蓝);
+	}
+	static constexpr float f颜色值提取_阿(E颜色值 a颜色) {
+		return f颜色值提取(a颜色, e提取阿);
+	}
+	//属性
+	float *fg数据();
+	const float *fg数据() const;
+	//通用计算
+	S颜色 f颜色分量变换(const std::function<float(float)> &) const;
+	S颜色 f颜色分量变换2(const S颜色 &, const std::function<float(float, float)> &) const;
+	S颜色 f全分量变换(const std::function<float(float)> &) const;
+	S颜色 f全分量变换2(const S颜色 &, const std::function<float(float, float)> &) const;
+	S颜色 f混合变换2(const S颜色 &, const std::function<float(float, float)> &, const std::function<float(float, float)> &) const;
+	S颜色 f混合变换a固定(const S颜色 &, const std::function<float(float, float)> &, float) const;
+	//具体计算
+	S颜色 f颜色校正() const;
 	S颜色 f对比度(const float &) const;
 	S颜色 f饱和度(const float &) const;
 	S颜色 f颜色分量乘(const float &) const;
@@ -76,6 +107,17 @@ struct S颜色 {
 	S颜色 f混合_最小(const S颜色 &) const;
 	S颜色_亮色浓 ft亮色浓() const;
 };
+constexpr inline S颜色 S颜色::c白{ 1, 1, 1, 1 };
+constexpr inline S颜色 S颜色::c黑{ 0, 0, 0, 1 };
+constexpr inline S颜色 S颜色::c红{ 1, 0, 0, 1 };
+constexpr inline S颜色 S颜色::c橙{ 1, 0.5f, 0, 1 };
+constexpr inline S颜色 S颜色::c黄{ 1, 1, 0, 1 };
+constexpr inline S颜色 S颜色::c绿{ 0, 1, 0, 1 };
+constexpr inline S颜色 S颜色::c青{ 0, 1, 1, 1 };
+constexpr inline S颜色 S颜色::c蓝{ 0, 0, 1, 1 };
+constexpr inline S颜色 S颜色::c紫{ 1, 0, 1, 1 };
+constexpr inline S颜色 S颜色::c粉{ 1, 0.5f, 0.5f, 1 };
+constexpr inline S颜色 S颜色::c灰{ 0.5f, 0.5f, 0.5f, 1 };
 //亮度,色度,浓度(yuv)
 struct S颜色_亮色浓 {
 	float y, u, v;

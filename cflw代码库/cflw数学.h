@@ -55,6 +55,7 @@ template<typename t> t f立方(const t &);
 template<typename t> t f对齐(const t &, const t &);//将x对齐到y的整数倍
 template<typename t> t f环绕(const t &, const t &最小, const t &最大);
 template<typename t> t f差(const t &, const t &);
+template<typename t> t f翻折(const t &, const t &);
 template<typename tk, typename tv> tv f插值2(const std::pair<tk, tv> &, const std::pair<tk, tv> &, const tk &);
 template<typename tk, typename tv> tv f插值2(const tk &, const tv &, const tk &, const tv &, const tk &);
 template<typename t> t f反勾股(const t &, const t &);	//已知斜边和一直角边求另一直角边
@@ -68,7 +69,6 @@ template<typename...t参数> auto f绝对值最大值(t参数 &&...);	//计算�
 //==============================================================================
 //特别角度
 float f求余(const float &x, const float &y);
-float f翻折(float, float);
 float f位置(float, float);
 //窗口坐标与直角坐标变换
 float f窗口坐标x(float, float 原始);

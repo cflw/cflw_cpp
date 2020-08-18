@@ -168,6 +168,7 @@ struct S图形管线参数 {
 };
 struct S深度模板参数 : public D3D11_DEPTH_STENCIL_DESC {
 	S深度模板参数();
+	S深度模板参数(const D3D11_DEPTH_STENCIL_DESC &);
 	void fs深度部分(const D3D11_DEPTH_STENCIL_DESC &);
 	void fs模板部分(const D3D11_DEPTH_STENCIL_DESC &);
 };

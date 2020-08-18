@@ -128,6 +128,9 @@ template<typename t> t f差(const t &a, const t &b) {
 		return b - a;
 	}
 }
+template<typename t> t f翻折(const t &a, const t &b) {
+	return b * 2 - a;
+}
 template<typename tk, typename tv> tv f插值2(const std::pair<tk, tv> &a0, const std::pair<tk, tv> &a1, const tk &a键) {
 	const tk k = (a键 - a0.first) / (a1.first - a0.first);
 	return f插值<tv>(a0.second, a1.second, k);

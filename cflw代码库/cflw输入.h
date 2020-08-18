@@ -19,6 +19,7 @@ using tp鼠标 = std::shared_ptr<I鼠标>;
 using tp手柄 = std::shared_ptr<I手柄>;
 using tp触摸 = std::shared_ptr<I触摸>;
 using tp触控点 = std::shared_ptr<I触控点>;
+bool fi死区3(float x, float y, float z, float da);
 //==============================================================================
 // 输出的信息
 //==============================================================================
@@ -46,6 +47,7 @@ struct S方向 {
 	bool f下() const;
 	bool f前() const;
 	bool f后() const;
+	bool fi死区(float) const;
 	float x = 0, y = 0, z = 0;
 };
 //==============================================================================
@@ -87,20 +89,21 @@ public:
 	void f清空();
 	bool m立即 = false, m缓冲 = false;
 };
-class C缓冲方向2 {
+class C缓冲方向2 {	//可以记录坐标或方向的缓冲方向
 public:
 	C缓冲方向2();
 	S方向 f这次方向() const;
 	S方向 f上次方向() const;
 	S方向 f方向差() const;
-	void f覆盖上次();
-	void f清空这次();
+	void f覆盖上次() &;
+	void f清空这次() &;
 	float m这次[2], m上次[2];
 };
 class C方向3 {
 public:
 	C方向3();
 	S方向 f方向() const;
+	bool fi死区(float) const;
 	float m方向[3];
 };
 /*

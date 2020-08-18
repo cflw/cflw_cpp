@@ -15,7 +15,7 @@ template<typename t> ComPtr<IDXGISurface> f取表面(t *a) {
 template<typename t范围>
 HRESULT C二维::f初始化_多个位图(const t范围 &a范围, float a缩放) {
 	ma位图目标.clear();
-	const 数学::S向量2 dpi = fg每英寸点数(a缩放);
+	const 数学::S向量2 dpi = f计算每英寸点数(a缩放);
 	const D2D1_BITMAP_PROPERTIES1 v位图属性 = D2D1::BitmapProperties1(
 		D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
 		D2D1::PixelFormat(DXGI_FORMAT_UNKNOWN, D2D1_ALPHA_MODE_PREMULTIPLIED),

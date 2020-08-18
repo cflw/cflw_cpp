@@ -550,7 +550,7 @@ void C渲染控制::f结束() {
 	m命令列表->ResourceBarrier(1, &v栅栏);
 }
 void C渲染控制::f清屏() {
-	m命令列表->ClearRenderTargetView(m三维->m渲染目标管理->fg当前视图(), m清屏颜色.m值, 0, nullptr);
+	m命令列表->ClearRenderTargetView(m三维->m渲染目标管理->fg当前视图(), m清屏颜色.fg数据(), 0, nullptr);
 	constexpr D3D12_CLEAR_FLAGS c清除深度模板标志 = D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL;
 	m命令列表->ClearDepthStencilView(m三维->m深度模板管理->fg当前视图(), c清除深度模板标志, m清屏深度, m清屏模板, 0, nullptr);
 }
@@ -608,7 +608,8 @@ void C渲染控制::f更新资源(ID3D12Resource *a目标, ID3D12Resource *a源)
 }
 void C渲染控制::f更新纹理(ID3D12Resource *a目标, ID3D12Resource *a源, D3D12_SUBRESOURCE_DATA &a资源描述) {
 	UpdateSubresources(m命令列表.Get(), a目标, a源, 0, 0, 1, &a资源描述);
-	m命令列表->ResourceBarrier(1, &S资源栅栏::fc变换(a目标, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+	const S资源栅栏 v资源栅栏 = S资源栅栏::fc变换(a目标, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+	m命令列表->ResourceBarrier(1, &v资源栅栏);
 	ma更新资源.emplace_back(a源);
 }
 void C渲染控制::fs清屏颜色(const 数学::S颜色 &a) {
@@ -1121,7 +1122,8 @@ HRESULT C纹理工厂::f从内存创建纹理资源(tp资源 &a输出, const voi
 	v纹理描述.SampleDesc.Quality = 0;
 	v纹理描述.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
 	v纹理描述.Flags = D3D12_RESOURCE_FLAG_NONE;
-	HRESULT hr = m设备->CreateCommittedResource(&S堆属性::fc类型(D3D12_HEAP_TYPE_DEFAULT), D3D12_HEAP_FLAG_NONE, &v纹理描述, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS(&a输出));
+	const S堆属性 v堆属性 = S堆属性::fc类型(D3D12_HEAP_TYPE_DEFAULT);
+	HRESULT hr = m设备->CreateCommittedResource(&v堆属性, D3D12_HEAP_FLAG_NONE, &v纹理描述, D3D12_RESOURCE_STATE_COPY_DEST, nullptr, IID_PPV_ARGS(&a输出));
 	if (FAILED(hr)) {
 		return hr;
 	}

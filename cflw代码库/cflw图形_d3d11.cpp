@@ -507,7 +507,7 @@ HRESULT C创建设备::f创建软件设备(ID3D11Device **a设备, ID3D11DeviceC
 C渲染控制::C渲染控制() {
 }
 void C渲染控制::f清屏() {
-	m三维->m上下文->ClearRenderTargetView(m三维->m渲染目标视图.Get(), m清屏颜色.m值);
+	m三维->m上下文->ClearRenderTargetView(m三维->m渲染目标视图.Get(), m清屏颜色.fg数据());
 	if (m三维->m深度模板视图) {
 		m三维->m上下文->ClearDepthStencilView(m三维->m深度模板视图.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, m清屏深度, m清屏模板);
 	}
@@ -1062,6 +1062,9 @@ void S图形管线参数::fs深度模板(ID3D11DepthStencilState *a) {
 }
 S深度模板参数::S深度模板参数():
 	D3D11_DEPTH_STENCIL_DESC(c默认深度模板) {
+}
+S深度模板参数::S深度模板参数(const D3D11_DEPTH_STENCIL_DESC &a):
+	D3D11_DEPTH_STENCIL_DESC(a) {
 }
 void S深度模板参数::fs深度部分(const D3D11_DEPTH_STENCIL_DESC &a) {
 	DepthEnable = a.DepthEnable;

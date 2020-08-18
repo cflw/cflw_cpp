@@ -2,6 +2,7 @@
 #include "cflw数学_图形.h"
 #include "cflw数学_向量.h"
 #include "cflw数学_矩阵.h"
+#include "cflw工具_运算.h"
 namespace cflw::数学 {
 //==============================================================================
 // 函数
@@ -15,24 +16,6 @@ template<> S四元数 f插值(const S四元数 &q0, const S四元数 &q1, float 
 //==============================================================================
 // 颜色rgb
 //==============================================================================
-const S颜色 S颜色::c白{1, 1, 1, 1};
-const S颜色 S颜色::c黑{0, 0, 0, 1};
-const S颜色 S颜色::c红{1, 0, 0, 1};
-const S颜色 S颜色::c橙{1, 0.5f, 0, 1};
-const S颜色 S颜色::c黄{1, 1, 0, 1};
-const S颜色 S颜色::c绿{0, 1, 0, 1};
-const S颜色 S颜色::c青{0, 1, 1, 1};
-const S颜色 S颜色::c蓝{0, 0, 1, 1};
-const S颜色 S颜色::c紫{1, 0, 1, 1};
-const S颜色 S颜色::c粉{1, 0.5f, 0.5f, 1};
-const S颜色 S颜色::c灰{0.5f, 0.5f, 0.5f, 1};
-//构造函数
-S颜色::S颜色() : r(0), g(0), b(0), a(0) {
-}
-S颜色::S颜色(E颜色值 p): r(f颜色值提取_红(p)), g(f颜色值提取_绿(p)), b(f颜色值提取_蓝(p)), a(f颜色值提取_阿(p)) {
-}
-S颜色::S颜色(float R, float G, float B, float A) : r(R), g(G), b(B), a(A) {
-}
 S颜色::operator unsigned long() {
 	return (unsigned long)(a * 255) * 0x1000000 + (unsigned long)(r * 255) * 0x10000 + (unsigned long)(g * 255) * 0x100 + (unsigned long)(b * 255);
 }
@@ -101,112 +84,125 @@ S颜色 S颜色::fc三基色(float R, float A, float l, float s) {
 S颜色 S颜色::fc黑白(float W, float A) {
 	return S颜色(W, W, W, A);
 }
-constexpr float S颜色::f颜色值提取(E颜色值 p值, E颜色值提取 p提取) {
-	return static_cast<float>((static_cast<unsigned int>(p值) >> (static_cast<unsigned int>(p提取) * 8)) % 0x100) / 255.f;
+//属性
+float *S颜色::fg数据() {
+	return &r;
 }
-constexpr float S颜色::f颜色值提取_红(E颜色值 p) {
-	return f颜色值提取(p, e提取红);
+const float *S颜色::fg数据() const {
+	return &r;
 }
-constexpr float S颜色::f颜色值提取_绿(E颜色值 p) {
-	return f颜色值提取(p, e提取绿);
+//
+S颜色 S颜色::f颜色分量变换(const std::function<float(float)> &af变换) const {
+	const float R = af变换(r);
+	const float G = af变换(g);
+	const float B = af变换(b);
+	return S颜色(R, G, B, a);
 }
-constexpr float S颜色::f颜色值提取_蓝(E颜色值 p) {
-	return f颜色值提取(p, e提取蓝);
+S颜色 S颜色::f颜色分量变换2(const S颜色 &a颜色, const std::function<float(float, float)> &af变换) const {
+	const float R = af变换(r, a颜色.r);
+	const float G = af变换(g, a颜色.b);
+	const float B = af变换(b, a颜色.g);
+	return S颜色(R, G, B, a);
+
 }
-constexpr float S颜色::f颜色值提取_阿(E颜色值 p) {
-	return f颜色值提取(p, e提取阿);
+S颜色 S颜色::f全分量变换(const std::function<float(float)> &af变换) const {
+	const float R = af变换(r);
+	const float G = af变换(g);
+	const float B = af变换(b);
+	const float A = af变换(a);
+	return S颜色(R, G, B, A);
 }
-void S颜色::f颜色校正() {
-	for (int i = 0; i != 4; ++i) {
-		if (m值[i] > 1) m值[i] = 1;
-		if (m值[i] < 0) m值[i] = 0;
-	}
+S颜色 S颜色::f全分量变换2(const S颜色 &a颜色, const std::function<float(float, float)> &af变换) const {
+	const float R = af变换(r, a颜色.r);
+	const float G = af变换(g, a颜色.g);
+	const float B = af变换(b, a颜色.b);
+	const float A = af变换(a, a颜色.a);
+	return S颜色(R, G, B, A);
 }
-S颜色 S颜色::f对比度(const float &_) const {
-	S颜色 v = *this;
-	for (int i = 0; i != 4; ++i) {
-		v.m值[i] *= _;
-		if (v.m值[i] > 1) v.m值[i] = 1;
-		if (v.m值[i] < 0) v.m值[i] = 0;
-	}
-	return v;
+S颜色 S颜色::f混合变换2(const S颜色 &a颜色, const std::function<float(float, float)> &af颜色, const std::function<float(float, float)> &af阿尔法) const {
+	const float R = af颜色(r, a颜色.r);
+	const float G = af颜色(g, a颜色.g);
+	const float B = af颜色(b, a颜色.b);
+	const float A = af阿尔法(a, a颜色.a);
+	return S颜色(R, G, B, A);
+}
+S颜色 S颜色::f混合变换a固定(const S颜色 &a颜色, const std::function<float(float, float)> &af颜色, float a阿尔法) const {
+	const float R = af颜色(r, a颜色.r);
+	const float G = af颜色(g, a颜色.g);
+	const float B = af颜色(b, a颜色.b);
+	return S颜色(R, G, B, a阿尔法);
+}
+S颜色 S颜色::f颜色校正() const {
+	return f全分量变换(f单色校正);
+}
+S颜色 S颜色::f对比度(const float &a乘) const {
+	const auto f = [a乘](float a分量)->float {
+		return f单色校正(a分量 * a乘);
+	};
+	return f全分量变换(f);
 }
 S颜色 S颜色::f饱和度(const float &) const {
 	return *this;
 }
-S颜色 S颜色::f颜色分量乘(const float &p) const {
-	S颜色 v = *this;
-	for (int i = 0; i != 3; ++i) {
-		v.m值[i] *= p;
-	}
-	return v;
-}
-S颜色 S颜色::f透明度乘(const float &p) const {
-	S颜色 v = *this;
-	v.a *= p;
-	return v;
-}
-S颜色 S颜色::f全插值(const S颜色 &p颜色, const float &p插值) const {
-	return S颜色{
-		f插值<float>(r, p颜色.r, p插值),
-		f插值<float>(g, p颜色.g, p插值),
-		f插值<float>(b, p颜色.b, p插值),
-		f插值<float>(a, p颜色.a, p插值)
+S颜色 S颜色::f颜色分量乘(const float &a乘) const {
+	const auto f = [a乘](float a分量)->float {
+		return a分量 * a乘;
 	};
+	return f颜色分量变换(f);
 }
-S颜色 S颜色::f颜色分量插值(const S颜色 &p颜色, const float &p插值) const {
-	return S颜色{
-		f插值<float>(r, p颜色.r, p插值),
-		f插值<float>(g, p颜色.g, p插值),
-		f插值<float>(b, p颜色.b, p插值),
-		a
+S颜色 S颜色::f透明度乘(const float &a乘) const {
+	S颜色 v = *this;
+	v.a *= a乘;
+	return v;
+}
+S颜色 S颜色::f全插值(const S颜色 &a颜色, const float &a插值) const {
+	const auto f = [a插值](float a, float b)->float {
+		return f插值<float>(a, b, a插值);
 	};
+	return f全分量变换2(a颜色, f);
 }
-S颜色 S颜色::f混合_相加(const S颜色 &p) const {
-	S颜色 v = *this;
-	for (int i = 0; i != 4; ++i) {
-		v.m值[i] += p.m值[i];
-		if (v.m值[i] > 1) v.m值[i] = 1;
-		if (v.m值[i] < 0) v.m值[i] = 0;
-	}
-	return v;
+S颜色 S颜色::f颜色分量插值(const S颜色 &a颜色, const float &a插值) const {
+	const auto f = [a插值](float a, float b)->float {
+		return f插值<float>(a, b, a插值);
+	};
+	return f颜色分量变换2(a颜色, f);
 }
-S颜色 S颜色::f混合_相乘(const S颜色 &p) const {
-	S颜色 v = *this;
-	for (int i = 0; i != 4; ++i) {
-		v.m值[i] *= p.m值[i];
-		if (v.m值[i] > 1) v.m值[i] = 1;
-		if (v.m值[i] < 0) v.m值[i] = 0;
-	}
-	return v;
+S颜色 S颜色::f混合_相加(const S颜色 &a颜色) const {
+	const auto f = [](float a, float b)->float {
+		return f单色校正(a + b);
+	};
+	return f全分量变换2(a颜色, f);
 }
-S颜色 S颜色::f混合_叠加(const S颜色 &p) const {
-	S颜色 v;
-	v.r = this->r * this->a + p.r * (1 - this->a);
-	v.g = this->g * this->a + p.g * (1 - this->a);
-	v.b = this->b * this->a + p.b * (1 - this->a);
-	v.a = this->a;
-	return v;
+S颜色 S颜色::f混合_相乘(const S颜色 &a颜色) const {
+	const auto f = [](float a, float b)->float {
+		return f单色校正(a * b);
+	};
+	return f全分量变换2(a颜色, f);
 }
-S颜色 S颜色::f混合_叠底(const S颜色 &p) const {
-	S颜色 v;
-	v.r = this->r * (1 - p.a) + p.r * p.a;
-	v.g = this->g * (1 - p.a) + p.g * p.a;
-	v.b = this->b * (1 - p.a) + p.b * p.a;
-	v.a = p.a;
-	return v;
+S颜色 S颜色::f混合_叠加(const S颜色 &a颜色) const {
+	//正插值
+	return f全插值(a颜色, a颜色.a);
 }
-S颜色 S颜色::f混合_最大(const S颜色 &p) const {
-	S颜色 v;
-	for (int i = 0; i != 4; ++i)
-		v.m值[i] = std::max<float>(this->m值[i], p.m值[i]);
-	return v;
+S颜色 S颜色::f混合_叠底(const S颜色 &a颜色) const {
+	//反插值
+	const auto f = [v插值 = a颜色.a](float a, float b)->float {
+		return f插值<float>(b, a, v插值);
+	};
+	return f全分量变换2(a颜色, f);
 }
-S颜色 S颜色::f混合_最小(const S颜色 &p) const {
-	S颜色 v;
-	for (int i = 0; i != 4; ++i)
-		v.m值[i] = std::min<float>(this->m值[i], p.m值[i]);
-	return v;
+S颜色 S颜色::f混合_最大(const S颜色 &a颜色) const {
+	//最大值
+	const auto f = [](float a, float b)->float {
+		return std::max<float>(a, b);
+	};
+	return f全分量变换2(a颜色, f);
+}
+S颜色 S颜色::f混合_最小(const S颜色 &a颜色) const {
+	//最小值
+	const auto f = [](float a, float b)->float {
+		return std::min<float>(a, b);
+	};
+	return f全分量变换2(a颜色, f);
 }
 S颜色_亮色浓 S颜色::ft亮色浓() const {
 	S颜色_亮色浓 v;

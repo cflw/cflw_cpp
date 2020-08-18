@@ -242,11 +242,20 @@ std::wstring C环境::fg工作目录() {
 int C环境::fg处理器数量() {
 	return fg系统信息().dwNumberOfProcessors;
 }
-UINT C环境::fg每英寸点数() {
+UINT C环境::fg显示精度() {
 	return GetDpiForSystem();
 }
+UINT C环境::fg显示精度(HWND a窗口) {
+	return GetDpiForWindow(a窗口);
+}
 float C环境::fg缩放() {
-	return (float)fg每英寸点数() / 96.f;
+	return f显示精度到缩放(fg显示精度());
+}
+UINT C环境::f缩放到显示精度(float a缩放) {
+	return (UINT)(a缩放 * 96.f);
+}
+float C环境::f显示精度到缩放(UINT a显示精度) {
+	return (float)a显示精度 / 96.f;
 }
 //==============================================================================
 // 输入法

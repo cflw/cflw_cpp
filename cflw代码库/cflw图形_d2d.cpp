@@ -6,6 +6,9 @@
 //声明
 using Microsoft::WRL::ComPtr;
 namespace cflw::图形::d2d {
+数学::S向量2 f计算每英寸点数(float a缩放) {
+	return 数学::S向量2::fc相同(96 * a缩放);
+}
 //==============================================================================
 // 二维
 //==============================================================================
@@ -26,7 +29,7 @@ HRESULT C二维::f初始化(HWND a窗口, float a缩放) {
 	if (FAILED(hr)) {
 		return hr;
 	}
-	const 数学::S向量2 dpi = fg每英寸点数(a缩放);
+	const 数学::S向量2 dpi = f计算每英寸点数(a缩放);
 	const D2D1_RENDER_TARGET_PROPERTIES v渲染目标属性 = D2D1::RenderTargetProperties(
 		D2D1_RENDER_TARGET_TYPE_DEFAULT,
 		D2D1::PixelFormat(),
@@ -56,7 +59,7 @@ HRESULT C二维::f初始化(IDXGISwapChain *a交换链, float a缩放) {
 	if (FAILED(hr)) {
 		return hr;
 	}
-	const 数学::S向量2 dpi = fg每英寸点数(a缩放);
+	const 数学::S向量2 dpi = f计算每英寸点数(a缩放);
 	const D2D1_RENDER_TARGET_PROPERTIES v渲染目标属性 = D2D1::RenderTargetProperties(
 		D2D1_RENDER_TARGET_TYPE_DEFAULT,
 		D2D1::PixelFormat(DXGI_FORMAT_R8G8B8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED),
@@ -113,7 +116,7 @@ HRESULT C二维::f初始化_单个位图(IDXGISwapChain *a交换链, float a缩�
 	if (FAILED(hr)) {
 		return hr;
 	}
-	const 数学::S向量2 dpi = fg每英寸点数(a缩放);
+	const 数学::S向量2 dpi = f计算每英寸点数(a缩放);
 	const D2D1_BITMAP_PROPERTIES1 v位图属性 = D2D1::BitmapProperties1(
 		D2D1_BITMAP_OPTIONS_TARGET | D2D1_BITMAP_OPTIONS_CANNOT_DRAW,
 		D2D1::PixelFormat(DXGI_FORMAT_UNKNOWN, D2D1_ALPHA_MODE_PREMULTIPLIED),
@@ -270,15 +273,6 @@ ComPtr<IDWriteTextFormat> C二维::fg默认文本格式() {
 		m默认文本格式 = v文本工厂.fc文本格式(S文本格式参数());
 	}
 	return m默认文本格式;
-}
-数学::S向量2 C二维::fg每英寸点数(float a缩放) const {
-	数学::S向量2 dpi;
-	if (a缩放) {
-		dpi = 数学::S向量2::fc相同(96 * a缩放);
-	} else {
-		m二维工厂->GetDesktopDpi(&dpi.x, &dpi.y);
-	}
-	return dpi;
 }
 //==============================================================================
 // 渲染控制

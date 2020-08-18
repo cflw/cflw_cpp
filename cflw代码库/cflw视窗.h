@@ -258,8 +258,12 @@ public:
 	static std::wstring fg执行程序路径();
 	static std::wstring fg工作目录();
 	static int fg处理器数量();
-	static UINT fg每英寸点数();
+	//分辨率
+	static UINT fg显示精度();
+	static UINT fg显示精度(HWND);
 	static float fg缩放();
+	static UINT f缩放到显示精度(float);
+	static float f显示精度到缩放(UINT);
 };
 //==============================================================================
 // 输入法

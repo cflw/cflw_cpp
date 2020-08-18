@@ -82,6 +82,8 @@ enum class E文本垂直对齐 {
 	e下,
 	e中,
 };
+//函数
+数学::S向量2 f计算每英寸点数(float 缩放);
 //==============================================================================
 // 结构
 //==============================================================================
@@ -89,7 +91,6 @@ struct S渐变点 {
 	float m位置;	//m位置∈[0,1]
 	数学::S颜色 m颜色;
 };
-
 //==============================================================================
 // 二维引擎
 //==============================================================================
@@ -100,15 +101,15 @@ public:
 //函数
 	C二维();
 	~C二维();
-	HRESULT f初始化(HWND, float 缩放 = 0);	//废弃.注意:此函数不创建上下文
-	HRESULT f初始化(IDXGISwapChain*, float 缩放 = 0);	//废弃.注意:此函数不创建上下文
+	HRESULT f初始化(HWND, float 缩放);	//废弃.注意:此函数不创建上下文
+	HRESULT f初始化(IDXGISwapChain*, float 缩放);	//废弃.注意:此函数不创建上下文
 	HRESULT f初始化_工厂();
 	HRESULT f初始化_设备(IDXGIDevice *);
 	void f初始化_窗口大小(float x, float y);
 	void f初始化_渲染目标(ID2D1RenderTarget*);
-	HRESULT f初始化_单个位图(IDXGISwapChain *, float 缩放 = 0);
+	HRESULT f初始化_单个位图(IDXGISwapChain *, float 缩放);
 	//template<std::ranges::Range t范围> HRESULT f初始化_多个位图(const t范围 &, float 缩放 = 0);
-	template<typename t范围> HRESULT f初始化_多个位图(const t范围 &, float 缩放 = 0);
+	template<typename t范围> HRESULT f初始化_多个位图(const t范围 &, float 缩放);
 	void f销毁();
 	void fs缩放(float = 1);
 	//画图对象
@@ -135,7 +136,6 @@ public:
 	C渲染控制 &fg渲染控制();
 	ComPtr<ID2D1DeviceContext> fg上下文() const;
 private:
-	数学::S向量2 fg每英寸点数(float 缩放 = 0) const;
 	数学::S向量2 m窗口大小;
 	ComPtr<ID2D1Factory3> m二维工厂;
 	ComPtr<ID2D1Device1> m设备;

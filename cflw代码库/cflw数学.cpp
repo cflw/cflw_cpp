@@ -22,9 +22,6 @@ int f10的次方(const int &x) {
 float f求余(const float &x, const float &y) {
 	return sqrt(x * x + y * y);
 }
-float f翻折(float p点, float p翻折) {
-	return 2 * p翻折 - p点;
-}
 float f位置(float x, float y) {
 	return y - x;
 }

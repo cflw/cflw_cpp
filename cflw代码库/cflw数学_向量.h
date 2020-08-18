@@ -82,9 +82,9 @@ struct S向量2 {
 	S向量2 f线性渐变(const S向量2 &目标, const float &渐变值) const;
 	S向量2 &fs倍数渐变(const S向量2 &目标, const float &渐变值, const float &最小渐变 = 0, const float &最大渐变 = 999999999);
 	S向量2 f倍数渐变(const S向量2 &目标, const float &渐变值, const float &最小渐变 = 0, const float &最大渐变 = 999999999) const;
-	S向量2 f翻折(const S直线2 &) const;
-	S向量2 f翻折(const float &) const;
-	S向量2 f翻折(const S圆形 &) const;
+	S向量2 f翻折(const S直线2 &直线) const;
+	S向量2 f翻折(const float &方向) const;
+	S向量2 f翻折(const S圆形 &圆形) const;
 	S向量2 f对齐(const float &) const;
 	S向量2 f直角坐标(float, float) const;
 	S向量2 f窗口坐标(float, float) const;

@@ -266,31 +266,14 @@ S向量2 S向量2::f倍数渐变(const S向量2 &a, const float &a渐变, const 
 		v.fs大小(a最大);
 	return *this + v;
 }
-S向量2 S向量2::f翻折(const S直线2 &a直线方程) const {
-	assert(a直线方程.a != 0 || a直线方程.b != 0);
-	S向量2 v = *this;
-	if (a直线方程.a == 0) {//直线平行于y轴
-		const float d = -a直线方程.c / a直线方程.b;
-		v.x = 数学::f翻折(v.x, d);
-	} else if (a直线方程.b == 0) {//直线平行于x轴
-		const float d = -a直线方程.c / a直线方程.a;
-		v.y = 数学::f翻折(v.y, d);
-	} else {
-		const float v2d = a直线方程.f到点距离(*this);
-		const float m斜 = hypotf(a直线方程.a, a直线方程.b);
-		v.x = x - a直线方程.a / m斜 * v2d;
-		v.y = y - a直线方程.b / m斜 * v2d;
-	}
-	return v;
+S向量2 S向量2::f翻折(const S直线2 &a直线) const {
+	return f点关于直线翻折(*this, a直线);
 }
-S向量2 S向量2::f翻折(const float &a) const {
-	return S向量2::fc方向r(fg大小(), 数学::f翻折(fg方向r(), a));
+S向量2 S向量2::f翻折(const float &a方向) const {
+	return f点关于方向翻折(*this, a方向);
 }
-S向量2 S向量2::f翻折(const S圆形 &a) const {
-	const S向量2 m相对 = *this - a.m坐标;
-	const float m距离 = m相对.fg大小();
-	const float m方向 = m相对.fg方向r();
-	return fc方向r(数学::f翻折(m距离, a.m半径), m方向);
+S向量2 S向量2::f翻折(const S圆形 &a圆形) const {
+	return f点关于圆形翻折(*this, a圆形);
 }
 S向量2 S向量2::f对齐(const float &a) const {
 	return{数学::f对齐(x, a), 数学::f对齐(y, a)};

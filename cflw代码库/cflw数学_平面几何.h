@@ -41,6 +41,8 @@ struct S矩形 {
 	static S矩形 fc坐标半尺寸(const S向量2 &, const S向量2 &);
 	static S矩形 fc正方形(const S向量2 &, float 边长);
 	static S矩形 fc对角点(const S向量2 &, const S向量2 &);
+	static S矩形 fc原点尺寸(float 宽, float 高);
+	static S矩形 fc原点半尺寸(float, float);
 	S向量2 fg点(float x, float y) const;
 	S向量2 fg中心() const;
 	S向量2 fg半尺寸() const;
@@ -51,6 +53,13 @@ struct S矩形 {
 	float fg右() const;
 	float fg上() const;
 	float fg下() const;
+	void fs左(float);
+	void fs右(float);
+	void fs上(float);
+	void fs下(float);
+	void fs左右(float, float);
+	void fs上下(float, float);
+	void fs下上(float, float);
 	S矩形 f左边移(float) const;	//调整一条边的位置
 	S矩形 f右边移(float) const;
 	S矩形 f上边移(float) const;
@@ -131,23 +140,30 @@ struct S直线2 {
 	static S直线2 fc截距(const float &, const float &);
 	static S直线2 fc一般(const float &, const float &, const float &);
 	static S直线2 fc点法(const S向量2 &, const S向量2 &);
-	static S直线2 fc点向(const S向量2 &, const float &);
+	static S直线2 fc点向r(const S向量2 &, const float &);
+	//点的运算
 	float f到点距离(const S向量2 &) const;
+	S向量2 f对称点(const S向量2 &) const;
+	//线的运算
+	bool fi有效() const;	//a和b不为0
 	float fg斜率() const;
 	S直线2 f平移(const S向量2 &) const;
 	float f求x(const float &) const;
 	float f求y(const float &) const;
-	bool f平行(const S直线2 &) const;
+	bool fi平行(const S直线2 &) const;
 	float fg方向r() const;
 	float fg方向d() const;
 	S向量2 f交点(const S直线2 &) const;
 	S向量2 fg法向量() const;
-	bool f交x轴(int) const;
-	bool f交y轴(int) const;
+	bool f交x轴(int 符号) const;
+	bool f交y轴(int 符号) const;
 	bool fi平行x轴() const;
 	bool fi平行y轴() const;
 	bool fi垂直x轴() const;
 	bool fi垂直y轴() const;
+	S直线2 fg过原点平行线() const;
+	S直线2 fg过点平行线(const S向量2 &) const;
+	S直线2 fg过点垂直线(const S向量2 &) const;
 };
 //线段2
 struct S线段2 {
@@ -186,7 +202,7 @@ struct S椭圆 {
 	S椭圆() = default;
 	S椭圆(const S向量2 &, const S向量2 &);
 	static S椭圆 fc圆(const S向量2 &, float);
-	bool fw圆() const;
+	bool fi圆() const;
 	S向量2 f取点(float) const;
 };
 //旋转椭圆
@@ -197,7 +213,7 @@ struct S旋转椭圆 {
 	S旋转椭圆();
 	S旋转椭圆(const S向量2 &, const S向量2 &, float);
 	static S旋转椭圆 fc圆(const S向量2 &, float);
-	bool fw圆() const;
+	bool fi圆() const;
 	S向量2 f取点(float) const;
 };
 //圆角矩形
@@ -234,5 +250,8 @@ bool f三角形相交判定(const S三角形 &, const S三角形 &);
 //位置关系
 int f点圆位置关系(const S向量2 &, const S圆形 &);
 int f点旋转椭圆位置关系(const S向量2 &, const S旋转椭圆 &);
-
+//其他
+S向量2 f点关于直线翻折(const S向量2 &, const S直线2 &);
+S向量2 f点关于方向翻折(const S向量2 &, float);
+S向量2 f点关于圆形翻折(const S向量2 &, const S圆形 &);
 }
