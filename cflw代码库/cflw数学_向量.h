@@ -9,15 +9,19 @@ template<typename t = double> using t复数 = std::complex<t>;
 struct S直线2;
 struct S矩阵4;
 struct S圆形;
+template<typename t> t f插值(const t&起始值, const t&终止值, float 中间值);
+template<typename t> t f绝对值(const t &);
+template<typename t> t f平均(const t &, const t &);	//定义在"cflw数学.inl"
 //本文件
 struct S向量2;
 struct S向量3;
 struct S向量4;
-template<typename t> t f插值(const t&起始值, const t&终止值, float 中间值);
-template<typename t> t f绝对值(const t &);
 template<> S向量2 f绝对值<S向量2>(const S向量2 &);
 template<> S向量3 f绝对值<S向量3>(const S向量3 &);
 template<> S向量4 f绝对值<S向量4>(const S向量4 &);
+template<> S向量2 f平均<S向量2>(const S向量2 &, const S向量2 &);
+template<> S向量3 f平均<S向量3>(const S向量3 &, const S向量3 &);
+template<> S向量4 f平均<S向量4>(const S向量4 &, const S向量4 &);
 //==============================================================================
 //向量2
 struct S向量2 {

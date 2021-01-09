@@ -51,7 +51,7 @@ class C纹理资源;
 using tp顶点 = std::shared_ptr<C顶点缓冲>;
 using tp索引 = std::shared_ptr<C索引缓冲>;
 using tp常量 = std::shared_ptr<C常量缓冲>;
-using tp纹理 = std::shared_ptr<C纹理资源>;
+using tp纹理资源视图 = std::shared_ptr<C纹理资源>;
 //==============================================================================
 // 常量&标志
 //==============================================================================
@@ -552,8 +552,8 @@ public:
 	~C纹理工厂();
 	HRESULT f初始化();
 public:	//创建纹理
-	HRESULT f从文件创建纹理(tp纹理 &输出, const wchar_t *文件);
-	HRESULT f从纹理对象创建纹理(tp纹理 &, const 纹理::I纹理 &);
+	HRESULT f从文件创建纹理资源视图(tp纹理资源视图 &输出, const wchar_t *文件);
+	HRESULT f从纹理对象创建纹理资源视图(tp纹理资源视图 &, const 纹理::I纹理 &);
 	HRESULT f从内存创建纹理资源(tp资源 &输出, const void *数据, DXGI_FORMAT 格式, UINT 宽, UINT 高, UINT 行距, UINT 图像大小);
 	HRESULT f从纹理对象创建纹理资源(tp资源 &输出, const 纹理::I纹理 &纹理);
 	HRESULT f从纹理资源创建纹理视图(tp描述符堆 &输出, const tp资源 &, DXGI_FORMAT 格式);

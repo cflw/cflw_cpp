@@ -37,7 +37,7 @@ using tp域着色器 = ComPtr<ID3D11DomainShader>;
 using tp计算着色器 = ComPtr<ID3D11ComputeShader>;
 using tp缓冲 = ComPtr<ID3D11Buffer>;
 using tp输入布局 = ComPtr<ID3D11InputLayout>;
-using tp纹理 = ComPtr<ID3D11ShaderResourceView>;
+using tp纹理资源视图 = ComPtr<ID3D11ShaderResourceView>;
 using tp光栅化 = ComPtr<ID3D11RasterizerState>;
 using tp混和 = ComPtr<ID3D11BlendState>;
 using tp采样器 = ComPtr<ID3D11SamplerState>;
@@ -459,11 +459,14 @@ public:
 	~C纹理工厂();
 	HRESULT f初始化(ID3D11Device *);
 public:	//创建纹理
-	HRESULT f从文件创建纹理(tp纹理 &输出, const wchar_t *文件);
-	HRESULT f从纹理对象创建纹理(tp纹理 &, const 纹理::I纹理 &);
+	HRESULT f从文件创建纹理资源视图(tp纹理资源视图 &输出, const std::wstring_view &文件);
+	HRESULT f从文件创建纹理资源视图c(tp纹理资源视图 &输出, const std::wstring_view *文件);
+	HRESULT f从纹理对象创建纹理资源视图(tp纹理资源视图 &, const 纹理::I纹理 &);
 	HRESULT f从内存创建纹理2(tp纹理2 &输出, const void *数据, DXGI_FORMAT 格式, UINT 宽, UINT 高, UINT 行距, UINT 图像大小);
 	HRESULT f从纹理对象创建纹理2(tp纹理2 &输出, const 纹理::I纹理 &纹理);
-	HRESULT f创建纹理资源视图(tp纹理 &输出, tp纹理2, DXGI_FORMAT 格式);
+	HRESULT f从纹理对象创建纹理c(tp纹理2 &输出, const 纹理::I纹理 *纹理[]); //纹理顺序: +x -x +y -y +z -z
+	HRESULT f从纹理资源创建纹理资源视图(tp纹理资源视图 &输出, const tp纹理2 &, const D3D11_TEXTURE2D_DESC &纹理描述);
+	HRESULT f从纹理资源创建纹理资源视图c(tp纹理资源视图 &输出, const tp纹理2 &, const D3D11_TEXTURE2D_DESC &纹理描述);
 	const D3D11_TEXTURE2D_DESC &fg最近纹理描述() const;
 private:
 	std::unique_ptr<纹理::C图像工厂> m工厂;

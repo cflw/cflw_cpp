@@ -61,6 +61,8 @@ template<typename tk, typename tv> tv f插值2(const tk &, const tv &, const tk 
 template<typename t> t f反勾股(const t &, const t &);	//已知斜边和一直角边求另一直角边
 template<typename t> t f四舍五入(const t &);	//
 template<typename t> t f等腰梯形插值(const t &小, const t &大, float 斜宽, float 中间值);
+template<typename t> t f平均(const t &, const t &);	//(a+b)/2
+template<typename t> t f半距离(const t &, const t &);	//(b-a)/2
 template<typename...t参数> auto f算术平均(t参数 &&...);
 template<typename...t参数> auto f几何平均(t参数 &&...);
 template<typename...t参数> auto f绝对值最大值(t参数 &&...);	//计算出绝对值最大值,返回原值
@@ -99,6 +101,8 @@ public:
 	t f方向(const t &x, const t &y) const;	//原点到目标点的方向
 	t f插值(const t &角1, const t &角2, const t &插值) const;
 };
+template<typename t> inline const C角度计算<t> &c角度计算 = C角度计算<t>::c角度;
+template<typename t> inline const C角度计算<t> &c弧度计算 = C角度计算<t>::c弧度;
 //==============================================================================
 // 位置关系
 //==============================================================================

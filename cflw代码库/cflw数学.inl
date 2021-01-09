@@ -155,11 +155,18 @@ template<typename t> t f等腰梯形插值(const t &a小, const t &a大, float a
 		return a大;
 	}
 }
+template<typename t> t f平均(const t &a, const t &b) {
+	return (a + b) / 2;
+}
+template<typename t> t f半距离(const t &a, const t &b) {
+	return (b - a) / 2;
+}
 template<typename...t参数> auto f算术平均(t参数 &&...a参数) {
 	return (... + a参数) / sizeof...(t参数);
 }
 template<typename...t参数> auto f几何平均(t参数 &&...a参数) {
-	return std::sqrt((... * a参数));
+	const auto v积 = (... * a参数);
+	return std::pow(v积, static_cast<decltype(v积)>(1) / sizeof...(t参数));
 }
 template<typename...t参数> auto f绝对值最大值(t参数 &&...a参数) {
 	using t返回 = decltype((... + a参数));

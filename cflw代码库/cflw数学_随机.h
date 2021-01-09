@@ -2,11 +2,6 @@
 #include <random>
 #include "cflw数学.h"
 #include "cflw数学_平面几何.h"
-#define 定义随机数分布计算函数 \
-template<typename t引擎>\
-auto operator()(t引擎 &a引擎) const {\
-	return f生成(a引擎());\
-}
 namespace cflw::数学 {
 //==============================================================================
 // 随机引擎
@@ -32,12 +27,40 @@ template<class t> t C线性同余::f生成(const t &a小, const t &a大) {
 //==============================================================================
 // 分布
 //==============================================================================
-template<typename t = double> static const std::uniform_real_distribution<t> c圆周分布r = std::uniform_real_distribution<t>(0, c二π<t>);
-template<typename t = double> static const std::uniform_real_distribution<t> c圆周分布d = std::uniform_real_distribution<t>(0, (t)360);
+//分布类
+template<typename t>
+class C零一分布 {
+public:
+	C零一分布(double a = 0.5) :
+		m伯努利分布(a) {
+	}
+	template<typename t引擎>
+	t operator()(t引擎 &a引擎) const {
+		return m伯努利分布(a引擎) ? (t)1 : (t)0;
+	}
+private:
+	std::bernoulli_distribution m伯努利分布;
+};
+template<>
+class C零一分布<bool> {
+public:
+	C零一分布(double a = 0.5) :
+		m伯努利分布(a) {
+	}
+	template<typename t引擎>
+	bool operator()(t引擎 &a引擎) const {
+		return m伯努利分布(a引擎);
+	}
+private:
+	std::bernoulli_distribution m伯努利分布;
+};
 class C圆形分布 {
 public:
 	C圆形分布(const S圆形 &);
-	定义随机数分布计算函数
+	template<typename t引擎>
+	S向量2 operator()(t引擎 &a引擎) const {
+		return f生成(a引擎());
+	}
 	S向量2 f生成(unsigned int) const;
 private:
 	S圆形 m圆形;
@@ -46,9 +69,21 @@ class C矩形分布 {
 public:
 	C矩形分布(const S矩形 &);
 	C矩形分布(const S旋转矩形 &);
-	定义随机数分布计算函数
+	template<typename t引擎>
+	S向量2 operator()(t引擎 &a引擎) const {
+		return f生成(a引擎());
+	}
 	S向量2 f生成(unsigned int) const;
 private:
 	S旋转矩形 m矩形;
 };
+//分布常量
+template<typename t = double> 
+static const std::uniform_real_distribution<t> c圆周分布r = std::uniform_real_distribution<t>(0, c二π<t>);
+template<typename t = double> 
+static const std::uniform_real_distribution<t> c圆周分布d = std::uniform_real_distribution<t>(0, (t)360);
+template<typename t = double>
+static const auto c零一分布 = C零一分布<t>(0.5f);
+template<>
+static const auto c零一分布<bool> = std::bernoulli_distribution(0.5f);
 }	//namespace cflw::数学

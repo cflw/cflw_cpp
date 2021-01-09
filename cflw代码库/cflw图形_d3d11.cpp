@@ -966,7 +966,7 @@ HRESULT C纹理工厂::f初始化(ID3D11Device *a设备) {
 	return m工厂->f初始化();
 }
 //创建纹理
-HRESULT C纹理工厂::f从文件创建纹理(tp纹理 &a输出, const wchar_t *a文件) {
+HRESULT C纹理工厂::f从文件创建纹理资源视图(tp纹理资源视图 &a输出, const std::wstring_view &a文件) {
 	std::unique_ptr<纹理::C只读纹理> v纹理 = m工厂->f一键读取(a文件);
 	if (v纹理 == nullptr) {
 		return E_FAIL;
@@ -976,16 +976,41 @@ HRESULT C纹理工厂::f从文件创建纹理(tp纹理 &a输出, const wchar_t *
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = f创建纹理资源视图(a输出, v纹理2.Get(), v纹理->fg格式());
+	hr = f从纹理资源创建纹理资源视图(a输出, v纹理2.Get(), m纹理描述);
 	return hr;
 }
-HRESULT C纹理工厂::f从纹理对象创建纹理(tp纹理 &a输出, const 纹理::I纹理 &a纹理) {
+HRESULT C纹理工厂::f从文件创建纹理资源视图c(tp纹理资源视图& a输出, const std::wstring_view* aa文件) {
+	constexpr UINT c数量 = 6;
+	std::unique_ptr<纹理::C只读纹理> va纹理[c数量];
+	for (UINT i = 0; i != c数量; ++i) {
+		va纹理[i] = m工厂->f一键读取(aa文件[i]);
+		if (va纹理[i] == nullptr) {
+			return E_FAIL;
+		}
+	}
+	tp纹理2 v纹理2;
+	const 纹理::I纹理 *vp纹理[] = {	//当做不知道unique_ptr的内存布局,手动转换数组类型
+		va纹理[0].get(),
+		va纹理[1].get(),
+		va纹理[2].get(),
+		va纹理[3].get(),
+		va纹理[4].get(),
+		va纹理[5].get(),
+	};
+	HRESULT hr = f从纹理对象创建纹理c(v纹理2, vp纹理);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	hr = f从纹理资源创建纹理资源视图c(a输出, v纹理2.Get(), m纹理描述);
+	return hr;
+}
+HRESULT C纹理工厂::f从纹理对象创建纹理资源视图(tp纹理资源视图 &a输出, const 纹理::I纹理 &a纹理) {
 	tp纹理2 v纹理2;
 	HRESULT hr = f从纹理对象创建纹理2(v纹理2, a纹理);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = f创建纹理资源视图(a输出, v纹理2.Get(), a纹理.fg格式());
+	hr = f从纹理资源创建纹理资源视图(a输出, v纹理2.Get(), m纹理描述);
 	return hr;
 }
 HRESULT C纹理工厂::f从内存创建纹理2(tp纹理2 &a输出, const void *a数据, DXGI_FORMAT a格式, UINT a宽, UINT a高, UINT a行距, UINT a大小) {
@@ -1010,11 +1035,42 @@ HRESULT C纹理工厂::f从内存创建纹理2(tp纹理2 &a输出, const void *a
 HRESULT C纹理工厂::f从纹理对象创建纹理2(tp纹理2 &a输出, const 纹理::I纹理 &a纹理) {
 	return f从内存创建纹理2(a输出, a纹理.fg数据(), a纹理.fg格式(), a纹理.fg宽(), a纹理.fg高(), a纹理.fg行距(), a纹理.fg图像大小());
 }
-HRESULT C纹理工厂::f创建纹理资源视图(tp纹理 &a输出, tp纹理2 a纹理, DXGI_FORMAT a格式) {
+HRESULT C纹理工厂::f从纹理对象创建纹理c(tp纹理2 &a输出, const 纹理::I纹理 *aa纹理[]) {
+	constexpr UINT c数量 = 6;
+	const UINT v长度 = aa纹理[0]->fg宽();
+	m纹理描述.Width = v长度;
+	m纹理描述.Height = v长度;
+	m纹理描述.MipLevels = 1;
+	m纹理描述.ArraySize = c数量;
+	m纹理描述.Format = aa纹理[0]->fg格式();
+	m纹理描述.SampleDesc.Count = 1;
+	m纹理描述.SampleDesc.Quality = 0;
+	m纹理描述.Usage = D3D11_USAGE_DEFAULT;
+	m纹理描述.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	m纹理描述.CPUAccessFlags = 0;
+	m纹理描述.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
+	D3D11_SUBRESOURCE_DATA va资源描述[c数量];
+	for (UINT i = 0; i != c数量; ++i) {
+		va资源描述[i].pSysMem = aa纹理[i]->fg数据();
+		va资源描述[i].SysMemPitch = aa纹理[i]->fg行距();
+		va资源描述[i].SysMemSlicePitch = aa纹理[i]->fg图像大小();
+	}
+	HRESULT hr = m设备->CreateTexture2D(&m纹理描述, va资源描述, &a输出);
+	return hr;
+}
+HRESULT C纹理工厂::f从纹理资源创建纹理资源视图(tp纹理资源视图 &a输出, const tp纹理2 &a纹理, const D3D11_TEXTURE2D_DESC &a纹理描述) {
 	D3D11_SHADER_RESOURCE_VIEW_DESC v描述 = {};
-	v描述.Format = a格式;
+	v描述.Format = a纹理描述.Format;
 	v描述.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	v描述.Texture2D.MipLevels = 1;
+	v描述.Texture2D.MipLevels = a纹理描述.MipLevels;
+	HRESULT hr = m设备->CreateShaderResourceView(a纹理.Get(), &v描述, &a输出);
+	return hr;
+}
+HRESULT C纹理工厂::f从纹理资源创建纹理资源视图c(tp纹理资源视图 &a输出, const tp纹理2 &a纹理, const D3D11_TEXTURE2D_DESC &a纹理描述) {
+	D3D11_SHADER_RESOURCE_VIEW_DESC v描述 = {};
+	v描述.Format = a纹理描述.Format;
+	v描述.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
+	v描述.Texture2D.MipLevels = a纹理描述.MipLevels;
 	HRESULT hr = m设备->CreateShaderResourceView(a纹理.Get(), &v描述, &a输出);
 	return hr;
 }
@@ -1078,5 +1134,4 @@ void S深度模板参数::fs模板部分(const D3D11_DEPTH_STENCIL_DESC &a) {
 	FrontFace = a.FrontFace;
 	BackFace = a.BackFace;
 }
-
 }	//namespace cflw::图形::d3d11

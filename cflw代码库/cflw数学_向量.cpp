@@ -14,6 +14,28 @@ template<> S向量3 f绝对值<S向量3>(const S向量3 &_) {
 template<> S向量4 f绝对值<S向量4>(const S向量4 &a) {
 	return S向量4(abs(a.x), abs(a.y), abs(a.z), abs(a.w));
 }
+template<> S向量2 f平均<S向量2>(const S向量2 &a, const S向量2 &b) {
+	return {
+		f平均<float>(a.x, b.x),
+		f平均<float>(a.y, b.y)
+	};
+}
+template<> S向量3 f平均<S向量3>(const S向量3 &a, const S向量3 &b) {
+	return {
+		f平均<float>(a.x, b.x),
+		f平均<float>(a.y, b.y),
+		f平均<float>(a.z, b.z)
+	};
+
+}
+template<> S向量4 f平均<S向量4>(const S向量4 &a, const S向量4 &b) {
+	return {
+		f平均<float>(a.x, b.x),
+		f平均<float>(a.y, b.y),
+		f平均<float>(a.z, b.z),
+		f平均<float>(a.w, b.w)
+	};
+}
 //==============================================================================
 // 向量
 //==============================================================================

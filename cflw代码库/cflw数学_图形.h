@@ -18,6 +18,8 @@ struct S四元数;
 struct S欧拉角;
 template<> S颜色 f插值<S颜色>(const S颜色 &起始值, const S颜色 &终止值, float 中间值);
 template<> S四元数 f插值<S四元数>(const S四元数 &, const S四元数 &, float);
+template<> S颜色 f平均<S颜色>(const S颜色 &, const S颜色 &);
+template<> S四元数 f平均<S四元数>(const S四元数 &, const S四元数 &);
 constexpr float f单色校正(float a值) {
 	if (a值 >= 1) {
 		return 1;
@@ -162,7 +164,7 @@ struct S材质 {
 struct S世界矩阵2 {
 	S向量2 m平移 = S向量2::c零;
 	float m旋转 = 0;
-	S向量2 m缩放 = S向量2::c零;
+	S向量2 m缩放 = S向量2::c一;
 	S世界矩阵2() = default;
 	S世界矩阵2(const S向量2 &, const float &, const S向量2 &);
 	S矩阵2 ft矩阵2() const;
@@ -184,13 +186,13 @@ struct S相机 {
 	S矩阵4 ft矩阵4l() const;
 	S矩阵4 ft矩阵4r() const;
 };
-struct S投影 {
+struct S透视投影 {
 	static constexpr float c视角 = 数学::c半π<float>;
 	float m视角 = c视角;
 	float m宽 = 640, m高 = 480;
 	float m近裁剪面 = 1, m远裁剪面 = 100;
-	S投影() = default;
-	S投影(float 宽, float 高, float 视角 = c视角, float 近裁剪面 = 0.01f, float 远裁剪面 = 100.f);
+	S透视投影() = default;
+	S透视投影(float 宽, float 高, float 视角 = c视角, float 近裁剪面 = 0.01f, float 远裁剪面 = 100.f);
 	S矩阵4 ft矩阵4l() const;
 	S矩阵4 ft矩阵4r() const;
 };

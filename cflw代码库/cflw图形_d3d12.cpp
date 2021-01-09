@@ -506,9 +506,15 @@ HRESULT C创建设备::f取软件适配器(IDXGIAdapter3 **a显卡) {
 	return m工厂->EnumWarpAdapter(IID_PPV_ARGS(a显卡));
 }
 HRESULT C创建设备::f创建设备(IDXGIAdapter3 *a显卡, ID3D12Device **a设备) {
-	HRESULT hr = D3D12EnableExperimentalFeatures(1, &D3D12ExperimentalShaderModels, nullptr, nullptr);
+	HRESULT hr;
+	//新着色器模型功能，旧系统（win10 v1803之前）旧显卡需要调用
+	hr = D3D12EnableExperimentalFeatures(1, &D3D12ExperimentalShaderModels, nullptr, nullptr);
 	if (FAILED(hr)) {
-		return hr;
+		if (hr == 0x80004002) {	//E_NOINTERFACE No such interface supported.
+			//跳过
+		} else {
+			return hr;
+		}
 	}
 	hr = D3D12CreateDevice(a显卡, c最低功能级别, IID_PPV_ARGS(a设备));
 	return hr;
@@ -1088,15 +1094,15 @@ HRESULT C纹理工厂::f初始化() {
 	m工厂 = std::make_unique<纹理::C图像工厂>();
 	return m工厂->f初始化();
 }
-HRESULT C纹理工厂::f从文件创建纹理(tp纹理 &a输出, const wchar_t *a文件) {
+HRESULT C纹理工厂::f从文件创建纹理资源视图(tp纹理资源视图 &a输出, const wchar_t *a文件) {
 	std::unique_ptr<纹理::C只读纹理> v纹理 = m工厂->f一键读取(a文件);
 	if (v纹理 == nullptr) {
 		return E_FAIL;
 	}
-	return f从纹理对象创建纹理(a输出, *v纹理);
+	return f从纹理对象创建纹理资源视图(a输出, *v纹理);
 }
-HRESULT C纹理工厂::f从纹理对象创建纹理(tp纹理 &a输出, const 纹理::I纹理 &a纹理) {
-	tp纹理 v = std::make_shared<C纹理资源>();
+HRESULT C纹理工厂::f从纹理对象创建纹理资源视图(tp纹理资源视图 &a输出, const 纹理::I纹理 &a纹理) {
+	tp纹理资源视图 v = std::make_shared<C纹理资源>();
 	HRESULT hr = f从纹理对象创建纹理资源(v->m资源, a纹理);
 	if (FAILED(hr)) {
 		return hr;
