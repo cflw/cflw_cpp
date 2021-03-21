@@ -44,6 +44,8 @@ struct S圆形 {
 	static S圆形 fc坐标直径(const S向量2 &, float);
 	S向量2 fg点r(const float &方向) const;
 	S向量2 fg点d(const float &方向) const;
+	float fg周长() const;
+	float fg半径() const;
 	S向量2 f离边最近点(const S圆形 &) const;
 	bool fi包含点(const S向量2 &) const;
 	float f中线切线夹角r(const S向量2 &) const;	//中线=过圆心与一点的直线
@@ -61,6 +63,8 @@ struct S矩形 {
 	static S矩形 fc对角点(const S向量2 &, const S向量2 &);
 	static S矩形 fc原点尺寸(float 宽, float 高);
 	static S矩形 fc原点半尺寸(float, float);
+	static float f计算周长(const S向量2 &半尺寸);
+	static float f计算面积(const S向量2 &半尺寸);
 	S向量2 fg点(float x, float y) const;
 	S向量2 fg中心() const;
 	S向量2 fg半尺寸() const;
@@ -112,16 +116,18 @@ struct S窗口矩形 {
 	S窗口矩形(float, float, float, float);
 	S窗口矩形(const S向量2 &, const S向量2 &);
 	static S窗口矩形 fc坐标半尺寸(const S向量2 &, const S向量2 &);
-	float fg宽();
-	float fg高();
-	S向量2 fg中心();
-	S向量2 fg半尺寸();
+	float fg宽() const;
+	float fg高() const;
+	S向量2 fg中心() const;
+	S向量2 fg半尺寸() const;
+	float fg周长() const;
+	float fg面积() const;
 	S窗口矩形 f对齐左边(float);
 	S窗口矩形 f对齐上边(float);
 	S窗口矩形 f对齐右边(float);
 	S窗口矩形 f对齐下边(float);
 	S窗口矩形 f对齐中心(const S向量2 &);
-	S窗口矩形 f移动(const S向量2 &);
+	S窗口矩形 fg移动(const S向量2 &);
 	S旋转矩形 f到直角矩形(float, float);
 };
 //三角形
@@ -135,6 +141,8 @@ struct S三角形 {
 	float fg边长(int) const;
 	float fg角r(int) const;
 	float fg角d(int) const;
+	float fg周长() const;
+	float fg面积() const;
 	//坐标
 	S向量2 f标准坐标(const S向量3 &) const;
 	S向量3 f重心坐标(const S向量2 &) const;
@@ -200,6 +208,7 @@ struct S线段2 {
 	float fg方向r() const;
 	float fg方向d() const;
 	float fg斜率() const;
+	float fg长度() const;
 };
 //射线
 struct S射线2 {
@@ -220,8 +229,12 @@ struct S椭圆 {
 	S椭圆() = default;
 	S椭圆(const S向量2 &, const S向量2 &);
 	static S椭圆 fc圆(const S向量2 &, float);
+	static float f计算周长(const S向量2 &半径);
+	static float f计算面积(const S向量2 &半径);
 	bool fi圆() const;
-	S向量2 f取点(float) const;
+	S向量2 f取点(float 方向) const;
+	float fg周长() const;
+	float fg面积() const;
 };
 //旋转椭圆
 struct S旋转椭圆 {
@@ -233,12 +246,19 @@ struct S旋转椭圆 {
 	static S旋转椭圆 fc圆(const S向量2 &, float);
 	bool fi圆() const;
 	S向量2 f取点(float) const;
+	float fg周长() const;
+	float fg面积() const;
 };
 //圆角矩形
 struct S圆角矩形 {
 	S向量2 m坐标, m半尺寸, m角半径;
 	S圆角矩形();
 	S圆角矩形(const S向量2 &, const S向量2 &, const S向量2 &);
+	static S圆角矩形 fc左上右下(float 左, float 上, float 右, float 下, S向量2 角半径);
+	static S圆角矩形 fc坐标尺寸(const S向量2 &, const S向量2 &, S向量2 角半径);
+	static S圆角矩形 fc坐标半尺寸(const S向量2 &, const S向量2 &, S向量2 角半径);
+	float fg周长() const;
+	float fg面积() const;
 };
 //==============================================================================
 // 平面几何计算

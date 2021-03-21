@@ -1,6 +1,7 @@
-﻿#include "cflw数学_立体几何.h"
+﻿#include "cflw数学.h"
+#include "cflw数学_常数.h"
+#include "cflw数学_立体几何.h"
 #include "cflw数学_向量.h"
-#include "cflw数学.h"
 namespace cflw::数学 {
 //==============================================================================
 // 球体

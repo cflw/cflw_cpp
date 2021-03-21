@@ -156,9 +156,9 @@ public:
 	};
 	C手柄(DWORD);
 	void f更新() override;
-	S按键 f按键(t索引) const override;
-	S方向 f方向(t索引) const override;
-	float f触发(t索引) const override;
+	S按键 fg按键(t索引) const override;
+	S方向 fg方向(t索引) const override;
+	float fg触发(t索引) const override;
 private:
 	DWORD m序号, m包数 = 0, m上次状态 = 0;
 	C按键组 m按键{16};
@@ -177,15 +177,15 @@ C输入::C输入() {
 }
 C输入::~C输入() {
 }
-void C输入::f创建手柄(tp手柄 &a输出, DWORD a序号) {
+输入::tp手柄 C输入::f创建手柄(DWORD a序号) {
 	if (a序号 >= 4) {
-		a输出 = nullptr;
+		return nullptr;
 	}
 	std::shared_ptr<C手柄> &v手柄 = ma手柄[a序号];
 	if (v手柄 == nullptr) {
 		v手柄 = std::make_shared<C手柄>(a序号);
 	}
-	a输出 = v手柄;
+	return v手柄;
 }
 void C输入::f更新() {
 	for (const std::shared_ptr<C手柄> &v : ma手柄) {
@@ -200,17 +200,17 @@ void C输入::f更新() {
 C手柄::C手柄(DWORD p序号) :
 	m序号{p序号} {
 }
-S按键 C手柄::f按键(t索引 i) const {
-	return m按键.f按键(i);
+S按键 C手柄::fg按键(t索引 i) const {
+	return m按键.fg按键(i);
 }
-S方向 C手柄::f方向(t索引 i) const {
+S方向 C手柄::fg方向(t索引 i) const {
 	switch (i) {
 	case (int)E手柄方向::e方向键:
 		return {m方向键[(int)E方向键::x].m方向, m方向键[(int)E方向键::y].m方向, 0};
 	case (int)E手柄方向::e左摇杆:
-		return m摇杆[(int)E摇杆::e左].f方向();
+		return m摇杆[(int)E摇杆::e左].fg方向();
 	case (int)E手柄方向::e右摇杆:
-		return m摇杆[(int)E摇杆::e右].f方向();
+		return m摇杆[(int)E摇杆::e右].fg方向();
 	default: {
 		const float v最大x = 数学::f绝对值最大值(
 			m方向键[(int)E方向键::x].m方向, 
@@ -224,7 +224,7 @@ S方向 C手柄::f方向(t索引 i) const {
 	}
 	}
 }
-float C手柄::f触发(t索引 i) const {
+float C手柄::fg触发(t索引 i) const {
 	return m触发[i];
 }
 void C手柄::f更新() {

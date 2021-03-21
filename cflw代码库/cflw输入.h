@@ -3,22 +3,43 @@
 #include <map>
 #include <algorithm>
 #include <type_traits>
+#include <functional>
 namespace cflw::输入 {
 //声明
 using t数量 = unsigned short;
 using t索引 = unsigned short;
+struct S按键;
+struct S方向;
 class I输入设备;
 class I键盘;
 class I鼠标;
 class I手柄;
 class I触摸;
 class I触控点;
+class I笔;
+class I笔点;
 using tp输入设备 = std::shared_ptr<I输入设备>;
 using tp键盘 = std::shared_ptr<I键盘>;
 using tp鼠标 = std::shared_ptr<I鼠标>;
 using tp手柄 = std::shared_ptr<I手柄>;
 using tp触摸 = std::shared_ptr<I触摸>;
 using tp触控点 = std::shared_ptr<I触控点>;
+using tp笔 = std::shared_ptr<I笔>;
+using tp笔点 = std::shared_ptr<I笔点>;
+//概念
+template<typename t> concept T按键组 = requires(t a) {
+	{ a.fg按键(0) }->std::convertible_to<S按键>;
+};
+template<typename t> concept T指针 = requires(t a) {
+	{ a.fg按键() }->std::convertible_to<S按键>;
+	{ a.fg坐标() }->std::convertible_to<S方向>;
+	{ a.fi有效() }->std::convertible_to<bool>;
+};
+template<typename t> concept Tp指针 = requires(t a) {
+	{ *a }->T指针;
+};
+template<typename t> concept Ta指针 = std::ranges::forward_range<t> && Tp指针<typename t::value_type>;
+//函数
 bool fi死区3(float x, float y, float z, float da);
 //==============================================================================
 // 输出的信息
@@ -28,12 +49,12 @@ struct S按键 {
 	S按键() = default;
 	S按键(bool, bool);
 	operator bool() const;
-	bool f刚按下() const;
-	bool f刚松开() const;
-	bool f按下() const;
-	bool f松开() const;
-	bool f持续() const;
-	bool f变化() const;
+	bool fi刚按下() const;
+	bool fi刚松开() const;
+	bool fi按下() const;
+	bool fi松开() const;
+	bool fi持续() const;
+	bool fi变化() const;
 	void f覆盖上次() &;
 	bool m这次 = false, m上次 = false;
 };
@@ -41,12 +62,12 @@ struct S按键 {
 struct S方向 {
 	S方向() = default;
 	S方向(float, float, float);
-	bool f左() const;
-	bool f右() const;
-	bool f上() const;
-	bool f下() const;
-	bool f前() const;
-	bool f后() const;
+	bool fi左() const;
+	bool fi右() const;
+	bool fi上() const;
+	bool fi下() const;
+	bool fi前() const;
+	bool fi后() const;
 	bool fi死区(float) const;
 	float x = 0, y = 0, z = 0;
 };
@@ -60,7 +81,7 @@ public:
 	~C按键组();
 	void f重置数量(t数量);
 	t数量 fg数量() const;
-	S按键 f按键(t索引 i) const;
+	S按键 fg按键(t索引 i) const;
 	void f覆盖上次();
 	void f清空上次();
 	void f清空这次();
@@ -92,9 +113,9 @@ public:
 class C缓冲方向2 {	//可以记录坐标或方向的缓冲方向
 public:
 	C缓冲方向2();
-	S方向 f这次方向() const;
-	S方向 f上次方向() const;
-	S方向 f方向差() const;
+	S方向 fg这次方向() const;
+	S方向 fg上次方向() const;
+	S方向 fg方向差() const;
 	void f覆盖上次() &;
 	void f清空这次() &;
 	float m这次[2], m上次[2];
@@ -102,16 +123,10 @@ public:
 class C方向3 {
 public:
 	C方向3();
-	S方向 f方向() const;
+	S方向 fg方向() const;
 	bool fi死区(float) const;
 	float m方向[3];
 };
-/*
-template<typename t> concept T按键组 = requires(t a) {
-	{a.f按键(0)}->S按键;
-}
-*/
-
 //==============================================================================
 // 输入设备接口
 //==============================================================================
@@ -123,34 +138,51 @@ public:
 class I键盘 : public I输入设备 {
 public:
 	static constexpr t数量 c按键数量 = 256;
-	virtual S按键 f按键(t索引 i) const = 0;
+	virtual S按键 fg按键(t索引 i) const = 0;
 };
 class I鼠标 : public I输入设备 {
 public:
 	static constexpr t数量 c按键数量 = 32;
-	virtual S按键 f按键(t索引 i) const = 0;
-	virtual S方向 f坐标() const = 0;
-	virtual S方向 f移动() const = 0;
-	virtual S方向 f滚轮() const = 0;
+	virtual S按键 fg按键(t索引 i) const = 0;
+	virtual S方向 fg坐标() const = 0;
+	virtual S方向 fg移动() const = 0;
+	virtual S方向 fg滚轮() const = 0;
 };
 class I手柄 : public I输入设备 {
 public:
 	static constexpr t数量 c按键数量 = 32;
-	virtual S按键 f按键(t索引) const = 0;
-	virtual S方向 f方向(t索引) const = 0;
-	virtual float f触发(t索引) const = 0;
+	virtual S按键 fg按键(t索引) const = 0;
+	virtual S方向 fg方向(t索引) const = 0;
+	virtual float fg触发(t索引) const = 0;
 };
 class I触摸 : public I输入设备 {
 public:
-	virtual t数量 f触控点数() const = 0;	//返回仍按在屏幕上的触控点数量
+	virtual t数量 fg触控点数() const = 0;	//返回仍按在屏幕上的触控点数量
 	virtual tp触控点 fg触控点(t索引) const = 0;	//触摸实现要保证新出现的触控点总是在最后
 	virtual tp触控点 fg新触控点() = 0;	//没有新的则返回nullptr，最好在每次更新后把新触控点取完
 };
 class I触控点 {
 public:	//I触控点 的更新由 I触摸::f更新 管理
-	virtual S按键 f按键() const = 0;
-	virtual S方向 f坐标() const = 0;
-	virtual S方向 f移动() const = 0;
+	virtual S按键 fg按键() const = 0;
+	virtual S方向 fg坐标() const = 0;
+	virtual S方向 fg移动() const = 0;
+	virtual bool fi有效() const = 0;
+};
+class I笔 : public I输入设备 {
+public:
+	virtual t数量 fg笔点数() const = 0;
+	virtual tp笔点 fg笔点(t索引) const = 0;
+	virtual tp笔点 fg新笔点() = 0;
+};
+class I笔点 {
+public:
+	virtual S按键 fg按键() const = 0;
+	virtual S方向 fg坐标() const = 0;
+	virtual S方向 fg移动() const = 0;
+	virtual bool fi有效() const = 0;
+	virtual float fg压力() const = 0;	//范围0~1
+	virtual float fg旋转() const = 0;	//单位:弧度
+	virtual std::pair<float, float> fg倾斜() const = 0;	//单位:弧度
 };
 //==============================================================================
 // 按键工具
@@ -165,7 +197,7 @@ public:
 	template<typename t按键组, typename t迭代器> static void f更新顺序(C按键组 &, const t按键组 &, t迭代器 开始, t迭代器 结束);	//顺序容器,方向<-
 	template<typename t按键组, typename t迭代器> static void f更新关联l(C按键组 &, const t按键组 &, t迭代器 开始, t迭代器 结束);	//关联容器,方向<-
 	template<typename t按键组, typename t迭代器> static void f更新关联r(C按键组 &, const t按键组 &, t迭代器 开始, t迭代器 结束);	//关联容器,方向->
-	S按键 f按键(t索引 i) const;
+	S按键 fg按键(t索引 i) const;
 	void f更新(const C按键组 &);
 	void f更新(const I键盘 &);
 	void f更新(const I鼠标 &);
@@ -208,7 +240,7 @@ template<typename t按键组, typename t迭代器>
 void C按键映射::f更新顺序(C按键组 &a输出, const t按键组 &a输入, t迭代器 a开始, t迭代器 a结束) {
 	t迭代器 v迭代 = a开始;
 	for (t索引 i = 0; i != a输出.m分配数量 && v迭代 != a结束; ++i, ++v迭代) {
-		const S按键 &v按键 = a输入.f按键(*v迭代);
+		const S按键 &v按键 = a输入.fg按键(*v迭代);
 		a输出.m这次[i] |= v按键.m这次;
 	}
 }
@@ -216,7 +248,7 @@ template<typename t按键组, typename t迭代器>
 void C按键映射::f更新关联l(C按键组 &a输出, const t按键组 &a输入, t迭代器 a开始, t迭代器 a结束) {
 	for (t迭代器 v迭代 = a开始; v迭代 != a结束; ++v迭代) {
 		const auto &[v输出索引, v输入索引] = *v迭代;
-		const S按键 &v按键 = a输入.f按键(v输入索引);
+		const S按键 &v按键 = a输入.fg按键(v输入索引);
 		a输出.m这次[v输出索引] |= v按键.m这次;
 	}
 }
@@ -224,23 +256,25 @@ template<typename t按键组, typename t迭代器>
 void C按键映射::f更新关联r(C按键组 &a输出, const t按键组 &a输入, t迭代器 a开始, t迭代器 a结束) {
 	for (t迭代器 v迭代 = a开始; v迭代 != a结束; ++v迭代) {
 		const auto &[v输入索引, v输出索引] = *v迭代;
-		const S按键 &v按键 = a输入.f按键(v输入索引);
+		const S按键 &v按键 = a输入.fg按键(v输入索引);
 		a输出.m这次[v输出索引] |= v按键.m这次;
 	}
 }
-template<typename ta触控点>
-//requires std::range::ForwardRange<ta触控点> && std::is_same<typename ta触控点::value_type, tp触控点>::value
-void f清除松开触控点(ta触控点 &aa触控点) {
-	static_assert(std::is_same<typename ta触控点::value_type, tp触控点>::value);
-	aa触控点.erase(
+template<Ta指针 ta指针>
+void f清除指针(ta指针 &aa指针, const std::function<bool(const typename ta指针::value_type &)> &af) {
+	aa指针.erase(
 		std::remove_if(
-			aa触控点.begin(),
-			aa触控点.end(),
-			[](const tp触控点 &a)->bool {
-				return a->f按键().f松开();
-			}
+			aa指针.begin(),
+			aa指针.end(),
+			af
 		),
-		aa触控点.end()
+		aa指针.end()
 	);
+}
+template<Ta指针 ta指针>
+void f清除无效指针(ta指针 &aa指针) {
+	f清除指针(aa指针, [](const typename ta指针::value_type &a)->bool {
+		return !a->fi有效();
+	});
 }
 }	//namespace cflw::输入

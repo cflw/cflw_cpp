@@ -42,7 +42,7 @@ class C输入 {
 public:
 	C输入();
 	~C输入();
-	void f创建手柄(tp手柄 &, DWORD = 0);
+	输入::tp手柄 f创建手柄(DWORD = 0);
 	void f更新();
 private:
 	std::array<std::shared_ptr<C手柄>, 4> ma手柄;

@@ -377,6 +377,10 @@ void C画图形::f绘制椭圆(const 数学::S椭圆 &a椭圆) {
 void C画图形::f绘制圆角矩形(const 数学::S圆角矩形 &a) {
 	m渲染目标->DrawRoundedRectangle(m坐标计算->f圆角矩形(a.m坐标, a.m半尺寸, a.m角半径), m画笔.Get(), m线条宽度);
 }
+void C画图形::f绘制十字(const 数学::S圆形 &a) {
+	f绘制线条(数学::S线段2::fc两点({a.m坐标.x - a.m半径, a.m坐标.y}, {a.m坐标.x + a.m半径, a.m坐标.y}));
+	f绘制线条(数学::S线段2::fc两点({a.m坐标.x, a.m坐标.y - a.m半径}, {a.m坐标.x, a.m坐标.y + a.m半径}));
+}
 //填充
 void C画图形::f填充矩形(const 数学::S矩形 &a) {
 	m渲染目标->FillRectangle(m坐标计算->f矩形_中心半径(a.m坐标, a.m半尺寸), m画笔.Get());
@@ -556,8 +560,7 @@ void C修改路径几何::f点(const 数学::S向量2 &a) {
 		m几何槽->BeginFigure(m坐标计算->f点(a), D2D1_FIGURE_BEGIN_HOLLOW);
 		m当前点 = a;
 		mi开始 = true;
-	}
-	if (m当前点 != a) {
+	} else if (m当前点 != a) {
 		m几何槽->AddLine(m坐标计算->f点(a));
 		m当前点 = a;
 	}
@@ -592,6 +595,7 @@ void C修改路径几何::f连续直线(const std::vector<数学::S向量2> &a) 
 	for (size_t i = 1; i != n; ++i) {
 		m几何槽->AddLine(m坐标计算->f点(a[i]));
 	}
+	m当前点 = a.back();
 }
 void C修改路径几何::f平滑曲线(const std::vector<数学::S向量2> &a) {
 	assert(a.size() > 1);
@@ -624,7 +628,6 @@ void C修改路径几何::f断开() {
 	m几何槽->EndFigure(D2D1_FIGURE_END_OPEN);
 	mi开始 = false;
 }
-
 //==============================================================================
 // 文本工厂
 //==============================================================================

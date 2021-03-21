@@ -168,6 +168,9 @@ enum class E手柄方向 {
 	e左摇杆 = e方向键,
 	e右摇杆,
 };
+//==============================================================================
+// 类声明
+//==============================================================================
 class C输入;
 class C键盘;
 class C鼠标;
@@ -177,26 +180,27 @@ class C手柄;
 //==============================================================================
 class C输入 {
 public:
+	//构造/析构函数
+	C输入();
+	~C输入();
+	//引擎控制
+	HRESULT f初始化(HINSTANCE, HWND);
+	bool f窗口消息(UINT 消息, WPARAM 按键);
+	void f更新();
+	//设备控制
+	输入::tp键盘 f创建键盘();
+	输入::tp鼠标 f创建鼠标();
+	输入::tp手柄 f创建手柄();
+private:
+	void f获得焦点();
+	void f释放焦点();
+	static BOOL CALLBACK f回调手柄(LPCDIDEVICEINSTANCE, LPVOID);
+private:
 	HWND m窗口;
 	ComPtr<IDirectInput8W> m接口;
 	std::shared_ptr<C键盘> m键盘;
 	std::shared_ptr<C鼠标> m鼠标;
 	std::shared_ptr<C手柄> m手柄;
 	static C输入 *g这;
-	//构造/析构函数
-	C输入();
-	~C输入();
-	//引擎控制
-	HRESULT f初始化(HINSTANCE, HWND);
-	void f窗口消息(UINT 消息, WPARAM 按键);
-	void f更新();
-	//设备控制
-	HRESULT f创建键盘(tp键盘 &);
-	HRESULT f创建鼠标(tp鼠标 &);
-	HRESULT f创建手柄(tp手柄 &);
-private:
-	void f获得焦点();
-	void f释放焦点();
-	static BOOL CALLBACK f回调手柄(LPCDIDEVICEINSTANCE, LPVOID);
 };
-}
+}	//namespace cflw::输入::di8

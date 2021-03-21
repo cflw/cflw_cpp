@@ -19,22 +19,22 @@ S按键::S按键(bool a这次, bool a上次):
 S按键::operator bool() const {
 	return m这次;
 }
-bool S按键::f刚按下() const {
+bool S按键::fi刚按下() const {
 	return m这次 && !m上次;
 }
-bool S按键::f刚松开() const {
+bool S按键::fi刚松开() const {
 	return !m这次 && m上次;
 }
-bool S按键::f按下() const {
+bool S按键::fi按下() const {
 	return m这次;
 }
-bool S按键::f松开() const {
+bool S按键::fi松开() const {
 	return !m这次;
 }
-bool S按键::f持续() const {
+bool S按键::fi持续() const {
 	return m这次 == m上次;
 }
-bool S按键::f变化() const {
+bool S按键::fi变化() const {
 	return m这次 != m上次;
 }
 void S按键::f覆盖上次() & {
@@ -48,22 +48,22 @@ S方向::S方向(float X, float Y, float Z):
 	y{Y},
 	z{Z} {
 }
-bool S方向::f左() const {
+bool S方向::fi左() const {
 	return x < 0;
 }
-bool S方向::f右() const {
+bool S方向::fi右() const {
 	return x > 0;
 }
-bool S方向::f上() const {
+bool S方向::fi上() const {
 	return y > 0;
 }
-bool S方向::f下() const {
+bool S方向::fi下() const {
 	return y < 0;
 }
-bool S方向::f前() const {
+bool S方向::fi前() const {
 	return z > 0;
 }
-bool S方向::f后() const {
+bool S方向::fi后() const {
 	return z < 0;
 }
 bool S方向::fi死区(float da) const {
@@ -93,7 +93,7 @@ void C按键组::f重置数量(t数量 n) {
 t数量 C按键组::fg数量() const {
 	return m使用数量;
 }
-S按键 C按键组::f按键(t索引 i) const {
+S按键 C按键组::fg按键(t索引 i) const {
 	assert(i < m分配数量);
 	return S按键{m这次[i], m上次[i]};
 }
@@ -169,13 +169,13 @@ void C缓冲按键::f清空() {
 C缓冲方向2::C缓冲方向2():
 	m这次(), m上次() {
 }
-S方向 C缓冲方向2::f这次方向() const {
+S方向 C缓冲方向2::fg这次方向() const {
 	return S方向{m这次[0], m这次[1], 0};
 }
-S方向 C缓冲方向2::f上次方向() const {
+S方向 C缓冲方向2::fg上次方向() const {
 	return S方向{m上次[0], m上次[1], 0};
 }
-S方向 C缓冲方向2::f方向差() const {
+S方向 C缓冲方向2::fg方向差() const {
 	return S方向{m这次[0] - m上次[0], m这次[1] - m上次[0], 0};
 }
 void C缓冲方向2::f覆盖上次() & {
@@ -192,7 +192,7 @@ void C缓冲方向2::f清空这次() & {
 C方向3::C方向3() {
 	m方向[0] = m方向[1] = m方向[2] = 0;
 }
-S方向 C方向3::f方向() const {
+S方向 C方向3::fg方向() const {
 	return S方向{m方向[0], m方向[1], m方向[2]};
 }
 bool C方向3::fi死区(float da) const {
@@ -203,7 +203,7 @@ bool C方向3::fi死区(float da) const {
 //==============================================================================
 template<typename t接口> void f按键映射更新接口(C按键映射 &a映射, const t接口 &a接口) {
 	for (const auto &[v源, v目标] : a映射.ma映射) {
-		const S按键 v按键 = a接口.f按键(v目标);
+		const S按键 v按键 = a接口.fg按键(v目标);
 		a映射.m按键.m这次[v源] = v按键.m这次;
 		a映射.m按键.m上次[v源] = v按键.m上次;
 	}
@@ -212,8 +212,8 @@ C按键映射::C按键映射() {
 }
 C按键映射::~C按键映射() {
 }
-S按键 C按键映射::f按键(t索引 i) const {
-	return m按键.f按键(i);
+S按键 C按键映射::fg按键(t索引 i) const {
+	return m按键.fg按键(i);
 }
 void C按键映射::f更新(const C按键组 &a按键) {
 	for (const auto &[v源, v目标] : ma映射) {
@@ -243,34 +243,34 @@ C方向键::C方向键(t索引 a正, t索引 a反):
 }
 float C方向键::f计算(float a方向, const S按键 &a正向键, const S按键 &a反向键) {
 	if (a方向 == 0) {
-		if (a正向键.f按下()) {
+		if (a正向键.fi按下()) {
 			return 1;
-		} else if (a反向键.f按下()) {
+		} else if (a反向键.fi按下()) {
 			return -1;
 		}
 	} else if (a方向 > 0) {
-		if (a反向键.f刚按下()) {
+		if (a反向键.fi刚按下()) {
 			return -1;
-		} else if (a正向键.f松开()) {
+		} else if (a正向键.fi松开()) {
 			return 0;
 		}
 	} else {//p < 0
-		if (a正向键.f刚按下()) {
+		if (a正向键.fi刚按下()) {
 			return 1;
-		} else if (a反向键.f松开()) {
+		} else if (a反向键.fi松开()) {
 			return 0;
 		}
 	}
 	return a方向;
 }
 void C方向键::f更新(const C按键组 &a按键) {
-	const S按键 v正向键 = a按键.f按键(m正向键);
-	const S按键 v反向键 = a按键.f按键(m反向键);
+	const S按键 v正向键 = a按键.fg按键(m正向键);
+	const S按键 v反向键 = a按键.fg按键(m反向键);
 	m方向 = f计算(m方向, v正向键, v反向键);
 }
 void C方向键::f更新(I键盘 &a键盘) {
-	const S按键 v正向键 = a键盘.f按键(m正向键);
-	const S按键 v反向键 = a键盘.f按键(m反向键);
+	const S按键 v正向键 = a键盘.fg按键(m正向键);
+	const S按键 v反向键 = a键盘.fg按键(m反向键);
 	m方向 = f计算(m方向, v正向键, v反向键);
 }
 void C方向键::fs正反键(t索引 a正, t索引 a反) {
@@ -281,10 +281,10 @@ void C方向键::fs正反键(t索引 a正, t索引 a反) {
 // 按住重复
 //==============================================================================
 std::tuple<bool, S按键> C互斥键::f计算(const S按键 &a正, const S按键 &a反) {
-	if (a正.f刚按下()) {
+	if (a正.fi刚按下()) {
 		m键 = true;
 		return {m键, a正};
-	} else if (a反.f刚按下()) {
+	} else if (a反.fi刚按下()) {
 		m键 = false;
 		return {m键, a反};
 	}
@@ -304,11 +304,11 @@ void C按住重复::fs重置时间(float a延迟, float a间隔) {
 	m间隔 = a间隔;
 }
 bool C按住重复::f滴答(const S按键 &a按键, float a时间) {
-	if (a按键.f刚按下()) {
+	if (a按键.fi刚按下()) {
 		m次数 = 0;
 		m时间 = 0;
 		return true;
-	} else if (a按键.f按下()) {
+	} else if (a按键.fi按下()) {
 		auto f比较 = [this](float a间隔) {
 			if (m时间 >= a间隔) {
 				++m次数;

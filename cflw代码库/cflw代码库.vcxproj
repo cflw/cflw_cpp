@@ -192,6 +192,7 @@
     <ClInclude Include="cflw数学_单位转换.h" />
     <ClInclude Include="cflw数学_向量.h" />
     <ClInclude Include="cflw数学_图形.h" />
+    <ClInclude Include="cflw数学_常数.h" />
     <ClInclude Include="cflw数学_平面几何.h" />
     <ClInclude Include="cflw数学_杂烩.h" />
     <ClInclude Include="cflw数学_矩阵.h" />
@@ -203,12 +204,14 @@
     <ClInclude Include="cflw时间.h" />
     <ClInclude Include="cflw工具_运算.h" />
     <ClInclude Include="cflw物理_二维.h" />
+    <ClInclude Include="cflw物理_常数.h" />
     <ClInclude Include="cflw视窗.h" />
     <ClInclude Include="cflw辅助.h" />
     <ClInclude Include="cflw工具_循环.h" />
     <ClInclude Include="cflw输入.h" />
     <ClInclude Include="cflw输入_di8.h" />
     <ClInclude Include="cflw输入_win.h" />
+    <ClInclude Include="cflw输入_win8.h" />
     <ClInclude Include="cflw输入_xi.h" />
     <ClInclude Include="cflw音频_xa2.h" />
   </ItemGroup>
@@ -253,6 +256,7 @@
     <ClCompile Include="cflw输入.cpp" />
     <ClCompile Include="cflw输入_di8.cpp" />
     <ClCompile Include="cflw输入_win.cpp" />
+    <ClCompile Include="cflw输入_win8.cpp" />
     <ClCompile Include="cflw输入_xi.cpp" />
     <ClCompile Include="cflw音频_xa2.cpp" />
     <ClCompile Include="常用代码\窗口模板.cpp">

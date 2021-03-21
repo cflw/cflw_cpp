@@ -14,15 +14,6 @@ namespace cflw::数学 {
 //标准库类型
 template<typename t = double> using t复数 = std::complex<t>;
 //==============================================================================
-// 数学常数
-//==============================================================================
-template<typename t = double> constexpr t c半π = t(1.5707963267948966192313216916398);
-template<typename t = double> constexpr t cπ = t(3.1415926535897932384626433832795);
-template<typename t = double> constexpr t c二π = t(6.283185307179586476925286766559);
-template<typename t = double> constexpr t c根号2 = t(1.4142135623730950488016887242097);
-template<typename t = double> constexpr t c度到弧度 = t(0.01745329251994329576923690768489);
-template<typename t = double> constexpr t c弧度到度 = t(57.295779513082320876798154814105);
-//==============================================================================
 // 基本数学函数&全局偷懒函数
 //==============================================================================
 int f取整数位数(const int &);
@@ -62,6 +53,7 @@ template<typename t> t f反勾股(const t &, const t &);	//已知斜边和一直
 template<typename t> t f四舍五入(const t &);	//
 template<typename t> t f等腰梯形插值(const t &小, const t &大, float 斜宽, float 中间值);
 template<typename t> t f平均(const t &, const t &);	//(a+b)/2
+template<typename t> t f距离(const t &, const t &);	//b-a
 template<typename t> t f半距离(const t &, const t &);	//(b-a)/2
 template<typename...t参数> auto f算术平均(t参数 &&...);
 template<typename...t参数> auto f几何平均(t参数 &&...);

@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include <vector>
 #include <Windows.h>
 #include "cflw输入.h"
 namespace cflw::输入::win {
@@ -213,27 +212,32 @@ enum class E鼠标按键 {
 	e后退,
 };
 //==============================================================================
-// 设备
+// 类声明
 //==============================================================================
 class C输入;
 class C键盘;
 class C鼠标;
 class C触摸;
 class C触控点;
-//输入
+//==============================================================================
+// 输入引擎
+//==============================================================================
 class C输入 {
 public:
 	~C输入();
 	//引擎控制
 	void f初始化(HWND, float 缩放 = 0);
 	void f销毁();
-	void f窗口消息(UINT 消息, WPARAM, LPARAM);
+	bool f窗口消息(UINT 消息, WPARAM, LPARAM);	//有处理消息返回true
+	bool f键盘消息(UINT 消息, WPARAM, LPARAM);
+	bool f鼠标消息(UINT 消息, WPARAM, LPARAM);
+	bool f触摸消息(UINT 消息, WPARAM, LPARAM);
 	void f更新();
 	void fs缩放(float);
 	//设备控制
-	void f创建键盘(tp键盘 &);
-	void f创建鼠标(tp鼠标 &);
-	void f创建触摸(tp触摸 &);
+	输入::tp键盘 f创建键盘();
+	输入::tp鼠标 f创建鼠标();
+	输入::tp触摸 f创建触摸();	//win7起支持
 public:
 	HWND m窗口;
 	float m缩放 = 1;

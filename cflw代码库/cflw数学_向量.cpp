@@ -1,5 +1,6 @@
 ﻿#include <assert.h>
 #include "cflw数学.h"
+#include "cflw数学_常数.h"
 #include "cflw数学_向量.h"
 #include "cflw数学_函数方程.h"
 #include "cflw数学_平面几何.h"

@@ -142,6 +142,15 @@
     <ClInclude Include="cflw物理_二维.h">
       <Filter>数学</Filter>
     </ClInclude>
+    <ClInclude Include="cflw输入_win8.h">
+      <Filter>输入</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw数学_常数.h">
+      <Filter>数学</Filter>
+    </ClInclude>
+    <ClInclude Include="cflw物理_常数.h">
+      <Filter>数学</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cflw数学_单位转换.cpp">
@@ -242,6 +251,9 @@
     </ClCompile>
     <ClCompile Include="cflw物理_二维.cpp">
       <Filter>数学</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw输入_win8.cpp">
+      <Filter>输入</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

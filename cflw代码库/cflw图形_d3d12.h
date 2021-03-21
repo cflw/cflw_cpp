@@ -11,6 +11,7 @@
 #include "cflw数学_图形.h"
 #include "cflw图形_dx纹理.h"
 #ifdef _WINDOWS
+#pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3d12.lib")
 #endif

@@ -458,6 +458,7 @@ class C纹理工厂 {
 public:
 	~C纹理工厂();
 	HRESULT f初始化(ID3D11Device *);
+	纹理::C图像工厂 &fg图像工厂();
 public:	//创建纹理
 	HRESULT f从文件创建纹理资源视图(tp纹理资源视图 &输出, const std::wstring_view &文件);
 	HRESULT f从文件创建纹理资源视图c(tp纹理资源视图 &输出, const std::wstring_view *文件);

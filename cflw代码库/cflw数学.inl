@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "cflw数学.h"
+#include "cflw数学_常数.h"
 namespace cflw::数学 {
 //==============================================================================
 // 基本数学函数
@@ -157,6 +158,9 @@ template<typename t> t f等腰梯形插值(const t &a小, const t &a大, float a
 }
 template<typename t> t f平均(const t &a, const t &b) {
 	return (a + b) / 2;
+}
+template<typename t> t f距离(const t &a, const t &b) {
+	return b - a;
 }
 template<typename t> t f半距离(const t &a, const t &b) {
 	return (b - a) / 2;

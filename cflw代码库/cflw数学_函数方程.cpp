@@ -1,5 +1,4 @@
-﻿#include <assert.h>
-#include "cflw数学.h"
+﻿#include <cassert>
 #include "cflw数学_函数方程.h"
 #include "cflw数学_向量.h"
 namespace cflw::数学 {
@@ -142,5 +141,4 @@ F正幂函数2 F正幂函数2::fc三点(const S向量2 &p1, const S向量2 &p2, 
 float F正幂函数2::operator()(float x) const {
 	return std::pow(x, a) + b;
 }
-
 }	//namespace cflw::数学

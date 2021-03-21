@@ -965,6 +965,9 @@ HRESULT C纹理工厂::f初始化(ID3D11Device *a设备) {
 	m工厂 = std::make_unique<纹理::C图像工厂>();
 	return m工厂->f初始化();
 }
+纹理::C图像工厂 &C纹理工厂::fg图像工厂() {
+	return *m工厂;
+}
 //创建纹理
 HRESULT C纹理工厂::f从文件创建纹理资源视图(tp纹理资源视图 &a输出, const std::wstring_view &a文件) {
 	std::unique_ptr<纹理::C只读纹理> v纹理 = m工厂->f一键读取(a文件);

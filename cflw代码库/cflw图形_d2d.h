@@ -183,6 +183,7 @@ public:
 	void f绘制圆形(const 数学::S圆形 &);
 	void f绘制椭圆(const 数学::S椭圆 &);
 	void f绘制圆角矩形(const 数学::S圆角矩形 &);
+	void f绘制十字(const 数学::S圆形 &);
 	//填充
 	void f填充矩形(const 数学::S矩形 &);
 	void f填充圆形(const 数学::S圆形 &);
