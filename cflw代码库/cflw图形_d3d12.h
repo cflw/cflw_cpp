@@ -479,6 +479,7 @@ public:
 	};
 	void f清空();
 	void f添加(E类型, int 大小);
+	void f添加(E类型, int 大小, int 数量);
 	void f添加(const char *, int 大小);
 	D3D12_INPUT_LAYOUT_DESC fg输入层描述() const;
 private:

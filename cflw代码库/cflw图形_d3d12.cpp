@@ -4,6 +4,12 @@
 #include "cflw视窗.h"
 #include "cflw辅助.h"
 namespace cflw::图形::d3d12 {
+D3D12_SHADER_BYTECODE ft着色器字节码(const std::span<const std::byte> &a) {
+	D3D12_SHADER_BYTECODE v;
+	v.pShaderBytecode = a.data();
+	v.BytecodeLength = a.size();
+	return v;
+}
 //==============================================================================
 // 三维
 //==============================================================================
@@ -789,34 +795,40 @@ D3D12_STATIC_SAMPLER_DESC C渲染状态::ft静态采样器(const D3D12_SAMPLER_D
 //==============================================================================
 // 顶点格式
 //==============================================================================
+static const char*const ca顶点语义[] = {
+	"POSITION",
+	"NORMAL",
+	"BINORMAL",
+	"COLOR",
+	"TEXCOORD",
+	"PSIZE",
+	"TANGENT",
+	"ALPHA"
+};
 void C顶点格式::f清空() {
 	m数组.clear();
 	m类型累计.clear();
 	m字节累计 = 0;
 }
 void C顶点格式::f添加(E类型 a类型, int a大小) {
-	static const char*const v语义[] = {
-		"POSITION",
-		"NORMAL",
-		"BINORMAL",
-		"COLOR",
-		"TEXCOORD",
-		"PSIZE",
-		"TANGENT",
-		"ALPHA"
-	};
-	f添加(v语义[a类型], a大小);
+	f添加(ca顶点语义[a类型], a大小);
+}
+void C顶点格式::f添加(E类型 a类型, int a大小, int a数量) {
+	for (int i = 0; i != a数量; ++i) {
+		f添加(ca顶点语义[a类型], a大小);
+	}
 }
 void C顶点格式::f添加(const char *a语义, int a大小) {
-	static const DXGI_FORMAT v格式[] = {
+	static const DXGI_FORMAT ca格式[] = {
 		DXGI_FORMAT_R32_FLOAT,
 		DXGI_FORMAT_R32G32_FLOAT,
 		DXGI_FORMAT_R32G32B32_FLOAT,
 		DXGI_FORMAT_R32G32B32A32_FLOAT
 	};
+	assert(a大小 <= _countof(ca格式));
 	D3D12_INPUT_ELEMENT_DESC v;
 	v.AlignedByteOffset = m字节累计;
-	v.Format = v格式[a大小 - 1];
+	v.Format = ca格式[a大小 - 1];
 	m字节累计 += a大小 * 4;
 	v.SemanticName = a语义;
 	auto &v语义索引 = m类型累计[a语义];
@@ -1218,24 +1230,24 @@ void S图形管线参数::fs根签名(ID3D12RootSignature *a) {
 	pRootSignature = a;
 }
 void S图形管线参数::fs顶点着色器(const std::span<const std::byte> &a) {
-	VS.pShaderBytecode = a.data();
-	VS.BytecodeLength = a.size();
+	assert(!a.empty());
+	VS = ft着色器字节码(a);
 }
 void S图形管线参数::fs像素着色器(const std::span<const std::byte> &a) {
-	PS.pShaderBytecode = a.data();
-	PS.BytecodeLength = a.size();
+	assert(!a.empty());
+	PS = ft着色器字节码(a);
 }
 void S图形管线参数::fs几何着色器(const std::span<const std::byte> &a) {
-	GS.pShaderBytecode = a.data();
-	GS.BytecodeLength = a.size();
+	assert(!a.empty());
+	GS = ft着色器字节码(a);
 }
 void S图形管线参数::fs外壳着色器(const std::span<const std::byte> &a) {
-	HS.pShaderBytecode = a.data();
-	HS.BytecodeLength = a.size();
+	assert(!a.empty());
+	HS = ft着色器字节码(a);
 }
 void S图形管线参数::fs域着色器(const std::span<const std::byte> &a) {
-	DS.pShaderBytecode = a.data();
-	DS.BytecodeLength = a.size();
+	assert(!a.empty());
+	DS = ft着色器字节码(a);
 }
 void S图形管线参数::fs光栅化(const D3D12_RASTERIZER_DESC &a) {
 	RasterizerState = a;
@@ -1274,8 +1286,7 @@ void S计算管线参数::fs根签名(ID3D12RootSignature *a) {
 	pRootSignature = a;
 }
 void S计算管线参数::fs计算着色器(const std::span<const std::byte> &a) {
-	CS.pShaderBytecode = a.data();
-	CS.BytecodeLength = a.size();
+	CS = ft着色器字节码(a);
 }
 //==============================================================================
 // 堆属性

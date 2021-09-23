@@ -33,27 +33,27 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -201,6 +201,7 @@
     <ClInclude Include="cflw文件_csv.h" />
     <ClInclude Include="cflw文件_json.h" />
     <ClInclude Include="cflw文件_obj模型.h" />
+    <ClInclude Include="cflw日期时间.h" />
     <ClInclude Include="cflw时间.h" />
     <ClInclude Include="cflw工具_运算.h" />
     <ClInclude Include="cflw物理_二维.h" />
@@ -244,6 +245,7 @@
     <ClCompile Include="cflw文件_csv.cpp" />
     <ClCompile Include="cflw文件_json.cpp" />
     <ClCompile Include="cflw文件_obj模型.cpp" />
+    <ClCompile Include="cflw日期时间.cpp" />
     <ClCompile Include="cflw时间.cpp" />
     <ClCompile Include="cflw物理_二维.cpp" />
     <ClCompile Include="cflw视窗.cpp" />

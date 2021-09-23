@@ -298,19 +298,20 @@ public:
 	void fs域着色器(ID3D11DomainShader *);
 	//状态控制
 	void fs混合(ID3D11BlendState * = nullptr, const 数学::S颜色 & = {0, 0, 0, 0}, UINT = 0xffffffff);
-	void fs深度模板(ID3D11DepthStencilState * = nullptr, UINT = 1);
+	void fs深度模板(ID3D11DepthStencilState *);
 	void fs模板参考值(UINT);
 	void fs光栅化(ID3D11RasterizerState *);
 	void fs顶点缓冲(ID3D11Buffer *, UINT 单位大小);
 	void fs索引缓冲(ID3D11Buffer *);
-	void fs常量缓冲(UINT, ID3D11Buffer *);
+	void fs常量缓冲(UINT, ID3D11Buffer *);	//绑定到cbuffer
 	void fs常量缓冲v(UINT, ID3D11Buffer *);
 	void fs常量缓冲p(UINT, ID3D11Buffer *);
 	void fs常量缓冲g(UINT, ID3D11Buffer *);
 	void fs常量缓冲h(UINT, ID3D11Buffer *);
 	void fs常量缓冲d(UINT, ID3D11Buffer *);
-	void fs纹理(UINT, ID3D11ShaderResourceView *);
-	void fs采样器(UINT, ID3D11SamplerState *);
+	void fs纹理(UINT, ID3D11ShaderResourceView *);	//绑定到Texture2D
+	void fs纹理数组(UINT, ID3D11ShaderResourceView *const *, UINT 数量);	//绑定到Texture2D[]
+	void fs采样器(UINT, ID3D11SamplerState *);	//绑定到SamplerState
 	void fs输入布局(ID3D11InputLayout *);
 	void fs图元拓扑(E图元拓扑);
 	void f更新资源(ID3D11Buffer *, const void *);
@@ -320,6 +321,7 @@ private:
 	数学::S颜色 m清屏颜色 = 数学::S颜色::c黑;
 	float m清屏深度 = c清屏深度r;
 	UINT8 m清屏模板 = 0;
+	UINT m模板参考值 = 0;
 };
 class C自动缓冲 {
 public:
@@ -443,6 +445,7 @@ public:
 	int m字节累计 = 0;
 	void f清空();
 	void f添加(E类型, int 大小);
+	void f添加(E类型, int 大小, int 数量);
 	void f添加(const char *, int 大小);
 };
 //创建缓存
@@ -460,13 +463,16 @@ public:
 	HRESULT f初始化(ID3D11Device *);
 	纹理::C图像工厂 &fg图像工厂();
 public:	//创建纹理
-	HRESULT f从文件创建纹理资源视图(tp纹理资源视图 &输出, const std::wstring_view &文件);
-	HRESULT f从文件创建纹理资源视图c(tp纹理资源视图 &输出, const std::wstring_view *文件);
+	HRESULT f从文件创建纹理资源视图(tp纹理资源视图 &输出, const std::wstring_view &文件);	//一个
+	HRESULT f从文件创建纹理资源视图a(tp纹理资源视图 &输出, const std::wstring_view *文件, UINT 数量);	//数组
+	HRESULT f从文件创建纹理资源视图c(tp纹理资源视图 &输出, const std::wstring_view *文件);	//立方
 	HRESULT f从纹理对象创建纹理资源视图(tp纹理资源视图 &, const 纹理::I纹理 &);
 	HRESULT f从内存创建纹理2(tp纹理2 &输出, const void *数据, DXGI_FORMAT 格式, UINT 宽, UINT 高, UINT 行距, UINT 图像大小);
 	HRESULT f从纹理对象创建纹理2(tp纹理2 &输出, const 纹理::I纹理 &纹理);
+	HRESULT f从纹理对象创建纹理a(tp纹理2 &输出, const 纹理::I纹理 *纹理[], UINT 数量);
 	HRESULT f从纹理对象创建纹理c(tp纹理2 &输出, const 纹理::I纹理 *纹理[]); //纹理顺序: +x -x +y -y +z -z
 	HRESULT f从纹理资源创建纹理资源视图(tp纹理资源视图 &输出, const tp纹理2 &, const D3D11_TEXTURE2D_DESC &纹理描述);
+	HRESULT f从纹理资源创建纹理资源视图a(tp纹理资源视图 &输出, const tp纹理2 &, const D3D11_TEXTURE2D_DESC &纹理描述);
 	HRESULT f从纹理资源创建纹理资源视图c(tp纹理资源视图 &输出, const tp纹理2 &, const D3D11_TEXTURE2D_DESC &纹理描述);
 	const D3D11_TEXTURE2D_DESC &fg最近纹理描述() const;
 private:

@@ -212,7 +212,7 @@ bool C三维::f初始化(HWND a) {
 		m上下文->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		fs视口();
 		return true;
-	} catch (HRESULT hr) {
+	} catch (HRESULT) {
 		return false;
 	}
 }
@@ -492,12 +492,12 @@ HRESULT C创建设备::f取显卡_性能(IDXGIAdapter1 **a输出) {
 void C创建设备::fs调试标志(bool a) {
 	m创建标志 = 辅助::f位赋值<UINT>(m创建标志, D3D11_CREATE_DEVICE_DEBUG, a);
 }
-HRESULT C创建设备::f创建设备(IDXGIAdapter1 *p显卡, ID3D11Device **a设备, ID3D11DeviceContext **p上下文) {
-	HRESULT hr = D3D11CreateDevice(p显卡, D3D_DRIVER_TYPE_UNKNOWN, nullptr, m创建标志, c功能级别组, c功能级别数, D3D11_SDK_VERSION, a设备, &m功能级别, p上下文);
+HRESULT C创建设备::f创建设备(IDXGIAdapter1 *p显卡, ID3D11Device **a设备, ID3D11DeviceContext **a上下文) {
+	HRESULT hr = D3D11CreateDevice(p显卡, D3D_DRIVER_TYPE_UNKNOWN, nullptr, m创建标志, c功能级别组, c功能级别数, D3D11_SDK_VERSION, a设备, &m功能级别, a上下文);
 	return hr;
 }
-HRESULT C创建设备::f创建软件设备(ID3D11Device **a设备, ID3D11DeviceContext **p上下文) {
-	HRESULT hr = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_WARP, nullptr, m创建标志, c功能级别组, c功能级别数, D3D11_SDK_VERSION, a设备, &m功能级别, p上下文);
+HRESULT C创建设备::f创建软件设备(ID3D11Device **a设备, ID3D11DeviceContext **a上下文) {
+	HRESULT hr = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_WARP, nullptr, m创建标志, c功能级别组, c功能级别数, D3D11_SDK_VERSION, a设备, &m功能级别, a上下文);
 	return hr;
 }
 //==============================================================================
@@ -571,15 +571,14 @@ void C渲染控制::fs域着色器(ID3D11DomainShader *a) {
 void C渲染控制::fs混合(ID3D11BlendState *a混合, const 数学::S颜色 &a颜色, UINT a掩码) {
 	m三维->m上下文->OMSetBlendState(a混合, (float*)&a颜色, a掩码);
 }
-void C渲染控制::fs深度模板(ID3D11DepthStencilState *a深度模板, UINT a参考) {
-	m三维->m上下文->OMSetDepthStencilState(a深度模板, a参考);
+void C渲染控制::fs深度模板(ID3D11DepthStencilState *a深度模板) {
+	m三维->m上下文->OMSetDepthStencilState(a深度模板, m模板参考值);
 }
 void C渲染控制::fs模板参考值(UINT a参考) {
 	ComPtr<ID3D11DepthStencilState> v深度模板;
-	UINT v参考;
-	m三维->m上下文->OMGetDepthStencilState(&v深度模板, &v参考);
-	v参考 = a参考;
-	m三维->m上下文->OMSetDepthStencilState(v深度模板.Get(), v参考);
+	m三维->m上下文->OMGetDepthStencilState(&v深度模板, &m模板参考值);
+	m模板参考值 = a参考;
+	m三维->m上下文->OMSetDepthStencilState(v深度模板.Get(), m模板参考值);
 }
 void C渲染控制::fs光栅化(ID3D11RasterizerState *a光栅化) {
 	m三维->m上下文->RSSetState(a光栅化);
@@ -615,6 +614,9 @@ void C渲染控制::fs常量缓冲d(UINT a位置, ID3D11Buffer *a缓冲) {
 }
 void C渲染控制::fs纹理(UINT a位置, ID3D11ShaderResourceView *a纹理) {
 	m三维->m上下文->PSSetShaderResources(a位置, 1, &a纹理);
+}
+void C渲染控制::fs纹理数组(UINT a位置, ID3D11ShaderResourceView *const *aa纹理, UINT a数量) {
+	m三维->m上下文->PSSetShaderResources(a位置, a数量, aa纹理);
 }
 void C渲染控制::fs采样器(UINT a位置, ID3D11SamplerState *a采样器) {
 	m三维->m上下文->PSSetSamplers(a位置, 1, &a采样器);
@@ -690,8 +692,8 @@ C自动缓冲::C缓冲::C缓冲(ID3D11DeviceContext &a上下文, C缓冲工厂 &
 	m上下文(&a上下文), m缓冲工厂(&a缓冲工厂), m标志(a标志) {
 }
 void C自动缓冲::C缓冲::f初始化(size_t a单位大小, size_t a数量) {
-	m单位大小 = a单位大小;
-	m缓冲大小 = m单位大小 * a数量;
+	m单位大小 = (UINT)a单位大小;
+	m缓冲大小 = m单位大小 * (UINT)a数量;
 	m缓冲工厂->f创建缓冲(m缓冲, nullptr, m缓冲大小, m标志, e动态);
 	m修改 = 0;
 }
@@ -713,15 +715,16 @@ bool C自动缓冲::C缓冲::f取消映射() {
 	m映射 = nullptr;
 	return true;
 }
-bool C自动缓冲::C缓冲::f复制(const void *p指针, size_t a大小) {
+bool C自动缓冲::C缓冲::f复制(const void *a指针, size_t a大小) {
 	if (m映射 == nullptr) {
 		f映射();
 	}
-	const unsigned int v目标 = m修改 + a大小;
+	assert(m映射);	//应该不存在映射失败的情况
+	const unsigned int v目标 = m修改 + (UINT)a大小;
 	const bool v可用 = v目标 <= m缓冲大小;
 	assert(v可用);
 	if (v可用) {
-		memcpy(m映射 + m修改, p指针, a大小);
+		memcpy(m映射 + m修改, a指针, a大小);
 		m修改 = v目标;
 	}
 	return v可用;
@@ -884,34 +887,40 @@ C渲染状态::C渲染状态(ID3D11Device *a设备) {
 //==============================================================================
 // 顶点格式
 //==============================================================================
+static const char *const ca顶点语义[] = {
+	"POSITION",
+	"NORMAL",
+	"BINORMAL",
+	"COLOR",
+	"TEXCOORD",
+	"PSIZE",
+	"TANGENT",
+	"ALPHA"
+};
 void C顶点格式::f清空() {
 	m数组.clear();
 	m类型累计.clear();
 	m字节累计 = 0;
 }
 void C顶点格式::f添加(E类型 a类型, int a大小) {
-	static const char *const ca语义[] = {
-		"POSITION",
-		"NORMAL",
-		"BINORMAL",
-		"COLOR",
-		"TEXCOORD",
-		"PSIZE",
-		"TANGENT",
-		"ALPHA"
-	};
-	f添加(ca语义[a类型], a大小);
+	f添加(ca顶点语义[a类型], a大小);
+}
+void C顶点格式::f添加(E类型 a类型, int a大小, int a数量) {
+	for (int i = 0; i != a数量; ++i) {
+		f添加(ca顶点语义[a类型], a大小);
+	}
 }
 void C顶点格式::f添加(const char *a语义, int a大小) {
-	static const DXGI_FORMAT v格式[] = {
+	static constexpr DXGI_FORMAT ca格式[] = {
 		DXGI_FORMAT_R32_FLOAT,
 		DXGI_FORMAT_R32G32_FLOAT,
 		DXGI_FORMAT_R32G32B32_FLOAT,
 		DXGI_FORMAT_R32G32B32A32_FLOAT
 	};
+	assert(a大小 <= _countof(ca格式));
 	D3D11_INPUT_ELEMENT_DESC v;
 	v.AlignedByteOffset = m字节累计;
-	v.Format = v格式[a大小-1];
+	v.Format = ca格式[a大小-1];
 	m字节累计 += a大小 * 4;
 	v.SemanticName = a语义;
 	auto &v语义索引 = m类型累计[a语义];
@@ -934,6 +943,7 @@ HRESULT C缓冲工厂::f创建缓冲(tp缓冲 &a输出, const void *a数据, UIN
 	switch (a用法) {
 	case e暂存:
 		v描述.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+		break;
 	case e动态:
 		v描述.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		break;
@@ -982,24 +992,39 @@ HRESULT C纹理工厂::f从文件创建纹理资源视图(tp纹理资源视图 &
 	hr = f从纹理资源创建纹理资源视图(a输出, v纹理2.Get(), m纹理描述);
 	return hr;
 }
+HRESULT C纹理工厂::f从文件创建纹理资源视图a(tp纹理资源视图 &a输出, const std::wstring_view *aa文件, UINT a数量) {
+	std::vector<std::unique_ptr<纹理::C只读纹理>> va纹理;
+	std::vector<const 纹理::I纹理 *> vp纹理;
+	va纹理.reserve(a数量);
+	vp纹理.reserve(a数量);
+	for (size_t i = 0; i != a数量; ++i) {
+		std::unique_ptr<纹理::C只读纹理> v纹理 = m工厂->f一键读取(aa文件[i]);
+		if (v纹理 == nullptr) {
+			return E_FAIL;
+		}
+		vp纹理.push_back(v纹理.get());
+		va纹理.push_back(std::move(v纹理));
+	}
+	tp纹理2 v纹理2;
+	HRESULT hr = f从纹理对象创建纹理a(v纹理2, vp纹理.data(), a数量);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	hr = f从纹理资源创建纹理资源视图a(a输出, v纹理2.Get(), m纹理描述);
+	return hr;
+}
 HRESULT C纹理工厂::f从文件创建纹理资源视图c(tp纹理资源视图& a输出, const std::wstring_view* aa文件) {
 	constexpr UINT c数量 = 6;
 	std::unique_ptr<纹理::C只读纹理> va纹理[c数量];
+	const 纹理::I纹理 *vp纹理[c数量];
 	for (UINT i = 0; i != c数量; ++i) {
 		va纹理[i] = m工厂->f一键读取(aa文件[i]);
 		if (va纹理[i] == nullptr) {
 			return E_FAIL;
 		}
+		vp纹理[i] = va纹理[i].get();
 	}
 	tp纹理2 v纹理2;
-	const 纹理::I纹理 *vp纹理[] = {	//当做不知道unique_ptr的内存布局,手动转换数组类型
-		va纹理[0].get(),
-		va纹理[1].get(),
-		va纹理[2].get(),
-		va纹理[3].get(),
-		va纹理[4].get(),
-		va纹理[5].get(),
-	};
 	HRESULT hr = f从纹理对象创建纹理c(v纹理2, vp纹理);
 	if (FAILED(hr)) {
 		return hr;
@@ -1036,7 +1061,28 @@ HRESULT C纹理工厂::f从内存创建纹理2(tp纹理2 &a输出, const void *a
 	return hr;
 }
 HRESULT C纹理工厂::f从纹理对象创建纹理2(tp纹理2 &a输出, const 纹理::I纹理 &a纹理) {
-	return f从内存创建纹理2(a输出, a纹理.fg数据(), a纹理.fg格式(), a纹理.fg宽(), a纹理.fg高(), a纹理.fg行距(), a纹理.fg图像大小());
+	return f从内存创建纹理2(a输出, a纹理.fg数据(), a纹理.fg格式(), a纹理.fg宽(), a纹理.fg高(), a纹理.fg行距(), (UINT)a纹理.fg图像大小());
+}
+HRESULT C纹理工厂::f从纹理对象创建纹理a(tp纹理2 &a输出, const 纹理::I纹理 *aa纹理[], UINT a数量) {
+	const UINT v长度 = (UINT)aa纹理[0]->fg宽();
+	m纹理描述.Width = v长度;
+	m纹理描述.Height = v长度;
+	m纹理描述.MipLevels = 1;
+	m纹理描述.ArraySize = a数量;
+	m纹理描述.Format = aa纹理[0]->fg格式();
+	m纹理描述.SampleDesc.Count = 1;
+	m纹理描述.SampleDesc.Quality = 0;
+	m纹理描述.Usage = D3D11_USAGE_DEFAULT;
+	m纹理描述.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	m纹理描述.CPUAccessFlags = 0;
+	std::vector<D3D11_SUBRESOURCE_DATA> va资源描述(a数量);
+	for (UINT i = 0; i != a数量; ++i) {
+		va资源描述[i].pSysMem = aa纹理[i]->fg数据();
+		va资源描述[i].SysMemPitch = (UINT)aa纹理[i]->fg行距();
+		va资源描述[i].SysMemSlicePitch = (UINT)aa纹理[i]->fg图像大小();
+	}
+	HRESULT hr = m设备->CreateTexture2D(&m纹理描述, va资源描述.data(), &a输出);
+	return hr;
 }
 HRESULT C纹理工厂::f从纹理对象创建纹理c(tp纹理2 &a输出, const 纹理::I纹理 *aa纹理[]) {
 	constexpr UINT c数量 = 6;
@@ -1069,6 +1115,15 @@ HRESULT C纹理工厂::f从纹理资源创建纹理资源视图(tp纹理资源�
 	HRESULT hr = m设备->CreateShaderResourceView(a纹理.Get(), &v描述, &a输出);
 	return hr;
 }
+HRESULT C纹理工厂::f从纹理资源创建纹理资源视图a(tp纹理资源视图 &a输出, const tp纹理2 &a纹理, const D3D11_TEXTURE2D_DESC &a纹理描述) {
+	D3D11_SHADER_RESOURCE_VIEW_DESC v描述 = {};
+	v描述.Format = a纹理描述.Format;
+	v描述.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
+	v描述.Texture2DArray.ArraySize = a纹理描述.ArraySize;
+	v描述.Texture2DArray.MipLevels = a纹理描述.MipLevels;
+	HRESULT hr = m设备->CreateShaderResourceView(a纹理.Get(), &v描述, &a输出);
+	return hr;
+}
 HRESULT C纹理工厂::f从纹理资源创建纹理资源视图c(tp纹理资源视图 &a输出, const tp纹理2 &a纹理, const D3D11_TEXTURE2D_DESC &a纹理描述) {
 	D3D11_SHADER_RESOURCE_VIEW_DESC v描述 = {};
 	v描述.Format = a纹理描述.Format;
@@ -1087,18 +1142,23 @@ void S图形管线参数::fs输入布局(const C顶点格式 &a) {
 	m顶点格式 = &a;
 }
 void S图形管线参数::fs顶点着色器(const std::span<const std::byte> &a) {
+	assert(!a.empty());
 	m顶点着色器 = a;
 }
 void S图形管线参数::fs像素着色器(const std::span<const std::byte> &a) {
+	assert(!a.empty());
 	m像素着色器 = a;
 }
 void S图形管线参数::fs几何着色器(const std::span<const std::byte> &a) {
+	assert(!a.empty());
 	m几何着色器 = a;
 }
 void S图形管线参数::fs外壳着色器(const std::span<const std::byte> &a) {
+	assert(!a.empty());
 	m外壳着色器 = a;
 }
 void S图形管线参数::fs域着色器(const std::span<const std::byte> &a) {
+	assert(!a.empty());
 	m域着色器 = a;
 }
 void S图形管线参数::fs光栅化(const D3D11_RASTERIZER_DESC &a) {
