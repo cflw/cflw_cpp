@@ -141,4 +141,31 @@ F正幂函数2 F正幂函数2::fc三点(const S向量2 &p1, const S向量2 &p2, 
 float F正幂函数2::operator()(float x) const {
 	return std::pow(x, a) + b;
 }
+//==============================================================================
+// 一元二次方程
+//==============================================================================
+S一元二次方程::S一元二次方程(float A, float B, float C):
+	a(A), b(B), c(C) {
+}
+std::tuple<std::complex<float>, std::complex<float>> S一元二次方程::f解() const {
+	const float d0 = d();
+	const float _2a = 2 * a;
+	const float _b_2a = -b / _2a;
+	if (d0 >= 0) {
+		const float sqrt_d = std::sqrt(d0);
+		const float sqrt_d_2a = sqrt_d / _2a;
+		const std::complex<float> x1 = {_b_2a - sqrt_d_2a};
+		const std::complex<float> x2 = {_b_2a + sqrt_d_2a};
+		return {x1, x2};
+	} else {
+		const float sqrt_d = std::sqrt(-d0);
+		const float sqrt_d_2a = sqrt_d / _2a;
+		const std::complex<float> x1 = {_b_2a, -sqrt_d_2a};
+		const std::complex<float> x2 = {_b_2a, sqrt_d_2a};
+		return {x1, x2};
+	}
+}
+float S一元二次方程::d() const {
+	return b * b - 4 * a * c;
+}
 }	//namespace cflw::数学

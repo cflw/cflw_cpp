@@ -256,13 +256,13 @@ template<typename t> t C角度计算<t>::f插值(const t &a角1, const t &a角2,
 //==============================================================================
 // 未实现
 //==============================================================================
-template<typename t> t f点乘(const t&, const t&) {
-	static_assert(false, "未实现");
+template<typename t> t f点乘(const t&a, const t&b) {
+	return a * b;	//随便实现一个,报错再另外特化
 }
-template<typename t> t f叉乘(const t&, const t&) {
-	static_assert(false, "未实现");
+template<typename t> t f叉乘(const t&a, const t&b) {
+	return a * b;
 }
-template<typename t> t f负(const t&) {
-	static_assert(false, "未实现");
+template<typename t> t f负(const t&a) {
+	return -a;
 }
 }	//namespace cflw::数学 

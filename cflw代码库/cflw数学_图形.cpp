@@ -319,7 +319,7 @@ void S欧拉角::f夹取() {
 	m头 = C角度计算<float>::c弧度.f夹取(m头);
 }
 void S欧拉角::fs物体到惯性(const S四元数 &q) {
-	float sp = -2.0f * (q.y*q.z - q.w*q.x);
+	const float sp = -2.0f * (q.y*q.z - q.w*q.x);
 	if (fabs(sp) > 0.9999f) {
 		m侧 = cπ<float> / 2 * sp;
 		m头 = atan2(-q.x*q.z + q.w*q.y, 0.5f - q.y*q.y - q.z*q.z);
@@ -331,7 +331,7 @@ void S欧拉角::fs物体到惯性(const S四元数 &q) {
 	}
 }
 void S欧拉角::fs惯性到物体(const S四元数 &q) {
-	float sp = -2.0f * (q.y*q.z + q.w*q.x);
+	const float sp = -2.0f * (q.y*q.z + q.w*q.x);
 	if (fabs(sp) > 0.9999f) {
 		m侧 = cπ<float> / 2 * sp;
 		m头 = atan2(-q.x*q.z - q.w*q.y, 0.5f - q.y*q.y - q.z*q.z);
@@ -343,7 +343,7 @@ void S欧拉角::fs惯性到物体(const S四元数 &q) {
 	}
 }
 void S欧拉角::fs物体到世界(const S矩阵4 &m) {
-	float	sp = -m.m值[3][2];
+	const float sp = -m.m值[3][2];
 	if (fabs(sp) > 9.99999f) {
 		m侧 = cπ<float> / 2 * sp;
 		m头 = atan2(-m.m值[2][3], m.m值[1][1]);
@@ -355,7 +355,7 @@ void S欧拉角::fs物体到世界(const S矩阵4 &m) {
 	}
 }
 void S欧拉角::fs世界到物体(const S矩阵4 &m) {
-	float	sp = -m.m值[2][3];
+	const float sp = -m.m值[2][3];
 	if (fabs(sp) > 9.99999f) {
 		m侧 = cπ<float> / 2.f * sp;
 		m头 = atan2(-m.m值[3][1], m.m值[1][1]);
@@ -518,20 +518,22 @@ void S四元数::fs归一() {
 	}
 }
 S向量3 S四元数::fg旋转轴() {
-	float s = 1.0f - w * w;	//(sin(theta/2))^2
-	if (s <= 0.0f)	//是否单位向量
+	const float s = 1.0f - w * w;	//(sin(theta/2))^2
+	if (s <= 0.0f) {	//是否单位向量
 		return S向量3(1.0f, 0.0f, 0.0f);
-	float d = 1.0f / sqrt(s);	//1/sin(theta/2)
+	}
+	const float d = 1.0f / sqrt(s);	//1/sin(theta/2)
 	return S向量3(x*d, y*d, z*d);
 }
 S四元数 S四元数::fg次方(const float &e) const {
-	if (fabs(w) > .9999f)
+	if (fabs(w) > .9999f) {
 		return *this;
-	float a = acos(w);	//a = 旋转角/2
-	float aa = a * e;
+	}
+	const float a = acos(w);	//a = 旋转角/2
+	const float aa = a * e;
 	S四元数 v;
 	v.w = cos(aa);
-	float	mult = sin(aa) / sin(a);
+	const float mult = sin(aa) / sin(a);
 	v.x = x * mult;
 	v.y = y * mult;
 	v.z = z * mult;
@@ -558,9 +560,9 @@ S四元数 S四元数::f插值(const S四元数 &q, float t) const {
 		k0 = 1.0f - t;
 		k1 = t;
 	} else {
-		float so = sqrt(1.0f - co * co);
-		float o = atan2(so, co);
-		float rso = 1.0f / so;
+		const float so = sqrt(1.0f - co * co);
+		const float o = atan2(so, co);
+		const float rso = 1.0f / so;
 		k0 = sin((1.0f - t) * o) * rso;
 		k1 = sin(t * o) * rso;
 	}

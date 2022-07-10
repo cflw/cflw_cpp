@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include <tuple>
+#include <complex>
 namespace cflw::数学 {
 struct S向量2;
 struct S向量3;
@@ -57,5 +59,12 @@ struct F正幂函数2 {
 	static F正幂函数2 fc三点(const S向量2 &, const S向量2 &, const S向量2 &);
 
 	float operator()(float) const;
+};
+struct S一元二次方程 {
+	float a = 1, b = 0, c = 0;
+	S一元二次方程() = default;
+	S一元二次方程(float, float, float);
+	std::tuple<std::complex<float>, std::complex<float>> f解() const;
+	float d() const;
 };
 }	//namespace cflw::数学

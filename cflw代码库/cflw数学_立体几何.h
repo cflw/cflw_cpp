@@ -29,14 +29,28 @@ struct S长方体 {
 };
 //三维空间中的直线
 struct S直线3 {
-	float x[2], y[2], z[2];//参数方程的形式
+	float x, y, z, m, n, p;	//参数方程的形式
 	S直线3();
+	S直线3(float x, float y, float z, float m, float n, float p);
+	static S直线3 fc参数(float x, float m, float y, float n, float z, float p);	//和构造函数顺序不一样
 	static S直线3 fc两点(const S向量3 &, const S向量3 &);
+	static S直线3 fc点向(const S向量3 &点, const S向量3 &方向);
 	S直线3 &fs两点(const S向量3 &, const S向量3 &);
 	S直线3 fg归一() const;
 	S直线3 &fs归一();
 	bool f相交判定(const S直线3 &) const;
 	float fg模() const;
+	S向量3 f在(float t) const;
+};
+//三维空间中的射线
+struct S射线3 {
+	S向量3 m坐标;
+	S向量3 m方向;
+	S射线3() = default;
+	S射线3(const S向量3 &, const S向量3 &);
+	static S射线3 fc方向(const S向量3 &, const S向量3 &);
+	static S射线3 fc目标(const S向量3 &, const S向量3 &);
+	S向量3 fg点(float t) const;
 };
 //三维空间中的平面
 struct S平面3 {
@@ -53,4 +67,10 @@ struct S平面3 {
 	S向量3 fg法线() const;
 	S平面3 fg归一() const;	//a,b,c归一
 };
+//==============================================================================
+// 立体几何计算
+//==============================================================================
+float f直线与平面相交位置(const S直线3 &, const S平面3 &);	//返回t
+S向量3 f直线与平面交点(const S直线3 &, const S平面3 &);	//返回交点
+bool f球体射线相交判定(const S球体 &, const S射线3 &);
 }	//namespace cflw::数学

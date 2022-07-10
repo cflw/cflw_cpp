@@ -4,6 +4,24 @@
 #include "cflw数学_向量.h"
 namespace cflw::数学 {
 //==============================================================================
+// 形状几何
+//==============================================================================
+float f直线与平面相交位置(const S直线3 &l, const S平面3 &p) {
+	return -(p.a * l.x + p.b * l.y + p.c * l.z + p.d) / (p.a * l.m + p.b * l.n + p.c * l.p);
+}
+S向量3 f直线与平面交点(const S直线3 &l, const S平面3 &p) {
+	const float t = f直线与平面相交位置(l, p);
+	return l.f在(t);
+}
+bool f球体射线相交判定(const S球体 &a球体, const S射线3 &a射线) {
+	S向量3 v相对位置 = a球体.m坐标 - a射线.m坐标;
+	const float a = a射线.m方向.f点乘(a射线.m方向);
+	const float b = 2 * v相对位置.f点乘(a射线.m方向);
+	const float c = v相对位置.f点乘(v相对位置) - a球体.m半径 * a球体.m半径;
+	const float d = b * b - 4 * a * c;
+	return d >= 0;
+}
+//==============================================================================
 // 球体
 //==============================================================================
 S球体::S球体(const S向量3 &a坐标, float a半径):
@@ -61,56 +79,86 @@ float S长方体::fg体积() const {
 //==============================================================================
 // 直线方程3d
 //==============================================================================
-S直线3::S直线3() :
-	x(), y(), z() {
+S直线3::S直线3():
+	x(), y(), z(), m(), n(), p() {
+}
+S直线3::S直线3(float X, float Y, float Z, float M, float N, float P):
+	x(X), y(Y), z(Z), m(M), n(N), p(P) {
+}
+S直线3 S直线3::fc参数(float x, float m, float y, float n, float z, float p) {
+	return S直线3(x, y, z, m, n, p);
 }
 S直线3 S直线3::fc两点(const S向量3 &p1, const S向量3 &p2) {
 	S直线3 v;
-	v.x[0] = p1.x - p2.x;
-	v.x[1] = p2.x;
-	v.y[0] = p1.y - p2.y;
-	v.y[1] = p2.y;
-	v.z[0] = p1.z - p2.z;
-	v.z[1] = p2.z;
+	v.x = p1.x;
+	v.m = p2.x - p1.x;
+	v.y = p1.y;
+	v.n = p2.y - p1.y;
+	v.z = p1.z;
+	v.p = p2.z - p1.z;
+	return v;
+}
+S直线3 S直线3::fc点向(const S向量3 &a点, const S向量3 &a方向) {
+	S直线3 v;
+	v.x = a点.x;
+	v.y = a点.y;
+	v.z = a点.z;
+	v.m = a方向.x;
+	v.n = a方向.y;
+	v.p = a方向.z;
 	return v;
 }
 S直线3 &S直线3::fs两点(const S向量3 &p1, const S向量3 &p2) {
-	x[0] = p1.x - p2.x;
-	x[1] = p2.x;
-	y[0] = p1.y - p2.y;
-	y[1] = p2.y;
-	z[0] = p1.z - p2.z;
-	z[1] = p2.z;
+	x = p1.x;
+	m = p2.x - p1.x;
+	y = p1.y;
+	n = p2.y - p1.y;
+	z = p1.z;
+	p = p2.z - p1.z;
 	return *this;
 }
 S直线3 S直线3::fg归一() const {
 	const float v = fg模();
-	//未实现
-	return *this;
+	return S直线3(x, y, z, m/v, n/v, p/v);
 }
 S直线3 &S直线3::fs归一() {
 	const float v = fg模();
-	x[0] /= v;
-	y[0] /= v;
-	z[0] /= v;
+	m /= v;
+	n /= v;
+	p /= v;
 	return *this;
 }
-bool S直线3::f相交判定(const S直线3 &a直线方程) const {
-	const float v[2] = {fg模(), a直线方程.fg模()};
-	auto f = [](float *p1, float *p2)->float {
-		return (p2[1] - p1[1]) / (p1[0] - p2[2]);
-	};
-	if (x[0] / v[0] == a直线方程.x[0] / v[1]) {
+bool S直线3::f相交判定(const S直线3 &a直线) const {
+	const float v[2] = {fg模(), a直线.fg模()};
+	if (m / v[0] == a直线.m / v[1]) {
 		return true;
-	} else if (y[0] / v[0] == a直线方程.y[0] / v[1]) {
+	} else if (n / v[0] == a直线.n / v[1]) {
 		return true;
-	} else if (z[0] / v[0] == a直线方程.z[0] / v[1]) {
+	} else if (p / v[0] == a直线.p / v[1]) {
 		return true;
 	}
 	return false;
 }
 float S直线3::fg模() const {
-	return sqrt(x[0] * x[0] + y[0] * y[0] + z[0] * z[0]);
+	return sqrt(m * m + n * n + p * p);
+}
+S向量3 S直线3::f在(float t) const {
+	return S向量3(x + m * t, y + n * t, z + p * t);
+}
+//==============================================================================
+// 射线3
+//==============================================================================
+S射线3::S射线3(const S向量3 &a坐标, const S向量3 &a方向):
+	m坐标(a坐标), m方向(a方向) {
+}
+S射线3 S射线3::fc方向(const S向量3 &a坐标, const S向量3 &a方向) {
+	return S射线3(a坐标, a方向);
+}
+S射线3 S射线3::fc目标(const S向量3 &a坐标, const S向量3 &a目标) {
+	return S射线3(a坐标, (a目标 - a坐标).fg归一());
+}
+S向量3 S射线3::fg点(float t) const {
+	return m坐标 + m方向 * t;
 }
 //==============================================================================
 // 平面方程

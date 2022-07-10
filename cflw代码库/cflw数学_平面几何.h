@@ -213,7 +213,7 @@ struct S线段2 {
 //射线
 struct S射线2 {
 	S向量2 m坐标;
-	float m方向;
+	float m方向 = 0;
 	S射线2();
 	S射线2(const S向量2 &, float);
 	void fs点向(const S向量2 &, const S向量2 &);
@@ -221,6 +221,7 @@ struct S射线2 {
 	float f同向距离(const S向量2 &) const;
 	float f侧向距离(const S向量2 &) const;
 	S向量2 f相对距离(const S向量2 &) const;
+	S向量2 fg点(float t) const;	//射线在t位置的坐标
 };
 //椭圆
 struct S椭圆 {

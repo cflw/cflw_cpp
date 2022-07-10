@@ -261,6 +261,9 @@
     <ClCompile Include="cflw日期时间.cpp">
       <Filter>工具</Filter>
     </ClCompile>
+    <ClCompile Include="cflw文件_二进制.ixx">
+      <Filter>文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cflw数学_杂烩.inl">

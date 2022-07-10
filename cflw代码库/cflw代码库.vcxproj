@@ -102,6 +102,8 @@
       <AdditionalIncludeDirectories>$(boost)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -119,6 +121,8 @@
       <AdditionalIncludeDirectories>$(boost)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -137,6 +141,8 @@
       <AdditionalIncludeDirectories>$(boost)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -157,6 +163,8 @@
       <AdditionalIncludeDirectories>$(boost)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -245,6 +253,7 @@
     <ClCompile Include="cflw文件_csv.cpp" />
     <ClCompile Include="cflw文件_json.cpp" />
     <ClCompile Include="cflw文件_obj模型.cpp" />
+    <ClCompile Include="cflw文件_二进制.ixx" />
     <ClCompile Include="cflw日期时间.cpp" />
     <ClCompile Include="cflw时间.cpp" />
     <ClCompile Include="cflw物理_二维.cpp" />
