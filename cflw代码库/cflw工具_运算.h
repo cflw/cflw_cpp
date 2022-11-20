@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <algorithm>
+#include <functional>
 namespace cflw::工具 {
 //四则运算
 template<typename t> using F加 = std::plus<t>;
@@ -8,11 +9,11 @@ template<typename t> using F乘 = std::multiplies<t>;
 //简单比较
 template<typename t>
 bool f等于(const t &a0, const t &a1) {
-	return a0 < a1;
+	return a0 == a1;
 }
 template<typename t>
 bool f不等于(const t &a0, const t &a1) {
-	return a0 < a1;
+	return a0 != a1;
 }
 template<typename t>
 bool f小于(const t &a0, const t &a1) {
@@ -44,6 +45,18 @@ template<typename t> using F小于 = std::less<t>;
 template<typename t> using F小于等于 = std::less_equal<t>;
 template<typename t> using F大于 = std::greater<t>;
 template<typename t> using F大于等于 = std::greater_equal<t>;
+template<typename t>
+std::function<bool(const t &)> F比较值(auto &&af, const t &b) {
+	return std::bind(af, std::placeholders::_1, b);
+}
+template<typename t>
+std::function<bool(const t &)> F等于值(const t &b) {
+	return F比较值(f等于<t>, b);
+}
+template<typename t>
+std::function<bool(const t &)> F小于值(const t &b) {
+	return F比较值(f小于<t>, b);
+}
 //比较枚举
 enum E比较 {
 	e永不,

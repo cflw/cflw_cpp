@@ -5,9 +5,13 @@ namespace cflw::时间 {
 //类型
 using t时间段 = std::chrono::duration<double>;
 using t时间点 = std::chrono::time_point<std::chrono::system_clock>;
+using t时区秒 = std::chrono::zoned_seconds;
 t时间点 fg现在();
 t时间段 fg零();
 t时间段 f间隔(const t时间点 &, const t时间点 &);
+t时区秒 f本地时间();
+t时区秒 f本地时间(const std::chrono::system_clock::time_point &);
+t时区秒 f本地时间(const std::chrono::sys_seconds &);
 //时间间隔
 class C时间间隔 {
 public:

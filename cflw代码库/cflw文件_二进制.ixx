@@ -3,28 +3,54 @@
 #include <string>
 #include <vector>
 #include <span>
+#include <cassert>
+#include <functional>
 export module cflw.文件.二进制;
 export namespace cflw::文件::二进制 {
+constexpr size_t c安全大小 = 1 << 30;	//不能读写超过1GB的数据
 class C读 {
 public:
 	C读() = default;
 	~C读() {
 		m文件.close();
 	}
-	bool f打开(const std::wstring &a文件名) {
-		m文件.open(a文件名, std::ios::in | std::ios::binary);
+	bool f打开(const std::wstring_view &a文件名) {
+		m文件.open(a文件名.data(), std::ios::in | std::ios::binary);
 		return m文件.is_open();
 	}
 	void f读入缓存(size_t a大小) {
+		assert(a大小 < c安全大小);
 		if (a大小 > m缓存.size()) {
 			m缓存.resize(a大小);
 		}
-		m文件.read((char*)m缓存.data(), a大小);
+		m文件.read((char *)m缓存.data(), a大小);
+	}
+	void f跳过(size_t a大小) {
+		m文件.seekg(a大小, std::ios::cur);
+	}
+	template<typename t值>
+	void f跳过值() {
+		f跳过(sizeof(t值));
+	}
+	template<typename t容器, typename t大小 = size_t>
+	void f跳过动态数组() {
+		using t值 = typename t容器::value_type;
+		const t大小 v数量 = f读值<t大小>();
+		f跳过(sizeof(t值) * v数量);
 	}
 	template<typename t值>
 	const t值 &f读值() {
 		f读入缓存(sizeof(t值));
 		return *(t值*)m缓存.data();
+	}
+	template<typename t值>
+	const t值 &f读值(const t值 &a默认) {
+		f读入缓存(sizeof(t值));
+		if (m文件.good()) {
+			return *(t值 *)m缓存.data();
+		} else {
+			return a默认;
+		}
 	}
 	const std::byte *f读数据(size_t a大小) {
 		f读入缓存(a大小);
@@ -45,6 +71,15 @@ public:
 		std::span<const t值> v跨度{(const t值*)m缓存.data(), v数量};
 		return t容器{v跨度.begin(), v跨度.end()};
 	}
+	template<typename t容器, typename t大小 = size_t>
+	t容器 f读动态数组(const std::function<bool(const t大小 &)> &af断言) {	//带断言,防止数据出错读到的数量过大导致内存满
+		using t值 = typename t容器::value_type;
+		const t大小 v数量 = f读值<t大小>();
+		assert(af断言(v数量));
+		f读入缓存(sizeof(t值) * v数量);
+		std::span<const t值> v跨度{(const t值 *)m缓存.data(), v数量};
+		return t容器{v跨度.begin(), v跨度.end()};
+	}
 	std::ifstream m文件;
 	std::vector<std::byte> m缓存;
 };
@@ -54,8 +89,8 @@ public:
 	~C写() {
 		m文件.close();
 	}
-	bool f打开(const std::wstring &a文件名) {
-		m文件.open(a文件名, std::ios::out | std::ios::binary);
+	bool f打开(const std::wstring_view &a文件名) {
+		m文件.open(a文件名.data(), std::ios::out | std::ios::binary);
 		return m文件.is_open();
 	}
 	template<typename t值>

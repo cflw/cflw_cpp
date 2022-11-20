@@ -13,6 +13,17 @@ t时间段 fg零() {
 t时间段 f间隔(const t时间点 &a0, const t时间点 &a1) {
 	return std::chrono::duration_cast<t时间段>(a1 - a0);
 }
+t时区秒 f本地时间() {
+	auto v现在 = std::chrono::time_point_cast<std::chrono::seconds>(std::chrono::system_clock::now());
+	return std::chrono::zoned_time(std::chrono::current_zone(), v现在);
+}
+t时区秒 f本地时间(const std::chrono::system_clock::time_point &a) {
+	auto v = std::chrono::time_point_cast<std::chrono::seconds>(a);
+	return std::chrono::zoned_time(std::chrono::current_zone(), v);
+}
+t时区秒 f本地时间(const std::chrono::sys_seconds &a) {
+	return std::chrono::zoned_time(std::chrono::current_zone(), a);
+}
 //==============================================================================
 // 时间间隔
 //==============================================================================

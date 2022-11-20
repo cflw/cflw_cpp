@@ -6,17 +6,30 @@ namespace cflw::数学 {
 //==============================================================================
 // 形状几何
 //==============================================================================
+float f直线与直线最近距离(const S直线3 &l1, const S直线3 &l2) {
+	const S向量3 n = l1.fg方向().f叉乘(l2.fg方向());
+	return std::abs(n.f点乘(l2.fg坐标() - l1.fg坐标())) / n.fg大小();
+}
+float f直线与直线最近位置(const S直线3 &l1, const S直线3 &l2) {
+	const S向量3 d1 = l1.fg方向();
+	const S向量3 d2 = l2.fg方向();
+	const S向量3 n = d1.f叉乘(d2);
+	const S平面3 p = S平面3::fc线向(l2, n);
+	return f直线与平面相交位置(l1, p);
+}
 float f直线与平面相交位置(const S直线3 &l, const S平面3 &p) {
 	return -(p.a * l.x + p.b * l.y + p.c * l.z + p.d) / (p.a * l.m + p.b * l.n + p.c * l.p);
 }
 S向量3 f直线与平面交点(const S直线3 &l, const S平面3 &p) {
 	const float t = f直线与平面相交位置(l, p);
-	return l.f在(t);
+	return l.fg点(t);
 }
-bool f球体射线相交判定(const S球体 &a球体, const S射线3 &a射线) {
-	S向量3 v相对位置 = a球体.m坐标 - a射线.m坐标;
-	const float a = a射线.m方向.f点乘(a射线.m方向);
-	const float b = 2 * v相对位置.f点乘(a射线.m方向);
+bool f球体射线相交判定(const S球体 &a球体, const S直线3 &a射线) {
+	const S向量3 v射线坐标 = a射线.fg坐标();
+	const S向量3 v射线方向 = a射线.fg方向();
+	const S向量3 v相对位置 = a球体.m坐标 - v射线坐标;
+	const float a = v射线方向.f点乘(v射线方向);
+	const float b = 2 * v相对位置.f点乘(v射线方向);
 	const float c = v相对位置.f点乘(v相对位置) - a球体.m半径 * a球体.m半径;
 	const float d = b * b - 4 * a * c;
 	return d >= 0;
@@ -117,6 +130,12 @@ S直线3 &S直线3::fs两点(const S向量3 &p1, const S向量3 &p2) {
 	p = p2.z - p1.z;
 	return *this;
 }
+S向量3 S直线3::fg坐标() const {
+	return {x, y, z};
+}
+S向量3 S直线3::fg方向() const {
+	return {m, n, p};
+}
 S直线3 S直线3::fg归一() const {
 	const float v = fg模();
 	return S直线3(x, y, z, m/v, n/v, p/v);
@@ -142,23 +161,8 @@ bool S直线3::f相交判定(const S直线3 &a直线) const {
 float S直线3::fg模() const {
 	return sqrt(m * m + n * n + p * p);
 }
-S向量3 S直线3::f在(float t) const {
+S向量3 S直线3::fg点(float t) const {
 	return S向量3(x + m * t, y + n * t, z + p * t);
-}
-//==============================================================================
-// 射线3
-//==============================================================================
-S射线3::S射线3(const S向量3 &a坐标, const S向量3 &a方向):
-	m坐标(a坐标), m方向(a方向) {
-}
-S射线3 S射线3::fc方向(const S向量3 &a坐标, const S向量3 &a方向) {
-	return S射线3(a坐标, a方向);
-}
-S射线3 S射线3::fc目标(const S向量3 &a坐标, const S向量3 &a目标) {
-	return S射线3(a坐标, (a目标 - a坐标).fg归一());
-}
-S向量3 S射线3::fg点(float t) const {
-	return m坐标 + m方向 * t;
 }
 //==============================================================================
 // 平面方程
@@ -176,6 +180,14 @@ S平面3 S平面3::fc点法(const S向量3 &p, const S向量3 &n) {
 		n.z,
 		-n.x * p.x - n.y * p.y - n.z * p.z
 	);
+}
+S平面3 S平面3::fc点向(const S向量3 &p, const S向量3 &d1, const S向量3 &d2) {
+	const S向量3 n = d1.f叉乘(d2);
+	return fc点法(p, n);
+}
+S平面3 S平面3::fc线向(const S直线3 &l, const S向量3 &d) {
+	const S向量3 n = l.fg方向().f叉乘(d);
+	return fc点法(l.fg坐标(), n);
 }
 S平面3 S平面3::fc一般(float A, float B, float C, float D) {
 	return S平面3(A, B, C, D);

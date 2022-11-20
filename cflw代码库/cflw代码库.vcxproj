@@ -209,7 +209,6 @@
     <ClInclude Include="cflw文件_csv.h" />
     <ClInclude Include="cflw文件_json.h" />
     <ClInclude Include="cflw文件_obj模型.h" />
-    <ClInclude Include="cflw日期时间.h" />
     <ClInclude Include="cflw时间.h" />
     <ClInclude Include="cflw工具_运算.h" />
     <ClInclude Include="cflw物理_二维.h" />
@@ -240,6 +239,7 @@
     <ClCompile Include="cflw图形_dx纹理.cpp" />
     <ClCompile Include="cflw多媒体.cpp" />
     <ClCompile Include="cflw工具.cpp" />
+    <ClCompile Include="cflw工具_单例.ixx" />
     <ClCompile Include="cflw异常.cpp" />
     <ClCompile Include="cflw数学.cpp" />
     <ClCompile Include="cflw数学_函数方程.cpp" />
@@ -254,7 +254,6 @@
     <ClCompile Include="cflw文件_json.cpp" />
     <ClCompile Include="cflw文件_obj模型.cpp" />
     <ClCompile Include="cflw文件_二进制.ixx" />
-    <ClCompile Include="cflw日期时间.cpp" />
     <ClCompile Include="cflw时间.cpp" />
     <ClCompile Include="cflw物理_二维.cpp" />
     <ClCompile Include="cflw视窗.cpp" />

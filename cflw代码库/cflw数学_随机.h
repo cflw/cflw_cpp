@@ -79,11 +79,11 @@ private:
 };
 //分布常量
 template<typename t = double> 
-static const std::uniform_real_distribution<t> c圆周分布r = std::uniform_real_distribution<t>(0, c二π<t>);
+inline std::uniform_real_distribution<t> c圆周分布r = std::uniform_real_distribution<t>(0, c二π<t>);
 template<typename t = double> 
-static const std::uniform_real_distribution<t> c圆周分布d = std::uniform_real_distribution<t>(0, (t)360);
+inline std::uniform_real_distribution<t> c圆周分布d = std::uniform_real_distribution<t>(0, (t)360);
 template<typename t = double>
-static const auto c零一分布 = C零一分布<t>(0.5f);
+inline auto c零一分布 = C零一分布<t>(0.5f);
 template<>
-static const auto c零一分布<bool> = std::bernoulli_distribution(0.5f);
+inline auto c零一分布<bool> = std::bernoulli_distribution(0.5f);
 }	//namespace cflw::数学
