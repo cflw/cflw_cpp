@@ -28,24 +28,6 @@ private:
 	t m间隔 = 0;
 };
 //==============================================================================
-// 文本编缉
-//==============================================================================
-class C文本 {
-public:
-	typedef std::wstring t字符串;
-	template<typename t1, typename t2> static inline t2 f转换(t1);
-	template<typename t> static t字符串 f整数_文本(t);
-	template<typename t> static t字符串 f浮点数_文本(t);
-	template<typename t> static t f文本_整数(const t字符串 &);
-	template<typename t> static t f文本_浮点数(const t字符串 &);
-	static t字符串 f数据_十六进制(const void *, size_t);
-	static std::tuple<std::byte*, size_t> f十六进制_数据(const t字符串 &);	//记得删除指针,或者用智能指针
-	static bool fw数字(const t字符串 &);
-	static int f查找(const t字符串 &, const t字符串 &, int);
-	static t字符串 f有效数字(const t字符串 &, int);
-	static t字符串 f小数位数(const t字符串 &, int);
-};
-//==============================================================================
 // 存放一堆数据的字节数组
 //==============================================================================
 //任意数量

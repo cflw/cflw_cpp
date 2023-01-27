@@ -1,8 +1,12 @@
 ﻿#include <boost/program_options/detail/convert.hpp>
 #include <boost/program_options/detail/utf8_codecvt_facet.hpp>
 #include "cflw文件_json.h"
+import cflw.字符串.编码;
 namespace cflw::文件::json {
-const std::locale C文件::utf8{std::locale(), new boost::program_options::detail::utf8_codecvt_facet()};
+const std::locale utf8{std::locale(), new boost::program_options::detail::utf8_codecvt_facet()};
+//==============================================================================
+// 文件
+//==============================================================================
 C文件::C文件() {
 	m流.imbue(utf8);
 }
@@ -21,9 +25,48 @@ void C文件::f写入(const t树 &a树) {
 bool C文件::fi好() const {
 	return m流.good();
 }
+//==============================================================================
+// 函数
+//==============================================================================
+bool f打开文件(const wchar_t *a文件名, t树 &a树) {	//打开utf8编码的json文件
+	std::wifstream v流;
+	v流.imbue(utf8);
+	v流.open(a文件名, std::ios::in);
+	if (!v流.is_open()) {
+		return false;
+	}
+	boost::property_tree::read_json(v流, a树);
+	return true;
+}
+bool f保存文件(const wchar_t *a文件名, const t树 &a树) {	//保存utf8编码的json文件
+	std::wofstream v流;
+	v流.imbue(utf8);
+	v流.open(a文件名, std::ios::out);
+	if (!v流.is_open()) {
+		return false;
+	}
+	boost::property_tree::write_json(v流, a树);
+	return true;
+}
+t树 f解析数据(const std::u8string_view &a数据) {	//解析utf8字符串
+	const std::wstring v数据 = 字符串::f编码转换<char8_t, wchar_t>(a数据);
+	std::wistringstream v流{v数据};
+	t树 v树;
+	boost::property_tree::read_json(v流, v树);
+	return v树;
+}
+std::u8string f生成数据(const t树 &a树) {	//生成utf8字符串
+	std::wostringstream v流;
+	boost::property_tree::write_json(v流, a树);
+	const std::u8string v数据 = 字符串::f编码转换<wchar_t, char8_t>(v流.str());
+	return v数据;
+}
 }	//namespace cflw::文件::json
+//==============================================================================
+// 重写转义函数
+//==============================================================================
 namespace boost::property_tree::json_parser {
-std::wstring create_escapes(const std::wstring &s) {
+template<> std::wstring create_escapes(const std::wstring &s) {
 	using Ch = wchar_t;
 	std::wstring result;
 	typename std::wstring::const_iterator b = s.begin();

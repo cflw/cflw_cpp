@@ -291,7 +291,9 @@ struct S文本格式参数 {
 	void fs字体(const std::wstring_view &);
 	void fs语言区域(const std::wstring_view &);
 	void fs字号(float);
+	void fs粗体(bool);
 	void fs粗体(int);
+	void fs斜体(bool);
 	void fs斜体(int);
 	void fs拉伸(int);
 	void fs自动换行(bool);
@@ -316,7 +318,9 @@ public:
 };
 class C文本格式转换 {
 public:
+	static DWRITE_FONT_WEIGHT f粗体(bool);
 	static DWRITE_FONT_WEIGHT f粗体(int);	//0~9
+	static DWRITE_FONT_STYLE f斜体(bool);
 	static DWRITE_FONT_STYLE f斜体(int);	//0~2
 	static DWRITE_FONT_STRETCH f拉伸(int);	//0~9
 	static DWRITE_TEXT_ALIGNMENT f水平对齐(E文本水平对齐);

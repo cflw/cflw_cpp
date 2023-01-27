@@ -3,6 +3,7 @@
 #include "cflw图形_d2d.h"
 #include "cflw视窗.h"
 #include "cflw图形_dx纹理.h"
+import cflw.字符串;
 //声明
 using Microsoft::WRL::ComPtr;
 namespace cflw::图形::d2d {
@@ -675,7 +676,7 @@ tp文本布局 C文本工厂::fc文本布局_小数(double a数字, int a小数�
 	const float v字号 = a格式->GetFontSize();
 	const float v小数字号 = v字号 * 0.6f;
 	std::wstring v字符串 = std::to_wstring(a数字);
-	v字符串 = 工具::C文本::f小数位数(v字符串, a小数位数);
+	v字符串 = 字符串::f截取小数位数(v字符串, a小数位数);
 	tp文本布局 v布局 = fc文本布局(v字符串, a格式);
 	const size_t v小数点位置 = v字符串.find(L".");
 	v布局->SetFontSize(v小数字号, {(UINT32)v小数点位置, (UINT32)(a小数位数 + 1)});
@@ -696,8 +697,14 @@ void S文本格式参数::fs语言区域(const std::wstring_view &a) {
 void S文本格式参数::fs字号(float a) {
 	m字号 = a;
 }
+void S文本格式参数::fs粗体(bool a) {
+	m粗体 = C文本格式转换::f粗体(a);
+}
 void S文本格式参数::fs粗体(int a) {
 	m粗体 = C文本格式转换::f粗体(a);
+}
+void S文本格式参数::fs斜体(bool a) {
+	m斜体 = C文本格式转换::f斜体(a);
 }
 void S文本格式参数::fs斜体(int a) {
 	m斜体 = C文本格式转换::f斜体(a);
@@ -714,10 +721,12 @@ void S文本格式参数::fs水平对齐(E文本水平对齐 a) {
 void S文本格式参数::fs垂直对齐(E文本垂直对齐 a) {
 	m垂直对齐 = C文本格式转换::f垂直对齐(a);
 }
-
 //==============================================================================
 // 文本格式
 //==============================================================================
+DWRITE_FONT_WEIGHT C文本格式转换::f粗体(bool a) {
+	return a ? DWRITE_FONT_WEIGHT_BOLD : DWRITE_FONT_WEIGHT_NORMAL;
+}
 DWRITE_FONT_WEIGHT C文本格式转换::f粗体(int a) {
 	static const DWRITE_FONT_WEIGHT ca粗体[] = {
 		DWRITE_FONT_WEIGHT_THIN,
@@ -737,6 +746,9 @@ DWRITE_FONT_WEIGHT C文本格式转换::f粗体(int a) {
 		__debugbreak();
 		return DWRITE_FONT_WEIGHT_NORMAL;
 	}
+}
+DWRITE_FONT_STYLE C文本格式转换::f斜体(bool a) {
+	return a ? DWRITE_FONT_STYLE_ITALIC : DWRITE_FONT_STYLE_NORMAL;
 }
 DWRITE_FONT_STYLE C文本格式转换::f斜体(int a) {
 	static const DWRITE_FONT_STYLE ca斜体[] = {

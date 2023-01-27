@@ -1,8 +1,7 @@
 ﻿#include <assert.h>
 #include "cflw工具.h"
 #include "cflw异常.h"
-namespace cflw {
-namespace 工具 {
+namespace cflw::工具 {
 //==============================================================================
 // 计次器
 //==============================================================================
@@ -20,178 +19,8 @@ bool C计次器::f滴答() {
 	}
 }
 //==============================================================================
-// 文本编缉
-//==============================================================================
-#define _文本转换模板(t1, t2, f) \
-	template<> t2 C文本::f转换<t1, t2>(t1 p) { \
-		return C文本::f(p); \
-	}
-#define _文本转换模板_到文本(t, f) _文本转换模板(t, C文本::t字符串, f<t>)
-#define _文本转换模板_到数字(t, f) _文本转换模板(C文本::t字符串, t, f<t>)
-_文本转换模板_到文本(unsigned char, f整数_文本)
-_文本转换模板_到文本(unsigned long, f整数_文本)
-_文本转换模板_到文本(int, f整数_文本)
-_文本转换模板_到文本(long long, f整数_文本)
-_文本转换模板_到文本(float, f浮点数_文本)
-_文本转换模板_到文本(double, f浮点数_文本)
-_文本转换模板_到数字(unsigned char, f文本_整数)
-_文本转换模板_到数字(unsigned long, f文本_整数)
-_文本转换模板_到数字(int, f文本_整数)
-_文本转换模板_到数字(long long, f文本_整数)
-_文本转换模板_到数字(float, f文本_浮点数)
-_文本转换模板_到数字(double, f文本_浮点数)
-#undef _文本转换模板_到文本
-#undef _文本转换模板_到数字
-#undef _文本转换模板
-C文本::t字符串 C文本::f数据_十六进制(const void *a数据, size_t a大小) {
-	auto f = [](unsigned char a数字)->wchar_t {
-		if (a数字 < 10) {
-			return L'0' + a数字;
-		} else {
-			return L'a' + (a数字 - 10);
-		}
-	};
-	std::unique_ptr<wchar_t[]> va缓冲 = std::make_unique<wchar_t[]>(a大小 * 2 + 1);
-	unsigned char *v数据 = (unsigned char*)a数据;
-	size_t v大小;
-	for (v大小 = 0; v大小 != a大小; ++v大小) {
-		unsigned char v数 = v数据[v大小];
-		va缓冲[2*v大小] = f(v数 / 0x10);
-		va缓冲[2*v大小+1] = f(v数 >> 4);
-	}
-	va缓冲[a大小 * 2] = 0;
-	return {va缓冲.get()};
-}
-std::tuple<std::byte*, size_t> C文本::f十六进制_数据(const t字符串 &a文本) {
-	auto f = [](wchar_t a字符)->unsigned char {
-		if (a字符 >= L'0' && a字符 <= L'9') {
-			return (unsigned char)(a字符 - L'0');
-		} else if (a字符 >= L'A' && a字符 <= L'F') {
-			return (unsigned char)(a字符 - L'A');
-		} else if (a字符 >= L'a' && a字符 <= L'f') {
-			return (unsigned char)(a字符 - L'a');
-		}
-		throw 异常::X参数("无效字符");
-	};
-	t字符串 v字符串 = (a文本.find(L"0x", 0) != 0) ? a文本 : a文本.substr(2);
-	size_t v大小 = v字符串.size() * 2;
-	std::byte *v数据 = new std::byte[v大小];
-	for (size_t i = 0; i != v大小; ++i) {
-		unsigned char &v当前数据 = (unsigned char &)v数据[i];
-		v当前数据 = f(v字符串[2*i]) << 0x10;
-		v当前数据 |= f(v字符串[2*i+1]);
-		//if (2 * i + 2 >= v大小) {
-		//	break;
-		//}
-	}
-	return {v数据, v大小};
-}
-bool C文本::fw数字(const t字符串 &a文本) {
-	bool v可负 = true;
-	bool v可点 = true;
-	bool v可e = true;
-	for (int i = 0; i < a文本.size(); ++i) {
-		const wchar_t v字 = a文本[i];
-		if (v字 == L'-') {//负号
-			if (v可负) {
-				v可负 = false;
-				continue;
-			} else {
-				return false;
-			}
-		} else if (v字 == L'.') {
-			if (v可点) {
-				v可点 = false;
-				continue;
-			} else {
-				return false;
-			}
-		} else if (v字 == L'e' && v字 == L'E') {
-			if (v可e) {
-				v可e = false;
-				v可点 = false;
-				v可负 = true;
-				continue;
-			} else {
-				return false;
-			}
-		} else if (v字 >= L'0' && v字 <= L'9') {
-			v可负 = false;
-			continue;
-		} else if (v字 == L'\0') {
-			return i != 0;
-		} else {
-			return false;
-		}
-	}
-	return true;
-}
-int C文本::f查找(const t字符串 &a文本, const t字符串 &a查找, int a开始) {
-	for (int i = a开始; i < a文本.size(); ++i) {
-		if (i >= a文本.size() - a查找.size()) {
-			return -1;
-		}
-		bool v结果 = true;
-		for (int j = 0; j < a查找.size(); ++j) {
-			if (a文本[i+j] != a查找[j]) {
-				v结果 = false;
-				break;
-			}
-		}
-		if (v结果) {
-			return i;
-		}
-	}
-	return -1;
-}
-C文本::t字符串 C文本::f有效数字(const t字符串 &a文本, int a位数) {
-	wchar_t v[16] = L"";
-	int v修改位 = 0;
-	bool v小数位 = false;
-	for (; v修改位 < a文本.size(); ++v修改位) {
-		const wchar_t v字 = a文本[v修改位];
-		if (v字 == L'.') {
-			v小数位 = true;
-			continue;
-		}
-		if ((++v修改位) <= a位数) {
-			v[v修改位] = v字;
-		} else {
-			if (v小数位) {
-				break;
-			}
-			v[v修改位] = L'0';
-		}
-	}
-	return {v};
-}
-C文本::t字符串 C文本::f小数位数(const t字符串 &a文本, int a位数) {
-	wchar_t v[16] = L"";
-	int v小数 = -999;
-	int v修改位 = 0;
-	for (; v修改位 < a文本.size(); ++v修改位) {
-		const wchar_t v字 = a文本[v修改位];
-		v[v修改位] = v字;
-		if (v字 == L'.') {
-			v小数 = 0;
-		}
-		if ((++v小数) > a位数) {
-			return {v};
-		}
-	}
-	//
-	if (v小数 < 0) {
-		v[v修改位++] = L'.';
-		v小数 = 0;
-	}
-	while ((++v小数) <= a位数) {
-		v[v修改位++] = L'0';
-	}
-	return {v};
-}
-//--------------------------------------------------------------------------------
 // 数据
-//--------------------------------------------------------------------------------
+//==============================================================================
 C数据::C数据(unsigned int a大小) : m指针(new unsigned char[a大小]), m大小(a大小) {
 }
 C数据::C数据(const C数据 &a数据) {
@@ -237,9 +66,9 @@ unsigned char *&C数据::fg数据() {
 unsigned int C数据::fg大小() {
 	return m大小;
 }
-//--------------------------------------------------------------------------------
+//==============================================================================
 // 位大小,位指针
-//--------------------------------------------------------------------------------
+//==============================================================================
 //位大小
 S位大小::S位大小(int a字节, int a位):
 	v字节(a字节 + a位 / 8),
@@ -332,5 +161,4 @@ void C位指针::f赋数据(void *a指针, int a偏移, unsigned long a数据) {
 	//第4字节
 	*(++v指针) = (unsigned char)(v数据 >> (24 - a偏移));
 }
-//命名空间结束
-}}
+}	//namespace cflw::工具

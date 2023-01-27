@@ -261,6 +261,18 @@
     <ClCompile Include="cflw工具_单例.ixx">
       <Filter>工具</Filter>
     </ClCompile>
+    <ClCompile Include="cflw文件_tar包.ixx">
+      <Filter>文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw字符串_编码.ixx">
+      <Filter>工具</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw文件_zip包.ixx">
+      <Filter>文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw字符串.ixx">
+      <Filter>工具</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cflw数学_杂烩.inl">

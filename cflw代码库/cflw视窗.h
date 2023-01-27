@@ -105,6 +105,26 @@ enum class E文本格式 : unsigned long {	//行:6594
 	e系统字体计算 = DT_INTERNAL
 };
 //==============================================================================
+// winnls.h
+//==============================================================================
+inline std::wstring fg用户语言() {
+	wchar_t v[LOCALE_NAME_MAX_LENGTH];
+	GetUserDefaultLocaleName(v, LOCALE_NAME_MAX_LENGTH);
+	return v;
+}
+//==============================================================================
+// processenv.h
+//==============================================================================
+inline std::wstring fg环境变量(std::wstring_view a名称) {
+	wchar_t v缓存[512] = {0};	//xp,2003环境变量最大32767字符,vista之后无限制.这里取1kb缓存
+	GetEnvironmentVariableW(a名称.data(), v缓存, sizeof(v缓存));
+	return v缓存;
+}
+inline HRESULT fs环境变量(std::wstring_view a名称, std::wstring_view a值) {
+	SetEnvironmentVariableW(a名称.data(), a值.data());
+	return GetLastError();
+}
+//==============================================================================
 // 窗口控制&计算
 //==============================================================================
 void fs窗口大小(HWND, int 宽, int 高);
