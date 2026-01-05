@@ -1,7 +1,7 @@
 ﻿module;
 #include <cassert>
-#include <concepts>
 export module cflw.工具.单例;
+export import <concepts>;
 export namespace cflw::工具 {
 //概念
 template<typename t> concept T单例 = requires(t a) {
@@ -13,7 +13,7 @@ template<typename t> concept T单例 = requires(t a) {
 template<typename t>
 class C单例 {
 public:
-	static t *g这;
+	inline static t *g这 = nullptr;
 	C单例() {
 		assert(!g这);
 		g这 = static_cast<t *>(this);
@@ -30,7 +30,7 @@ public:
 template<typename t>
 class C弱单例 {	//类本身只有一个静态指针,不维护对象生命周期
 public:
-	static t *g这;
+	inline static t *g这 = nullptr;
 	C弱单例() {
 		assert(!g这);
 		g这 = static_cast<t*>(this);
@@ -43,6 +43,4 @@ public:
 		return *g这;
 	}
 };
-template<typename t> inline t *C单例<t>::g这 = nullptr;
-template<typename t> inline t *C弱单例<t>::g这 = nullptr;
 }	//namespace cflw::工具

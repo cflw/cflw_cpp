@@ -10,9 +10,9 @@ namespace cflw::图形::dx纹理 {
 //格式
 namespace 格式 {
 //常量
-const GUID c通用rgba = GUID_WICPixelFormat32bppRGBA;
-const GUID c通用bgra = GUID_WICPixelFormat32bppBGRA;
-const GUID c通用pbgra = GUID_WICPixelFormat32bppPBGRA;
+inline const GUID c通用rgba = GUID_WICPixelFormat32bppRGBA;
+inline const GUID c通用bgra = GUID_WICPixelFormat32bppBGRA;
+inline const GUID c通用pbgra = GUID_WICPixelFormat32bppPBGRA;
 //函数
 bool f检查srgb(IWICBitmapFrameDecode *);
 DXGI_FORMAT f到dxgi(const GUID &);

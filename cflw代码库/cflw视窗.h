@@ -279,6 +279,7 @@ public:
 	static std::wstring fg工作目录();
 	static int fg处理器数量();
 	//分辨率
+	static std::pair<int, int> fg分辨率();	//获取主显示器分辨率
 	static UINT fg显示精度();
 	static UINT fg显示精度(HWND);
 	static float fg缩放();

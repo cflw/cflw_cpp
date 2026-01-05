@@ -68,9 +68,9 @@ struct S向量2 {
 	S向量2 &fs方向d(const float &);
 	S向量2 &fs旋转r(const float &);
 	S向量2 &fs旋转d(const float &);
-	S向量2 f大小(const float &) const;
-	S向量2 f方向r(const float &) const;
-	S向量2 f方向d(const float &) const;
+	S向量2 f大小(const float &) const;	//创建一个方向不变,大小改变的向量
+	S向量2 f方向r(const float &) const;	//创建一个大小不变,方向改变的向量
+	S向量2 f方向d(const float &) const;	//创建一个大小不变,方向改变的向量
 	float f到点方向r(const S向量2 &) const;
 	float f到点方向d(const S向量2 &) const;
 	S向量2 f旋转r(const float &) const;
@@ -95,7 +95,8 @@ struct S向量2 {
 	S向量2 f分量乘(float, float) const;
 	S向量2 f分量乘(const S向量2 &) const;
 	bool fi分量相等() const;
-	float f平方() const;
+	float fg算术平均() const;
+	float fg几何平均() const;	//等价于 大小
 	//转换
 	S向量3 ft向量3(float = 0) const;
 	S向量4 ft向量4(float = 0, float = 0) const;
@@ -125,6 +126,8 @@ struct S向量3 {
 	S向量3 f叉乘(const S向量3 &) const;
 	S向量3 &fs(const float &);
 	S向量3 &fs(const float &, const float &, const float &);
+	float fg算术平均() const;
+	float fg几何平均() const;	//等价于 大小
 	//转换
 	S向量2 ft向量2() const;
 	S向量4 ft向量4(const float &) const;
@@ -154,6 +157,7 @@ struct S向量4 {
 	S向量4 fg三维取反() const;	//x,y,z取反，w不变
 	float f点乘(const S向量4 &) const;
 	S向量3 ft向量3() const;
+	float fg算术平均() const;
+	float fg几何平均() const;	//等价于 大小
 };
-
 }	//namespace cflw::数学

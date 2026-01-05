@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <cassert>
 #include <algorithm>
 #include "cflw数学_杂烩.h"
 #include "cflw数学.h"

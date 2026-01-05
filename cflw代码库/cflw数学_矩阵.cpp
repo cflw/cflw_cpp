@@ -10,17 +10,17 @@ void C矩阵::f空矩阵_(float *a输出, int a行, int a列) {
 		}
 	}
 }
-void C矩阵::f矩阵相乘_(float *a输出, const float *a矩阵0, const float *a矩阵1, int ①, int ②, int ③) {
-	float *v = new float[①*③];
-	memset(v, 0, sizeof(float)*①*③);
-	for (int 列 = 0; 列 != ③; ++列) {
-		for (int 行 = 0; 行 != ①; ++行) {
-			for (int i = 0; i != ②; ++i) {
-				v[行 * ② + 列] += a矩阵0[行 * ② + i] * a矩阵1[i * ③ + 列];
+void C矩阵::f矩阵相乘_(float *a输出, const float *a矩阵0, const float *a矩阵1, int ni, int nj, int nk) {
+	float *v = new float[ni*nk];
+	memset(v, 0, sizeof(float)*ni*nk);
+	for (int 列 = 0; 列 != nk; ++列) {
+		for (int 行 = 0; 行 != ni; ++行) {
+			for (int i = 0; i != nj; ++i) {
+				v[行 * nj + 列] += a矩阵0[行 * nj + i] * a矩阵1[i * nk + 列];
 			}
 		}
 	}
-	memcpy(a输出, v, 4 * ①*③);
+	memcpy(a输出, v, 4 * ni*nk);
 	delete[] v;
 }
 void C矩阵::f单位矩阵_(float *a参数, int a参数数) {

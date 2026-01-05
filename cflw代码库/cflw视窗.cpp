@@ -242,6 +242,9 @@ std::wstring C环境::fg工作目录() {
 int C环境::fg处理器数量() {
 	return fg系统信息().dwNumberOfProcessors;
 }
+std::pair<int, int> C环境::fg分辨率() {
+	return {GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)};
+}
 UINT C环境::fg显示精度() {
 	return GetDpiForSystem();
 }

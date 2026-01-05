@@ -316,8 +316,11 @@ S向量2 S向量2::f分量乘(const S向量2 &a) const {
 bool S向量2::fi分量相等() const {
 	return x == y;
 }
-float S向量2::f平方() const {
-	return x * x + y * y;
+float S向量2::fg算术平均() const {
+	return (x + y) * 0.5f;
+}
+float S向量2::fg几何平均() const {
+	return std::sqrt(fg平方());
 }
 //转换
 S向量3 S向量2::ft向量3(float z)const {
@@ -415,6 +418,12 @@ S向量3 &S向量3::fs(const float &X, const float &Y, const float &Z) {
 	z = Z;
 	return *this;
 }
+float S向量3::fg算术平均() const {
+	return (x + y) * 0.5f;
+}
+float S向量3::fg几何平均() const {
+	return std::sqrt(fg平方());
+}
 //转换
 S向量2 S向量3::ft向量2() const {
 	return S向量2(x, y);
@@ -480,8 +489,13 @@ S向量4 S向量4::fg三维取反() const {
 float S向量4::f点乘(const S向量4 &a) const {
 	return x * a.x + y * a.y + z * a.z + w * a.w;
 }
+float S向量4::fg算术平均() const {
+	return (x + y) * 0.5f;
+}
+float S向量4::fg几何平均() const {
+	return std::sqrt(fg平方());
+}
 S向量3 S向量4::ft向量3() const {
 	return S向量3(x, y, z);
 }
-
-}
+}	//namespace cflw::数学

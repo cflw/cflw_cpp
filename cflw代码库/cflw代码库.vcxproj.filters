@@ -273,6 +273,12 @@
     <ClCompile Include="cflw字符串.ixx">
       <Filter>工具</Filter>
     </ClCompile>
+    <ClCompile Include="cflw字符串_数字.ixx">
+      <Filter>工具</Filter>
+    </ClCompile>
+    <ClCompile Include="cflw文件_文本.ixx">
+      <Filter>文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cflw数学_杂烩.inl">

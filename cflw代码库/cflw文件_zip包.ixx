@@ -201,6 +201,12 @@ struct S中央目录记录尾 {
 //==============================================================================
 // zip文件
 //==============================================================================
+template<typename t容器>
+concept T容器 = requires(t容器 a容器) {
+	typename t容器::value_type;
+	{ a容器.data() };
+	{ a容器.size() };
+};
 class C提取: private 二进制::C读 {
 public:
 	struct S文件信息 {
@@ -244,7 +250,7 @@ public:
 		}
 		return false;	//异常结束
 	}
-	template<typename t容器>
+	template<T容器 t容器>
 	bool f提取到容器(const std::string &a文件名, t容器 &a数据) {
 		using t值 = typename t容器::value_type;
 		t容器 v数据;
@@ -422,7 +428,7 @@ public:
 	bool f归档从文件(const std::string_view &a文件名, const std::wstring_view &a硬盘文件名) {
 		return false;	//未实现
 	}
-	template<typename t容器>	//必需是连续容器
+	template<T容器 t容器>	//必需是连续容器
 	bool f归档从容器(const std::string_view &a文件名, const t容器 &a容器) {
 		using t值 = typename t容器::value_type;
 		return f归档从内存(a文件名, (const std::byte *)a容器.data(), sizeof(t值) * a容器.size());

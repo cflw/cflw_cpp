@@ -11,6 +11,7 @@ namespace cflw::工具 {
 class C计次器 {
 public:
 	C计次器() = default;
+	C计次器(int);
 	void f重置(int);
 	bool f滴答();
 private:
